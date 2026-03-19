@@ -31,6 +31,62 @@
             color: #656d76; 
             margin: 0.5rem 0;
         }
+        .online-read {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(130,80,223,0.1), rgba(9,105,218,0.1));
+            border: 2px solid #0969da;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .online-read a {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #8250df, #0969da);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+        .online-read a:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(9,105,218,0.3);
+        }
+        .features {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f6f8fa;
+            border-radius: 8px;
+            border: 1px solid #d0d7de;
+        }
+        .features h2 {
+            margin-bottom: 1rem;
+            color: #1f2328;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .feature-item {
+            background: #ffffff;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #d0d7de;
+        }
+        .feature-title {
+            font-weight: 600;
+            color: #0969da;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            color: #656d76;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
         .stats { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
@@ -168,8 +224,38 @@
             · 🔄 最后更新：2026-03-19 
             · 📁 已收录：3 篇
         </div>
+        
+        <!-- 在线阅读按钮 -->
+        <div class="online-read">
+            <p style="color: #656d76; margin-bottom: 1rem;">🌐 在线阅读已上线！访问 GitHub Pages 查看完整网站</p>
+            <a href="https://haiyoung.github.io/AgentMemoryAtlas/" target="_blank">🚀 访问 GitHub Pages</a>
+        </div>
     </div>
     
+    <!-- 核心特色 -->
+    <div class="features">
+        <h2>🌟 核心特色</h2>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="feature-title">🔗 本体论驱动</div>
+                <div class="feature-desc">7 维度本体模型深度标注每篇论文 (记忆类型/结构/操作/载体/功能/模式/公理)</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-title">📊 可视化总结</div>
+                <div class="feature-desc">每篇论文生成交互式 HTML 报告，包含 Mermaid 架构图、本体映射、6 维度评分</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-title">🔄 持续更新</div>
+                <div class="feature-desc">由 OpenClaw 技能驱动，每周自动处理 5-10 篇新论文，本体模型持续演进</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-title">📖 开源共享</div>
+                <div class="feature-desc">MIT-0 协议，自由使用无需署名，欢迎贡献论文推荐和纠错</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 统计概览 -->
     <div class="stats">
         <div class="stat-card">
             <div class="stat-number">3</div>
@@ -185,7 +271,7 @@
         </div>
         <div class="stat-card">
             <div class="stat-number">10</div>
-            <div class="stat-label">本体维度</div>
+            <div class="stat-label">记忆操作</div>
         </div>
         <div class="stat-card">
             <div class="stat-number">11</div>
@@ -197,8 +283,9 @@
         </div>
     </div>
     
+    <!-- 已读论文列表 -->
     <div class="papers">
-        <h2 class="section-title">📄 最新论文</h2>
+        <h2 class="section-title">📄 已读论文 (3 篇)</h2>
         
         <div class="paper-card">
             <div class="paper-title">🧭 CompassMem: 事件中心记忆作为逻辑地图</div>
@@ -261,12 +348,14 @@
         </div>
     </div>
     
+    <!-- 快速链接 -->
     <div class="papers">
         <h2 class="section-title">🔗 快速链接</h2>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
             <a href="ontology/AGENT_MEMORY_ONTOLOGY.md" class="btn" style="background: linear-gradient(135deg, #1a7f37, #0969da);">📊 本体论模型</a>
             <a href="ontology/00_本体论入门.md" class="btn" style="background: linear-gradient(135deg, #8250df, #d29922);">📖 本体论入门</a>
             <a href="https://github.com/Haiyoung/AgentMemoryAtlas" class="btn" style="background: #1f2328;">🐙 GitHub 仓库</a>
+            <a href="CONTRIBUTING.md" class="btn" style="background: linear-gradient(135deg, #d29922, #9a6700);">🤝 贡献指南</a>
         </div>
     </div>
     
