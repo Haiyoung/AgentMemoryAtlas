@@ -70,15 +70,18 @@ graph TD
 
 记忆系统的核心操作，回答"**对记忆做什么**"
 
-| 操作 | 英文 | 说明 | 关键技术 |
-|------|------|------|---------|
-| 编码 | Encoding | 将信息转化为记忆 | 向量化/结构化 |
-| 存储 | Storage | 持久化保存 | 数据库/文件系统 |
-| 检索 | Retrieval | 按需提取记忆 | 相似度搜索/图遍历 |
-| 更新 | Update | 修改现有记忆 | 增量学习/覆盖 |
-| 遗忘 | Forgetting | 主动删除记忆 | 遗忘曲线/重要性筛选 |
-| 整合 | Consolidation | 记忆重组优化 | 聚类/摘要 |
-| 反思 | Reflection | 基于记忆的元认知 | 自我评估/规划 |
+| 操作 | 英文 | 说明 | 关键技术 | 代表论文 |
+|------|------|------|------|---------|
+| **编码** | Encoding | 将信息转化为记忆 | 向量化/结构化 | MemoryBank |
+| **存储** | Storage | 持久化保存 | 数据库/文件系统 | MemGPT |
+| **检索** | Retrieval | 按需提取记忆 | 相似度搜索/图遍历 | HippoRAG |
+| **更新** | Update | 修改现有记忆 | 增量学习/覆盖 | O-Mem |
+| **遗忘** | Forgetting | 主动删除记忆 | 遗忘曲线/重要性筛选 | MOOM |
+| **整合** | Consolidation | 记忆重组优化 | 聚类/摘要 | Memoria |
+| **反思** | Reflection | 基于记忆的元认知 | 自我评估/规划 | Reflexion |
+| **形成** | Formation | 从交互中产生新经验 | 经验蒸馏 | **FLEX** |
+| **进化** | Evolution | 经验库的自我完善 | 选择性合并 | **FLEX**, MemEvolve |
+| **蒸馏** | Distillation | 从具体经验抽象通用规则 | 模式提取 | **FLEX**, DreamGym |
 
 ---
 
@@ -116,15 +119,19 @@ graph TD
 
 设计范式识别，回答"**采用什么设计模式**"
 
-| 模式 | 英文 | 说明 | 代表工作 |
-|------|------|------|---------|
-| 检索增强 | RAG | 检索 + 生成 | 标准 RAG 架构 |
-| 反思 | Reflection | 自我反思改进 | Reflexion |
-| 自进化 | Self-evolving | 系统自主进化 | ReasoningBank |
-| 经验驱动 | Experience-driven | 基于经验学习 | FLEX, DreamGym |
-| 多智能体 | Multi-agent | 多智能体协作 | RCR-Router |
-| 模块化 | Modular | 功能模块分离 | Nemosine |
-| OS 启发 | OS-inspired | 操作系统式设计 | MemGPT, EverMemOS |
+| 模式 | 英文 | 说明 | 代表工作 | 关键特征 |
+|------|------|------|---------|---------|
+| **检索增强** | RAG | 检索 + 生成 | 标准 RAG 架构 | 静态知识库 |
+| **反思** | Reflection | 自我反思改进 | Reflexion | 单轮自我评估 |
+| **自进化** | Self-evolving | 系统自主进化 | ReasoningBank | 持续积累 |
+| **经验驱动** | Experience-driven | 基于经验学习 | **FLEX**, DreamGym | 成功/失败对比 |
+| **前向学习** | Forward-learning | 无需梯度的学习 | **FLEX** | 仅前向传播 |
+| **Actor-Critic** | Actor-Critic | 探索 + 评估协作 | **FLEX** | 双代理模式 |
+| **Meta-MDP** | Meta-MDP | 双层优化框架 | **FLEX** | 元级控制 |
+| **经验继承** | Experience-inheritance | 跨模型知识迁移 | **FLEX** | 即插即用 |
+| **多智能体** | Multi-agent | 多智能体协作 | RCR-Router | 角色分工 |
+| **模块化** | Modular | 功能模块分离 | Nemosine | 解耦设计 |
+| **OS 启发** | OS-inspired | 操作系统式设计 | MemGPT, EverMemOS | 虚拟内存管理 |
 
 ---
 
@@ -132,14 +139,15 @@ graph TD
 
 底层原则约束，回答"**遵循什么基本原则**"
 
-| 公理 | 英文 | 说明 | 挑战 |
-|------|------|------|------|
-| 稳定性 - 可塑性 | Stability-Plasticity | 保持旧知 vs 学习新知 | 灾难性遗忘 |
-| 泛化性 | Generalization | 从具体到一般 | 过拟合风险 |
-| 效率 | Efficiency | 计算/存储效率 | 规模扩展 |
-| 可解释性 | Interpretability | 记忆可理解 | 黑箱问题 |
-| 一致性 | Consistency | 记忆间无矛盾 | 冲突检测 |
-| 时序性 | Temporality | 时间关系保持 | 时序推理 |
+| 公理 | 英文 | 说明 | 可验证判据 | 代表论文 |
+|------|------|------|-----------|---------|
+| **稳定性 - 可塑性** | Stability-Plasticity | 保持旧知 vs 学习新知 | 无灾难性遗忘 + 新知识整合 | **FLEX**, O-Mem |
+| **泛化性** | Generalization | 从具体到一般 | 跨模型/跨任务迁移有效 | **FLEX** (+6.7~16.7%) |
+| **缩放性** | Scaling | 性能随规模可预测提升 | 经验库规模→性能幂律关系 | **FLEX** |
+| **效率** | Efficiency | 计算/存储效率 | token 使用/推理时间优化 | MemTool, MOOM |
+| **可解释性** | Interpretability | 记忆可理解 | 显式文本/可视化 | FLEX, MemGPT |
+| **一致性** | Consistency | 记忆间无矛盾 | 冲突检测/解决机制 | Memoria |
+| **时序性** | Temporality | 时间关系保持 | 时序推理正确 | CompassMem |
 
 ---
 
