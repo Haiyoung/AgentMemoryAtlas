@@ -11,9 +11,9 @@ env/
 # Node (if any scripts use Node)
 node_modules/
 
-# Build outputs
-site/*.html
-*.tmp
+# Build outputs (except index.html)
+site/*.tmp
+site/papers.json
 
 # OS
 .DS_Store
