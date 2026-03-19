@@ -16,7 +16,11 @@
 
 **🚀 GitHub Pages 已上线！点击访问完整网站：**
 
-### 🔗 [https://haiyoung.github.io/AgentMemoryAtlas/](https://haiyoung.github.io/AgentMemoryAtlas/)
+<div align="center">
+
+[**🌐 访问 GitHub Pages**](https://haiyoung.github.io/AgentMemoryAtlas/)
+
+</div>
 
 访问 GitHub Pages 查看：
 - 📊 实时统计数据
