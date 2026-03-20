@@ -114,10 +114,29 @@ AgentMemoryAtlas/
 
 已完成 **批次 1 (论文 1-10)** 的深度分析，详见 [ontology/BATCH_1_ANALYSIS.md](ontology/BATCH_1_ANALYSIS.md)
 
-**核心发现**:
-- 📈 **记忆类型分布**: Experiential (50%), Factual (40%), Hybrid (10%)
+### 📊 核心发现
+- 📈 **记忆类型分布**: Experiential (80%), Factual (10%), Hybrid (10%)
 - 🔄 **技术演进**: 从单一存储 → 混合架构 → 元级别自适应
-- 🔍 **认知对齐**: 从工程优化 → 认知科学启发的设计
+- 🔍 **认知对齐**: 从工程优化 → 认知科学启发的设计  
 - ⚪ **研究空白**: 多模态记忆、在线学习、长期演化、安全隐私
+
+### 🧠 领域本体论模型
+基于10篇论文构建了 **Agent Memory领域本体论模型**，包含核心概念(MemoryUnit, MemoryGraph, Event)、关系约束和领域公理体系。
+
+### 📚 批次 1 论文阅读
+
+#### 2026 年论文 (5篇)
+- **[CompassMem (MD)](papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-20.html)**
+- **[MAGMA (MD)](papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-20.html)**
+- **[EverMemOS (MD)](papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-20.html)**
+- **[MemRL (MD)](papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-20.html)**
+- **[AgeMem (MD)](papers/2026/05_2026-01_AgeMem-统一长短期记忆管理_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2026/05_2026-01_AgeMem-统一长短期记忆管理_2026-03-20.html)**
+
+#### 2025 年 12 月论文 (5篇)
+- **[FLEX (MD)](papers/2025/06_2025-12_FLEX-基于经验前向学习的连续智能体进化_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2025/06_2025-12_FLEX-基于经验前向学习的连续智能体进化_2026-03-20.html)**
+- **[Sophia (MD)](papers/2025/08_2025-12_Sophia-持久化智能体框架_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2025/08_2025-12_Sophia-持久化智能体框架_2026-03-20.html)**
+- **[Memoria (MD)](papers/2025/09_2025-12_Memoria-可扩展智能体记忆框架_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2025/09_2025-12_Memoria-可扩展智能体记忆框架_2026-03-20.html)**
+- **[ReMe (MD)](papers/2025/10_2025-12_ReMe-关系增强的多跳记忆_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2025/10_2025-12_ReMe-关系增强的多跳记忆_2026-03-20.html)**
+- **[MMAG (MD)](papers/2025/14_2025-12_MMAG-混合记忆增强生成框架_2026-03-20.md)** | **[HTML](https://haiyoung.github.io/AgentMemoryAtlas/papers/2025/14_2025-12_MMAG-混合记忆增强生成框架_2026-03-20.html)**
 
 ---

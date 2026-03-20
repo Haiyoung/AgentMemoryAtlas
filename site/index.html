@@ -17,331 +17,190 @@
             text-align: center; 
             padding: 3rem 0; 
             border-bottom: 1px solid #d0d7de; 
-            margin-bottom: 2rem; 
+            margin-bottom: 2rem;
         }
-        .hero h1 { 
-            font-size: 3rem; 
-            background: linear-gradient(135deg, #8250df, #0969da); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            margin-bottom: 1rem; 
-        }
-        .hero p { 
-            font-size: 1.2rem; 
-            color: #656d76; 
-            margin: 0.5rem 0;
-        }
-        .features {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: #f6f8fa;
-            border-radius: 8px;
-            border: 1px solid #d0d7de;
-        }
-        .features h2 {
-            margin-bottom: 1rem;
-            color: #1f2328;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .feature-item {
-            background: #ffffff;
-            padding: 1rem;
-            border-radius: 6px;
-            border: 1px solid #d0d7de;
-        }
-        .feature-title {
-            font-weight: 600;
-            color: #0969da;
-            margin-bottom: 0.5rem;
-        }
-        .feature-desc {
-            color: #656d76;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        .stats { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-            gap: 1rem; 
-            margin: 2rem 0; 
-        }
-        .stat-card { 
-            background: #f6f8fa; 
-            padding: 1.5rem; 
-            border-radius: 8px; 
-            border: 1px solid #d0d7de; 
-            text-align: center; 
-        }
-        .stat-number { 
-            font-size: 2.5rem; 
-            font-weight: 700; 
-            color: #0969da; 
-        }
-        .stat-label { 
-            color: #656d76; 
-            margin-top: 0.5rem; 
-            font-size: 0.9rem;
-        }
-        .papers { 
-            margin: 2rem 0; 
-        }
-        .section-title {
-            margin-bottom: 1.5rem; 
-            color: #1f2328;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .paper-card { 
-            background: #ffffff; 
-            padding: 1.5rem; 
-            border-radius: 8px; 
-            border: 1px solid #d0d7de; 
-            margin-bottom: 1rem; 
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; 
-        }
-        .paper-card:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1); 
-            border-color: #0969da; 
-        }
-        .paper-title { 
-            font-size: 1.3rem; 
-            color: #0969da; 
-            margin-bottom: 0.5rem; 
-            font-weight: 600;
-        }
-        .paper-meta { 
-            display: flex; 
-            gap: 1rem; 
-            color: #656d76; 
-            font-size: 0.9rem; 
-            margin-bottom: 1rem; 
-            flex-wrap: wrap;
-        }
-        .paper-rating { 
-            color: #9a6700; 
-            font-weight: 700; 
-        }
-        .paper-abstract {
-            color: #656d76; 
-            margin-bottom: 1rem; 
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-        .btn { 
-            display: inline-block; 
-            padding: 0.7rem 1.5rem; 
-            background: linear-gradient(135deg, #8250df, #0969da); 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 6px; 
-            font-weight: 600; 
-            transition: all 0.2s;
-        }
-        .btn:hover { 
-            opacity: 0.9; 
-            transform: translateY(-1px); 
-            box-shadow: 0 2px 4px rgba(9,105,218,0.3);
-        }
-        .tag {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: #f6f8fa;
-            border: 1px solid #d0d7de;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #656d76;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        footer {
-            text-align: center; 
-            margin-top: 3rem; 
-            padding-top: 2rem; 
-            border-top: 1px solid #d0d7de; 
-            color: #656d76;
-        }
-        footer a {
-            color: #0969da;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-        .update-info {
-            background: #f6f8fa;
-            padding: 1rem;
-            border-radius: 6px;
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: #e1e5e9;
+            border-radius: 12px;
+            overflow: hidden;
             margin: 1rem 0;
-            text-align: center;
-            color: #656d76;
-            font-size: 0.9rem;
         }
-        @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .hero h1 { font-size: 2rem; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .paper-meta { flex-direction: column; gap: 0.5rem; }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ea44f, #4dc966);
+            width: 6.7%;
+            border-radius: 12px;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+        .paper-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .paper-card {
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        .paper-card:hover {
+            border-color: #2ea44f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .paper-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #0969da;
+        }
+        .paper-meta {
+            font-size: 0.9rem;
+            color: #57606a;
+            margin-bottom: 0.5rem;
+        }
+        .paper-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .paper-link {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .link-md {
+            background: #f6f8fa;
+            color: #24292f;
+            border: 1px solid #d0d7de;
+        }
+        .link-html {
+            background: #2ea44f;
+            color: white;
+        }
+        .link-md:hover {
+            background: #eaeef2;
+        }
+        .link-html:hover {
+            background: #22863a;
         }
     </style>
 </head>
 <body>
     <div class="hero">
-        <h1>🧭 AgentMemoryAtlas</h1>
-        <p>基于本体论的智能体记忆领域论文地图集</p>
-        <p>7 维度标注 · 可视化 HTML 总结 · 持续更新</p>
-        <div class="update-info">
-            📊 本体论模型：v1.1 (10 操作 / 11 模式 / 7 公理) 
-            · 🔄 最后更新：2026-03-19 
-            · 📁 已收录：3 篇
-        </div>
-    </div>
-    
-    <!-- 核心特色 -->
-    <div class="features">
-        <h2>🌟 核心特色</h2>
-        <div class="feature-grid">
-            <div class="feature-item">
-                <div class="feature-title">🔗 本体论驱动</div>
-                <div class="feature-desc">7 维度本体模型深度标注每篇论文 (记忆类型/结构/操作/载体/功能/模式/公理)</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-title">📊 可视化总结</div>
-                <div class="feature-desc">每篇论文生成交互式 HTML 报告，包含 Mermaid 架构图、本体映射、6 维度评分</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-title">🔄 持续更新</div>
-                <div class="feature-desc">由 OpenClaw 技能驱动，每周自动处理 5-10 篇新论文，本体模型持续演进</div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-title">📖 开源共享</div>
-                <div class="feature-desc">MIT-0 协议，自由使用无需署名，欢迎贡献论文推荐和纠错</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 统计概览 -->
-    <div class="stats">
-        <div class="stat-card">
-            <div class="stat-number">3</div>
-            <div class="stat-label">已读论文</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">2026</div>
-            <div class="stat-label">最新年份</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">4.7</div>
-            <div class="stat-label">平均评分</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">10</div>
-            <div class="stat-label">记忆操作</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">11</div>
-            <div class="stat-label">模式识别</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">7</div>
-            <div class="stat-label">公理约束</div>
-        </div>
-    </div>
-    
-    <!-- 已读论文列表 -->
-    <div class="papers">
-        <h2 class="section-title">📄 已读论文 (3 篇)</h2>
+        <h1>AgentMemoryAtlas</h1>
+        <p>Agent Memory 领域论文地图集 - 系统性梳理与深度分析</p>
         
-        <div class="paper-card">
-            <div class="paper-title">🧭 CompassMem: 事件中心记忆作为逻辑地图</div>
-            <div class="paper-meta">
-                <span>📄 arXiv: 2601.04726</span>
-                <span>🏫 中国人民大学高瓴人工智能学院</span>
-                <span>📅 2026 年 1 月</span>
-                <span class="paper-rating">⭐ 4.8/5.0</span>
-            </div>
-            <p class="paper-abstract">
-                受事件分割理论启发，将记忆组织为事件图，通过显式逻辑关系连接事件单元。
-                支持主动多路径搜索和逻辑感知导航，在 LoCoMo 上 F1 达到 52.18% (+4.26% vs HippoRAG)。
-            </p>
-            <div style="margin-bottom: 1rem;">
-                <span class="tag">📦 情景式</span>
-                <span class="tag">🏗️ 图式</span>
-                <span class="tag">🔁 RAG+ 图导航</span>
-            </div>
-            <a href="papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-19.html" class="btn" target="_blank">📖 阅读全文</a>
+        <div class="stats">
+            <div>📊 总进度: <strong>10/150 (6.7%)</strong></div>
+            <div>📚 已完成: <strong>批次 1 (论文 1-10)</strong></div>
+            <div>🎯 目标: <strong>150 篇 Agent Memory 论文</strong></div>
         </div>
         
-        <div class="paper-card">
-            <div class="paper-title">🧲 MAGMA: 多图智能体记忆架构</div>
-            <div class="paper-meta">
-                <span>📄 arXiv: 2601.03236</span>
-                <span>🏫 德克萨斯大学达拉斯分校</span>
-                <span>📅 2026 年 1 月</span>
-                <span class="paper-rating">⭐ 4.7/5.0</span>
-            </div>
-            <p class="paper-abstract">
-                将记忆表示为四个正交关系图 (语义/时序/因果/实体)，支持意图感知检索和结构化上下文构建。
-                LoCoMo Judge 分数 0.700 (+18.6% vs 次优)，查询延迟 1.47s (比 A-MEM 快 40%)。
-            </p>
-            <div style="margin-bottom: 1rem;">
-                <span class="tag">📦 语义式 + 情景式</span>
-                <span class="tag">🏗️ 多图式</span>
-                <span class="tag">🔁 策略引导遍历</span>
-            </div>
-            <a href="papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-19.html" class="btn">📖 阅读全文</a>
-        </div>
-        
-        <div class="paper-card">
-            <div class="paper-title">🌱 EverMemOS: 自组织记忆操作系统</div>
-            <div class="paper-meta">
-                <span>📄 arXiv: 2601.02163</span>
-                <span>🏫 阿里巴巴集团 + 武汉大学</span>
-                <span>📅 2026 年 1 月</span>
-                <span class="paper-rating">⭐ 4.6/5.0</span>
-            </div>
-            <p class="paper-abstract">
-                印迹启发的记忆生命周期：MemCells→MemScenes 层次化组织，支持 Foresight 信号和用户画像。
-                在 LoCoMo 和 LongMemEval 上达到 SOTA，并在 PersonaMem v2 上展示聊天导向能力。
-            </p>
-            <div style="margin-bottom: 1rem;">
-                <span class="tag">📦 情景式 + 语义式</span>
-                <span class="tag">🏗️ 层次化</span>
-                <span class="tag">🔁 OS 启发 + 自组织</span>
-            </div>
-            <a href="papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-19.html" class="btn">📖 阅读全文</a>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
         </div>
     </div>
-    
-    <!-- 快速链接 -->
-    <div class="papers">
-        <h2 class="section-title">🔗 快速链接</h2>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-            <a href="ontology/AGENT_MEMORY_ONTOLOGY.md" class="btn" style="background: linear-gradient(135deg, #1a7f37, #0969da);">📊 本体论模型</a>
-            <a href="ontology/00_本体论入门.md" class="btn" style="background: linear-gradient(135deg, #8250df, #d29922);">📖 本体论入门</a>
-            <a href="https://github.com/Haiyoung/AgentMemoryAtlas" class="btn" style="background: #1f2328;">🐙 GitHub 仓库</a>
-            <a href="CONTRIBUTING.md" class="btn" style="background: linear-gradient(135deg, #d29922, #9a6700);">🤝 贡献指南</a>
+
+    <h2>批次 1 论文阅读列表</h2>
+    <p>已完成 2026 年论文 + 2025 年 12 月重要论文的深度分析</p>
+
+    <div class="paper-list">
+        <div class="paper-card">
+            <div class="paper-title">CompassMem</div>
+            <div class="paper-meta">2026年 · 事件中心记忆-as-逻辑地图</div>
+            <div class="paper-links">
+                <a href="../papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">MAGMA</div>
+            <div class="paper-meta">2026年 · 多图智能体记忆架构</div>
+            <div class="paper-links">
+                <a href="../papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">EverMemOS</div>
+            <div class="paper-meta">2026年 · 自组织记忆操作系统</div>
+            <div class="paper-links">
+                <a href="../papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">MemRL</div>
+            <div class="paper-meta">2026年 · 运行时强化学习自进化智能体</div>
+            <div class="paper-links">
+                <a href="../papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">AgeMem</div>
+            <div class="paper-meta">2026年 · 统一长短期记忆管理</div>
+            <div class="paper-links">
+                <a href="../papers/2026/05_2026-01_AgeMem-统一长短期记忆管理_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2026/05_2026-01_AgeMem-统一长短期记忆管理_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">FLEX</div>
+            <div class="paper-meta">2025年12月 · 基于经验前向学习的连续智能体进化</div>
+            <div class="paper-links">
+                <a href="../papers/2025/06_2025-12_FLEX-基于经验前向学习的连续智能体进化_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2025/06_2025-12_FLEX-基于经验前向学习的连续智能体进化_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">Sophia</div>
+            <div class="paper-meta">2025年12月 · 持久化智能体框架</div>
+            <div class="paper-links">
+                <a href="../papers/2025/08_2025-12_Sophia-持久化智能体框架_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2025/08_2025-12_Sophia-持久化智能体框架_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">Memoria</div>
+            <div class="paper-meta">2025年12月 · 可扩展智能体记忆框架</div>
+            <div class="paper-links">
+                <a href="../papers/2025/09_2025-12_Memoria-可扩展智能体记忆框架_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2025/09_2025-12_Memoria-可扩展智能体记忆框架_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">ReMe</div>
+            <div class="paper-meta">2025年12月 · 关系增强的多跳记忆</div>
+            <div class="paper-links">
+                <a href="../papers/2025/10_2025-12_ReMe-关系增强的多跳记忆_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2025/10_2025-12_ReMe-关系增强的多跳记忆_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
+        </div>
+        <div class="paper-card">
+            <div class="paper-title">MMAG</div>
+            <div class="paper-meta">2025年12月 · 混合记忆增强生成框架</div>
+            <div class="paper-links">
+                <a href="../papers/2025/14_2025-12_MMAG-混合记忆增强生成框架_2026-03-20.md" class="paper-link link-md">MD阅读</a>
+                <a href="papers/2025/14_2025-12_MMAG-混合记忆增强生成框架_2026-03-20.html" class="paper-link link-html">HTML阅读</a>
+            </div>
         </div>
     </div>
-    
-    <footer>
-        <p>📊 本体论模型：v1.1 (10 操作 / 11 模式 / 7 公理)</p>
-        <p>🔄 最后更新：2026-03-19</p>
-        <p>
-            <a href="https://github.com/Haiyoung/AgentMemoryAtlas">GitHub 仓库</a> 
-            · 
-            <a href="ontology/AGENT_MEMORY_ONTOLOGY.md">本体论文档</a>
-            ·
-            <a href="CONTRIBUTING.md">贡献指南</a>
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.85rem;">
-            📄 License: MIT-0 · 🛠️ Powered by OpenClaw v8 Template
-        </p>
-    </footer>
+
+    <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #d0d7de; text-align: center; color: #57606a;">
+        <p>AgentMemoryAtlas · 系统性梳理 Agent Memory 领域研究进展</p>
+        <p>最后更新: 2026-03-20</p>
+    </div>
 </body>
 </html>
