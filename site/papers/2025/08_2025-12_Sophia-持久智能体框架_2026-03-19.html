@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophia - 持久智能体框架</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root { --bg-primary: #ffffff; --bg-secondary: #f6f8fa; --bg-card: #ffffff; --bg-mermaid: #f0f4f8; --text-primary: #1f2328; --text-secondary: #656d76; --text-mermaid: #24292f; --accent-purple: #8250df; --accent-cyan: #0969da; --accent-green: #1a7f37; --accent-orange: #9a6700; --border-color: #d0d7de; --border-subtle: rgba(208,215,222,0.5); --shadow-sm: 0 1px 3px rgba(0,0,0,0.08); --shadow-md: 0 3px 6px rgba(0,0,0,0.1); }
+        [data-theme="dark"] { --bg-primary: #0d1117; --bg-secondary: #161b22; --bg-card: #161b22; --bg-mermaid: #1c2128; --text-primary: #f0f6fc; --text-secondary: #c9d1d9; --text-mermaid: #e6edf3; --accent-purple: #8b94ff; --accent-cyan: #58a6ff; --accent-green: #3fb950; --accent-orange: #d29922; --border-color: #30363d; --border-subtle: rgba(240,246,252,0.1); --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 3px 6px rgba(0,0,0,0.4); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; padding: 0; font-size: 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero { text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green)); }
+        .hero-title { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: 1.4rem; color: var(--text-secondary); margin: 0.8rem 0; }
+        .hero-subtitle-cn { font-size: 1.2rem; color: var(--text-primary); opacity: 0.9; }
+        .hero-meta { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .hero-meta-item { background: var(--bg-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; color: var(--text-secondary); }
+        .hero-actions { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .btn { padding: 0.7rem 1.5rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); color: white; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--accent-cyan); }
+        .rating-card { background: var(--bg-card); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); }
+        .rating-title { font-size: 1.4rem; font-weight: 700; color: var(--accent-orange); display: flex; align-items: center; gap: 0.5rem; }
+        .rating-stars { display: flex; align-items: center; gap: 0.3rem; }
+        .star { font-size: 1.6rem; color: #fbbf24; filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3)); opacity: 0.9; }
+        .rating-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-orange); margin-left: 0.5rem; }
+        .rating-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
+        .rating-item { background: var(--bg-secondary); padding: 0.8rem 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle); text-align: center; display: flex; flex-direction: column; gap: 0.4rem; }
+        .rating-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rating-score { font-size: 1rem; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; }
+        .rating-summary { padding: 1.2rem; background: rgba(210, 153, 34, 0.08); border-radius: 8px; border-left: 4px solid var(--accent-orange); color: var(--text-secondary); line-height: 1.6; }
+        .card { background: var(--bg-card); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent-cyan); }
+        .card-title { font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--accent-cyan); font-weight: 700; }
+        .highlight { background: linear-gradient(135deg, rgba(139, 148, 255, 0.1), rgba(88, 166, 255, 0.08)); border-left: 4px solid var(--accent-cyan); padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 1px solid var(--border-subtle); }
+        .highlight p { margin: 0.8rem 0; line-height: 1.7; }
+        .highlight strong { color: var(--text-primary); font-weight: 700; }
+        .tag-container { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tag { background: var(--bg-secondary); padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border-color); color: var(--text-secondary); }
+        .tag:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); transform: translateY(-1px); }
+        .tag-accent { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .comparison-table th, .comparison-table td { padding: 1rem; text-align: center; border: 1px solid var(--border-color); }
+        .comparison-table th { background: var(--bg-secondary); color: var(--text-primary); font-weight: 700; }
+        .comparison-table tr:hover { background: rgba(88, 166, 255, 0.04); }
+        .comparison-table .best { background: rgba(63, 185, 80, 0.1); font-weight: 700; border: 1px solid rgba(63, 185, 80, 0.3); }
+        .mermaid-wrapper { background: var(--bg-mermaid); border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--border-color); padding: 1.5rem; overflow-x: auto; overflow-y: hidden; max-width: 100%; text-align: center; }
+        .mermaid { display: inline-block; min-width: 600px; text-align: center; }
+        .mermaid svg { max-width: 100%; height: auto !important; display: block; margin: 0 auto; }
+        .limitations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .limitation-item { background: var(--bg-secondary); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-orange); display: flex; gap: 1rem; align-items: flex-start; }
+        .limitation-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .limitation-title { color: var(--text-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .limitation-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .glossary-item { background: var(--bg-secondary); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .glossary-item:hover { border-color: var(--accent-cyan); transform: translateY(-2px); }
+        .glossary-term { color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.5rem; }
+        .glossary-definition { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .key-point { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; background: var(--bg-secondary); border-radius: 8px; margin: 1rem 0; }
+        .key-point-icon { font-size: 1.5rem; }
+        a { color: var(--accent-cyan); text-decoration: none; }
+        a:hover { color: var(--accent-purple); text-decoration: underline; }
+        @media (max-width: 768px) { .container { padding: 1rem; } .hero-title { font-size: 2rem; } .hero-meta { flex-direction: column; } .rating-grid { grid-template-columns: repeat(2, 1fr); } .mermaid { min-width: 100%; } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧠 Sophia</h1>
+            <p class="hero-subtitle">A Persistent Agent Framework of Artificial Life</p>
+            <p class="hero-subtitle-cn">持久智能体框架</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">📄 arXiv: 2512.18202</div>
+                <div class="hero-meta-item">📅 2025 年 12 月</div>
+                <div class="hero-meta-item">🏫 多机构合作</div>
+                <div class="hero-meta-item">📊 多智能体基准</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.18202" target="_blank" class="btn btn-primary">🔗 阅读原文 (arXiv)</a>
+            </div>
+        </header>
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title">💎 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.6 / 5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">📊 期刊影响力</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">🎯 问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">💡 方法创新性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">🔧 技术壁垒</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">✅ 落地可行性</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">🚀 应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+            </div>
+            <div class="rating-summary"><strong>综合评价：</strong>System 3 创新框架。提出第三层元认知系统管理叙事身份和长程适应，四个协同机制 (过程监督思维搜索/叙事记忆/用户和自我建模/混合奖励系统) 实现身份连续性和透明行为解释。推理步骤减少 80%，高复杂度任务成功率 +40%。</div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">🔗 本体论映射</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            <div class="tag-container">
+                <span class="tag tag-accent">📦 记忆类型：情景式 + 语义式</span>
+                <span class="tag tag-accent">🏗️ 记忆结构：层次化 + 叙事记忆</span>
+                <span class="tag tag-accent">⚙️ 记忆操作：形成 + 整合 + 重建</span>
+                <span class="tag">💾 记忆载体：外部数据库</span>
+                <span class="tag">🎯 功能类型：推理 + 身份连续性</span>
+                <span class="tag tag-accent">🔁 使用模式：System 3 + 持久智能体</span>
+                <span class="tag" style="border-color: var(--accent-green); color: var(--accent-green);">✅ 验证公理：稳定性 - 可塑性 + 效率</span>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">🎯 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 大多数架构保持静态和被动，局限于手动定义的狭窄场景，缺乏持久的元层来维护身份、验证推理并将短期行动与长期生存对齐。</p>
+                <p style="margin-top: 0.8rem;"><strong>💡 解决方案是什么？</strong> 提出 System 3 第三层，管理智能体的叙事身份和长程适应。Sophia 是"持久智能体"包装器，将连续自改进循环嫁接到任何 LLM 中心的 System 1/2 栈上。</p>
+                <p style="margin-top: 0.8rem;"><strong>🌟 核心优势是什么？</strong> ①推理步骤减少 80% ②高复杂度任务成功率 +40% ③连贯叙事身份 ④任务组织能力</p>
+            </div>
+            <div class="key-point">
+                <span class="key-point-icon">💡</span>
+                <div><strong>关键洞见：</strong>通过融合心理学洞察和轻量级强化学习核心，持久智能体架构推进了人工生命的实用路径。System 3 管理叙事身份和长程适应，实现身份连续性和透明行为解释。</div>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">📐 方法架构</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Sophia 由四个协同机制驱动：过程监督思维搜索、叙事记忆、用户和自我建模、混合奖励系统。</p>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph System3["🧠 System 3 (元层)"]
+        S1["叙事身份"]
+        S2["长程适应"]
+    end
+    
+    subgraph Mechanisms["🔄 四个协同机制"]
+        M1["过程监督思维搜索"]
+        M2["叙事记忆"]
+        M3["用户和自我建模"]
+        M4["混合奖励系统"]
+    end
+    
+    subgraph Agent["🤖 LLM 智能体"]
+        A1["System 1 (感知)"]
+        A2["System 2 (深思)"]
+    end
+    
+    System3 --> Mechanisms
+    Mechanisms --> Agent
+    
+    style System3 fill:#e7f3ff,stroke:#0969da,stroke-width:2px
+    style Mechanisms fill:#f0e6ff,stroke:#8250df,stroke-width:2px
+    style Agent fill:#dafbe1,stroke:#1a7f37,stroke-width:2px
+                </div>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">📈 实验结果</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">在多智能体基准上评估</p>
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>指标</th><th>Sophia</th><th>基线</th><th>提升</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="best"><td>推理步骤减少</td><td><strong>80%</strong></td><td>-</td><td><strong>-</strong></td></tr>
+                    <tr class="best"><td>高复杂度任务成功率</td><td><strong>+40%</strong></td><td>-</td><td><strong>显著</strong></td></tr>
+                    <tr><td>身份连续性</td><td>连贯</td><td>碎片化</td><td>显著改进</td></tr>
+                    <tr><td>任务组织能力</td><td>内在能力</td><td>无</td><td>新增能力</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight" style="margin-top: 1rem;">
+                <p><strong>关键发现：</strong>Sophia 独立发起和执行各种内在任务，同时实现重复操作推理步骤减少 80%。元认知持久性使高复杂度任务成功率提升 40%，有效弥合简单和复杂目标之间的性能差距。定性评估显示 System 3 展现连贯叙事身份和任务组织内在能力。</p>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">⚠️ 局限性与未来工作</h2>
+            <div class="limitations-grid">
+                <div class="limitation-item">
+                    <div class="limitation-icon">⚠️</div>
+                    <div><h3 class="limitation-title">概念性为主</h3><p class="limitation-desc">论文主要是概念性的，需要更多工程实现验证。</p></div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-icon">⚠️</div>
+                    <div><h3 class="limitation-title">评估范围</h3><p class="limitation-desc">需要在更广泛的任务和智能体设置中验证适用性。</p></div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-icon">⚠️</div>
+                    <div><h3 class="limitation-title">计算开销</h3><p class="limitation-desc">System 3 元层可能引入额外计算开销。</p></div>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+                <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 1rem;">🔮 未来工作方向</h3>
+                <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
+                    <li>扩展工程原型，验证概念框架</li>
+                    <li>在更多任务类型和智能体架构上评估</li>
+                    <li>优化 System 3 元层的计算效率</li>
+                    <li>探索多智能体身份和协作机制</li>
+                </ul>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">🏷️ 关键词</h2>
+            <div class="tag-container">
+                <span class="tag">持久智能体 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Persistent Agent</small></span>
+                <span class="tag">System 3 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">元层</small></span>
+                <span class="tag">叙事记忆 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Narrative Memory</small></span>
+                <span class="tag">身份连续性 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Identity Continuity</small></span>
+                <span class="tag">过程监督 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Process Supervision</small></span>
+                <span class="tag">自我建模 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Self-Modeling</small></span>
+                <span class="tag">混合奖励 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Hybrid Reward</small></span>
+                <span class="tag">人工生命 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Artificial Life</small></span>
+            </div>
+        </section>
+        <section class="card">
+            <h2 class="card-title">📚 专业名词解释</h2>
+            <div class="glossary-grid">
+                <div class="glossary-item">
+                    <div class="glossary-term">📚 System 3 (元层)</div>
+                    <div class="glossary-definition">第三层元认知系统，管理智能体的叙事身份和长程适应，验证推理并将短期行动与长期生存对齐。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">📚 叙事记忆 (Narrative Memory)</div>
+                    <div class="glossary-definition">自传式记忆系统，存储智能体的连续经验和身份，支持身份连续性和透明行为解释。</div>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">📚 过程监督思维搜索</div>
+                    <div class="glossary-definition">验证推理过程的机制，通过过程监督而非结果监督来引导智能体思维搜索，提高推理质量。</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { useMaxWidth: true, htmlLabels: true } });
+    </script>
+</body>
+</html>
