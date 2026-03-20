@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidence-Aware Neural Decoding of Overt Speech from EEG: Toward Robust Brain-Computer Interfaces</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Rating Card */
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Ontology Tags */
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag.primary {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .tag.secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tag.warning {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .tag.success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Mermaid */
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        /* Future Research */
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .future-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .future-icon {
+            font-size: 1.8rem;
+            color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .future-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Keywords */
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">Confidence-Aware Neural Decoding of Overt Speech from EEG</h1>
+            <p class="hero-subtitle">Confidence-Aware Neural Decoding of Overt Speech from EEG: Toward Robust Brain-Computer Interfaces</p>
+            <p class="hero-subtitle-cn">置信度感知的 EEG 显性语音神经解码：迈向鲁棒的脑机接口</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2511.07890</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2025-11-11</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> Korea University</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> 13 类显性语音 EEG 数据集</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2511.07890" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> 主题切换
+                </button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.2/5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">4.0</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">4.5</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">4.0</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">4.0</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">4.5</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">4.0</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong> 该论文提出了一种置信度感知的 EEG 语音解码框架，通过深度集成、温度校准和选择性分类机制，显著提升了 BCI 系统的可靠性和可部署性。方法模块化程度高，适合实际应用，但受限于被试内实验设计和固定命令集。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <!-- 7 维度标签 -->
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Hybrid (混合记忆)</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Hierarchical (层次结构)</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Retrieval, Evolution</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Latent (潜空间)</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Working (工作记忆)</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Value-aware Retrieval, Confidence-aware Decision</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Efficiency Axiom, Generalization Axiom</span>
+            </div>
+            
+            <!-- 领域贡献 with integrated explanations -->
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> 本论文虽非直接针对 Agent Memory，但其置信度感知框架和选择性分类机制对智能体记忆系统有重要借鉴意义：(1) 不确定性量化可用于记忆检索的可信度评估；(2) 选择性接受/放弃机制可应用于记忆写入的质量控制；(3) 温度校准方法可优化记忆检索的概率输出。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 非侵入式脑机接口 (BCI) 从 EEG 信号解码语音命令时，不仅要求高准确率，还需要系统"知道自己何时不确定"，以建立用户信任。现有方法缺乏可靠的置信度估计，导致实际部署时可能出现危险误判。</p>
+                <p><strong>💡 解决方案是什么？</strong> 提出置信度感知解码框架：(1) 使用多个紧凑 CNN 模型组成深度集成；(2) 用温度缩放进行后验概率校准；(3) 基于不确定性量化实现选择性分类（接受/放弃决策）；(4) 采用防泄漏的块状分层数据划分。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 相比传统基线 (如 EEGNet)，该方法提供更可靠的概率估计、更低的校准误差 (ECE 降低 39%)、在不同覆盖率下均保持优异的准确率 - 覆盖率权衡，且各类别接受度更平衡。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p>该方法包含以下核心组件：(1) 数据预处理：64 通道 EEG 信号，带通滤波 (0.5-40Hz)，去伪影，z-score 标准化；(2) 防泄漏块状分层：将连续试次按块划分，确保训练/校准/测试集无时间泄露；(3) 深度集成训练：训练 M 个紧凑 CNN 模型，每个模型通过 bootstrap 采样、通道 dropout、时间偏移等引入多样性；(4) 温度校准：在校准集上为每个模型学习温度参数 T，优化 softmax 输出；(5) 不确定性量化：计算三种指标——预测熵 H(p̄)、互信息 MI(x)、top-2 边际 Δ；(6) 选择性分类：根据目标覆盖率α设定阈值τ*，不确定性低于阈值时接受预测，否则放弃；(7) 评估指标：准确率 - 覆盖率曲线、AURC、ECE、NLL、Brier 分数。</p>
+            
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+graph TD
+    A[EEG 原始信号<br/>64 通道 500Hz] --> B[预处理<br/>滤波/去伪影/z-score]
+    B --> C[防泄漏块状分层<br/>Train/Cal/Test]
+    C --> D[深度集成训练<br/>M 个 CNN 模型]
+    D --> E[温度校准<br/>学习 T1...TM]
+    E --> F[测试时聚合<br/>p̄y|x = 1/M Σ pm]
+    F --> G[不确定性量化<br/>熵/MI/边际]
+    G --> H{选择性决策<br/>u≤τ*?}
+    H -->|是 | I[接受预测 ŷ]
+    H -->|否 | J[放弃 Abstain]
+    I --> K[评估指标<br/>Acc-Coverage/ECE/AURC]
+    J --> K
+</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p>在 13 类显性语音任务上评估（12 个单词 + 休息状态），健康成年被试，每人约 1300 次试次。采用被试内评估，块状分层防止时间泄露。</p>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现</strong>: 在覆盖率α=0.50 时，Ensemble-32 达到 87.00±4.00% 准确率，相比全覆盖率 (70.90±5.10%) 提升显著；Ensemble-32 相比 EEGNet 降低 AURC 39.00%，集成规模增大收益递减；温度校准显著改善置信度 - 准确率对齐，ECE、NLL、Brier 均随 M 增大而降低；各类别接受度在α=0.50 时分布在 [0.45, 0.56]，最小值 0.41，混淆主要集中在声学/发音相似的命令。</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-chart-line"></i></div>
+                    <div>
+                        <div class="future-title">AURC 降低</div>
+                        <div class="future-desc">Ensemble-32 相比 EEGNet 降低 39.00%</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-bullseye"></i></div>
+                    <div>
+                        <div class="future-title">Acc@α=0.50</div>
+                        <div class="future-desc">87.00±4.00% vs 70.90±5.10%</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-check-double"></i></div>
+                    <div>
+                        <div class="future-title">ECE/NLL/Brier</div>
+                        <div class="future-desc">均随集成规模 M 增大而降低</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div>
+                        <div class="future-title">类别平衡</div>
+                        <div class="future-desc">接受度 [0.45, 0.56]，最小值 0.41</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>BCI</strong>
+                    <small>应用领域</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>EEG Decoding</strong>
+                    <small>技术方法</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Confidence-Aware</strong>
+                    <small>核心特性</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Deep Ensembles</strong>
+                    <small>模型架构</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Uncertainty</strong>
+                    <small>关键技术</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Selective Classification</strong>
+                    <small>决策机制</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Temperature Calibration</strong>
+                    <small>校准方法</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Overt Speech</strong>
+                    <small>任务类型</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <div class="future-item" style="border-left-color: var(--accent-orange);">
+                    <div class="future-icon" style="color: var(--accent-orange);"><i class="fas fa-user-friends"></i></div>
+                    <div>
+                        <div class="future-title">被试内设计</div>
+                        <div class="future-desc">模型无法跨被试泛化，需每人重新训练</div>
+                    </div>
+                </div>
+                <div class="future-item" style="border-left-color: var(--accent-orange);">
+                    <div class="future-icon" style="color: var(--accent-orange);"><i class="fas fa-sliders-h"></i></div>
+                    <div>
+                        <div class="future-title">固定全局阈值</div>
+                        <div class="future-desc">所有试次使用同一阈值，未考虑个体差异</div>
+                    </div>
+                </div>
+                <div class="future-item" style="border-left-color: var(--accent-orange);">
+                    <div class="future-icon" style="color: var(--accent-orange);"><i class="fas fa-list-ol"></i></div>
+                    <div>
+                        <div class="future-title">命令集有限</div>
+                        <div class="future-desc">仅 13 类命令，实际应用场景受限</div>
+                    </div>
+                </div>
+                <div class="future-item" style="border-left-color: var(--accent-orange);">
+                    <div class="future-icon" style="color: var(--accent-orange);"><i class="fas fa-stopwatch"></i></div>
+                    <div>
+                        <div class="future-title">离线评估</div>
+                        <div class="future-desc">未验证实时性能</div>
+                    </div>
+                </div>
+                <div class="future-item" style="border-left-color: var(--accent-orange);">
+                    <div class="future-icon" style="color: var(--accent-orange);"><i class="fas fa-procedures"></i></div>
+                    <div>
+                        <div class="future-title">健康被试</div>
+                        <div class="future-desc">未在实际运动障碍患者中验证</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div>
+                        <div class="future-title">跨被试迁移</div>
+                        <div class="future-desc">开发领域自适应方法，减少对新用户的校准数据需求</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <div class="future-title">分布外保证</div>
+                        <div class="future-desc">引入共形预测 (Conformal Prediction) 提供统计保证</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-sync-alt"></i></div>
+                    <div>
+                        <div class="future-title">在线自适应</div>
+                        <div class="future-desc">支持模型在部署过程中持续学习和更新</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-user-check"></i></div>
+                    <div>
+                        <div class="future-title">用户闭环策略</div>
+                        <div class="future-desc">强调公平性和安全性的用户在环交互设计</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <div class="future-title">上下文建模</div>
+                        <div class="future-desc">利用语言模型或对话历史提升解码准确性</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-wave-square"></i></div>
+                    <div>
+                        <div class="future-title">多模态融合</div>
+                        <div class="future-desc">结合 EOG、EMG 等辅助信号提升鲁棒性</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Initialize Mermaid
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            
+            // Theme switching
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                
+                // Update button icon
+                const btn = document.querySelector('.btn-secondary');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                // Update button icon based on saved theme
+                const btn = document.querySelector('.btn-secondary');
+                if (btn && savedTheme === 'dark') {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-sun';
+                    }
+                }
+            }
+        </script>
+    </main>
+</body>
+</html>
