@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophia: 持久化智能体框架</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+        }
+        .hero-subtitle { font-size: 1.4rem; color: var(--text-secondary); margin: 0.8rem 0; }
+        .hero-subtitle-cn { font-size: 1.3rem; color: var(--text-primary); opacity: 0.9; }
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+        }
+        
+        .rating-card, .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .star { font-size: 1.8rem; color: #fbbf24; }
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        .rating-label { font-size: 0.85rem; color: var(--text-secondary); }
+        .rating-score { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+        }
+        
+        .ontology-box {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(103, 232, 249, 0.04));
+            border: 2px solid var(--accent-purple);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .ontology-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .tag {
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .tag.primary { background: rgba(167, 139, 250, 0.15); border-color: var(--accent-purple); color: var(--accent-purple); }
+        .tag.secondary { background: rgba(103, 232, 249, 0.15); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .tag.warning { background: rgba(251, 146, 60, 0.15); border-color: var(--accent-orange); color: var(--accent-orange); }
+        .tag.success { background: rgba(74, 222, 128, 0.15); border-color: var(--accent-green); color: var(--accent-green); }
+        .ontology-contribution {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-purple);
+        }
+        
+        .core-claims { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 2rem 0; }
+        .claim-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-cyan);
+        }
+        .claim-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .claim-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .claim-content { font-size: 1.05rem; color: var(--text-primary); margin-top: 0.5rem; }
+        
+        .mermaid { background: var(--bg-mermaid); padding: 2rem; border-radius: var(--radius-md); margin: 1.5rem 0; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--accent-cyan);
+        }
+        tr:hover { background: var(--bg-secondary); }
+        
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin: 2.5rem 0 1.5rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+        h3 { font-size: 1.3rem; font-weight: 600; color: var(--text-primary); margin: 1.5rem 0 1rem 0; }
+        p { margin: 1rem 0; color: var(--text-secondary); }
+        ul, ol { margin: 1rem 0 1rem 2rem; color: var(--text-secondary); }
+        li { margin: 0.5rem 0; }
+        strong { color: var(--text-primary); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 class="hero-title">📄 Sophia</h1>
+            <p class="hero-subtitle">A Persistent Agent Framework of Artificial Life</p>
+            <p class="hero-subtitle-cn">Sophia：人工生命的持久化智能体框架</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">📄 arXiv: 2512.18202</div>
+                <div class="hero-meta-item">🏫 Westlake University, Shanghai Jiao Tong University</div>
+                <div class="hero-meta-item">📊 Web Sandbox (36h)</div>
+                <div class="hero-meta-item">📅 2025-12-20</div>
+            </div>
+            <a href="https://arxiv.org/abs/2512.18202" class="btn btn-primary" target="_blank">
+                <i class="fas fa-external-link-alt"></i> 查看原文
+            </a>
+        </div>
+
+        <!-- Rating Card -->
+        <div class="rating-card">
+            <div class="rating-header">
+                <div class="rating-title">
+                    <i class="fas fa-gem"></i> 论文综合评分
+                </div>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.5/5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">期刊影响力</div><div class="rating-score">⭐⭐⭐⭐ 4.0</div></div>
+                <div class="rating-item"><div class="rating-label">问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐ 5.0</div></div>
+                <div class="rating-item"><div class="rating-label">方法创新性</div><div class="rating-score">⭐⭐⭐⭐⭐ 5.0</div></div>
+                <div class="rating-item"><div class="rating-label">技术壁垒</div><div class="rating-score">⭐⭐⭐⭐ 4.0</div></div>
+                <div class="rating-item"><div class="rating-label">落地可行性</div><div class="rating-score">⭐⭐⭐⭐ 4.0</div></div>
+                <div class="rating-item"><div class="rating-label">应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐ 5.0</div></div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价:</strong> Sophia 提出了革命性的 System 3 元认知层架构，将 AI 智能体从静态任务执行器提升为具有自传体记忆、身份连续性和自我进化能力的持久化实体。论文深度融合认知心理学四大支柱（元认知、心智理论、内在动机、情景记忆），并提供了 36 小时持续部署的原型验证。定量结果显示推理步骤减少 80%，高复杂度任务成功率提升 40%。这是 Agent Memory 领域迈向人工生命的重要里程碑。
+            </div>
+        </div>
+
+        <!-- Ontology Mapping -->
+        <div class="card">
+            <h2><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            <div class="ontology-box">
+                <div class="tag-container">
+                    <span class="tag primary">📦 记忆类型：Hybrid (混合记忆)</span>
+                    <span class="tag primary">🏗️ 记忆结构：Hierarchical (层次结构)</span>
+                    <span class="tag primary">⚙️ 记忆操作：Formation, Evolution, Retrieval</span>
+                    <span class="tag secondary">💾 记忆载体：Token-level + Latent</span>
+                    <span class="tag secondary">🎯 功能定位：Experiential + Working</span>
+                    <span class="tag warning">🔁 使用模式：Unified, Value-aware, Self-organizing, Experience-Driven</span>
+                    <span class="tag success">✅ 验证公理：Memory-Performance, Stability-Plasticity, Efficiency, Generalization</span>
+                </div>
+                <div class="ontology-contribution">
+                    <strong>🎯 领域贡献:</strong> Sophia 为 Agent Memory 领域引入了"持久化智能体"新范式，将记忆从被动存储提升为主动自我进化的核心驱动力。提出的 System 3 元认知层扩展了领域本体模型，新增"叙事身份连续性"和"内在动机驱动"两个关键维度。情景记忆模块的 tiered retrieval scheme（分层检索方案）为长时记忆管理提供了新方法论。混合奖励系统 (Hybrid Reward) 将外在任务反馈与内在好奇心/掌控感驱动相结合，丰富了记忆价值评估体系。
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Claims -->
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> 核心主张（通俗易懂版）</h2>
+            <div class="core-claims">
+                <div class="claim-card">
+                    <div class="claim-icon">🤔</div>
+                    <div class="claim-label">问题是什么？</div>
+                    <div class="claim-content">当前 AI 智能体都是"静态工具"，部署后无法自我更新技能、生成新目标或适应新领域，缺乏身份连续性和长期生存能力。</div>
+                </div>
+                <div class="claim-card">
+                    <div class="claim-icon">💡</div>
+                    <div class="claim-label">解决方案是什么？</div>
+                    <div class="claim-content">提出 System 3 元认知层，像"大脑的第三层"一样监控和改进底层思考过程，包含情景记忆、自我模型、用户建模和混合奖励四大模块。</div>
+                </div>
+                <div class="claim-card">
+                    <div class="claim-icon">🌟</div>
+                    <div class="claim-label">核心优势是什么？</div>
+                    <div class="claim-content">智能体能在用户闲置时自主学习 (36 小时持续运行)，重复任务推理步骤减少 80%，高难度任务成功率提升 40%，并维持连贯的"人格身份"。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Method Architecture -->
+        <div class="card">
+            <h2><i class="fas fa-sitemap"></i> 方法架构</h2>
+            <p><strong>System 1 (感知与行动)</strong>: 处理低延迟的外部交互，包括多模态编码器 (CLIP、Whisper) 和执行器层。</p>
+            <p><strong>System 2 (深思熟虑推理)</strong>: 基于 LLM 的规划器，通过思维链 (Chain-of-Thought) 模板进行慢速、审慎的问题分解和求解。</p>
+            <p><strong>System 3 (执行核心)</strong>: 元认知监控层，包含执行监控器、记忆模块、用户建模、混合奖励和自我模型五个关键子模块。</p>
+            <p><strong>自主认知循环</strong>: 性能下降 → 混合奖励模块检测 → 执行监控器提升事件 → 咨询自我模型 → 生成补救目标 → 思想搜索并行推理 → 过程监督剪枝 → System 2 分解子任务 → System 1 执行 → 内在奖励强化 → 新情景提交记忆。</p>
+            
+            <h3>架构图</h3>
+            <div class="mermaid">
+graph TD
+    subgraph System3["System 3: 执行核心 (元认知层)"]
+        EM[执行监控器<br/>Executive Monitor]
+        MM[记忆模块<br/>Memory Module]
+        UM[用户建模<br/>User Modeling]
+        HR[混合奖励<br/>Hybrid Reward]
+        SM[自我模型<br/>Self-Model]
+    end
+    
+    subgraph System2["System 2: 深思熟虑推理"]
+        LLM[LLM 规划器<br/>Chain-of-Thought]
+    end
+    
+    subgraph System1["System 1: 感知与行动"]
+        PER[多模态编码器]
+        ACT[执行器层]
+    end
+    
+    Env[外部环境<br/>Web Sandbox]
+    
+    Env -->|原始观察 | PER
+    PER -->|时间戳事件 | EM
+    PER -->|编码观察 | LLM
+    EM -->|目标 + 内在奖励 | LLM
+    MM -->|检索记忆 | EM
+    UM -->|用户信念 | EM
+    HR -->|总奖励 | LLM
+    SM -->|能力评估 | EM
+    LLM -->|高级命令 | ACT
+    ACT -->|环境操作 | Env
+    ACT -->|外在奖励 | HR
+    EM -->|思想搜索/监督/反思 | EM
+    LLM -->|推理轨迹 | MM
+    EM -->|自我更新 | SM
+            </div>
+        </div>
+
+        <!-- Experiments -->
+        <div class="card">
+            <h2><i class="fas fa-flask"></i> 实验结果</h2>
+            <p><strong>实验设置</strong>: 36 小时持续部署在离线浏览器沙盒环境，智能体初始目标为"从新手精灵成长为知识渊博、值得信赖的桌面伴侣"，存储 5 条不可变的终极信条。</p>
+            
+            <h3>定量结果</h3>
+            <ol>
+                <li><strong>能力进化</strong>: 高难度任务 (&gt;8 步) 成功率从 T=0 时的 20% 提升至 T=36h 时的 60%</li>
+                <li><strong>主动性自主</strong>: 用户闲置时段 (12-18h) 执行 13 个内在目标 (自我精炼、记忆优化、文档阅读)</li>
+                <li><strong>认知效率</strong>: 重复任务的推理步骤从初始 15-20 步降至 3-4 步 (减少约 80%)</li>
+            </ol>
+            
+            <h3>定性结果</h3>
+            <ul>
+                <li>维持连贯的叙事身份，所有子目标和奖励信号均引用核心信条</li>
+                <li>自然语言奖励编码情感和信条关联，动态调整探索 - 利用平衡 (β值)</li>
+                <li>成功动作序列直接从记忆实例化，无需重新规划</li>
+            </ul>
+            
+            <h3>实验指标</h3>
+            <table>
+                <thead>
+                    <tr><th>指标</th><th>基线 (T=0)</th><th>Sophia (T=36h)</th><th>提升</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>高难度任务成功率</td><td>20%</td><td>60%</td><td>+40%</td></tr>
+                    <tr><td>重复任务推理步骤</td><td>15-20 步</td><td>3-4 步</td><td>-80%</td></tr>
+                    <tr><td>用户闲置时段活动</td><td>0 任务</td><td>13 个内在目标</td><td>∞</td></tr>
+                    <tr><td>身份一致性</td><td>N/A</td><td>100% 信条引用</td><td>-</td></tr>
+                </tbody>
+            </table>
+            
+            <h3>关键发现</h3>
+            <ol>
+                <li>System 3 使智能体突破零样本推理限制，通过情景记忆和元认知监督识别并规避"认知陷阱"</li>
+                <li>内在动机模块成功将外部静默期转化为自我提升机会</li>
+                <li>前向学习 (Forward Learning) 通过记忆检索实现能力增长，无需参数更新或反向传播</li>
+            </ol>
+        </div>
+
+        <!-- Keywords -->
+        <div class="card">
+            <h2><i class="fas fa-tags"></i> 关键词</h2>
+            <table>
+                <thead><tr><th>关键词</th><th>解释</th></tr></thead>
+                <tbody>
+                    <tr><td>持久化智能体 (Persistent Agent)</td><td>具有身份连续性和自我进化能力的长生命周期智能体</td></tr>
+                    <tr><td>System 3</td><td>元认知监督层，监控和改进底层推理过程</td></tr>
+                    <tr><td>情景记忆 (Episodic Memory)</td><td>存储时间戳和情境标记的自传体经验记录</td></tr>
+                    <tr><td>内在动机 (Intrinsic Motivation)</td><td>好奇心、掌控感、关联性驱动的自主学习</td></tr>
+                    <tr><td>前向学习 (Forward Learning)</td><td>推理阶段通过上下文学习获取知识，无需权重更新</td></tr>
+                    <tr><td>混合奖励 (Hybrid Reward)</td><td>融合外在任务反馈与内在驱动力的奖励系统</td></tr>
+                    <tr><td>自我模型 (Self-Model)</td><td>智能体对自身能力、状态和信条的显式表征</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Limitations -->
+        <div class="card">
+            <h2><i class="fas fa-triangle-exclamation"></i> 局限性分析</h2>
+            <table>
+                <thead><tr><th>局限性</th><th>影响</th><th>原文说明</th></tr></thead>
+                <tbody>
+                    <tr><td>探索性小规模实验</td><td>缺乏大规模基准测试和系统性消融实验</td><td>"not a full benchmark"</td></tr>
+                    <tr><td>纯 Web 环境验证</td><td>未评估具身机器人等物理交互场景</td><td>计划迁移到机器人平台</td></tr>
+                    <tr><td>概念性论文为主</td><td>工程原型紧凑，深度技术细节有限</td><td>"primarily conceptual"</td></tr>
+                    <tr><td>单智能体实验</td><td>未验证多智能体协作场景</td><td>未来研究方向</td></tr>
+                    <tr><td>36 小时部署周期</td><td>长期 (数周/数月) 稳定性未验证</td><td>需要更长周期研究</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Future Research -->
+        <div class="card">
+            <h2><i class="fas fa-road"></i> 未来研究方向</h2>
+            <ol>
+                <li><strong>大规模基准测试</strong>: 扩展 subject pools，进行系统性消融实验和与替代架构的定量对比</li>
+                <li><strong>具身机器人平台</strong>: 将框架从纯 Web 界面迁移到实体机器人，评估传感器运动场景下的 System 3 机制</li>
+                <li><strong>多智能体协作</strong>: 探索多个持久化智能体之间的社会互动和集体学习</li>
+                <li><strong>长期稳定性研究</strong>: 数周/数月部署周期下的身份连续性和能力进化轨迹</li>
+                <li><strong>记忆压缩优化</strong>: 分层检索方案的扩展性改进，平衡存储成本与检索精度</li>
+                <li><strong>安全与对齐</strong>: 元认知审计机制在防止有害行为方面的深入研究</li>
+                <li><strong>内在动机精细化</strong>: 好奇心、掌控感、关联性的动态权重学习算法</li>
+                <li><strong>跨领域迁移</strong>: 验证 System 3 架构在游戏、教育、医疗等不同领域的适用性</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</body>
+</html>
