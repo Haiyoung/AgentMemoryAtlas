@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEX - 基于经验前向学习的连续智能体进化</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #161b22;
+            --bg-mermaid: #161b22;
+            --text-primary: #f0f6fc;
+            --text-secondary: #b8b8d0;
+            --text-muted: #8b949e;
+            --accent-purple: #7c7dff;
+            --accent-cyan: #22d3ee;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #30363d;
+            --border-subtle: rgba(48, 54, 61, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .ontology-box {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(139, 92, 246, 0.04));
+            border: 2px solid var(--accent-purple);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .ontology-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag.primary {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .tag.secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tag.warning {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .tag.success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .glossary-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-subtle);
+        }
+
+        .glossary-title {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .glossary-item {
+            background: rgba(167, 139, 250, 0.06);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glossary-item:hover {
+            background: rgba(167, 139, 250, 0.1);
+            border-color: rgba(167, 139, 250, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .glossary-term {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 0.6rem;
+        }
+
+        .glossary-definition {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .diagram-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .diagram-container .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        .diagram-glossary {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-subtle);
+        }
+
+        .diagram-glossary-title {
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 140px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .experiment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .experiment-table th,
+        .experiment-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .experiment-table th {
+            background: var(--bg-secondary);
+            color: var(--accent-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .experiment-table tr:hover {
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .experiment-table .highlight-cell {
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
+        .axiom-box {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.08), rgba(34, 197, 94, 0.04));
+            border: 2px solid var(--accent-green);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .axiom-title {
+            font-size: 1.4rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .axiom-box p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0.8rem 0;
+        }
+
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .future-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .future-icon {
+            font-size: 1.8rem;
+            color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .future-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .limitations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .limitation-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .limitation-title {
+            color: var(--accent-orange);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .limitation-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">📄 FLEX</h1>
+            <p class="hero-subtitle">Continuous Agent Evolution via Forward Learning from Experience</p>
+            <p class="hero-subtitle-cn">基于经验前向学习的连续智能体进化</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2511.06449</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2025 年 11 月</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> 清华大学 AIR, ByteDance Seed</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> AIME25, GSM8k, USPTO50k, ProteinGym</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2511.06449" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <a href="https://flex-gensi-thuair.github.io" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> 项目主页
+                </a>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.6 / 5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong>FLEX 提出了范式级的学习范式转变，从基于梯度的反向传播转向无需梯度的经验前向学习。在数学、化学、生物三个科学领域均取得显著提升（最高 +23%），发现经验缩放律和跨模型继承现象，具有开创性意义。无需参数更新、即插即用的经验库设计使其落地可行性极高，为连续智能体进化开辟了新路径。
+            </div>
+        </section>
+
+        <div class="ontology-box">
+            <div class="ontology-title">🔗 本体论映射 (Ontology Mapping)</div>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Experiential (经验记忆)</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Hierarchical (层次：战略/模式/实例)</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Token-level (显式文本)</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Experiential (技能/策略/洞察)</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Experience-Driven, Self-Organizing, Progressive Learning</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Stability-Plasticity, Generalization, Efficiency</span>
+            </div>
+            
+            <div class="highlight" style="background: rgba(167, 139, 250, 0.08); border-left-color: var(--accent-purple);">
+                <strong>🎯 领域贡献:</strong> FLEX 将经验记忆形式化为层次化文本存储系统，通过 Meta-MDP 框架实现经验的持续积累与演化。验证了经验缩放律（性能随经验库规模可预测提升）和跨模型继承公理（弱模型经验可帮助强模型 +6.7%~+16.7%），为 Agent Memory 领域提供了首个无需梯度的连续学习范式。
+            </div>
+
+            <div class="glossary-section">
+                <div class="glossary-title">📖 专业名词解释</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 前向学习 Forward Learning</div>
+                        <div class="glossary-definition">
+                            <strong>「只向前看的学习」</strong>：传统学习需要反向传播梯度（像「回溯错误」），FLEX 只通过向前探索积累经验，无需反向更新参数。就像人类从经验中学习，不需要「倒带」修改大脑神经连接。
+                        </div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 经验库 Experience Library</div>
+                        <div class="glossary-definition">
+                            <strong>「知识插件仓库」</strong>：层次化文本存储系统，分三层（战略原则/推理模式/具体实例）和两区（金色成功区/警告失败区）。即插即用，可跨模型迁移。
+                        </div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 Meta-MDP</div>
+                        <div class="glossary-definition">
+                            <strong>「双层优化框架」</strong>：Meta 层级管理全局经验库演化，Base 层级进行单样本探索。类似「经理 - 工人」协作：工人尝试解决问题，经理总结经验并更新知识库。
+                        </div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 经验继承 Experience Inheritance</div>
+                        <div class="glossary-definition">
+                            <strong>「知识即插即用」</strong>：一个模型学到的经验库可以直接被另一个模型使用，无需重新训练。弱模型的经验能帮助强模型提升 +6.7%，强模型经验能帮助弱模型提升 +16.7%。
+                        </div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 语义反馈 Semantic Feedback</div>
+                        <div class="glossary-definition">
+                            <strong>「自然语言梯度」</strong>：传统优化用数值梯度指导更新，FLEX 用自然语言反馈（如「这里应该先化简方程」）指导推理改进。信息带宽更高，可解释性更强。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 当前 LLM 智能体训练完就固定了，无法像人类一样在部署后从经验中持续学习。传统梯度学习存在三大障碍：(1) 反向传播计算成本过高；(2) 参数更新导致灾难性遗忘；(3) 闭源模型无法直接优化参数。</p>
+                <p><strong>💡 解决方案是什么？</strong> FLEX 提出无需梯度的前向学习范式，构建可演化的经验库。通过 Actor-Critic 框架探索经验（Actor 生成推理轨迹，Critic 提供语义反馈），Updater 将经验分层存储到经验库（金色区存成功策略，警告区存失败教训），推理时动态检索相关经验指导决策。</p>
+                <p><strong>🌟 核心优势是什么？</strong> (1) <strong>跨模型继承</strong>：经验库即插即用，弱模型经验能帮助强模型提升 +6.7%~+16.7%；(2) <strong>经验缩放律</strong>：性能随经验库规模可预测提升；(3) <strong>低成本</strong>：单智能体训练 + 评估成本 < $100；(4) <strong>三领域验证</strong>：数学 AIME25 (+23%)、化学 USPTO50k (+10%)、生物 ProteinGym (+14%) 均取得显著提升。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">FLEX 采用双层 Meta-MDP 架构：Base-level MDP 负责单样本内的经验探索（Actor-Critic 迭代 refinement），Meta-level MDP 负责全局经验库演化（Updater 更新与检索）。经验库采用三层两区层次结构，支持跨任务、跨模型的知识迁移。</p>
+            
+            <div class="diagram-container">
+                <div class="mermaid">
+flowchart TB
+    subgraph Meta["🎯 Meta-level MDP - 经验库演化"]
+        direction TB
+        MetaState["📦 经验库状态 ℰᵢ"]
+        MetaAction["⚡ 调用 Base-level MDP"]
+        MetaUpdate["🔄 Updater μ 更新"]
+        MetaReward["🏆 奖励：正确性 Φ"]
+    end
+    
+    subgraph Base["🔬 Base-level MDP - 经验探索"]
+        direction TB
+        Actor["🎭 Actor π<br/>生成推理轨迹"]
+        Critic["👁️ Critic<br/>语义反馈 Γ"]
+        Refine["🔁 迭代优化"]
+        Experience["💎 经验 Eᵢᵗ"]
+    end
+    
+    subgraph Library["📚 经验库 ℰ"]
+        direction LR
+        Golden["✨ 金色区<br/>成功策略"]
+        Warning["⚠️ 警告区<br/>失败教训"]
+        Level1["🎯 战略原则"]
+        Level2["📋 推理模式"]
+        Level3["📝 具体实例"]
+    end
+    
+    MetaState --> MetaAction
+    MetaAction --> Base
+    Actor --> Critic
+    Critic --> Refine
+    Refine -->|改进轨迹 | Actor
+    Refine -->|验证经验 | Experience
+    Experience --> MetaUpdate
+    MetaUpdate --> MetaState
+    MetaState --> MetaReward
+    
+    Experience --> Library
+    Golden --> Level1
+    Warning --> Level2
+    Level1 --> Level3
+    Level2 --> Level3
+    
+    Library -.->|检索 ε| MetaState
+    
+    style Meta fill:rgba(124,58,237,0.1),stroke:#7c3aed,stroke-width:2px
+    style Base fill:rgba(34,211,238,0.1),stroke:#22d3ee,stroke-width:2px
+    style Library fill:rgba(74,222,128,0.1),stroke:#4ade80,stroke-width:2px
+    style Golden fill:rgba(251,191,36,0.1),stroke:#fbbf24
+    style Warning fill:rgba(249,115,22,0.1),stroke:#f97316
+                </div>
+                
+                <div class="diagram-glossary">
+                    <div class="diagram-glossary-title">📖 架构图名词解释</div>
+                    <div class="glossary-grid">
+                        <div class="glossary-item">
+                            <div class="glossary-term">🎯 Meta-level MDP</div>
+                            <div class="glossary-definition">
+                                <strong>「知识图书馆管理员」</strong>：负责全局经验库的演化。状态是当前经验库，动作是调用 Base-level 探索新样本，转移函数是 Updater 更新经验库，奖励是模型在新经验指导下的正确率。
+                            </div>
+                        </div>
+                        <div class="glossary-item">
+                            <div class="glossary-term">🔬 Base-level MDP</div>
+                            <div class="glossary-definition">
+                                <strong>「一线探索工人」</strong>：负责单样本内的深度探索。Actor 生成推理轨迹，Critic 提供语义反馈（类似「这里逻辑不对，应该...」），迭代优化直到得到正确答案或达到上限。
+                            </div>
+                        </div>
+                        <div class="glossary-item">
+                            <div class="glossary-term">📚 经验库三层结构</div>
+                            <div class="glossary-definition">
+                                <strong>「知识分层存储」</strong>：L1 战略原则（如「先化简再求解」）、L2 推理模式（如「数学归纳法模板」）、L3 具体实例（如「2024-AIME-7 题解法」）。检索时从 L1→L2→L3 逐层细化。
+                            </div>
+                        </div>
+                        <div class="glossary-item">
+                            <div class="glossary-term">✨ 金色区 vs ⚠️ 警告区</div>
+                            <div class="glossary-definition">
+                                <strong>「成功博物馆 + 失败警示录」</strong>：金色区存储成功推理的策略和洞察，警告区记录失败案例和诊断分析。双区设计确保从成功和失败中均衡学习。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">在数学、化学、生物三个科学领域的 4 个基准测试上评估 FLEX，覆盖 10+ 个不同模型。所有实验中 FLEX 均取得显著提升，验证了方法的通用有效性。</p>
+            
+            <table class="experiment-table">
+                <thead>
+                    <tr>
+                        <th>领域</th>
+                        <th>基准测试</th>
+                        <th>模型</th>
+                        <th>Baseline</th>
+                        <th>FLEX</th>
+                        <th>提升</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">🧮 数学</td>
+                        <td rowspan="2">AIME25</td>
+                        <td>Claude-Sonnet-4</td>
+                        <td>40.0%</td>
+                        <td class="highlight-cell">63.3%</td>
+                        <td class="highlight-cell">+23.3%</td>
+                    </tr>
+                    <tr>
+                        <td>DeepSeek-V3.1</td>
+                        <td>56.7%</td>
+                        <td class="highlight-cell">66.6%</td>
+                        <td class="highlight-cell">+10.0%</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">🧮 数学</td>
+                        <td rowspan="3">GSM8k</td>
+                        <td>GPT-4</td>
+                        <td>93.8%</td>
+                        <td class="highlight-cell">95.9%</td>
+                        <td class="highlight-cell">+2.1%</td>
+                    </tr>
+                    <tr>
+                        <td>Llama-3.2-1B</td>
+                        <td>74.3%</td>
+                        <td class="highlight-cell">80.9%</td>
+                        <td class="highlight-cell">+6.6%</td>
+                    </tr>
+                    <tr>
+                        <td>Llama-3.2-3B</td>
+                        <td>78.4%</td>
+                        <td class="highlight-cell">81.1%</td>
+                        <td class="highlight-cell">+2.7%</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">🧪 化学</td>
+                        <td rowspan="3">USPTO50k</td>
+                        <td>GPT-5</td>
+                        <td>9.0%</td>
+                        <td class="highlight-cell">16.0%</td>
+                        <td class="highlight-cell">+7.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Gemini-2.5-Pro</td>
+                        <td>9.0%</td>
+                        <td class="highlight-cell">18.0%</td>
+                        <td class="highlight-cell">+9.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Claude-Sonnet-4.5</td>
+                        <td>20.0%</td>
+                        <td class="highlight-cell">30.0%</td>
+                        <td class="highlight-cell">+10.0%</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">🧬 生物</td>
+                        <td rowspan="3">ProteinGym</td>
+                        <td>DeepSeek-V3.1</td>
+                        <td>47.9</td>
+                        <td class="highlight-cell">56.8</td>
+                        <td class="highlight-cell">+8.9</td>
+                    </tr>
+                    <tr>
+                        <td>GPT-OSS-120B</td>
+                        <td>47.7</td>
+                        <td class="highlight-cell">57.3</td>
+                        <td class="highlight-cell">+9.6</td>
+                    </tr>
+                    <tr>
+                        <td>Claude-Sonnet-4</td>
+                        <td>46.0</td>
+                        <td class="highlight-cell">59.7</td>
+                        <td class="highlight-cell">+13.7</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现</strong>: (1) <strong>经验缩放律</strong>：训练准确率随经验库规模从 1001→1904 项，从 81.2%→94.2% 幂律提升；(2) <strong>跨模型继承</strong>：Claude 经验帮助 DeepSeek +6.7%，DeepSeek 经验帮助 Claude +16.7%；(3) <strong>弱帮强</strong>：弱模型经验可使强模型达到与自身经验相同水平；(4) <strong>低成本</strong>：单智能体训练 + 评估成本 < $100。</p>
+            </div>
+            
+            <div class="axiom-box">
+                <div class="axiom-title">✅ 验证的领域公理</div>
+                <p><strong>Stability-Plasticity 公理：</strong> 经验库通过金色区/警告区双区设计，既保留成功经验（稳定性），又持续吸收新经验（可塑性）。5 个 epoch 后经验库从快速扩张（+576）转向选择性精炼（+64），验证了稳定 - 可塑性平衡。</p>
+                <p><strong>Generalization 公理：</strong> 跨模型继承实验验证了经验的可迁移性。弱模型（Claude）经验帮助强模型（DeepSeek）+6.7%，强模型经验帮助弱模型 +16.7%，证明经验捕获的是模型无关的高层策略。</p>
+                <p><strong>Efficiency 公理：</strong> 无需梯度更新，单智能体成本 < $100，远低于传统微调。经验库即插即用，避免重复训练，验证了效率公理。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>前向学习</strong>
+                    <small>Forward Learning</small>
+                </div>
+                <div class="keyword-tag primary">
+                    <strong>经验库</strong>
+                    <small>Experience Library</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>无需梯度</strong>
+                    <small>Gradient-free</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Meta-MDP</strong>
+                    <small>Meta-MDP</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>Actor-Critic</strong>
+                    <small>Actor-Critic</small>
+                </div>
+                <div class="keyword-tag warning">
+                    <strong>跨模型继承</strong>
+                    <small>Cross-model Inheritance</small>
+                </div>
+                <div class="keyword-tag success">
+                    <strong>经验缩放律</strong>
+                    <small>Experience Scaling Law</small>
+                </div>
+                <div class="keyword-tag secondary">
+                    <strong>语义反馈</strong>
+                    <small>Semantic Feedback</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>连续进化</strong>
+                    <small>Continuous Evolution</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>层次化存储</strong>
+                    <small>Hierarchical Storage</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div class="limitations-grid">
+                <div class="limitation-item">
+                    <div class="limitation-title"><i class="fas fa-circle-exclamation"></i> 经验库规模上限</div>
+                    <div class="limitation-desc">
+                        论文未明确讨论经验库的理论容量上限。当经验库增长到数万条时，检索效率和存储成本可能成为瓶颈。需要探索经验压缩、去冗余、重要性排序等机制。
+                    </div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-title"><i class="fas fa-circle-exclamation"></i> 检索延迟</div>
+                    <div class="limitation-desc">
+                        层次化检索（L1→L2→L3）虽然提高精度，但可能增加推理延迟。实时应用场景（如对话系统）需要优化检索速度，或采用缓存机制。
+                    </div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-title"><i class="fas fa-circle-exclamation"></i> 领域泛化边界</div>
+                    <div class="limitation-desc">
+                        实验仅在数学、化学、生物三个科学领域验证。对于开放域对话、创意写作、代码生成等任务，经验库的适用性和迁移效果仍需进一步研究。
+                    </div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-title"><i class="fas fa-circle-exclamation"></i> Updater 设计依赖</div>
+                    <div class="limitation-desc">
+                        经验库质量高度依赖 Updater 的判断能力（是否合并、如何分层）。Updater 本身需要较强的语义理解和抽象能力，可能成为系统瓶颈。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <div class="future-icon">🔮</div>
+                    <div>
+                        <div class="future-title">经验压缩与蒸馏</div>
+                        <div class="future-desc">
+                            研究经验库的自动压缩技术，将相似经验合并、冗余经验剔除、低质量经验过滤。探索经验蒸馏方法，将大量实例经验抽象为更通用的战略原则。
+                        </div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon">🌐</div>
+                    <div>
+                        <div class="future-title">跨领域迁移学习</div>
+                        <div class="future-desc">
+                            验证数学领域经验是否能帮助化学推理、生物经验是否能启发数学建模。探索跨领域经验迁移的边界条件和适配机制。
+                        </div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon">⚡</div>
+                    <div>
+                        <div class="future-title">高效检索优化</div>
+                        <div class="future-desc">
+                            结合向量检索（快速粗筛）和语义检索（精准细选）的混合检索策略。研究经验库索引结构优化，支持亿级经验的高效查询。
+                        </div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon">🤖</div>
+                    <div>
+                        <div class="future-title">多智能体协作进化</div>
+                        <div class="future-desc">
+                            多个智能体共享同一经验库，各自探索不同区域，定期同步经验。研究多智能体经验融合、冲突消解、贡献度评估等机制。
+                        </div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon">📊</div>
+                    <div>
+                        <div class="future-title">经验价值评估</div>
+                        <div class="future-desc">
+                            建立经验质量评估体系，量化每条经验的信息增益、泛化能力、使用频率。基于价值驱动的经验选择与淘汰机制，保持经验库的「新陈代谢」。
+                        </div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon">🔒</div>
+                    <div>
+                        <div class="future-title">安全与对齐</div>
+                        <div class="future-desc">
+                            研究经验库的安全审查机制，防止有害策略被存储和传播。探索经验库与人类价值观对齐的方法，确保进化方向符合人类利益。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+        </script>
+    </main>
+</body>
+</html>
