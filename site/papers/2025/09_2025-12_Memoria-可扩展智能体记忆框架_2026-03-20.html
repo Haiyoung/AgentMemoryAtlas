@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria - 可扩展智能体记忆框架</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Rating Card */
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Ontology Tags */
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag.primary {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .tag.secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tag.warning {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .tag.success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Mermaid */
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        /* Future Research */
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .future-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .future-icon {
+            font-size: 1.8rem;
+            color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .future-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Keywords */
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧠 Memoria</h1>
+            <p class="hero-subtitle">A Scalable Agentic Memory Framework for Personalized Conversational AI</p>
+            <p class="hero-subtitle-cn">可扩展智能体记忆框架用于个性化对话 AI</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2512.12686</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2025年12月14日</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> Not specified in paper</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> LongMemEvals dataset</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.12686" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> 主题切换
+                </button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.2 / 5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong> Memoria 提出了一个实用的模块化记忆框架，通过动态会话摘要和加权知识图谱相结合的方式，为 LLM 对话系统提供了持久化、可解释的记忆能力。该框架在 LongMemEvals 数据集上表现优于 A-MEM，在保持高准确率的同时显著降低了 token 使用量和延迟，为工业级应用提供了可行的解决方案。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <!-- 7 维度标签 -->
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Hybrid (混合记忆)</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Graph + Sequential (知识图谱 + 会话序列)</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Token-level (令牌级)</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能定位：Working (工作记忆) + Factual (事实记忆)</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Value-aware Retrieval, Recency-weighted, Personalized Context</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Efficiency, Generalization, Stability-Plasticity</span>
+            </div>
+            
+            <!-- 领域贡献 with integrated explanations -->
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> Memoria 将<strong>加权知识图谱 (Weighted Knowledge Graph)</strong> 和<strong>动态会话摘要 (Dynamic Session Summarization)</strong> 引入智能体记忆领域，提出了<strong>指数衰减权重机制</strong>来解决记忆冲突和优先级问题。该框架通过<strong>模块化设计</strong>实现了短时对话连贯性和长期个性化记忆的统一，为构建可扩展的工业级对话 AI 系统提供了实用方案。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有 LLM 对话系统是无状态的，每次交互都从零开始，无法记住用户偏好和历史对话，导致重复询问和缺乏个性化。</p>
+                <p><strong>💡 解决方案是什么？</strong> Memoria 提出混合记忆架构，结合动态会话摘要（短期记忆）和加权知识图谱（长期记忆），通过指数衰减权重机制优先使用最近的信息。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 在 LongMemEvals 数据集上准确率优于 A-MEM，同时将 token 使用量从 115,000+ 降低到 400 以下，延迟减少 38.7%，实现了性能和效率的平衡。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p>Memoria 的核心创新是混合记忆架构：</p>
+            
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 用户输入"]
+        UserMessage[用户消息]
+    end
+    
+    subgraph MemoryComponents["🧠 记忆组件"]
+        SessionSummary[会话摘要模块]
+        KnowledgeGraph[加权知识图谱]
+        VectorDB[向量数据库]
+        SQLDB[SQL 数据库]
+    end
+    
+    subgraph Processing["⚙️ 处理流程"]
+        TripletExtraction[三元组提取]
+        WeightCalculation[权重计算]
+        PromptConstruction[提示构建]
+    end
+    
+    subgraph Output["📤 LLM 响应"]
+        LLMResponse[LLM 生成响应]
+    end
+    
+    UserMessage --> SessionSummary
+    UserMessage --> TripletExtraction
+    TripletExtraction --> KnowledgeGraph
+    KnowledgeGraph --> VectorDB
+    KnowledgeGraph --> SQLDB
+    
+    SessionSummary --> WeightCalculation
+    VectorDB --> WeightCalculation
+    WeightCalculation --> PromptConstruction
+    PromptConstruction --> LLMResponse
+    LLMResponse --> MemoryComponents
+</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p>在 LongMemEvals 数据集上进行评估：</p>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现</strong>: Memoria 通过加权知识图谱和动态摘要的结合，在保持高准确率的同时显著提升了效率，解决了传统全上下文提示的可扩展性问题。</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="rating-item" style="text-align: center;">
+                    <div class="rating-label">准确率</div>
+                    <div class="rating-score" style="color: var(--accent-cyan);">优于 A-MEM</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">single-session-user & knowledge-update</div>
+                </div>
+                <div class="rating-item" style="text-align: center;">
+                    <div class="rating-label">Token 长度</div>
+                    <div class="rating-score" style="color: var(--accent-cyan);">400 以下</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">减少 99.6%</div>
+                </div>
+                <div class="rating-item" style="text-align: center;">
+                    <div class="rating-label">延迟</div>
+                    <div class="rating-score" style="color: var(--accent-cyan);">-38.7%</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">相比全上下文提示</div>
+                </div>
+                <div class="rating-item" style="text-align: center;">
+                    <div class="rating-label">内存效率</div>
+                    <div class="rating-score" style="color: var(--accent-cyan);">✅</div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">模块化设计，支持大规模部署</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>智能体记忆</strong>
+                    <small>Agentic Memory</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>知识图谱</strong>
+                    <small>Knowledge Graph</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>动态摘要</strong>
+                    <small>Dynamic Summarization</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>加权检索</strong>
+                    <small>Weighted Retrieval</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>指数衰减</strong>
+                    <small>Exponential Decay</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>个性化对话</strong>
+                    <small>Personalized Conversation</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>模块化框架</strong>
+                    <small>Modular Framework</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>可扩展性</strong>
+                    <small>Scalability</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>上下文连贯性</strong>
+                    <small>Context Coherence</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>工业应用</strong>
+                    <small>Industrial Application</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <div class="future-item">
+                    <i class="fas fa-brain future-icon"></i>
+                    <div>
+                        <div class="future-title">嵌入模型依赖</div>
+                        <div class="future-desc">默认使用 OpenAI 的 text-embedding-ada-002，可能增加成本。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-vial future-icon"></i>
+                    <div>
+                        <div class="future-title">评估范围有限</div>
+                        <div class="future-desc">仅在 LongMemEvals 的两个子集上进行评估。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-tools future-icon"></i>
+                    <div>
+                        <div class="future-title">KG 质量</div>
+                        <div class="future-desc">三元组提取质量依赖于底层 LLM 的准确性。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <i class="fas fa-code future-icon"></i>
+                    <div>
+                        <div class="future-title">开源嵌入</div>
+                        <div class="future-desc">支持更多开源嵌入模型以降低成本。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-image future-icon"></i>
+                    <div>
+                        <div class="future-title">多模态扩展</div>
+                        <div class="future-desc">扩展到视觉、音频等多模态记忆。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-tachometer-alt future-icon"></i>
+                    <div>
+                        <div class="future-title">系统优化</div>
+                        <div class="future-desc">优化内存占用和检索延迟。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-users future-icon"></i>
+                    <div>
+                        <div class="future-title">应用场景扩展</div>
+                        <div class="future-desc">应用于推荐系统、生产力工具等更广泛的智能体系统。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-clock future-icon"></i>
+                    <div>
+                        <div class="future-title">高级记忆任务</div>
+                        <div class="future-desc">支持时序推理、用户偏好追踪等复杂任务。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Initialize Mermaid
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            
+            // Theme switching
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                
+                // Update button icon
+                const btn = document.querySelector('.btn-secondary');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                // Update button icon based on saved theme
+                const btn = document.querySelector('.btn-secondary');
+                if (btn && savedTheme === 'dark') {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-sun';
+                    }
+                }
+            }
+        </script>
+    </main>
+</body>
+</html>
