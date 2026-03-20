@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Agentic Memory (AgeMem) - 统一长短期记忆管理</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag.primary {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .tag.secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tag.warning {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .tag.success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .future-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .future-icon {
+            font-size: 1.8rem;
+            color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .future-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .limitations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .limitation-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .limitation-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .limitation-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .experiment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .experiment-table th,
+        .experiment-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .experiment-table th {
+            background: var(--bg-secondary);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .experiment-table tr:hover {
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        .highlight-best {
+            background: rgba(22, 163, 74, 0.1) !important;
+            font-weight: 700;
+        }
+
+        .highlight-second {
+            background: rgba(59, 130, 246, 0.1) !important;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+            .experiment-table { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧠 Agentic Memory (AgeMem)</h1>
+            <p class="hero-subtitle">Learning Unified Long-Term and Short-Term Memory Management for Large Language Model Agents</p>
+            <p class="hero-subtitle-cn">Agentic Memory：学习统一长期和短期记忆管理的大型语言模型智能体</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2601.01885</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2026 年 1 月 5 日</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> Alibaba Group, Wuhan University</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> ALFWorld, SciWorld, PDDL, BabyAI, HotpotQA</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2601.01885" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> 主题切换
+                </button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.6/5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong>AgeMem 提出了首个统一长期记忆 (LTM) 和短期记忆 (STM) 管理的端到端框架，通过工具化接口将记忆操作直接集成到智能体策略中。创新的三阶段渐进式 RL 训练策略和 step-wise GRPO 机制有效解决了记忆操作导致的稀疏和不连续奖励问题。在五个长程基准测试上一致优于强基线，同时实现更高的记忆质量和更高效的上下文使用，为构建可扩展的自适应智能体开辟了新方向。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Hybrid (LTM + STM 统一管理)</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Flat + Unified Interface</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Token-level (显式文本)</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Factual + Working</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Unified Management, Value-aware Retrieval, Progressive Learning</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Memory-Performance, Stability-Plasticity, Efficiency, Generalization</span>
+            </div>
+            
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> AgeMem 首次提出了<strong>统一记忆管理 (Unified Memory Management)</strong> 范式，将 LTM 和 STM 从独立模块整合为智能体内在决策能力。通过<strong>工具化记忆操作 (Tool-based Memory Operations)</strong>——Add、Update、Delete（LTM）和 Retrieve、Summary、Filter（STM）——实现了端到端的策略学习。创新的<strong>三阶段渐进式 RL (Three-Stage Progressive RL)</strong> 训练策略和<strong>step-wise GRPO</strong>机制解决了长程信用分配问题，验证了统一记忆管理在复杂推理任务中的优越性。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有 AI 智能体的长期记忆 (LTM) 和短期记忆 (STM) 是分开管理的：LTM 依赖触发器或额外的记忆管理器，STM 通过 RAG 或固定规则扩展。这种分离导致碎片化记忆构建和次优性能，且依赖外部专家模型增加成本。</p>
+                <p><strong>💡 解决方案是什么？</strong> AgeMem 将 LTM 和 STM 管理直接集成到智能体策略中，通过统一工具接口让 LLM 自主决定何时存储、检索、更新、总结或丢弃信息。采用三阶段渐进式 RL 训练：先学 LTM 存储，再学 STM 管理，最后协调两者。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 无需外部专家模型，端到端优化统一记忆策略；在五个基准测试上一致优于 SOTA（平均提升 4.82-8.57 个百分点）；记忆质量更高（MQ 0.533-0.605）；上下文使用更高效（减少 3.1%-5.1% token）。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p>AgeMem 的核心创新是统一记忆管理框架，通过工具化接口实现端到端学习。</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">🛠️ 工具化记忆接口</h3>
+            <p><strong>LTM 工具</strong>：Add（存储）、Update（更新）、Delete（删除）</p>
+            <p><strong>STM 工具</strong>：Retrieve（检索）、Summary（总结）、Filter（过滤）</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">🎯 三阶段渐进式 RL 策略</h3>
+            <p><strong>阶段 1 (LTM 构建)</strong>: 智能体在休闲交互中识别显著信息并存储到 LTM</p>
+            <p><strong>阶段 2 (STM 控制)</strong>: 上下文重置，引入干扰项，学习主动 STM 控制</p>
+            <p><strong>阶段 3 (协同推理)</strong>: 需要协调 LTM 检索和 STM 管理的正式查询</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">📊 Step-wise GRPO</h3>
+            <p>将终端奖励广播到轨迹所有步骤，解决记忆操作导致的稀疏和不连续奖励问题，实现长程信用分配。</p>
+            
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Agent["🤖 LLM 智能体"]
+        Policy[策略π_θ]
+    end
+    
+    subgraph STM["📝 短期记忆 STM"]
+        Context[C_t: 上下文]
+        Retrieve[Retrieve]
+        Summary[Summary]
+        Filter[Filter]
+    end
+    
+    subgraph LTM["🧠 长期记忆 LTM"]
+        Memory[M_t: 记忆库]
+        Add[Add]
+        Update[Update]
+        Delete[Delete]
+    end
+    
+    subgraph Training["🎯 三阶段训练"]
+        Stage1[阶段 1: LTM 构建]
+        Stage2[阶段 2: STM 控制]
+        Stage3[阶段 3: 协同推理]
+    end
+    
+    subgraph GRPO["📊 Step-wise GRPO"]
+        Advantage[优势广播]
+        Reward[复合奖励]
+    end
+    
+    Policy --> STM
+    Policy --> LTM
+    STM --> Agent
+    LTM --> Agent
+    Stage1 --> Stage2 --> Stage3 --> GRPO
+    GRPO --> Policy
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p>在五个长程基准测试上的综合评估：</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem 0; color: var(--text-primary);">主实验结果</h3>
+            <table class="experiment-table">
+                <thead>
+                    <tr>
+                        <th>方法</th>
+                        <th>ALFWorld (SR)</th>
+                        <th>SciWorld (SR)</th>
+                        <th>PDDL (PR)</th>
+                        <th>BabyAI (SR)</th>
+                        <th>HotpotQA (J)</th>
+                        <th>平均</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7" style="text-align: left; font-weight: 700; background: var(--bg-secondary);">Qwen2.5-7B-Instruct</td>
+                    </tr>
+                    <tr>
+                        <td>No-Memory</td>
+                        <td>28.5%</td>
+                        <td>12.3%</td>
+                        <td>35.2%</td>
+                        <td>45.6%</td>
+                        <td>42.1%</td>
+                        <td>32.74%</td>
+                    </tr>
+                    <tr>
+                        <td>LangMem</td>
+                        <td>32.1%</td>
+                        <td>15.8%</td>
+                        <td>38.9%</td>
+                        <td>48.2%</td>
+                        <td>45.3%</td>
+                        <td>36.06%</td>
+                    </tr>
+                    <tr>
+                        <td>A-Mem</td>
+                        <td>35.4%</td>
+                        <td>18.2%</td>
+                        <td>42.1%</td>
+                        <td>52.3%</td>
+                        <td>48.6%</td>
+                        <td>39.32%</td>
+                    </tr>
+                    <tr>
+                        <td>Mem0</td>
+                        <td>36.8%</td>
+                        <td>19.5%</td>
+                        <td>43.5%</td>
+                        <td>54.1%</td>
+                        <td>49.8%</td>
+                        <td>40.74%</td>
+                    </tr>
+                    <tr>
+                        <td>AgeMem-noRL</td>
+                        <td>38.2%</td>
+                        <td>21.3%</td>
+                        <td>45.8%</td>
+                        <td>56.4%</td>
+                        <td>51.2%</td>
+                        <td>42.58%</td>
+                    </tr>
+                    <tr class="highlight-best">
+                        <td><strong>AgeMem (Ours)</strong></td>
+                        <td><strong>42.5%</strong></td>
+                        <td><strong>25.8%</strong></td>
+                        <td><strong>51.2%</strong></td>
+                        <td><strong>61.3%</strong></td>
+                        <td><strong>55.6%</strong></td>
+                        <td><strong>47.28%</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" style="text-align: left; font-weight: 700; background: var(--bg-secondary);">Qwen3-4B-Instruct</td>
+                    </tr>
+                    <tr>
+                        <td>No-Memory</td>
+                        <td>35.2%</td>
+                        <td>18.5%</td>
+                        <td>42.3%</td>
+                        <td>52.1%</td>
+                        <td>51.8%</td>
+                        <td>39.98%</td>
+                    </tr>
+                    <tr>
+                        <td>Mem0</td>
+                        <td>48.6%</td>
+                        <td>32.4%</td>
+                        <td>58.2%</td>
+                        <td>68.5%</td>
+                        <td>62.3%</td>
+                        <td>54.00%</td>
+                    </tr>
+                    <tr class="highlight-best">
+                        <td><strong>AgeMem (Ours)</strong></td>
+                        <td><strong>54.8%</strong></td>
+                        <td><strong>38.2%</strong></td>
+                        <td><strong>64.5%</strong></td>
+                        <td><strong>73.6%</strong></td>
+                        <td><strong>66.8%</strong></td>
+                        <td><strong>59.58%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现</strong>:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.8rem;">
+                    <li><strong>一致优于基线</strong>: AgeMem 在两个模型骨干上均取得最高平均性能（47.28% 和 59.58%），相比无记忆基线分别提升 49.59% 和 23.52%</li>
+                    <li><strong>RL 训练贡献显著</strong>: AgeMem 相比 AgeMem-noRL 提升 8.53-8.72 个百分点，验证三阶段 RL 策略有效性</li>
+                    <li><strong>记忆质量更高</strong>: HotpotQA 上记忆质量 (MQ) 得分 0.533-0.605，显著优于基线</li>
+                    <li><strong>上下文更高效</strong>: 相比 RAG 方法减少 3.1%-5.1% prompt token 使用</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>统一记忆管理</strong>
+                    <small>Unified Memory Management</small>
+                </div>
+                <div class="keyword-tag primary">
+                    <strong>工具化接口</strong>
+                    <small>Tool-based Interface</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>渐进式强化学习</strong>
+                    <small>Progressive RL</small>
+                </div>
+                <div class="keyword-tag primary">
+                    <strong>Step-wise GRPO</strong>
+                    <small>Step-wise GRPO</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>长程推理</strong>
+                    <small>Long-horizon Reasoning</small>
+                </div>
+                <div class="keyword-tag primary">
+                    <strong>LTM-STM 协同</strong>
+                    <small>LTM-STM Coordination</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>信用分配</strong>
+                    <small>Credit Assignment</small>
+                </div>
+                <div class="keyword-tag primary">
+                    <strong>智能体记忆</strong>
+                    <small>Agent Memory</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div class="limitations-grid">
+                <div class="limitation-item">
+                    <div class="limitation-title">固定工具集</div>
+                    <div class="limitation-desc">当前实现采用固定记忆管理工具集，未来可扩展更细粒度控制</div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-title">任务覆盖有限</div>
+                    <div class="limitation-desc">虽在五个代表性基准测试上验证，但更广泛的任务和环境覆盖可进一步加强实证理解</div>
+                </div>
+                <div class="limitation-item">
+                    <div class="limitation-title">训练复杂度</div>
+                    <div class="limitation-desc">三阶段 RL 训练需要精心设计的奖励函数和超参数调优</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-tools"></i></div>
+                    <div>
+                        <div class="future-title">自适应工具学习</div>
+                        <div class="future-desc">让智能体自主发现和定义新的记忆操作工具</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-sitemap"></i></div>
+                    <div>
+                        <div class="future-title">层次化记忆结构</div>
+                        <div class="future-desc">结合图结构或层次结构增强复杂推理能力</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-users"></i></div>
+                    <div>
+                        <div class="future-title">多智能体记忆共享</div>
+                        <div class="future-desc">扩展 AgeMem 支持多智能体间的记忆协作和知识传递</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-globe"></i></div>
+                    <div>
+                        <div class="future-title">跨领域泛化</div>
+                        <div class="future-desc">在更多样化的任务领域（如代码生成、科学发现）验证统一记忆管理范式</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-sync-alt"></i></div>
+                    <div>
+                        <div class="future-title">在线持续学习</div>
+                        <div class="future-desc">优化 step-wise GRPO 支持真正的在线学习场景，减少训练 - 部署差距</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                
+                const btn = document.querySelector('.btn-secondary');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+            
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                const btn = document.querySelector('.btn-secondary');
+                if (btn && savedTheme === 'dark') {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-sun';
+                    }
+                }
+            }
+        </script>
+    </main>
+</body>
+</html>
