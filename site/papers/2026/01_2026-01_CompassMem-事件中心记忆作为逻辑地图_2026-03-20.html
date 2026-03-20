@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompassMem - 事件中心记忆作为逻辑地图</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root { --bg-primary: #ffffff; --bg-secondary: #f6f8fa; --bg-card: #ffffff; --bg-mermaid: #ffffff; --text-primary: #1f2328; --text-secondary: #656d76; --accent-purple: #8250df; --accent-cyan: #0969da; --accent-green: #1a7f37; --accent-orange: #f59e0b; --border-color: #d0d7de; --border-subtle: rgba(208,215,222,0.5); --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); --shadow-md: 0 4px 12px rgba(0,0,0,0.1); }
+        [data-theme="dark"] { --bg-primary: #0d1117; --bg-secondary: #161b22; --bg-card: #161b22; --bg-mermaid: #161b22; --text-primary: #f0f6fc; --text-secondary: #c9d1d9; --accent-purple: #8b94ff; --accent-cyan: #58a6ff; --accent-green: #3fb950; --accent-orange: #d29922; --border-color: #30363d; --border-subtle: rgba(240,246,252,0.1); --shadow-sm: 0 1px 2px rgba(0,0,0,0.2); --shadow-md: 0 4px 12px rgba(0,0,0,0.3); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; padding: 0; font-size: 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero { text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green)); }
+        .hero-title { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: 1.4rem; color: var(--text-secondary); margin: 0.8rem 0; }
+        .hero-subtitle-cn { font-size: 1.2rem; color: var(--text-primary); opacity: 0.9; }
+        .hero-meta { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .hero-meta-item { background: var(--bg-secondary); padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem; color: var(--text-secondary); }
+        .hero-actions { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .btn { padding: 0.7rem 1.5rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); color: white; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--accent-cyan); }
+        .rating-card { background: var(--bg-card); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); }
+        .rating-title { font-size: 1.4rem; font-weight: 700; color: var(--accent-orange); display: flex; align-items: center; gap: 0.5rem; }
+        .rating-stars { display: flex; align-items: center; gap: 0.3rem; }
+        .star { font-size: 1.6rem; color: #fbbf24; filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.3)); opacity: 0.9; }
+        .rating-value { font-size: 1.5rem; font-weight: 700; color: var(--accent-orange); margin-left: 0.5rem; }
+        .rating-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.8rem; margin-bottom: 1.5rem; }
+        .rating-item { background: var(--bg-secondary); padding: 0.8rem 0.5rem; border-radius: 8px; border: 1px solid var(--border-subtle); text-align: center; display: flex; flex-direction: column; gap: 0.4rem; }
+        .rating-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rating-score { font-size: 1rem; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; }
+        .rating-summary { padding: 1.2rem; background: rgba(210, 153, 34, 0.08); border-radius: 8px; border-left: 4px solid var(--accent-orange); color: var(--text-secondary); line-height: 1.6; }
+        .card { background: var(--bg-card); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent-cyan); }
+        .card-title { font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--accent-cyan); font-weight: 700; }
+        .highlight { background: linear-gradient(135deg, rgba(139, 148, 255, 0.1), rgba(88, 166, 255, 0.08)); border-left: 4px solid var(--accent-cyan); padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 1px solid var(--border-subtle); }
+        .highlight p { margin: 0.8rem 0; line-height: 1.7; }
+        .highlight strong { color: var(--text-primary); font-weight: 700; }
+        .tag-container { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tag { background: var(--bg-secondary); padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--border-color); color: var(--text-secondary); }
+        .tag:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); transform: translateY(-1px); }
+        .tag-accent { color: var(--accent-cyan); border-color: var(--accent-cyan); }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+        .comparison-table th, .comparison-table td { padding: 1rem; text-align: center; border: 1px solid var(--border-color); }
+        .comparison-table th { background: var(--bg-secondary); color: var(--text-primary); font-weight: 700; }
+        .comparison-table tr:hover { background: rgba(88, 166, 255, 0.04); }
+        .comparison-table .best { background: rgba(63, 185, 80, 0.1); font-weight: 700; border: 1px solid rgba(63, 185, 80, 0.3); }
+        .mermaid-wrapper { background: var(--bg-mermaid); border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--border-color); padding: 1.5rem; overflow-x: auto; overflow-y: hidden; max-width: 100%; text-align: center; }
+        .mermaid { display: inline-block; min-width: 600px; text-align: center; }
+        .mermaid svg { max-width: 100%; height: auto !important; }
+        .limitations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .limitation-item { background: var(--bg-secondary); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-orange); display: flex; gap: 1rem; align-items: flex-start; }
+        .limitation-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .limitation-title { color: var(--text-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .limitation-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .glossary-item { background: var(--bg-secondary); padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .glossary-item:hover { border-color: var(--accent-cyan); transform: translateY(-2px); }
+        .glossary-term { color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.5rem; }
+        .glossary-definition { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .key-point { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; background: var(--bg-secondary); border-radius: 8px; margin: 1rem 0; }
+        .key-point-icon { font-size: 1.5rem; }
+        .term-box { background: var(--bg-secondary); padding: 1.2rem; border-radius: 8px; margin-bottom: 0.8rem; }
+        .term-box-title { color: var(--accent-cyan); font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .term-box-content { color: var(--text-secondary); line-height: 1.7; }
+        .section-separator { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle); }
+        .section-title { color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; }
+        a { color: var(--accent-cyan); text-decoration: none; }
+        a:hover { color: var(--accent-purple); text-decoration: underline; }
+        @media (max-width: 768px) { .container { padding: 1rem; } .hero-title { font-size: 2rem; } .hero-meta { flex-direction: column; } .rating-grid { grid-template-columns: repeat(2, 1fr); } .mermaid { min-width: 100%; } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧭 CompassMem</h1>
+            <p class="hero-subtitle">Memory Matters More: Event-Centric Memory as a Logic Map for Agent Searching and Reasoning</p>
+            <p class="hero-subtitle-cn">记忆更重要：事件中心记忆作为智能体搜索和推理的逻辑地图</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">📄 arXiv: 2601.04726</div>
+                <div class="hero-meta-item">📅 2026年1月8日</div>
+                <div class="hero-meta-item">🏫 中国人民大学高瓴人工智能学院</div>
+                <div class="hero-meta-item">📊 LoCoMo, NarrativeQA</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2601.04726" target="_blank" class="btn btn-primary">🔗 阅读原文 (arXiv)</a>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title">💎 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.8 / 5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-desc">顶会级别，高质量研究</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-desc">解决智能体记忆核心挑战</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-desc">范式级创新，事件图框架</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                    <div class="rating-desc">完整理论框架 + 实现</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-desc">模块化设计，易于集成</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-desc">对话、长文档理解等场景</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong> CompassMem 提出了一个革命性的事件中心记忆框架，将记忆组织为事件图作为逻辑地图。这种方法不仅在理论上具有创新性，在实践中也显著提升了智能体的多跳推理和时序推理能力。其模块化设计使其易于集成到现有系统中，具有很高的实用价值。
+            </div>
+        </section>
+
+        <div class="ontology-box">
+            <div class="ontology-title">🔗 本体论映射 (Ontology Mapping)</div>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <!-- 7 维度标签 -->
+            <div class="tag-container">
+                <span class="tag primary">📦 记忆类型：Experiential (经验记忆)</span>
+                <span class="tag primary">🏗️ 记忆结构：Graph (事件图)</span>
+                <span class="tag primary">⚙️ 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary">💾 记忆载体：Token-level (令牌级)</span>
+                <span class="tag secondary">🎯 功能类型：Working (工作记忆)</span>
+                <span class="tag warning">🔁 使用模式：Graph Navigation, Experience-Driven</span>
+                <span class="tag success">✅ 验证公理：Stability-Plasticity, Generalization</span>
+            </div>
+            
+            <!-- 名词解释子模块 -->
+            <div class="glossary-section">
+                <div class="glossary-title">📖 专业名词解释</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">事件分割理论 (Event Segmentation Theory)</div>
+                        <div class="glossary-definition">人类自然地将连续经验感知为一系列离散且有意义的事件，这些事件构成了长期记忆的骨干。</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">事件图 (Event Graph)</div>
+                        <div class="glossary-definition">一种图结构，其中节点对应连贯的事件单元，边编码因果、时序等逻辑依赖关系。</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">逻辑地图 (Logic Map)</div>
+                        <div class="glossary-definition">事件图作为结构化的逻辑地图，为智能体提供方向性线索，指导搜索和推理过程。</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 领域贡献 + 论文评分 -->
+            <div class="ontology-contribution">
+                <strong>🎯 领域贡献:</strong> CompassMem 将认知科学中的事件分割理论引入智能体记忆领域，提出了事件中心的记忆组织方式，为解决长程推理挑战提供了新的思路。
+            </div>
+        </div>
+
+        <div class="highlight">
+            <p><strong>🤔 问题是什么？</strong> 现有智能体记忆系统大多以扁平方式存储经验，缺乏逻辑关系结构，导致无法进行复杂的长程推理。</p>
+            <p><strong>💡 解决方案是什么？</strong> CompassMem 提出基于事件分割理论的事件中心记忆框架，将经验组织成事件图（Event Graph），通过显式逻辑关系连接事件节点。</p>
+            <p><strong>🌟 核心优势是什么？</strong> 事件图作为"逻辑地图"，使智能体能够进行结构化、目标导向的记忆导航，而不仅仅是简单的相似度检索，显著提升了多跳推理和时序推理能力。</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🔬 方法架构</h2>
+            <p>CompassMem 的核心创新在于将记忆构建为事件图：</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>事件分割</strong>: 将连续经验流分割为离散的事件单元</li>
+                <li><strong>关系提取</strong>: 使用 LLM 提取事件间的显式逻辑关系（因果、时序等）</li>
+                <li><strong>增量图更新</strong>: 通过节点融合、扩展和主题演化维护图结构</li>
+                <li><strong>主动多路径搜索</strong>: Planner-Explorer-Responder 三阶段检索机制</li>
+            </ul>
+            
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 输入流"]
+        X[连续经验流]
+    end
+    
+    subgraph Construction["🏗️ 增量层次记忆构建"]
+        Seg[事件分割] --> Rel[关系提取]
+        Rel --> Graph[事件图构建]
+        Graph --> Update[增量图更新]
+    end
+    
+    subgraph Search["🔍 主动多路径记忆搜索"]
+        Plan[Planner: 查询分解] --> Expl[Explorers: 图导航]
+        Expl --> Resp[Responder: 生成答案]
+    end
+    
+    X --> Construction
+    Construction --> Search
+</div>
+            </div>
+            
+            <!-- 架构图名词解释 -->
+            <div class="diagram-glossary">
+                <div class="diagram-glossary-title">📖 架构图名词解释</div>
+                <div class="glossary-grid">
+                    <div class="glossary-item">
+                        <div class="glossary-term">🏗️ 增量层次记忆构建</div>
+                        <div class="glossary-definition">
+                            <strong>「建筑师」</strong>：负责将原始经验流转化为结构化的事件图，包含事件分割、关系提取和图更新三个步骤。
+                        </div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">🔍 主动多路径记忆搜索</div>
+                        <div class="glossary-definition">
+                            <strong>「侦探团队」</strong>：由 Planner（制定搜索策略）、Explorers（执行图导航）和 Responder（生成最终答案）组成，协同完成复杂查询。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">📊 实验结果</h2>
+            <p>在 LoCoMo 和 NarrativeQA 基准测试上，CompassMem 显著优于现有方法：</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>模型</th>
+                        <th>方法</th>
+                        <th colspan="2">LoCoMo 平均 F1</th>
+                        <th colspan="2">NarrativeQA F1</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>GPT-4o-mini</th>
+                        <th>Qwen2.5-14B</th>
+                        <th>GPT-4o-mini</th>
+                        <th>Qwen2.5-14B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="7">GPT-4o-mini</td>
+                        <td>RAG</td>
+                        <td>42.25%</td>
+                        <td>-</td>
+                        <td>28.99%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Mem0</td>
+                        <td>45.10%</td>
+                        <td>-</td>
+                        <td>29.98%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>MemoryOS</td>
+                        <td>42.84%</td>
+                        <td>-</td>
+                        <td>25.58%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>HippoRAG</td>
+                        <td>47.92%</td>
+                        <td>-</td>
+                        <td>28.77%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>A-Mem</td>
+                        <td>39.65%</td>
+                        <td>-</td>
+                        <td>27.01%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>CAM</td>
+                        <td>44.10%</td>
+                        <td>-</td>
+                        <td>33.55%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CompassMem</strong></td>
+                        <td class="best">52.18%</td>
+                        <td>-</td>
+                        <td class="best">39.04%</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="7">Qwen2.5-14B</td>
+                        <td>RAG</td>
+                        <td>-</td>
+                        <td>33.18%</td>
+                        <td>-</td>
+                        <td>25.82%</td>
+                    </tr>
+                    <tr>
+                        <td>Mem0</td>
+                        <td>-</td>
+                        <td>29.91%</td>
+                        <td>-</td>
+                        <td>26.94%</td>
+                    </tr>
+                    <tr>
+                        <td>MemoryOS</td>
+                        <td>-</td>
+                        <td>34.89%</td>
+                        <td>-</td>
+                        <td>22.17%</td>
+                    </tr>
+                    <tr>
+                        <td>HippoRAG</td>
+                        <td>-</td>
+                        <td>30.53%</td>
+                        <td>-</td>
+                        <td>22.10%</td>
+                    </tr>
+                    <tr>
+                        <td>A-Mem</td>
+                        <td>-</td>
+                        <td>24.47%</td>
+                        <td>-</td>
+                        <td>25.37%</td>
+                    </tr>
+                    <tr>
+                        <td>CAM</td>
+                        <td>-</td>
+                        <td>38.27%</td>
+                        <td>-</td>
+                        <td>27.87%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CompassMem</strong></td>
+                        <td>-</td>
+                        <td class="best">46.17%</td>
+                        <td>-</td>
+                        <td class="best">35.90%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="key-point">
+                <span class="key-point-icon">📈</span>
+                <div>
+                    <strong>关键发现</strong>: CompassMem 在时序推理任务上表现尤为突出，相比 HippoRAG 提升了 9.03% F1 分数，证明了事件图结构对处理时间依赖关系的有效性。
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🏷️ 关键词</h2>
+            <div class="keywords-container">
+                <span class="keyword-tag">事件中心记忆<br><small>Event-Centric Memory</small></span>
+                <span class="keyword-tag">事件图<br><small>Event Graph</small></span>
+                <span class="keyword-tag">逻辑地图<br><small>Logic Map</small></span>
+                <span class="keyword-tag">事件分割理论<br><small>Event Segmentation Theory</small></span>
+                <span class="keyword-tag">主动搜索<br><small>Active Search</small></span>
+                <span class="keyword-tag">多跳推理<br><small>Multi-hop Reasoning</small></span>
+                <span class="keyword-tag">时序推理<br><small>Temporal Reasoning</small></span>
+                <span class="keyword-tag">图导航<br><small>Graph Navigation</small></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">⚠️ 局限性分析</h2>
+            <div class="limitations-grid">
+                <div class="limitation-item">
+                    <span class="limitation-icon">🔧</span>
+                    <div>
+                        <div class="limitation-title">事件分割质量依赖</div>
+                        <div class="limitation-desc">事件图的质量依赖于事件分割和关系提取的准确性，当前采用的 LLM 管道可能不够精细。</div>
+                    </div>
+                </div>
+                <div class="limitation-item">
+                    <span class="limitation-icon">🧪</span>
+                    <div>
+                        <div class="limitation-title">评估范围有限</div>
+                        <div class="limitation-desc">实验主要集中在对话和长文档理解任务，需要在更多样化的智能体场景中验证有效性。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            mermaid.initialize({ startOnLoad: true, theme: 'default' });
+            // Theme switching
+            const toggleTheme = () => {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            };
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+            
+            // Add theme toggle button
+            const heroActions = document.querySelector('.hero-actions');
+            if (heroActions) {
+                const themeBtn = document.createElement('button');
+                themeBtn.className = 'btn btn-secondary';
+                themeBtn.innerHTML = '🌙/☀️ 主题切换';
+                themeBtn.onclick = toggleTheme;
+                heroActions.appendChild(themeBtn);
+            }
+        </script>
+    </main>
+</body>
+</html>
