@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompassMem - 事件中心记忆作为逻辑地图</title>
+    <title>MemRL - 运行时强化学习自进化智能体</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         :root { --bg-primary: #ffffff; --bg-secondary: #f6f8fa; --bg-card: #ffffff; --bg-mermaid: #ffffff; --text-primary: #1f2328; --text-secondary: #656d76; --accent-purple: #8250df; --accent-cyan: #0969da; --accent-green: #1a7f37; --accent-orange: #f59e0b; --border-color: #d0d7de; --border-subtle: rgba(208,215,222,0.5); --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); --shadow-md: 0 4px 12px rgba(0,0,0,0.1); }
@@ -78,17 +78,18 @@
 <body>
     <main class="container">
         <header class="hero">
-            <h1 class="hero-title">🧭 CompassMem</h1>
-            <p class="hero-subtitle">Memory Matters More: Event-Centric Memory as a Logic Map</p>
-            <p class="hero-subtitle-cn">事件中心记忆作为逻辑地图</p>
+            <h1 class="hero-title">🧠 MemRL</h1>
+            <p class="hero-subtitle">Self-Evolving Agents via Runtime RL</p>
+            <p class="hero-subtitle-cn">运行时强化学习自进化智能体</p>
             <div class="hero-meta">
-                <div class="hero-meta-item">📄 arXiv: 2601.04726</div>
+                <div class="hero-meta-item">📄 arXiv: 2601.03192</div>
                 <div class="hero-meta-item">📅 2026 年 1 月</div>
-                <div class="hero-meta-item">🏫 中国人民大学</div>
-                <div class="hero-meta-item">📊 LoCoMo / NarrativeQA</div>
+                <div class="hero-meta-item">🏫 上海交通大学</div>
+                <div class="hero-meta-item">📊 HLE / BigCodeBench / ALFWorld</div>
             </div>
             <div class="hero-actions">
-                <a href="https://arxiv.org/abs/2601.04726" target="_blank" class="btn btn-primary">🔗 阅读原文 (arXiv)</a>
+                <a href="https://arxiv.org/abs/2601.03192" target="_blank" class="btn btn-primary">🔗 阅读原文 (arXiv)</a>
+                <a href="https://github.com/MemTensor/MemRL" target="_blank" class="btn btn-secondary">💻 代码仓库</a>
             </div>
         </header>
         
@@ -97,7 +98,7 @@
                 <h2 class="rating-title">💎 论文综合评分</h2>
                 <div class="rating-stars">
                     <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
-                    <span class="rating-value">4.8 / 5.0</span>
+                    <span class="rating-value">4.7 / 5.0</span>
                 </div>
             </div>
             <div class="rating-grid">
@@ -108,20 +109,20 @@
                 <div class="rating-item"><div class="rating-label">✅ 落地可行性</div><div class="rating-score">⭐⭐⭐⭐</div></div>
                 <div class="rating-item"><div class="rating-label">🚀 应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
             </div>
-            <div class="rating-summary"><strong>综合评价：</strong>事件中心记忆创新框架。受事件分割理论启发，将记忆组织为事件图，显式建模逻辑关系，支持主动多路径搜索。在 LoCoMo 上平均 F1 +4.26%，时序推理 +9.03%，超越所有基线方法。</div>
+            <div class="rating-summary"><strong>综合评价：</strong>非参数化强化学习创新框架。通过 Intent-Experience-Utility triplet 和两阶段检索，实现无需权重更新的运行时自进化。在 4 个基准上 CSR +3.8%，遗忘率 0.041。</div>
         </section>
         
         <section class="card">
             <h2 class="card-title">🔗 本体论映射</h2>
             <p style="color: var(--text-secondary); margin-bottom: 1rem;">基于 Agent Memory 领域本体模型的 7 维度标注</p>
             <div class="tag-container">
-                <span class="tag tag-accent">📦 记忆类型：情景式 (Episodic)</span>
-                <span class="tag tag-accent">🏗️ 记忆结构：图式 + 层次化</span>
-                <span class="tag tag-accent">⚙️ 记忆操作：形成 + 检索 + 演化</span>
-                <span class="tag">💾 记忆载体：外部数据库 (事件图)</span>
-                <span class="tag">🎯 功能类型：推理 + 规划</span>
-                <span class="tag tag-accent">🔁 使用模式：图导航 + 主动多路径搜索</span>
-                <span class="tag" style="border-color: var(--accent-green); color: var(--accent-green);">✅ 验证公理：效率 + 可解释性</span>
+                <span class="tag tag-accent">📦 记忆类型：经验式</span>
+                <span class="tag tag-accent">🏗️ 记忆结构：层次化</span>
+                <span class="tag tag-accent">⚙️ 记忆操作：检索 + 更新</span>
+                <span class="tag">💾 记忆载体：外部数据库</span>
+                <span class="tag">🎯 功能类型：学习</span>
+                <span class="tag tag-accent">🔁 使用模式：自进化 + 强化学习</span>
+                <span class="tag" style="border-color: var(--accent-green); color: var(--accent-green);">✅ 验证公理：稳定性 - 可塑性 + 效率</span>
             </div>
         </section>
         
@@ -131,13 +132,13 @@
             <div style="margin-bottom: 1.5rem;">
                 <h3 class="section-title" style="color: var(--accent-cyan);"><span>🤔</span><span>问题是什么？</span></h3>
                 <div class="term-box" style="border-left: 4px solid var(--accent-orange);">
-                    <p style="color: var(--text-primary); line-height: 1.7;">现有记忆系统采用扁平化存储和基于相似度的检索，无法显式捕捉经验间的逻辑关系（如因果、时序），导致记忆只能作为被动存储而非主动指导推理的基础设施。</p>
+                    <p style="color: var(--text-primary); line-height: 1.7;">当前 AI 智能体难以模拟人类自进化能力：微调计算成本高且易灾难性遗忘，现有记忆方法依赖被动语义匹配，无法区分高价值策略和噪声。</p>
                 </div>
                 <div class="term-box">
                     <div class="term-box-title">📚 专业名词解释</div>
                     <div class="term-box-content">
-                        <strong>扁平化存储</strong>：将记忆作为独立文本片段存储，缺乏结构化和关联。<br>
-                        <strong>相似度检索</strong>：基于向量相似度（如余弦相似度）检索记忆，忽略逻辑关系。
+                        <strong>被动语义匹配</strong>：基于相似度检索记忆，无法区分实际效用。<br>
+                        <strong>灾难性遗忘</strong>：学习新知识时遗忘旧知识。
                     </div>
                 </div>
             </div>
@@ -145,13 +146,13 @@
             <div style="margin-bottom: 1.5rem;">
                 <h3 class="section-title" style="color: var(--accent-cyan);"><span>💡</span><span>解决方案是什么？</span></h3>
                 <div class="term-box" style="border-left: 4px solid var(--accent-cyan);">
-                    <p style="color: var(--text-primary); line-height: 1.7;">CompassMem 受事件分割理论启发，将记忆组织为事件图 (Event Graph)，通过显式逻辑关系连接事件单元，使记忆成为指导智能体搜索和推理的逻辑地图。</p>
+                    <p style="color: var(--text-primary); line-height: 1.7;">MemRL 提出非参数化方法，通过在情景记忆上运行时强化学习实现自进化。采用 Intent-Experience-Utility triplet 结构和两阶段检索，基于环境反馈学习 Q 值区分高价值记忆。</p>
                 </div>
                 <div class="term-box">
                     <div class="term-box-title">📚 专业名词解释</div>
                     <div class="term-box-content">
-                        <strong>事件分割理论 (EST)</strong>：认知科学理论，认为人类将连续体验自动分割为离散的事件单元。<br>
-                        <strong>事件图 (Event Graph)</strong>：以事件为节点、逻辑关系为边的图结构，编码因果、时序等关系。
+                        <strong>非参数化学习</strong>：不修改模型权重的学习方式。<br>
+                        <strong>两阶段检索</strong>：先基于相似度召回，再基于 Q 值重排序。
                     </div>
                 </div>
             </div>
@@ -159,49 +160,44 @@
             <div style="margin-bottom: 1.5rem;">
                 <h3 class="section-title" style="color: var(--accent-cyan);"><span>🌟</span><span>核心优势是什么？</span></h3>
                 <div class="term-box" style="border-left: 4px solid var(--accent-green);">
-                    <p style="color: var(--text-primary); line-height: 1.7;">① 事件级细粒度表示保留叙事结构 ② 显式逻辑关系支持多跳推理 ③ 主动多路径搜索超越被动检索 ④ LoCoMo 平均 F1 +4.26%，时序推理 +9.03%</p>
+                    <p style="color: var(--text-primary); line-height: 1.7;">① 无需权重更新避免灾难性遗忘 ② Q 值驱动检索超越语义匹配 ③ 4 个基准 CSR +3.8% vs 次优 ④ 理论保证单调改进无漂移</p>
                 </div>
             </div>
             
             <div class="key-point">
                 <span class="key-point-icon">💡</span>
-                <div><strong>关键洞见：</strong>记忆不应只是被动存储，而应作为主动的逻辑地图指导推理过程。通过事件图和逻辑关系，智能体可以沿着有意义的逻辑路径导航，而非依赖扁平的相似度检索。</div>
+                <div><strong>关键洞见：</strong>通过将检索公式化为基于价值的决策过程，MemRL 使智能体能够从交互反馈中学习稳健的效用估计 (Q 值)，区分高价值经验和语义相似噪声，实现无需权重更新的持续运行时改进。</div>
             </div>
         </section>
         
         <section class="card">
             <h2 class="card-title">📐 方法架构</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">CompassMem 包含增量层次记忆构建和主动多路径记忆搜索两大模块。</p>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">MemRL 包含三元组记忆库、两阶段检索、运行时效用更新三大核心组件。</p>
             
             <div class="mermaid-wrapper">
                 <div class="mermaid">
 flowchart TB
-    subgraph Construction["🏗️ 增量层次记忆构建"]
-        C1[事件分割]
-        C2[关系提取]
-        C3[图更新]
-        C4[主题演化]
+    subgraph Memory["📚 记忆库"]
+        M1["Intent-Experience-Utility<br/>三元组结构"]
     end
     
-    subgraph Search["🔍 主动多路径搜索"]
-        S1[Planner<br/>目标分解]
-        S2[Explorers<br/>图导航]
-        S3[Responder<br/>生成答案]
+    subgraph Retrieval["🔍 两阶段检索"]
+        R1["阶段 A: 相似度召回"]
+        R2["阶段 B: Q 值重排序"]
     end
     
-    subgraph Memory["📚 事件图记忆"]
-        M1[事件节点]
-        M2[逻辑关系]
-        M3[主题层]
+    subgraph Update["🔄 效用更新"]
+        U1["环境反馈奖励"]
+        U2["Monte Carlo 更新 Q 值"]
     end
     
-    Construction --> Memory
-    Search --> Memory
-    Memory --> Search
+    Memory --> Retrieval
+    Retrieval --> Update
+    Update --> Memory
     
-    style Construction fill:#e7f3ff,stroke:#0969da,stroke-width:2px
-    style Search fill:#f0e6ff,stroke:#8250df,stroke-width:2px
-    style Memory fill:#dafbe1,stroke:#1a7f37,stroke-width:2px
+    style Memory fill:#e7f3ff,stroke:#0969da,stroke-width:2px
+    style Retrieval fill:#f0e6ff,stroke:#8250df,stroke-width:2px
+    style Update fill:#dafbe1,stroke:#1a7f37,stroke-width:2px
                 </div>
             </div>
             
@@ -209,28 +205,16 @@ flowchart TB
                 <h3 class="section-title"><span>🏗️</span><span>核心组件</span></h3>
                 <div class="glossary-grid">
                     <div class="glossary-item">
-                        <div class="glossary-term">🎯 事件分割</div>
-                        <div class="glossary-definition">基于事件分割理论 (EST)，将连续经验流分割为离散且连贯的事件单元。</div>
+                        <div class="glossary-term">📚 三元组记忆库</div>
+                        <div class="glossary-definition">Intent-Experience-Utility 结构，将记忆表示为 (意图，经验，效用) 三元组。</div>
                     </div>
                     <div class="glossary-item">
-                        <div class="glossary-term">🎯 关系提取</div>
-                        <div class="glossary-definition">显式提取事件间的逻辑关系（因果、时序、动机、部分 - 整体）。</div>
+                        <div class="glossary-term">🔍 两阶段检索</div>
+                        <div class="glossary-definition">阶段 A 基于相似度召回候选池 (k1=5)，阶段 B 使用 Q 值重排序选择最终上下文 (k2=3)。</div>
                     </div>
                     <div class="glossary-item">
-                        <div class="glossary-term">🎯 图更新</div>
-                        <div class="glossary-definition">节点融合与扩展，避免冗余和语义漂移。</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">🎯 主题演化</div>
-                        <div class="glossary-definition">K-means 聚类 + 在线更新，定期重新聚类防止语义漂移。</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">🎯 Planner</div>
-                        <div class="glossary-definition">将查询分解为 2-5 个子目标，维护满足向量，指导探索方向。</div>
-                    </div>
-                    <div class="glossary-item">
-                        <div class="glossary-term">🎯 Explorers</div>
-                        <div class="glossary-definition">多个 Explorer 并行在事件图上导航，决定跳过/扩展/回答。</div>
+                        <div class="glossary-term">🔄 运行时效用更新</div>
+                        <div class="glossary-definition">根据环境反馈奖励，使用 Monte Carlo 规则更新 Q 值。</div>
                     </div>
                 </div>
             </div>
@@ -239,12 +223,20 @@ flowchart TB
                 <h3 class="section-title"><span>📚</span><span>架构专业名词解释</span></h3>
                 <div class="glossary-grid">
                     <div class="glossary-item">
-                        <div class="glossary-term">📚 主动多路径搜索 (Active Multi-Path Search)</div>
-                        <div class="glossary-definition">基于事件图拓扑结构的主动探索机制。Planner 分解目标，多个 Explorers 并行导航，Responder 生成答案。超越被动相似度检索，实现逻辑感知的证据收集。</div>
+                        <div class="glossary-term">📚 非参数化强化学习</div>
+                        <div class="glossary-definition">不修改模型权重的强化学习方法。MemRL 在记忆空间优化检索策略 (Q 值更新)，而非优化 LLM 参数，避免在线更新成本和遗忘风险。</div>
                     </div>
                     <div class="glossary-item">
-                        <div class="glossary-term">📚 主题层 (Topic Layer)</div>
-                        <div class="glossary-definition">在事件图上层的语义聚类，防止搜索时陷入单一语义视角。定期重新聚类防止语义漂移，支持多路径探索。</div>
+                        <div class="glossary-term">📚 Intent-Experience-Utility Triplet</div>
+                        <div class="glossary-definition">记忆三元组结构：Intent(意图) 标识查询意图，Experience(经验) 存储解决方案轨迹，Utility(效用) 通过 Q 值表示预期回报，服务于检索决策的 critic。</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 两阶段检索 (Two-Phase Retrieval)</div>
+                        <div class="glossary-definition">两阶段检索策略：阶段 A 基于相似度召回候选池 (k1=5)，阶段 B 使用 Q 值重排序选择最终上下文 (k2=3)，平衡探索 (相似度) 和利用 (效用)。</div>
+                    </div>
+                    <div class="glossary-item">
+                        <div class="glossary-term">📚 Q 值驱动更新</div>
+                        <div class="glossary-definition">基于环境反馈的 Q 值更新机制。使用 Monte Carlo 规则：Q_new ← Q_old + α(r - Q_old)，驱动 Q 值向真实预期回报收敛。</div>
                     </div>
                 </div>
             </div>
@@ -252,33 +244,45 @@ flowchart TB
         
         <section class="card">
             <h2 class="card-title">📈 实验结果</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">在 LoCoMo 和 NarrativeQA 两个长程推理基准上评估</p>
-            <h3 style="color: var(--text-primary); font-weight: 700;">LoCoMo 主结果 (GPT-4o-mini)</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">在 HLE、BigCodeBench、ALFWorld、Lifelong Agent Bench 四个基准上评估</p>
+            <h3 style="color: var(--text-primary); font-weight: 700;">Runtime Learning 结果</h3>
             <table class="comparison-table">
                 <thead>
-                    <tr><th>方法</th><th>单跳 F1</th><th>多跳 F1</th><th>开放域 F1</th><th>时序 F1</th><th>平均 F1</th></tr>
+                    <tr><th>方法</th><th>BigCodeBench</th><th>Lifelong</th><th>ALFWorld</th><th>HLE</th><th>平均 CSR</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>RAG</td><td>52.19</td><td>32.17</td><td>23.21</td><td>30.77</td><td>42.25</td></tr>
-                    <tr><td>Mem0</td><td>47.65</td><td>38.72</td><td>28.64</td><td>48.93</td><td>45.10</td></tr>
-                    <tr><td>HippoRAG</td><td>54.84</td><td>33.59</td><td>28.59</td><td>48.17</td><td>47.92</td></tr>
-                    <tr><td>A-Mem</td><td>44.65</td><td>27.02</td><td>12.14</td><td>45.85</td><td>39.65</td></tr>
-                    <tr><td>CAM</td><td>50.58</td><td>33.55</td><td>18.23</td><td>44.14</td><td>44.10</td></tr>
-                    <tr class="best"><td><strong>CompassMem</strong></td><td><strong>57.36</strong></td><td><strong>38.84</strong></td><td><strong>26.61</strong></td><td><strong>57.96</strong></td><td><strong>52.18</strong></td></tr>
+                    <tr><td>No Memory</td><td>0.485</td><td>0.674</td><td>0.860</td><td>0.777</td><td>0.631</td></tr>
+                    <tr><td>RAG</td><td>0.475</td><td>0.690</td><td>0.914</td><td>0.887</td><td>0.679</td></tr>
+                    <tr><td>Mem0</td><td>0.487</td><td>0.670</td><td>0.920</td><td>0.894</td><td>0.681</td></tr>
+                    <tr><td>MemP</td><td>0.578</td><td>0.736</td><td>0.960</td><td>0.885</td><td>0.760</td></tr>
+                    <tr class="best"><td><strong>MemRL (ours)</strong></td><td><strong>0.595</strong></td><td><strong>0.788</strong></td><td><strong>0.960</strong></td><td><strong>0.949</strong></td><td><strong>0.772</strong></td></tr>
                 </tbody>
             </table>
             <div class="highlight" style="margin-top: 1rem;">
-                <p><strong>关键发现：</strong>CompassMem 在 LoCoMo 上平均 F1 达到 52.18%，超越最强基线 HippoRAG (47.92%) 4.26 个百分点。时序推理提升最显著 (57.96% vs 48.93% +9.03%)，证明事件图对时序关系建模的优势。</p>
+                <p><strong>关键发现：</strong>MemRL 在所有领域超越最强基线 MemP，平均 CSR +3.8%。在探索密集型环境 (ALFWorld/OS) 提升最显著 (+6.2%)。</p>
             </div>
+            <h3 style="color: var(--text-primary); font-weight: 700; margin-top: 1.5rem;">Transfer Learning 结果</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr><th>方法</th><th>BigCodeBench</th><th>Lifelong</th><th>ALFWorld</th><th>平均 SR</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>No Memory</td><td>0.485</td><td>0.673</td><td>0.841</td><td>0.709</td></tr>
+                    <tr><td>RAG</td><td>0.479</td><td>0.713</td><td>0.920</td><td>0.765</td></tr>
+                    <tr><td>MemP</td><td>0.494</td><td>0.720</td><td>0.928</td><td>0.766</td></tr>
+                    <tr class="best"><td><strong>MemRL (ours)</strong></td><td><strong>0.508</strong></td><td><strong>0.746</strong></td><td><strong>0.942</strong></td><td><strong>0.794</strong></td></tr>
+                </tbody>
+            </table>
+            <p style="color: var(--text-secondary); margin-top: 1rem;">MemRL 展现卓越迁移能力，平均 SR +2.8% vs MemP，ALFWorld 上 +5.8%。</p>
         </section>
         
         <section class="card">
             <h2 class="card-title">✅ 验证的领域公理</h2>
             <div style="margin-top: 1rem;">
-                <h3 class="section-title" style="color: var(--accent-green);"><span></span><span>效率公理</span></h3>
-                <p style="color: var(--text-secondary); line-height: 1.7;">记忆构建时间低于 Mem0、A-Mem、MemoryOS，每问题延迟相当，证明事件图构建的高效性。</p>
-                <h3 class="section-title" style="color: var(--accent-green); margin-top: 1rem;"><span></span><span>可解释性公理</span></h3>
-                <p style="color: var(--text-secondary); line-height: 1.7;">事件图提供显式逻辑结构，支持路径追踪和证据溯源，相比扁平检索更具可解释性。主动多路径搜索过程透明，可追踪探索路径。</p>
+                <h3 class="section-title" style="color: var(--accent-green);"><span></span><span>稳定性 - 可塑性公理</span></h3>
+                <p style="color: var(--text-secondary); line-height: 1.7;">理论证明 Q 值更新无偏且方差有界，遗忘率 0.041 vs MemP 0.051，CSR 与 SR 同步增长无灾难性遗忘。</p>
+                <h3 class="section-title" style="color: var(--accent-green); margin-top: 1rem;"><span></span><span>效率公理</span></h3>
+                <p style="color: var(--text-secondary); line-height: 1.7;">非参数化学习无需权重更新，计算成本显著低于微调，支持持续运行时改进。</p>
             </div>
         </section>
         
@@ -287,15 +291,15 @@ flowchart TB
             <div class="limitations-grid">
                 <div class="limitation-item">
                     <div class="limitation-icon">⚠️</div>
-                    <div><h3 class="limitation-title">事件分割质量依赖 LLM</h3><p class="limitation-desc">当前采用简单的 LLM 管道进行事件分割和关系提取，更细粒度和鲁棒的分割方法可能进一步提升记忆质量。</p></div>
+                    <div><h3 class="limitation-title">高方差噪声</h3><p class="limitation-desc">当前逐步更新虽快，但可能在长程轨迹中引入高方差噪声。</p></div>
                 </div>
                 <div class="limitation-item">
                     <div class="limitation-icon">⚠️</div>
-                    <div><h3 class="limitation-title">评估范围有限</h3><p class="limitation-desc">评估集中在 LoCoMo 和 NarrativeQA 两个基准，需要在更广泛的任务和智能体设置中验证适用性。</p></div>
+                    <div><h3 class="limitation-title">信用分配模糊</h3><p class="limitation-desc">效用更新时多经验参考导致信用分配不明确。</p></div>
                 </div>
                 <div class="limitation-item">
                     <div class="limitation-icon">⚠️</div>
-                    <div><h3 class="limitation-title">Token 消耗较高</h3><p class="limitation-desc">虽然构建时间低，但 CompassMem 使用更多 tokens（事件提取、关系提取、多路径探索），成本效益需进一步优化。</p></div>
+                    <div><h3 class="limitation-title">任务相似性依赖</h3><p class="limitation-desc">任务相似性低时性能可能退化为类 Reflexion 行为。</p></div>
                 </div>
             </div>
         </section>
@@ -303,24 +307,24 @@ flowchart TB
         <section class="card">
             <h2 class="card-title">🔮 未来工作方向</h2>
             <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
-                <li>探索更鲁棒的事件分割算法，减少对 LLM 的依赖</li>
-                <li>扩展到更多任务类型（代码生成、创意写作、多模态）</li>
-                <li>优化 token 使用效率，研究事件图压缩技术</li>
-                <li>研究离线构建高质量记忆结构，支持轻量级在线搜索</li>
+                <li>探索多步更新或定期记忆巩固，减少长程轨迹噪声</li>
+                <li>研究更精确的信用分配方法 (如 Shapley 值)</li>
+                <li>确保足够多样化且相关的经验基础</li>
+                <li>探索记忆安全、专用域和多智能体记忆共享</li>
             </ul>
         </section>
         
         <section class="card">
             <h2 class="card-title">🏷️ 关键词</h2>
             <div class="tag-container">
-                <span class="tag">事件中心记忆 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Event-Centric Memory</small></span>
-                <span class="tag">事件分割理论 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Event Segmentation Theory</small></span>
-                <span class="tag">事件图 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Event Graph</small></span>
-                <span class="tag">逻辑关系 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Logical Relations</small></span>
-                <span class="tag">主动导航 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Active Navigation</small></span>
-                <span class="tag">多路径搜索 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Multi-Path Search</small></span>
-                <span class="tag">长程推理 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Long-Horizon Reasoning</small></span>
-                <span class="tag">主题演化 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Topic Evolution</small></span>
+                <span class="tag">运行时强化学习 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Runtime RL</small></span>
+                <span class="tag">自进化智能体 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Self-Evolving Agents</small></span>
+                <span class="tag">情景记忆 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Episodic Memory</small></span>
+                <span class="tag">Q 值驱动检索 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Q-Value Retrieval</small></span>
+                <span class="tag">非参数化学习 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Non-Parametric Learning</small></span>
+                <span class="tag">稳定性 - 可塑性 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Stability-Plasticity</small></span>
+                <span class="tag">两阶段检索 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Two-Phase Retrieval</small></span>
+                <span class="tag">效用驱动更新 <small style="opacity: 0.7; display: block; font-size: 0.75rem; margin-top: 0.3rem;">Utility-Driven Update</small></span>
             </div>
         </section>
         
@@ -328,20 +332,20 @@ flowchart TB
             <h2 class="card-title">📚 专业名词解释</h2>
             <div class="glossary-grid">
                 <div class="glossary-item">
-                    <div class="glossary-term">📚 事件分割理论 (Event Segmentation Theory, EST)</div>
-                    <div class="glossary-definition">认知科学理论，认为人类将连续体验自动分割为离散的事件单元。每个事件内部表征稳定，事件边界触发新事件模型的构建。为 CompassMem 提供了认知科学基础。</div>
+                    <div class="glossary-term">📚 非参数化强化学习 (Non-Parametric RL)</div>
+                    <div class="glossary-definition">不修改模型权重的强化学习方法。MemRL 在记忆空间优化检索策略 (Q 值更新)，而非优化 LLM 参数，避免在线更新成本和遗忘风险。</div>
                 </div>
                 <div class="glossary-item">
-                    <div class="glossary-term">📚 事件图 (Event Graph)</div>
-                    <div class="glossary-definition">以事件为节点、逻辑关系为边的图结构。节点包含时间、语义、参与者等属性，边编码因果、时序等关系。作为逻辑地图指导智能体搜索和推理。</div>
+                    <div class="glossary-term">📚 Intent-Experience-Utility Triplet</div>
+                    <div class="glossary-definition">记忆三元组结构：Intent(意图) 标识查询意图，Experience(经验) 存储解决方案轨迹，Utility(效用) 通过 Q 值表示预期回报，服务于检索决策的 critic。</div>
                 </div>
                 <div class="glossary-item">
-                    <div class="glossary-term">📚 主动多路径搜索 (Active Multi-Path Search)</div>
-                    <div class="glossary-definition">基于事件图拓扑结构的主动探索机制。Planner 分解目标，多个 Explorers 并行导航，Responder 生成答案。超越被动相似度检索，实现逻辑感知的证据收集。</div>
+                    <div class="glossary-term">📚 两阶段检索 (Two-Phase Retrieval)</div>
+                    <div class="glossary-definition">两阶段检索策略：阶段 A 基于相似度召回候选池 (k1=5)，阶段 B 使用 Q 值重排序选择最终上下文 (k2=3)，平衡探索 (相似度) 和利用 (效用)。</div>
                 </div>
                 <div class="glossary-item">
-                    <div class="glossary-term">📚 主题层 (Topic Layer)</div>
-                    <div class="glossary-definition">在事件图上层的语义聚类，防止搜索时陷入单一语义视角。定期重新聚类防止语义漂移，支持多路径探索。</div>
+                    <div class="glossary-term">📚 Q 值驱动更新 (Q-Value Driven Update)</div>
+                    <div class="glossary-definition">基于环境反馈的 Q 值更新机制。使用 Monte Carlo 规则：Q_new ← Q_old + α(r - Q_old)，驱动 Q 值向真实预期回报收敛。</div>
                 </div>
             </div>
         </section>
@@ -349,8 +353,9 @@ flowchart TB
         <section class="card">
             <h2 class="card-title">🔗 链接</h2>
             <ul style="margin-left: 1.5rem; color: var(--text-secondary); line-height: 1.8;">
-                <li><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.04726" target="_blank">https://arxiv.org/abs/2601.04726</a></li>
-                <li><strong>HTML 总结</strong>: site/papers/2026/01_2026-01_CompassMem-事件中心记忆作为逻辑地图_2026-03-20.html</li>
+                <li><strong>arXiv</strong>: <a href="https://arxiv.org/abs/2601.03192" target="_blank">https://arxiv.org/abs/2601.03192</a></li>
+                <li><strong>HTML 总结</strong>: site/papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-20.html</li>
+                <li><strong>代码</strong>: <a href="https://github.com/MemTensor/MemRL" target="_blank">https://github.com/MemTensor/MemRL</a></li>
             </ul>
         </section>
     </main>
