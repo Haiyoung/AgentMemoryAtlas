@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 EverMemOS - 自组织记忆操作系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero {
+            text-align: center; padding: 3rem 2rem; background: var(--bg-card);
+            border-radius: var(--radius-lg); margin-bottom: 2.5rem; position: relative;
+            overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+        .hero-title {
+            font-size: 3.2rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem; letter-spacing: -0.5px;
+        }
+        .hero-subtitle { font-size: 1.4rem; color: var(--text-secondary); margin: 0.8rem 0; font-weight: 500; }
+        .hero-subtitle-cn { font-size: 1.3rem; color: var(--text-primary); opacity: 0.9; font-weight: 600; }
+        .hero-meta { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .hero-meta-item {
+            background: var(--bg-secondary); padding: 0.8rem 1.5rem; border-radius: var(--radius-md);
+            border: 1px solid var(--border-color); font-size: 0.95rem; color: var(--text-secondary);
+            font-weight: 500; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .hero-actions { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2rem; flex-wrap: wrap; }
+        .btn {
+            padding: 0.8rem 1.8rem; border-radius: var(--radius-md); font-size: 1rem; font-weight: 600;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem;
+            cursor: pointer; border: none; transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white; box-shadow: var(--shadow-sm);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .rating-card {
+            background: var(--bg-card); border-radius: var(--radius-lg); padding: 2.5rem;
+            margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md);
+        }
+        .rating-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border-subtle);
+        }
+        .rating-title {
+            font-size: 1.6rem; font-weight: 700; color: var(--accent-orange);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .rating-stars { display: flex; align-items: center; gap: 0.4rem; }
+        .star { font-size: 1.8rem; color: #fbbf24; filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4)); }
+        .rating-value { font-size: 1.6rem; font-weight: 700; color: var(--accent-orange); margin-left: 0.6rem; }
+        .rating-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .rating-item {
+            background: var(--bg-secondary); padding: 1rem 0.8rem; border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle); text-align: center; display: flex;
+            flex-direction: column; gap: 0.5rem; transition: all 0.3s ease;
+        }
+        .rating-item:hover { transform: translateY(-2px); border-color: var(--accent-cyan); box-shadow: var(--shadow-sm); }
+        .rating-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rating-score { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; }
+        .rating-summary {
+            padding: 1.5rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md); border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary); line-height: 1.7; font-size: 1.05rem;
+        }
+        .rating-summary strong { color: var(--accent-orange); font-weight: 600; }
+        .card {
+            background: var(--bg-card); border-radius: var(--radius-lg); padding: 2.5rem;
+            margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); transition: all 0.3s ease;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--accent-cyan); }
+        .card-title { font-size: 1.8rem; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 0.8rem; color: var(--accent-cyan); font-weight: 700; }
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan); padding: 2rem; border-radius: var(--radius-md);
+            margin: 1.5rem 0; border: 1px solid var(--border-subtle);
+        }
+        .highlight p { margin: 1rem 0; line-height: 1.8; font-size: 1.1rem; }
+        .highlight strong { color: var(--text-primary); font-weight: 700; }
+        .tag-container { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; margin-bottom: 2rem; }
+        .tag {
+            background: var(--bg-secondary); padding: 0.8rem 1.5rem; border-radius: 50px;
+            font-size: 0.95rem; border: 1px solid var(--border-color); color: var(--text-secondary);
+            font-weight: 600; display: flex; align-items: center; gap: 0.6rem; transition: all 0.3s ease;
+        }
+        .tag:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .tag.primary { background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1)); border-color: var(--accent-purple); color: var(--accent-purple); }
+        .tag.secondary { background: rgba(59, 130, 246, 0.1); border-color: var(--accent-blue); color: var(--accent-blue); }
+        .tag.warning { background: rgba(249, 115, 22, 0.1); border-color: var(--accent-orange); color: var(--accent-orange); }
+        .tag.success { background: rgba(22, 163, 74, 0.1); border-color: var(--accent-green); color: var(--accent-green); }
+        .mermaid-wrapper {
+            background: var(--bg-mermaid); border-radius: var(--radius-md); margin: 2rem 0;
+            border: 1px solid var(--border-color); padding: 2rem; overflow-x: auto; overflow-y: hidden;
+            max-width: 100%; text-align: center; box-shadow: var(--shadow-sm);
+        }
+        .mermaid { display: inline-block; min-width: 600px; text-align: center; }
+        .mermaid svg { max-width: 100%; height: auto !important; }
+        .keywords-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .keyword-tag {
+            background: var(--bg-secondary); padding: 1rem 1.2rem; border-radius: var(--radius-md);
+            border: 1px solid var(--border-color); display: flex; flex-direction: column;
+            align-items: center; text-align: center; min-width: 120px; transition: all 0.3s ease;
+        }
+        .keyword-tag:hover { transform: translateY(-2px); border-color: var(--accent-cyan); box-shadow: var(--shadow-sm); }
+        .keyword-tag strong { color: var(--text-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .keyword-tag small { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+        .future-research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .future-item {
+            background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md);
+            border: 1px solid var(--border-color); border-left: 4px solid var(--accent-purple);
+            display: flex; gap: 1.2rem; align-items: flex-start;
+        }
+        .future-icon { font-size: 1.8rem; color: var(--accent-purple); flex-shrink: 0; }
+        .future-title { color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .future-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        th, td { padding: 1rem; border: 1px solid var(--border-color); text-align: left; }
+        th { background: var(--bg-secondary); font-weight: 600; color: var(--text-primary); }
+        td { color: var(--text-secondary); }
+        tr:hover { background: var(--bg-secondary); }
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧠 EverMemOS</h1>
+            <p class="hero-subtitle">EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning</p>
+            <p class="hero-subtitle-cn">EverMemOS：用于结构化长程推理的自组织记忆操作系统</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2601.02163</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2026 年 1 月 5 日</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> EverMind, Shanda Group</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> LoCoMo, LongMemEval, PersonaMem-v2</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2601.02163" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> 主题切换
+                </button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.8 / 5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong>EverMemOS 提出了一个革命性的自组织记忆操作系统，通过实现类脑印迹 (engram) 生命周期的三阶段框架（情景痕迹形成、语义巩固、重构性回忆），将碎片化的情景经验转化为连贯稳定的知识结构。该方法在 LoCoMo 和 LongMemEval 上均达到 SOTA，尤其在多跳推理 (+19.7%) 和时序推理 (+10.0%) 任务上表现突出，为构建长程一致性智能体提供了新范式。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Experiential + Hybrid</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Hierarchical</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Token-level</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Working + Factual</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Self-organizing, Experience-Driven, Progressive Learning</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Stability-Plasticity, Generalization, Efficiency</span>
+            </div>
+            
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> EverMemOS 将<strong>印迹生命周期 (Engram Lifecycle)</strong>——生物记忆系统中记忆从编码到巩固再到提取的动态过程——引入智能体记忆领域，提出了<strong>自组织记忆操作系统</strong>框架。通过<strong>MemCell</strong>（记忆细胞）和<strong>MemScene</strong>（记忆场景）两级抽象，该框架实现了从碎片化情景到稳定语义结构的转化，并通过<strong>重构性回忆 (Reconstructive Recollection)</strong> 机制实现按需上下文合成，为解决长程推理中的一致性挑战提供了系统性解决方案。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有记忆系统像"碎片仓库"，存储孤立的记录并检索片段，无法将 evolving 的用户状态整合成连贯的知识结构，导致智能体无法在长期交互中保持一致性（例如：记住用户喜欢 IPA 啤酒，但忘记用户正在服用抗生素不能喝酒）。</p>
+                <p><strong>💡 解决方案是什么？</strong> EverMemOS 提出类脑印迹生命周期的三阶段框架：(1) 情景痕迹形成：将对话流转化为 MemCell（包含情景、原子事实、时间有界的预见信号）；(2) 语义巩固：将 MemCell 组织成主题 MemScene，提炼稳定语义结构并更新用户画像；(3) 重构性回忆：基于 MemScene 引导的代理检索，合成必要且充分的上下文。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 通过显式的记忆生命周期机制，EverMemOS 能够检测冲突、维护稳定用户模型、进行时序推理，在 LoCoMo 上相比最强基线提升 9.2%，在 LongMemEval 上提升 6.7%，尤其在多跳推理 (+19.7%) 和知识更新 (+20.6%) 任务上表现卓越。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-sitemap"></i> 方法架构</h2>
+            <p>EverMemOS 的核心创新是类脑印迹生命周期的三阶段框架：</p>
+            
+            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">🧬 记忆原语：MemCell</h3>
+            <p>MemCell 是连接底层数据和高层语义的原子单元，形式化为四元组 c = (E, F, P, M)：</p>
+            <ul style="margin: 1rem 0 1rem 2rem; color: var(--text-secondary);">
+                <li><strong>E (Episode)</strong>: 情景，简洁的第三人称叙事，作为语义锚点</li>
+                <li><strong>F (Atomic Facts)</strong>: 原子事实，离散的、可验证的陈述，用于高精度匹配</li>
+                <li><strong>P (Foresight)</strong>: 预见信号，前瞻性推断（计划、临时状态），带有有效性区间 [t_start, t_end]</li>
+                <li><strong>M (Metadata)</strong>: 元数据，包括时间戳和来源指针</li>
+            </ul>
+
+            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">🔄 三阶段生命周期</h3>
+            <ol style="margin: 1rem 0 1rem 2rem; color: var(--text-secondary);">
+                <li><strong>情景痕迹形成 (Episodic Trace Formation)</strong>: 语义边界检测 → 叙事合成 → 结构推导</li>
+                <li><strong>语义巩固 (Semantic Consolidation)</strong>: 增量语义聚类 → MemScene 池 → 用户画像更新</li>
+                <li><strong>重构性回忆 (Reconstructive Recollection)</strong>: MemScene 选择 → 情景/预见过滤 → 代理验证 → 合成上下文</li>
+            </ol>
+
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Phase1["📥 Phase I: 情景痕迹形成"]
+        Input[对话流] --> Segment[语义边界检测]
+        Segment --> Synthesize[叙事合成]
+        Synthesize --> Extract[结构推导]
+        Extract --> MemCell[MemCell: E+F+P+M]
+    end
+    
+    subgraph Phase2["🏗️ Phase II: 语义巩固"]
+        MemCell --> Cluster[增量语义聚类]
+        Cluster --> MemScene[MemScene 池]
+        MemScene --> Profile[用户画像更新]
+    end
+    
+    subgraph Phase3["🔍 Phase III: 重构性回忆"]
+        Query[查询] --> Select[MemScene 选择]
+        Select --> Filter[情景/预见过滤]
+        Filter --> Verify[代理验证]
+        Verify --> Context[合成上下文]
+    end
+    
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-bar"></i> 实验结果</h2>
+            <p>在 LoCoMo、LongMemEval 和 PersonaMem-v2 基准测试上，EverMemOS 均达到 SOTA：</p>
+            
+            <div class="highlight" style="margin-top: 1.5rem;">
+                <p><strong>关键发现:</strong></p>
+                <ul style="margin: 1rem 0 0 2rem;">
+                    <li>EverMemOS 在 LoCoMo 上达到 93.05% 准确率（GPT-4.1-mini），相比最强基线 Zep 提升 <strong>9.2%</strong></li>
+                    <li>在 LongMemEval 上达到 83.00%，相比 MemOS 提升 <strong>6.7%</strong></li>
+                    <li>在多跳推理任务上提升 <strong>19.7%</strong>，在时序推理任务上提升 <strong>10.0%</strong></li>
+                    <li>在知识更新任务上提升 <strong>20.6%</strong>，证明了 MemScene 对整合分散证据的有效性</li>
+                </ul>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">📊 LoCoMo (GPT-4.1-mini)</h3>
+            <table>
+                <thead>
+                    <tr><th>任务类型</th><th>EverMemOS</th><th>最强基线</th><th>提升</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>单跳 (Single Hop)</td><td><strong>96.67%</strong></td><td>90.84%</td><td>↑6.4%</td></tr>
+                    <tr><td>多跳 (Multi Hop)</td><td><strong>91.84%</strong></td><td>81.91%</td><td>↑12.1%</td></tr>
+                    <tr><td>时序 (Temporal)</td><td><strong>89.72%</strong></td><td>77.26%</td><td>↑16.1%</td></tr>
+                    <tr><td>开放域 (Open Domain)</td><td><strong>76.04%</strong></td><td>75.00%</td><td>↑1.4%</td></tr>
+                    <tr><td><strong>总体 (Overall)</strong></td><td><strong>93.05%</strong></td><td>85.22%</td><td><strong>↑9.2%</strong></td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">📊 LongMemEval</h3>
+            <table>
+                <thead>
+                    <tr><th>任务类型</th><th>EverMemOS</th><th>最强基线</th><th>提升</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>SS-User</td><td><strong>97.14%</strong></td><td>95.71%</td><td>↑1.5%</td></tr>
+                    <tr><td>SS-Asst</td><td><strong>85.71%</strong></td><td>75.00%</td><td>↑14.3%</td></tr>
+                    <tr><td>知识更新 (Know. Upd)</td><td><strong>89.74%</strong></td><td>74.26%</td><td>↑20.6%</td></tr>
+                    <tr><td><strong>总体 (Overall)</strong></td><td><strong>83.00%</strong></td><td>77.80%</td><td><strong>↑6.7%</strong></td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">🔬 消融实验</h3>
+            <table>
+                <thead>
+                    <tr><th>变体</th><th>LoCoMo 准确率</th><th>性能下降</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>EverMemOS (完整)</td><td><strong>93.05%</strong></td><td>-</td></tr>
+                    <tr><td>w/o MemScene (移除场景)</td><td>89.16%</td><td>-3.89%</td></tr>
+                    <tr><td>w/o MemCell (移除细胞)</td><td>81.82%</td><td>-11.23%</td></tr>
+                    <tr><td>w/o EverMemOS (移除外存)</td><td>52.05%</td><td>-41.00%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-key"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag"><strong>自组织记忆</strong><small>Self-organizing Memory</small></div>
+                <div class="keyword-tag"><strong>印迹生命周期</strong><small>Engram Lifecycle</small></div>
+                <div class="keyword-tag"><strong>记忆细胞</strong><small>MemCell</small></div>
+                <div class="keyword-tag"><strong>记忆场景</strong><small>MemScene</small></div>
+                <div class="keyword-tag"><strong>情景痕迹形成</strong><small>Episodic Trace Formation</small></div>
+                <div class="keyword-tag"><strong>语义巩固</strong><small>Semantic Consolidation</small></div>
+                <div class="keyword-tag"><strong>重构性回忆</strong><small>Reconstructive Recollection</small></div>
+                <div class="keyword-tag"><strong>长程推理</strong><small>Long-horizon Reasoning</small></div>
+                <div class="keyword-tag"><strong>用户画像</strong><small>User Profiling</small></div>
+                <div class="keyword-tag"><strong>预见信号</strong><small>Foresight</small></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-triangle-exclamation"></i> 局限性分析</h2>
+            <ul style="margin: 1rem 0 1rem 2rem; color: var(--text-secondary);">
+                <li><strong>多模态扩展:</strong> 当前仅在纯文本对话基准上评估，扩展到多模态或具身场景需要额外工作</li>
+                <li><strong>延迟和成本:</strong> 引入 LLM 介导的记忆构建和检索操作，相比单通道基线增加了延迟和计算成本</li>
+                <li><strong>超长时序评估:</strong> 现有基准缺乏压力测试超长时间跨度的协议，无法完全隔离超长时序下的性能</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-image"></i></div>
+                    <div>
+                        <div class="future-title">多模态扩展</div>
+                        <div class="future-desc">将 MemCell 和 MemScene 抽象扩展到视觉、听觉等异构观察流</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <div>
+                        <div class="future-title">效率优化</div>
+                        <div class="future-desc">通过缓存、批处理、异步运行提高端到端效率</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <div class="future-title">超长时序基准</div>
+                        <div class="future-desc">开发新的基准测试长时记忆组织和巩固能力</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div>
+                        <div class="future-title">跨域迁移</div>
+                        <div class="future-desc">研究记忆结构在不同领域间的知识迁移和共享机制</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 2rem;">
+            <p>Generated by Paper Reader Skill • AgentMemoryAtlas Project</p>
+            <p style="margin-top: 0.5rem;">Reading Date: 2026-03-20 | Paper #3 of 150</p>
+        </footer>
+    </main>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            
+            const btn = document.querySelector('.btn-secondary');
+            if (btn) {
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
