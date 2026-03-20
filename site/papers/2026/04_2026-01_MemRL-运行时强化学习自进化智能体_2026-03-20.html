@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 MemRL - 运行时强化学习自进化智能体</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-primary: #ffffff; --bg-secondary: #f8fafc; --bg-card: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b; --accent-purple: #7c3aed; --accent-cyan: #0ea5e9; --accent-green: #16a34a; --accent-orange: #f97316; --border-color: #e2e8f0; }
+        [data-theme="dark"] { --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-card: #1e293b; --text-primary: #f1f5f9; --text-secondary: #cbd5e1; --accent-purple: #a78bfa; --accent-cyan: #67e8f9; --accent-green: #4ade80; --accent-orange: #fb923c; --border-color: #334155; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero { text-align: center; padding: 3rem 2rem; background: var(--bg-card); border-radius: 16px; margin-bottom: 2.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid var(--border-color); }
+        .hero-title { font-size: 3.2rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.2rem; }
+        .hero-subtitle { font-size: 1.4rem; color: var(--text-secondary); margin: 0.8rem 0; }
+        .hero-subtitle-cn { font-size: 1.3rem; color: var(--text-primary); opacity: 0.9; font-weight: 600; }
+        .hero-meta { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .hero-meta-item { background: var(--bg-secondary); padding: 0.8rem 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); font-size: 0.95rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
+        .hero-actions { display: flex; justify-content: center; gap: 1.2rem; margin-top: 2rem; }
+        .btn { padding: 0.8rem 1.8rem; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; border: none; transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .rating-card { background: var(--bg-card); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid rgba(226, 232, 240, 0.5); }
+        .rating-title { font-size: 1.6rem; font-weight: 700; color: var(--accent-orange); display: flex; align-items: center; gap: 0.6rem; }
+        .rating-stars { display: flex; align-items: center; gap: 0.4rem; }
+        .star { font-size: 1.8rem; color: #fbbf24; }
+        .rating-value { font-size: 1.6rem; font-weight: 700; color: var(--accent-orange); margin-left: 0.6rem; }
+        .rating-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .rating-item { background: var(--bg-secondary); padding: 1rem 0.8rem; border-radius: 12px; border: 1px solid rgba(226, 232, 240, 0.5); text-align: center; }
+        .rating-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
+        .rating-score { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); letter-spacing: 2px; }
+        .rating-summary { padding: 1.5rem; background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04)); border-radius: 12px; border-left: 4px solid var(--accent-orange); color: var(--text-secondary); }
+        .rating-summary strong { color: var(--accent-orange); font-weight: 600; }
+        .card { background: var(--bg-card); border-radius: 16px; padding: 2.5rem; margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .card-title { font-size: 1.8rem; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 0.8rem; color: var(--accent-cyan); font-weight: 700; }
+        .highlight { background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06)); border-left: 4px solid var(--accent-cyan); padding: 2rem; border-radius: 12px; margin: 1.5rem 0; }
+        .highlight p { margin: 1rem 0; line-height: 1.8; font-size: 1.1rem; }
+        .highlight strong { color: var(--text-primary); font-weight: 700; }
+        .tag-container { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; margin-bottom: 2rem; }
+        .tag { background: var(--bg-secondary); padding: 0.8rem 1.5rem; border-radius: 50px; font-size: 0.95rem; border: 1px solid var(--border-color); color: var(--text-secondary); font-weight: 600; display: flex; align-items: center; gap: 0.6rem; }
+        .tag.primary { background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1)); border-color: var(--accent-purple); color: var(--accent-purple); }
+        .tag.secondary { background: rgba(59, 130, 246, 0.1); border-color: var(--accent-blue); color: var(--accent-blue); }
+        .tag.warning { background: rgba(249, 115, 22, 0.1); border-color: var(--accent-orange); color: var(--accent-orange); }
+        .tag.success { background: rgba(22, 163, 74, 0.1); border-color: var(--accent-green); color: var(--accent-green); }
+        .mermaid-wrapper { background: var(--bg-card); border-radius: 12px; margin: 2rem 0; border: 1px solid var(--border-color); padding: 2rem; overflow-x: auto; text-align: center; }
+        .mermaid { display: inline-block; min-width: 600px; }
+        .mermaid svg { max-width: 100%; height: auto !important; }
+        .keywords-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .keyword-tag { background: var(--bg-secondary); padding: 1rem 1.2rem; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 120px; }
+        .keyword-tag strong { color: var(--text-primary); font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .keyword-tag small { color: var(--text-secondary); font-size: 0.85rem; }
+        .future-research-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+        .future-item { background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); border-left: 4px solid var(--accent-purple); display: flex; gap: 1.2rem; align-items: flex-start; }
+        .future-icon { font-size: 1.8rem; color: var(--accent-purple); flex-shrink: 0; }
+        .future-title { color: var(--text-primary); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .future-desc { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
+        @media (max-width: 768px) { .container { padding: 1.5rem; } .hero-title { font-size: 2.2rem; } .hero-meta { flex-direction: column; gap: 0.8rem; } .rating-grid { grid-template-columns: repeat(2, 1fr); } .mermaid { min-width: 100%; } }
+        @media (max-width: 480px) { .hero-title { font-size: 1.8rem; } .rating-grid { grid-template-columns: repeat(1, 1fr); } }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🔄 MemRL</h1>
+            <p class="hero-subtitle">MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory</p>
+            <p class="hero-subtitle-cn">MemRL：通过情景记忆上的运行时强化学习实现自进化智能体</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2601.03192</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2026 年 1 月 6 日</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> SJTU, Xidian, NUS, MemTensor</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> HLE, BigCodeBench, ALFWorld, Lifelong Agent Bench</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2601.03192" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)</a>
+                <button class="btn btn-secondary" onclick="toggleTheme()"><i class="fas fa-moon"></i> 主题切换</button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="rating-value">4.7 / 5.0</span></div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">期刊影响力</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">方法创新性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">技术壁垒</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">落地可行性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong>MemRL 提出了一个革命性的非参数自进化框架，通过在情景记忆上应用强化学习，实现了智能体在运行时持续改进而无需权重更新。该方法通过两阶段检索机制过滤噪声并识别高效用策略，在四个多样化基准测试上均显著优于 SOTA 基线，有效解决了稳定性 - 可塑性困境。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Experiential</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Flat + Value-annotated</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Evolution + Retrieval</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：Token-level</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Experiential + Working</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Experience-Driven, Value-aware Retrieval, Progressive Learning</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Stability-Plasticity, Efficiency, Generalization</span>
+            </div>
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> MemRL 将<strong>非参数强化学习 (Non-parametric RL)</strong>引入智能体记忆领域，提出了<strong>意图 - 经验 - 效用三元组 (Intent-Experience-Utility Triplet)</strong> 记忆结构。通过<strong>两阶段检索 (Two-Phase Retrieval)</strong> 机制和<strong>效用驱动更新 (Utility-Driven Update)</strong>，该框架实现了从被动语义匹配到主动决策的转变，为解决运行时持续学习中的稳定性 - 可塑性困境提供了系统性解决方案。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有 AI 智能体难以像人类一样从经验中自我进化：微调计算成本高且容易灾难性遗忘，而基于记忆的方法依赖被动语义匹配，经常检索到噪声而非真正有用的策略。</p>
+                <p><strong>💡 解决方案是什么？</strong> MemRL 提出非参数强化学习方法，将记忆使用形式化为决策问题：(1) 意图 - 经验 - 效用三元组结构；(2) 两阶段检索（先按相似性召回候选，再按 Q 值选择）；(3) 基于环境反馈的效用更新。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 通过解耦稳定推理（冻结的 LLM）和可塑记忆（动态更新的 Q 值），MemRL 实现了无需权重更新的运行时持续学习，在四个基准测试上均显著优于 SOTA。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-sitemap"></i> 方法架构</h2>
+            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">🧬 记忆原语：Intent-Experience-Utility 三元组</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">记忆项形式化为三元组 (z, e, Q)：z (Intent): 意图；e (Experience): 经验；Q (Utility): 效用（Q 值）</p>
+
+            <h3 style="margin: 1.5rem 0 1rem; color: var(--text-primary);">🔄 两阶段检索机制</h3>
+            <ol style="margin: 1rem 0 1rem 2rem; color: var(--text-secondary);">
+                <li><strong>阶段 A：相似性召回</strong>: 通过余弦相似度过滤记忆库，生成候选池</li>
+                <li><strong>阶段 B：价值感知选择</strong>: 使用复合分数平衡探索（相似性）和利用（效用 Q）</li>
+            </ol>
+
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Memory["🧠 记忆库 M"]
+        Triplet[Intent-Experience-Utility 三元组]
+    end
+    
+    subgraph Retrieval["🔍 两阶段检索"]
+        Query[查询 s] --> PhaseA[阶段 A: 相似性召回]
+        PhaseA --> PhaseB[阶段 B: 价值感知选择]
+        PhaseB --> Context[上下文 m_ctx]
+    end
+    
+    subgraph Generation["💬 生成"]
+        Context --> LLM[冻结的 LLM]
+        LLM --> Action[动作 a]
+    end
+    
+    subgraph Update["🔄 效用更新"]
+        Action --> Env[环境]
+        Env --> Reward[奖励 r]
+        Reward --> UpdateQ[更新 Q 值]
+        UpdateQ --> Memory
+    end
+    
+    Memory --> Retrieval
+    Generation --> Update
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-bar"></i> 实验结果</h2>
+            <p style="color: var(--text-secondary);">在 HLE、BigCodeBench、ALFWorld 和 Lifelong Agent Bench 基准测试上，MemRL 均显著优于 SOTA 基线。</p>
+            <div class="highlight" style="margin-top: 1.5rem;">
+                <p><strong>关键发现:</strong></p>
+                <ul style="margin: 1rem 0 0 2rem;">
+                    <li>在探索密集型环境中表现尤为突出，证明了价值感知检索的有效性</li>
+                    <li>学习到的效用与任务成功率强相关，验证了 Q 值估计的准确性</li>
+                    <li>无需权重更新即可实现持续改进，避免了灾难性遗忘</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-key"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag"><strong>自进化智能体</strong><small>Self-Evolving Agents</small></div>
+                <div class="keyword-tag"><strong>运行时强化学习</strong><small>Runtime RL</small></div>
+                <div class="keyword-tag"><strong>情景记忆</strong><small>Episodic Memory</small></div>
+                <div class="keyword-tag"><strong>非参数学习</strong><small>Non-Parametric Learning</small></div>
+                <div class="keyword-tag"><strong>两阶段检索</strong><small>Two-Phase Retrieval</small></div>
+                <div class="keyword-tag"><strong>价值感知检索</strong><small>Value-Aware Retrieval</small></div>
+                <div class="keyword-tag"><strong>效用驱动更新</strong><small>Utility-Driven Update</small></div>
+                <div class="keyword-tag"><strong>稳定性 - 可塑性</strong><small>Stability-Plasticity</small></div>
+                <div class="keyword-tag"><strong>持续学习</strong><small>Continual Learning</small></div>
+                <div class="keyword-tag"><strong>意图 - 经验 - 效用</strong><small>Intent-Experience-Utility</small></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-database"></i></div>
+                    <div><div class="future-title">动态记忆管理</div><div class="future-desc">开发记忆压缩和遗忘机制，控制记忆库规模</div></div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-search"></i></div>
+                    <div><div class="future-title">弱监督学习</div><div class="future-desc">探索在稀疏或噪声奖励信号下的学习方法</div></div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-users"></i></div>
+                    <div><div class="future-title">多智能体扩展</div><div class="future-desc">将框架扩展到多智能体系统，实现经验共享</div></div>
+                </div>
+                <div class="future-item">
+                    <div class="future-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <div><div class="future-title">跨域迁移</div><div class="future-desc">研究记忆结构在不同领域间的知识迁移机制</div></div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); margin-top: 2rem;">
+            <p>Generated by Paper Reader Skill • AgentMemoryAtlas Project</p>
+            <p style="margin-top: 0.5rem;">Reading Date: 2026-03-20 | Paper #4 of 150</p>
+        </footer>
+    </main>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        function toggleTheme() { const html = document.documentElement; const currentTheme = html.getAttribute('data-theme'); const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', newTheme); const btn = document.querySelector('.btn-secondary'); if (btn) { const icon = btn.querySelector('i'); if (icon) { icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; } } }
+    </script>
+</body>
+</html>
