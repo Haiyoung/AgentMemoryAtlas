@@ -623,17 +623,22 @@ flowchart TB
     end
     
     subgraph Data["📊 数据结构层"]
-        VectorDB[Vector Database] --> SemanticGraph[Semantic Graph]
-        VectorDB --> TemporalGraph[Temporal Graph]
-        VectorDB --> CausalGraph[Causal Graph]
-        VectorDB --> EntityGraph[Entity Graph]
+        VectorDB[Vector Database]
+        SemanticGraph[Semantic Graph]
+        TemporalGraph[Temporal Graph]  
+        CausalGraph[Causal Graph]
+        EntityGraph[Entity Graph]
+        VectorDB --> SemanticGraph
+        VectorDB --> TemporalGraph
+        VectorDB --> CausalGraph
+        VectorDB --> EntityGraph
     end
     
     subgraph Write["✍️ 写入/更新层"]
         FastPath[Synaptic Ingestion\n(Fast Path)] --> SlowPath[Structural Consolidation\n(Slow Path)]
     end
     
-    Query <--> Data
+    Query --> Data
     Write --> Data
 </div>
             </div>
