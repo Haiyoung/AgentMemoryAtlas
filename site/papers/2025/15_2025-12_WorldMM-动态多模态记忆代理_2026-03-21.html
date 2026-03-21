@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0.8rem 0;
+            font-weight: 500;
+        }
+
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Rating Card */
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Ontology Tags */
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tag.primary {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .tag.secondary {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .tag.warning {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+
+        .tag.success {
+            background: rgba(22, 163, 74, 0.1);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Mermaid */
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mermaid {
+            display: inline-block;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        /* Future Research */
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .future-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-purple);
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .future-icon {
+            font-size: 1.8rem;
+            color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .future-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Keywords */
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-meta { flex-direction: column; gap: 0.8rem; }
+            .rating-grid { grid-template-columns: repeat(2, 1fr); }
+            .mermaid { min-width: 100%; }
+            .keywords-container { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .rating-grid { grid-template-columns: repeat(1, 1fr); }
+            .future-research-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="hero-title">🧠 WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning</h1>
+            <p class="hero-subtitle">WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning</p>
+            <p class="hero-subtitle-cn">WorldMM：用于长视频推理的动态多模态记忆代理</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i> arXiv: 2512.02425</div>
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2025年12月2日</div>
+                <div class="hero-meta-item"><i class="fas fa-university"></i> KAIST, Nanyang Technological University, DeepAuto.ai</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> EgoLifeQA, Ego-R1 Bench, HippoVlog, LVBench, Video-MME (long)</div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.02425" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> 阅读原文 (arXiv)
+                </a>
+                <button class="btn btn-secondary" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> 主题切换
+                </button>
+            </div>
+        </header>
+        
+        <section class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-gem"></i> 论文综合评分</h2>
+                <div class="rating-stars">
+                    <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                    <span class="rating-value">4.8/5.0</span>
+                </div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+            <div class="rating-summary">
+                <strong>综合评价：</strong> WorldMM提出了一个革命性的多模态记忆框架，通过构建情景、语义和视觉三种互补记忆，并采用自适应检索机制，在长视频理解任务上取得了显著突破。该工作不仅解决了现有方法过度依赖文本的问题，还通过多时间尺度设计提升了检索的灵活性。
+            </div>
+        </section>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p>基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <!-- 7 维度标签 -->
+            <div class="tag-container">
+                <span class="tag primary"><i class="fas fa-box"></i> 记忆类型：Experiential + Semantic + Episodic</span>
+                <span class="tag primary"><i class="fas fa-building"></i> 记忆结构：Graph + Hybrid</span>
+                <span class="tag primary"><i class="fas fa-cog"></i> 记忆操作：Formation + Retrieval + Consolidation + Evolution</span>
+                <span class="tag secondary"><i class="fas fa-save"></i> 记忆载体：External DB + Token-level</span>
+                <span class="tag secondary"><i class="fas fa-bullseye"></i> 功能类型：Reasoning + Learning</span>
+                <span class="tag warning"><i class="fas fa-sync"></i> 使用模式：Multimodal + Adaptive Retrieval + Multi-scale</span>
+                <span class="tag success"><i class="fas fa-check-circle"></i> 验证公理：Stability-Plasticity + Generalization + Efficiency</span>
+            </div>
+            
+            <!-- 领域贡献 with integrated explanations -->
+            <div class="highlight">
+                <strong>🎯 领域贡献:</strong> WorldMM首次将多模态记忆与自适应检索相结合，为长视频理解提供了新的范式。其三大记忆类型的分工协作（情景记忆处理事件、语义记忆处理关系、视觉记忆处理细节）体现了对人类记忆系统的深入理解和工程实现。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有视频大模型处理长视频时会丢失重要视觉细节，且只能用固定时间长度检索，不够灵活。</p>
+                <p><strong>💡 解决方案是什么？</strong> 构建三种不同类型的记忆：记录事件的情景记忆、存储关系的语义记忆、保留细节的视觉记忆，并让AI自己决定用哪种记忆和多长时间范围。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 在5个长视频问答测试中平均提升8.4%，能更好地理解复杂的长视频内容。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p>WorldMM采用三阶段架构：</p>
+            <p><strong>1. 多模态记忆构建</strong>: 情景记忆(多时间尺度图)、语义记忆(关系知识图)、视觉记忆(特征+帧索引)</p>
+            <p><strong>2. 自适应记忆检索</strong>: 检索代理动态选择记忆类型，支持多轮迭代和多时间尺度</p>
+            <p><strong>3. 响应生成</strong>: 基于检索结果生成最终答案</p>
+            
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph MemoryConstruction["🏗️ 多模态记忆构建"]
+        direction TB
+        Video[("📹 长视频输入")]
+        Episodic["🧠 情景记忆\n(多时间尺度图)"]
+        Semantic["📚 语义记忆\n(关系知识图)"]
+        Visual["👁️ 视觉记忆\n(特征+帧索引)"]
+    end
+    
+    subgraph AdaptiveRetrieval["🔍 自适应检索"]
+        Query[("❓ 查询")]
+        Retriever["🤖 检索代理"]
+        Iterative["🔄 迭代选择"]
+    end
+    
+    subgraph ResponseGeneration["🎯 响应生成"]
+        Response["💬 最终答案"]
+    end
+    
+    Video --> Episodic
+    Video --> Semantic  
+    Video --> Visual
+    Query --> Retriever
+    Episodic --> Iterative
+    Semantic --> Iterative
+    Visual --> Iterative
+    Iterative --> Retriever
+    Retriever --> Response
+    
+    style MemoryConstruction fill:#1e1b4b,stroke:#6366f1
+    style AdaptiveRetrieval fill:#0e2f35,stroke:#06b6d4
+    style ResponseGeneration fill:#166534,stroke:#10b981
+</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p>WorldMM在5个长视频问答基准上全面超越现有方法：</p>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现</strong>: 多模态记忆的组合效果最佳，单一记忆类型效果有限。视觉记忆对物体识别和动作理解特别重要。语义记忆对长期关系和习惯推理至关重要。自适应检索比固定检索策略更有效。</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>EgoLifeQA</strong><br>
+                    <span style="color: var(--accent-green); font-weight: 700;">65.6%</span> vs 59.6% (+6.0%)
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>Ego-R1 Bench</strong><br>
+                    <span style="color: var(--accent-green); font-weight: 700;">65.3%</span> vs 56.0% (+9.3%)
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>HippoVlog</strong><br>
+                    <span style="color: var(--accent-green); font-weight: 700;">78.3%</span> vs 75.7% (+2.6%)
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>LVBench</strong><br>
+                    <span style="color: var(--accent-green); font-weight: 700;">61.9%</span> vs 60.4% (+1.5%)
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>Video-MME (L)</strong><br>
+                    <span style="color: var(--accent-green); font-weight: 700;">76.6%</span> vs 74.3% (+2.3%)
+                </div>
+                <div style="background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple)); color: white; padding: 1.5rem; border-radius: var(--radius-md); font-weight: 700;">
+                    <strong>平均提升</strong><br>
+                    <span style="font-size: 1.2rem;">+8.4%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>多模态记忆</strong>
+                    <small>Multimodal Memory</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>长视频理解</strong>
+                    <small>Long Video Understanding</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>自适应检索</strong>
+                    <small>Adaptive Retrieval</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>情景记忆</strong>
+                    <small>Episodic Memory</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>语义记忆</strong>
+                    <small>Semantic Memory</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>视觉记忆</strong>
+                    <small>Visual Memory</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>计算复杂度高</strong><br>
+                    需要构建和维护三种不同类型的记忆
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>预处理时间长</strong><br>
+                    多尺度记忆构建需要大量预处理时间
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>依赖高质量视频LLM</strong><br>
+                    记忆构建质量依赖于底层视频大模型的性能
+                </div>
+                <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <strong>特定场景优化</strong><br>
+                    主要在长视频问答场景验证，其他任务需要进一步验证
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <i class="fas fa-compress future-icon"></i>
+                    <div>
+                        <div class="future-title">记忆压缩</div>
+                        <div class="future-desc">开发更高效的记忆表示方法，减少存储和计算开销</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-bolt future-icon"></i>
+                    <div>
+                        <div class="future-title">在线学习</div>
+                        <div class="future-desc">实现真正的在线记忆构建和更新，而非离线预处理</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-link future-icon"></i>
+                    <div>
+                        <div class="future-title">跨模态对齐</div>
+                        <div class="future-desc">改进文本和视觉记忆之间的对齐机制</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-expand future-icon"></i>
+                    <div>
+                        <div class="future-title">通用性扩展</div>
+                        <div class="future-desc">将框架扩展到其他长序列理解任务（如长音频、长文档）</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Initialize Mermaid
+            mermaid.initialize({ 
+                startOnLoad: true, 
+                theme: 'default',
+                securityLevel: 'loose'
+            });
+            
+            // Theme switching
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme') || 'light';
+                const next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                
+                // Update button icon
+                const btn = document.querySelector('.btn-secondary');
+                if (btn) {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                // Update button icon based on saved theme
+                const btn = document.querySelector('.btn-secondary');
+                if (btn && savedTheme === 'dark') {
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-sun';
+                    }
+                }
+            }
+        </script>
+    </main>
+</body>
+</html>
