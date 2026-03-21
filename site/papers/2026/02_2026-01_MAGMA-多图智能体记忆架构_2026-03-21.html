@@ -617,18 +617,24 @@
             <div class="mermaid-wrapper">
                 <div class="mermaid">
 flowchart TB
-    Router[Intent-Aware Router] --> Traversal[Adaptive Traversal]
-    Traversal --> Synthesizer[Context Synthesizer]
+    subgraph Query["🔍 查询处理"]
+        Router[Intent-Aware Router] --> Traversal[Adaptive Traversal]
+        Traversal --> Synthesizer[Context Synthesizer]
+    end
     
-    VectorDB[Vector Database] --> SemanticGraph[Semantic Graph]
-    VectorDB --> TemporalGraph[Temporal Graph]
-    VectorDB --> CausalGraph[Causal Graph]
-    VectorDB --> EntityGraph[Entity Graph]
+    subgraph Data["📊 数据结构"]
+        VectorDB[Vector Database] --> Semantic[Semantic Graph]
+        VectorDB --> Temporal[Temporal Graph]
+        VectorDB --> Causal[Causal Graph]
+        VectorDB --> Entity[Entity Graph]
+    end
     
-    FastPath[Synaptic Ingestion] --> SlowPath[Structural Consolidation]
+    subgraph Write["✍️ 写入更新"]
+        Fast[Fast Path] --> Slow[Slow Path]
+    end
     
-    Router --> VectorDB
-    FastPath --> VectorDB
+    Query --> Data
+    Write --> Data
 </div>
             </div>
         </div>
