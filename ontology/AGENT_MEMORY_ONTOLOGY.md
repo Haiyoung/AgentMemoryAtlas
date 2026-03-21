@@ -1,223 +1,106 @@
-# Agent Memory Ontology v1.2
+# Agent Memory 领域本体论
 
-**版本**: v1.2 (2026-03-19)  
-**更新**: 基于第 1 批次 10 篇论文分析优化  
-**变更**: 新增 2 个操作、3 个模式、1 个公理
+## 核心公理体系
 
-## 🧠 本体论概述
+### 记忆存在公理
+- **持久性**: 记忆必须能够跨时间保持信息完整性
+- **可访问性**: 记忆必须支持高效的检索和更新操作  
+- **一致性**: 记忆内容必须保持逻辑一致性和事实准确性
 
-本本体模型用于系统化标注和分析**智能体记忆 (Agent Memory)** 领域的研究论文。
+### 记忆操作公理
+- **形成公理**: 记忆形成必须基于有意义的经验单元（事件、对话、观察）
+- **演化公理**: 记忆必须支持结构化演进（巩固、遗忘、整合）
+- **检索公理**: 记忆检索必须支持目标导向的主动搜索
 
-### 设计原则
+### 认知交互公理
+- **感知绑定**: 记忆必须与感知系统紧密集成
+- **推理支撑**: 记忆必须为推理提供必要且充分的上下文
+- **行动指导**: 记忆必须能够指导智能体的行为决策
 
-1. **正交性** - 各维度相互独立，避免重叠
-2. **完备性** - 覆盖领域核心概念
-3. **可扩展** - 支持新概念动态添加
-4. **可计算** - 机器可读，支持推理
+## 概念关系网络
 
----
+### 形式维度网络 (Forms)
+- **Token-level Memory**: 显式离散存储
+  - *子类型*: Event Graph, Multi-Graph, Structural Tree
+  - *关系*: 可转化为 Parametric/Latent 表示
+- **Parametric Memory**: 隐式权重存储  
+  - *子类型*: Fine-tuning, Adapter-based
+  - *关系*: 通常不可逆，但效率高
+- **Latent Memory**: 隐藏状态存储
+  - *子类型*: Hidden States, Attention Patterns
+  - *关系*: 动态性强，但可解释性差
 
-## 📐 7 维度本体模型
+### 功能维度网络 (Functions)  
+- **Factual Memory**: 知识存储与检索
+  - *应用场景*: 长文档QA、知识问答
+  - *技术特征*: 结构化表示、精确检索
+- **Experiential Memory**: 技能学习与进化
+  - *应用场景*: 自主代理、强化学习
+  - *技术特征*: 效用驱动、自适应更新  
+- **Working Memory**: 上下文管理与推理
+  - *应用场景*: 多跳推理、复杂任务规划
+  - *技术特征*: 主动搜索、动态维护
 
-```mermaid
-graph TD
-    A[Agent Memory Paper] --> B[记忆类型 Memory Type]
-    A --> C[记忆结构 Memory Structure]
-    A --> D[记忆操作 Memory Operation]
-    A --> E[记忆载体 Memory Carrier]
-    A --> F[功能定位 Function]
-    A --> G[模式识别 Pattern]
-    A --> H[公理约束 Axiom]
-    
-    style B fill:#e1f5fe
-    style C fill:#fff3e0
-    style D fill:#f3e5f5
-    style E fill:#e8f5e9
-    style F fill:#ffebee
-    style G fill:#fff8e1
-    style H fill:#fce4ec
+### 动态维度网络 (Dynamics)
+- **Formation**: 记忆提取与构建
+  - *机制*: 事件分割、EDU分解、经验抽象
+  - *质量指标*: 忠实度、完整性、结构化程度
+- **Evolution**: 记忆巩固与遗忘  
+  - *机制*: 语义巩固、效用更新、周期性重聚类
+  - *质量指标*: 一致性、抗干扰性、演化稳定性
+- **Retrieval**: 记忆访问与检索
+  - *机制*: 策略引导遍历、两阶段检索、主动多路径搜索
+  - *质量指标*: 相关性、效率、可解释性
+
+## 跨维度整合网络
+
+### 三维一体记忆模型
+```
+[Form] ←→ [Function] ←→ [Dynamics]
+   ↑         ↑           ↑
+结构化     目标导向     生命周期
+表示       应用        管理
 ```
 
----
+### 认知架构集成
+- **感知层**: 原始输入 → 记忆形成
+- **记忆层**: 结构化存储 ↔ 动态演化 ↔ 目标检索  
+- **推理层**: 记忆检索 → 上下文合成 → 决策生成
+- **行动层**: 决策执行 → 经验反馈 → 记忆更新
 
-## 1️⃣ 记忆类型 (Memory Type)
+## 批次1 (2026年) 新增概念
 
-记忆的本质分类，回答"**是什么类型的记忆**"
+### 新增记忆结构类型
+- **Event Graph** (CompassMem): 基于事件分割理论的图结构
+- **Multi-Graph** (MAGMA): 四个正交关系图的解耦表示  
+- **Structural Relation Tree** (From Context to EDUs): EDU分解的树结构
+- **Intent-Experience-Utility Triplet** (MemRL): 强化学习驱动的三元组
 
-| 类型 | 英文 | 说明 | 代表论文 |
-|------|------|------|---------|
-| 情景式 | Episodic | 具体事件/经历的记忆 | CompassMem, MemGPT |
-| 程序式 | Procedural | 技能/操作程序的记忆 | Memp |
-| 语义式 | Semantic | 事实/概念知识的记忆 | MemoryBank |
-| 经验式 | Experiential | 交互中积累的经验 | FLEX, ELL |
-| 工作式 | Working | 短期任务相关记忆 | MemTool |
-| 长期式 | Long-term | 持久化存储的记忆 | HippoRAG |
+### 新增记忆操作机制  
+- **Active Multi-Path Search** (CompassMem): 规划器-探索者-响应者架构
+- **Policy-guided Graph Traversal** (MAGMA): 意图感知路由 + 自适应遍历
+- **Structure-then-Select** (From Context to EDUs): 先结构后选择的压缩范式
+- **Two-Phase Retrieval** (MemRL): 语义召回 + 价值感知选择
 
----
+### 新增验证公理
+- **Event Segmentation Theory**: 人类自然分割连续经验的认知机制
+- **Orthogonal Relation Modeling**: 多关系正交建模避免信息纠缠  
+- **Rhetorical Structure Theory**: 修辞结构理论指导上下文压缩
+- **Model-Memory Decoupling**: 解耦稳定推理与可塑记忆
 
-## 2️⃣ 记忆结构 (Memory Structure)
+## 未来发展方向
 
-记忆的组织形式，回答"**如何组织记忆**"
+### 短期 (2025-2026)
+- **多模态记忆整合**: 跨视觉、语言、音频的记忆统一表示
+- **实时性能优化**: 降低计算开销，提升检索效率
+- **评估基准完善**: 构建更全面的记忆能力评测体系
 
-| 结构 | 英文 | 说明 | 优势 |
-|------|------|------|------|
-| 向量式 | Vector | 嵌入向量表示 | 高效相似度检索 |
-| 图式 | Graph | 节点 - 边关系网络 | 捕捉复杂关联 |
-| 层次化 | Hierarchical | 多层抽象结构 | 支持不同粒度 |
-| 序列式 | Sequential | 时间顺序排列 | 保留时序信息 |
-| 混合式 | Hybrid | 多种结构组合 | 灵活性高 |
-| 键值式 | Key-Value | 离散键值对 | 精确检索 |
+### 中期 (2027-2028)  
+- **终身学习架构**: 支持跨会话、跨任务的记忆持续演化
+- **认知科学深度融合**: 更深入地借鉴人类记忆认知机制
+- **安全与隐私保护**: 记忆系统的安全访问控制和隐私保护
 
----
-
-## 3️⃣ 记忆操作 (Memory Operation)
-
-记忆系统的核心操作，回答"**对记忆做什么**"
-
-| 操作 | 英文 | 说明 | 关键技术 | 代表论文 |
-|------|------|------|------|---------|
-| **编码** | Encoding | 将信息转化为记忆 | 向量化/结构化 | MemoryBank |
-| **存储** | Storage | 持久化保存 | 数据库/文件系统 | MemGPT |
-| **检索** | Retrieval | 按需提取记忆 | 相似度搜索/图遍历 | HippoRAG |
-| **更新** | Update | 修改现有记忆 | 增量学习/覆盖 | O-Mem |
-| **遗忘** | Forgetting | 主动删除记忆 | 遗忘曲线/重要性筛选 | MOOM |
-| **整合** | Consolidation | 记忆重组优化 | 聚类/摘要 | Memoria |
-| **反思** | Reflection | 基于记忆的元认知 | 自我评估/规划 | Reflexion |
-| **形成** | Formation | 从交互中产生新经验 | 经验蒸馏 | **FLEX** |
-| **进化** | Evolution | 经验库的自我完善 | 选择性合并 | **FLEX**, MemEvolve |
-| **蒸馏** | Distillation | 从具体经验抽象通用规则 | 模式提取 | **FLEX**, DreamGym |
-
----
-
-## 4️⃣ 记忆载体 (Memory Carrier)
-
-记忆的物理/逻辑载体，回答"**记忆存储在哪里**"
-
-| 载体 | 英文 | 说明 | 示例 |
-|------|------|------|------|
-| Token 级 | Token-level | LLM 上下文窗口 | 对话历史 |
-| 隐藏状态 | Hidden State | 模型内部表示 | RNN/LSTM 状态 |
-| 参数级 | Parametric | 模型权重本身 | 微调后的模型 |
-| 外部数据库 | External DB | 独立存储系统 | 向量数据库 |
-| 文件系统 | File System | 文件形式存储 | JSON/文本文件 |
-| 混合载体 | Hybrid | 多种载体组合 | 上下文 + 外部 DB |
-
----
-
-## 5️⃣ 功能定位 (Function)
-
-记忆在智能体中的角色，回答"**记忆用来做什么**"
-
-| 功能 | 英文 | 说明 | 应用场景 |
-|------|------|------|---------|
-| 规划 | Planning | 支持任务规划 | 长期任务分解 |
-| 推理 | Reasoning | 支持逻辑推理 | 多跳问答 |
-| 对话 | Dialogue | 支持连贯对话 | 个性化助手 |
-| 学习 | Learning | 支持持续学习 | 技能积累 |
-| 决策 | Decision | 支持决策制定 | 游戏/机器人 |
-| 生成 | Generation | 支持内容生成 | 写作/创作 |
-
----
-
-## 6️⃣ 模式识别 (Pattern)
-
-设计范式识别，回答"**采用什么设计模式**"
-
-| 模式 | 英文 | 说明 | 代表工作 | 关键特征 |
-|------|------|------|---------|---------|
-| **检索增强** | RAG | 检索 + 生成 | 标准 RAG 架构 | 静态知识库 |
-| **反思** | Reflection | 自我反思改进 | Reflexion | 单轮自我评估 |
-| **自进化** | Self-evolving | 系统自主进化 | ReasoningBank | 持续积累 |
-| **经验驱动** | Experience-driven | 基于经验学习 | **FLEX**, DreamGym | 成功/失败对比 |
-| **前向学习** | Forward-learning | 无需梯度的学习 | **FLEX** | 仅前向传播 |
-| **Actor-Critic** | Actor-Critic | 探索 + 评估协作 | **FLEX** | 双代理模式 |
-| **Meta-MDP** | Meta-MDP | 双层优化框架 | **FLEX** | 元级控制 |
-| **经验继承** | Experience-inheritance | 跨模型知识迁移 | **FLEX** | 即插即用 |
-| **多智能体** | Multi-agent | 多智能体协作 | RCR-Router | 角色分工 |
-| **模块化** | Modular | 功能模块分离 | Nemosine | 解耦设计 |
-| **OS 启发** | OS-inspired | 操作系统式设计 | MemGPT, EverMemOS | 虚拟内存管理 |
-
----
-
-## 7️⃣ 公理约束 (Axiom)
-
-底层原则约束，回答"**遵循什么基本原则**"
-
-| 公理 | 英文 | 说明 | 可验证判据 | 代表论文 |
-|------|------|------|-----------|---------|
-| **稳定性 - 可塑性** | Stability-Plasticity | 保持旧知 vs 学习新知 | 无灾难性遗忘 + 新知识整合 | **FLEX**, O-Mem |
-| **泛化性** | Generalization | 从具体到一般 | 跨模型/跨任务迁移有效 | **FLEX** (+6.7~16.7%) |
-| **缩放性** | Scaling | 性能随规模可预测提升 | 经验库规模→性能幂律关系 | **FLEX** |
-| **效率** | Efficiency | 计算/存储效率 | token 使用/推理时间优化 | MemTool, MOOM |
-| **可解释性** | Interpretability | 记忆可理解 | 显式文本/可视化 | FLEX, MemGPT |
-| **一致性** | Consistency | 记忆间无矛盾 | 冲突检测/解决机制 | Memoria |
-| **时序性** | Temporality | 时间关系保持 | 时序推理正确 | CompassMem |
-
----
-
-## 📊 本体使用示例
-
-### 论文标注示例 (FLEX)
-
-```json
-{
-  "paper_id": "2511.06449",
-  "title": "Continuous Agent Evolution via Forward Learning from Experience",
-  "ontology": {
-    "memory_type": ["Experiential", "Procedural"],
-    "memory_structure": ["Hierarchical", "Graph"],
-    "memory_operation": ["Formation", "Evolution", "Retrieval"],
-    "memory_carrier": ["Token-level", "External DB"],
-    "function": ["Learning", "Reasoning"],
-    "patterns": ["Experience-driven", "Self-evolving"],
-    "axioms": ["Stability-Plasticity", "Generalization"]
-  }
-}
-```
-
-### 本体查询示例
-
-```sparql
-# 查询所有使用图结构的论文
-SELECT ?paper WHERE {
-  ?paper ontology:memoryStructure ontology:Graph .
-}
-
-# 查询支持自进化模式的论文
-SELECT ?paper WHERE {
-  ?paper ontology:pattern ontology:SelfEvolving .
-}
-```
-
----
-
-## 🔄 本体演进
-
-| 版本 | 日期 | 变更 |
-|------|------|------|
-| v1.0 | 2026-03-19 | 初始版本，7 维度模型 |
-| ... | ... | ... |
-
-### 演进原则
-
-1. **向后兼容** - 新增概念不破坏旧标注
-2. **社区驱动** - 基于论文分析需求扩展
-3. **文档化** - 每次变更记录日志
-
----
-
-## 📚 参考文献
-
-- [Memory in the Age of AI Agents (Survey)](../papers/2025/12_2025-12_MemorySurvey/)
-- [HippoRAG: Neurobiologically Inspired Long-Term Memory](../papers/2024/05_2024-05_HippoRAG/)
-- [MemGPT: Towards LLMs as Operating Systems](../papers/2023/10_2023-10_MemGPT/)
-
----
-
-<div align="center">
-
-**本体论是探索记忆领域版图的语言**
-
-[📄 返回主页](../README.md)
-
-</div>
+### 长期 (2029+)
+- **通用记忆基座**: 构建适用于所有智能体的通用记忆架构
+- **意识与记忆关联**: 探索记忆在机器意识中的作用
+- **群体记忆系统**: 多智能体间的记忆共享与协作

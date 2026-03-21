@@ -1,7 +1,7 @@
 # AgentMemoryAtlas 🧭
 
 [![Stars](https://img.shields.io/github/stars/Haiyoung/AgentMemoryAtlas?style=social)](https://github.com/Haiyoung/AgentMemoryAtlas)
-[![Papers](https://img.shields.io/badge/papers-10%2F150-blue)](https://haiyoung.github.io/AgentMemoryAtlas/)
+[![Papers](https://img.shields.io/badge/papers-4%2F204-blue)](https://haiyoung.github.io/AgentMemoryAtlas/)
 [![License](https://img.shields.io/badge/license-MIT--0-yellow)](LICENSE)
 
 > 🗺️ **系统性梳理 Agent Memory 领域研究版图**
@@ -40,7 +40,7 @@
 
 ### 在线阅读
 [**🌐 访问 GitHub Pages**](https://haiyoung.github.io/AgentMemoryAtlas/) 查看：
-- 📊 实时进度统计 (10/150)
+- 📊 实时进度统计 (4/204)
 - 📄 所有论文HTML总结
 - 🧠 本体论核心概念展示
 - 🔍 按年份分类浏览
@@ -73,9 +73,9 @@ AgentMemoryAtlas/
 
 | 指标 | 状态 |
 |------|------|
-| 📚 总目标 | 150篇Agent Memory论文 |
-| ✅ 已完成 | 10/150 (6.7%) |
-| 📅 最新批次 | 批次1 (2026年 + 2025年12月) |
+| 📚 总目标 | 204篇Agent Memory论文 |
+| ✅ 已完成 | 4/204 (2.0%) |
+| 📅 最新批次 | 批次1 (2026年) ✅ |
 | 🧠 本体论概念 | 42+核心概念 |
 
 ---
