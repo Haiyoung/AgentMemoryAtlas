@@ -617,24 +617,32 @@
             <div class="mermaid-wrapper">
                 <div class="mermaid">
 flowchart TB
-    subgraph Query["🔍 查询处理"]
-        Router[Intent-Aware Router] --> Traversal[Adaptive Traversal]
+    UserQuery[用户查询] --> Router[Intent-Aware Router]
+    
+    subgraph "Query Process"
+        Router --> Traversal[Adaptive Traversal]
         Traversal --> Synthesizer[Context Synthesizer]
     end
     
-    subgraph Data["📊 数据结构"]
-        VectorDB[Vector Database] --> Semantic[Semantic Graph]
-        VectorDB --> Temporal[Temporal Graph]
-        VectorDB --> Causal[Causal Graph]
-        VectorDB --> Entity[Entity Graph]
+    subgraph "Data Structure Layer"
+        VectorDB[Vector Database]
+        Semantic[Semantic Graph]
+        Temporal[Temporal Graph]
+        Causal[Causal Graph]
+        Entity[Entity Graph]
+        VectorDB --> Semantic
+        VectorDB --> Temporal
+        VectorDB --> Causal
+        VectorDB --> Entity
     end
     
-    subgraph Write["✍️ 写入更新"]
-        Fast[Fast Path] --> Slow[Slow Path]
+    subgraph "Write/Update Process"
+        FastPath[Fast Path\nSynaptic Ingestion] --> SlowPath[Slow Path\nStructural Consolidation]
     end
     
-    Query --> Data
-    Write --> Data
+    Synthesizer --> Response[最终响应]
+    QueryProcess["Query Process"] --> DataStructure["Data Structure Layer"]
+    WriteUpdate["Write/Update Process"] --> DataStructure
 </div>
             </div>
         </div>
