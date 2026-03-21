@@ -614,37 +614,22 @@
             <div class="mermaid-wrapper">
                 <div class="mermaid">
 flowchart TB
-    subgraph MemoryConstruction["🏗️ 多模态记忆构建"]
-        direction TB
-        Video[("📹 长视频输入")]
-        Episodic["🧠 情景记忆\n(多时间尺度图)"]
-        Semantic["📚 语义记忆\n(关系知识图)"]
-        Visual["👁️ 视觉记忆\n(特征+帧索引)"]
+    subgraph Input["📥 输入流"]
+        X[("📹 长视频输入")]
     end
     
-    subgraph AdaptiveRetrieval["🔍 自适应检索"]
-        Query[("❓ 查询")]
-        Retriever["🤖 检索代理"]
-        Iterative["🔄 迭代选择"]
+    subgraph Construction["🏗️ 增量层次记忆构建"]
+        Seg[情景记忆] --> Rel[语义记忆]
+        Rel --> Graph[视觉记忆]
     end
     
-    subgraph ResponseGeneration["🎯 响应生成"]
-        Response["💬 最终答案"]
+    subgraph Search["🔍 主动多路径记忆搜索"]
+        Plan[Planner: 查询分解] --> Expl[Explorers: 图导航]
+        Expl --> Resp[Responder: 生成答案]
     end
     
-    Video --> Episodic
-    Video --> Semantic  
-    Video --> Visual
-    Query --> Retriever
-    Episodic --> Iterative
-    Semantic --> Iterative
-    Visual --> Iterative
-    Iterative --> Retriever
-    Retriever --> Response
-    
-    style MemoryConstruction fill:#1e1b4b,stroke:#6366f1
-    style AdaptiveRetrieval fill:#0e2f35,stroke:#06b6d4
-    style ResponseGeneration fill:#166534,stroke:#10b981
+    X --> Construction
+    Construction --> Search
 </div>
             </div>
         </div>
