@@ -4,205 +4,600 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 { color: #1a1a1a; border-bottom: 3px solid #6366f1; padding-bottom: 10px; }
-        h2 { color: #4f46e5; margin-top: 30px; }
-        h3 { color: #6366f1; }
-        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
-        th { background: #f3f4f6; font-weight: 600; }
-        tr:nth-child(even) { background: #f9fafb; }
-        .highlight { background: #fef3c7; padding: 2px 6px; border-radius: 3px; }
-        .mermaid { background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; }
-        blockquote { border-left: 4px solid #6366f1; margin: 20px 0; padding-left: 20px; color: #4b5563; }
-        code { background: #f3f4f6; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
-        pre { background: #1f2937; color: #f9fafb; padding: 20px; border-radius: 8px; overflow-x: auto; }
-        .emoji { font-size: 1.2em; }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3 rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .meta-item i {
+            color: var(--accent-purple);
+        }
+
+        .meta-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0.3rem;
+        }
+
+        /* Content Sections */
+        .section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            color: var(--accent-purple);
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--bg-secondary);
+        }
+
+        /* Mermaid Diagrams */
+        .mermaid-container {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            border-left: 4px solid var(--accent-purple);
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            color: var(--text-secondary);
+        }
+
+        blockquote p {
+            margin: 0.5rem 0;
+        }
+
+        /* Code Blocks */
+        pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        :not(pre) > code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--accent-purple);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        /* Links */
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-purple);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .meta-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(124, 58, 237, 0.15));
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05));
+            border: 2px solid var(--accent-purple);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .insight-box-title {
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
 </head>
 <body>
+    <div class="theme-toggle" onclick="toggleTheme()" title="切换主题">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <div class="container">
-        <h1>05_2025-12_WorldMM-动态多模态记忆智能体_WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning_2026-03-22</h1>
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 class="hero-title">WorldMM</h1>
+            <p class="hero-subtitle">Dynamic Multimodal Memory Agent for Long Video Reasoning</p>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">动态多模态记忆智能体 for 长视频推理</p>
+            
+            <div class="meta-info">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>2025-12-02</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-university"></i>
+                    <span>KAIST, NTU, DeepAuto.ai</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>arXiv:2512.02425</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-brain"></i>
+                    <span>多模态记忆 · 自适应检索 · 长视频理解</span>
+                </div>
+            </div>
 
-<strong>arXiv</strong>: <a href="https://arxiv.org/abs/2512.02425">2512.02425</a>  
-<strong>作者</strong>: Woongyeong Yeo, Kangsan Kim, Jaehong Yoon, Sung Ju Hwang (KAIST, NTU, DeepAuto.ai)  
-<strong>日期</strong>: 2025-12-02  
-<strong>领域</strong>: 计算机视觉 (cs.CV), 人工智能 (cs.AI), 多模态记忆  
-<strong>标签</strong>: #长视频理解 #多模态记忆 #自适应检索 #图结构记忆
+            <div style="margin-top: 1.5rem;">
+                <span class="meta-tag">#长视频理解</span>
+                <span class="meta-tag">#多模态记忆</span>
+                <span class="meta-tag">#自适应检索</span>
+                <span class="meta-tag">#图结构记忆</span>
+            </div>
+        </div>
 
-<hr>
+        <!-- 核心信息卡片 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> 核心信息卡片</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">维度</th>
+                            <th>内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>核心问题</strong></td>
+                            <td>长视频 (小时/天级) 理解中，现有方法过度依赖文本表示，无法有效利用视觉证据，且检索时间粒度固定</td>
+                        </tr>
+                        <tr>
+                            <td><strong>核心创新</strong></td>
+                            <td><span class="highlight">三类型多模态记忆</span> (情景/语义/视觉) + <span class="highlight">自适应检索智能体</span> + 多时间粒度图结构</td>
+                        </tr>
+                        <tr>
+                            <td><strong>性能提升</strong></td>
+                            <td><span class="highlight">5 个长视频 QA 基准上平均提升 8.4%</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>关键洞见</strong></td>
+                            <td>视觉细节对属性识别、空间推理至关重要；不同查询需要不同时间跨度的上下文</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<h2>📋 核心信息卡片</h2>
+        <!-- 本体论 7 维度标注 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-brain"></i> 本体论 7 维度标注</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-title">📦 Form 维度</div>
+                    <div class="card-content">
+                        <strong>混合存储架构</strong><br>
+                        • 情景式：Token-level + 多图结构<br>
+                        • 语义式：Token-level + 知识图谱<br>
+                        • 视觉：Latent + 短视频索引
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🎯 Function 维度</div>
+                    <div class="card-content">
+                        <strong>三认知功能对应</strong><br>
+                        • Factual: 多时间粒度事件索引<br>
+                        • Experiential: 高层概念知识<br>
+                        • Working: 自适应检索决策
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🔄 Dynamics 维度</div>
+                    <div class="card-content">
+                        <strong>迭代检索机制</strong><br>
+                        • Formation: 细粒度 caption + 多图<br>
+                        • Evolution: 知识图谱持续更新<br>
+                        • Retrieval: 自适应多粒度选择
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🌍 Context 维度</div>
+                    <div class="card-content">
+                        <strong>长视频 QA 场景</strong><br>
+                        • 小时 - 天级视频理解<br>
+                        • 属性识别 & 空间推理<br>
+                        • 多时间跨度查询
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">📊 Evaluation 维度</div>
+                    <div class="card-content">
+                        <strong>5 基准验证</strong><br>
+                        • 平均提升 +8.4% vs SOTA<br>
+                        • LVBench, VideoMME, HourVideo 等<br>
+                        • 消融实验验证各组件贡献
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">⚠️ Limitation 维度</div>
+                    <div class="card-content">
+                        <strong>待改进方向</strong><br>
+                        • 计算开销较高<br>
+                        • 视觉记忆固定分段<br>
+                        • 依赖 caption 质量
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🚀 Future 维度</div>
+                    <div class="card-content">
+                        <strong>未来方向</strong><br>
+                        • 端到端联合训练<br>
+                        • 自适应视觉分段<br>
+                        • 跨模态深度融合
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<tr><td>维度 | 内容 |</td></tr>
-|------|------|
-<tr><td><strong>核心问题</strong> | 长视频 (小时/天级) 理解中，现有方法过度依赖文本表示，无法有效利用视觉证据，且检索时间粒度固定 |</td></tr>
-<tr><td><strong>核心创新</strong> | 三类型多模态记忆 (情景/语义/视觉) + 自适应检索智能体 + 多时间粒度图结构 |</td></tr>
-<tr><td><strong>性能提升</strong> | 5 个长视频 QA 基准上平均提升 8.4% |</td></tr>
-<tr><td><strong>关键洞见</strong> | 视觉细节对属性识别、空间推理至关重要；不同查询需要不同时间跨度的上下文 |</td></tr>
-
-<hr>
-
-<h2>🧠 本体论 7 维度标注</h2>
-
-<h3>1️⃣ Form 维度：存储介质类型</h3>
-
-<tr><td>记忆类型 | 存储形式 | 结构 |</td></tr>
-|---------|---------|------|
-<tr><td><strong>情景式记忆 (Episodic)</strong> | Token-level (文本) | 多图结构，多时间粒度 (秒/分/小时) |</td></tr>
-<tr><td><strong>语义式记忆 (Semantic)</strong> | Token-level (文本) | 知识图谱，持续更新 |</td></tr>
-<tr><td><strong>视觉记忆 (Visual)</strong> | Latent (视觉特征) | 短视频片段索引 corpus |</td></tr>
-
-<strong>本质特征</strong>: 混合存储架构，同时利用离散文本和连续视觉表示
-
-<hr>
-
-<h3>2️⃣ Function 维度：记忆功能</h3>
-
-<tr><td>功能类型 | 实现方式 | 应用场景 |</td></tr>
-|---------|---------|---------|
-<tr><td><strong>Factual (事实性)</strong> | 情景式记忆索引多时间粒度事件 | "我在哪里放了眼镜？" (秒级) |</td></tr>
-<tr><td><strong>Experiential (经验性)</strong> | 语义式记忆存储高层概念知识 | "足球赛下半场发生了什么？" (小时级) |</td></tr>
-<tr><td><strong>Working (工作性)</strong> | 自适应检索智能体动态选择记忆源 | 迭代检索直到信息充足 |</td></tr>
-
-<strong>核心洞见</strong>: 三种记忆类型分别对应不同认知功能，而非简单的时间划分
-
-<hr>
-
-<h3>3️⃣ Dynamics 维度：演化机制</h3>
-
-<tr><td>机制 | 情景式记忆 | 语义式记忆 | 视觉记忆 |</td></tr>
-|------|-----------|-----------|---------|
-<tr><td><strong>Formation (形成)</strong> | 细粒度 caption + 多图构建 | 从事件中提取关系，增量更新 | 视频分段 + 视觉特征提取 |</td></tr>
-<tr><td><strong>Evolution (演化)</strong> | 多时间粒度图合并/分裂 | 知识图谱持续更新 | 固定，按索引检索 |</td></tr>
-<tr><td><strong>Retrieval (检索)</strong> | 自适应选择时间粒度 | 关系推理 | 按需检索视觉证据 |</td></tr>
-
-<strong>关键创新</strong>: 检索智能体迭代选择记忆源和时间粒度，直到确定信息充足
-
-<hr>
-
-<h3>4️⃣ Context 维度：应用场景</h3>
-
-<tr><td>场景 | 挑战 | WorldMM 方案 |</td></tr>
-|------|------|------------|
-<tr><td><strong>长视频 QA</strong> (小时 - 天级) | 上下文窗口限制，视觉细节丢失 | 多模态记忆 + 自适应检索 |</td></tr>
-<tr><td><strong>属性识别</strong> | 文本描述无法精确表达视觉特征 | 视觉记忆保留细节 |</td></tr>
-<tr><td><strong>空间推理</strong> | 需要场景布局信息 | 视觉记忆支持 |</td></tr>
-<tr><td><strong>多时间跨度查询</strong> | 固定检索粒度不灵活 | 多时间粒度图结构 |</td></tr>
-
-<strong>基准测试</strong>: LVBench, VideoMME, HourVideo, EgoLife, 5 个长视频 QA 基准
-
-<hr>
-
-<h3>5️⃣ Evaluation 维度：评估指标</h3>
-
-<tr><td>指标 | 结果 | 对比基线 |</td></tr>
-|------|------|---------|
-<tr><td><strong>平均性能提升</strong> | +8.4% | 之前 SOTA 方法 |</td></tr>
-<tr><td><strong>基准数量</strong> | 5 个长视频 QA 基准 | 包括小时级到周级视频 |</td></tr>
-<tr><td><strong>消融实验</strong> | 验证三记忆类型各自贡献 | 情景/语义/视觉记忆 |</td></tr>
-
-<strong>关键发现</strong>: 
-<li>情景式记忆 → 多时间跨度事件推理</li>
-<li>视觉记忆 → 物体和动作中心查询</li>
-<li>语义式记忆 → 长时段上下文推理</li>
-
-<hr>
-
-<h3>6️⃣ Limitation 维度：局限性和挑战</h3>
-
-<tr><td>局限性 | 影响 | 可能改进方向 |</td></tr>
-|-------|------|-------------|
-<tr><td><strong>计算开销</strong> | 三类型记忆构建和检索成本高 | 更高效的记忆压缩 |</td></tr>
-<tr><td><strong>视觉记忆固定</strong> | 视觉片段按固定长度分段 | 自适应视觉分段 |</td></tr>
-<tr><td><strong>检索迭代次数</strong> | 需要确定何时停止检索 | 更智能的停止条件 |</td></tr>
-<tr><td><strong>依赖 caption 质量</strong> | 情景式记忆基于细粒度 caption | 端到端视觉 - 语言模型 |</td></tr>
-
-<hr>
-
-<h3>7️⃣ Future 维度：未来方向和扩展性</h3>
-
-<tr><td>方向 | 描述 |</td></tr>
-|------|------|
-<tr><td><strong>端到端训练</strong> | 联合优化记忆构建和检索策略 |</td></tr>
-<tr><td><strong>自适应视觉分段</strong> | 根据内容动态调整视觉片段长度 |</td></tr>
-<tr><td><strong>跨模态融合</strong> | 更深层的视觉 - 文本记忆融合 |</td></tr>
-<tr><td><strong>实时应用</strong> | 部署到 AI 眼镜、家庭机器人等设备 |</td></tr>
-<tr><td><strong>周级视频</strong> | 扩展到更长时间跨度的连续记录 |</td></tr>
-
-<hr>
-
-<h2>🏗️ 系统架构</h2>
-
-<h3>三阶段流程</h3>
-
-<code>`</code>mermaid
+        <!-- 系统架构 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-sitemap"></i> 系统架构</h2>
+            
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">三阶段流程</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
 flowchart TB
-    subgraph "阶段 1: 多模态记忆构建"
-        A[长视频流] --> B[细粒度 Caption]
+    subgraph "阶段 1: 多模态记忆构建\nMultimodal Memory Construction"
+        A[长视频流\nLong Video Stream] --> B[细粒度 Caption\nFine-grained Captioning]
         B --> C[情景式记忆\nEpisodic Memory]
         B --> D[语义式记忆\nSemantic Memory]
-        A --> E[视觉特征提取]
+        A --> E[视觉特征提取\nVisual Feature Extraction]
         E --> F[视觉记忆\nVisual Memory]
     end
     
-    subgraph "阶段 2: 自适应记忆检索"
-        G[用户查询] --> H[检索智能体\nRetrieval Agent]
+    subgraph "阶段 2: 自适应记忆检索\nAdaptive Memory Retrieval"
+        G[用户查询\nUser Query] --> H[检索智能体\nRetrieval Agent]
         C --> H
         D --> H
         F --> H
-        H --> I[迭代检索\n多模态 + 多时间粒度]
+        H --> I[迭代检索\nIterative Retrieval]
     end
     
-    subgraph "阶段 3: 响应生成"
+    subgraph "阶段 3: 响应生成\nResponse Generation"
         I --> J[响应智能体\nResponse Agent]
         G --> J
-        J --> K[生成响应\nGrounded Response]
+        J --> K[生成响应\nGenerate Response]
     end
     
     style C fill:#6366f1,color:#fff
     style D fill:#8b5cf6,color:#fff
     style F fill:#ec4899,color:#fff
     style H fill:#f59e0b,color:#fff
-<code>`</code>
+                </div>
+            </div>
 
-<hr>
-
-<h3>情景式记忆：多时间粒度图结构</h3>
-
-<code>`</code>mermaid
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">情景式记忆：多时间粒度图结构</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
 flowchart LR
-    subgraph "时间粒度层级"
+    subgraph "时间粒度层级\nTemporal Granularity"
         H[小时级图\nHour-level Graph]
         M[分钟级图\nMinute-level Graph]
         S[秒级图\nSecond-level Graph]
     end
     
-    H -.->|聚合 | M
-    M -.->|聚合 | S
+    H -.->|聚合\nAggregate | M
+    M -.->|聚合\nAggregate | S
     
-    subgraph "节点内容"
-        N1["事件节点\n• 时间戳\n• Caption\n• 关键实体"]
+    subgraph "节点内容\nNode Content"
+        N1["事件节点\nEvent Node\n• 时间戳\n• Caption\n• 关键实体"]
     end
     
-    subgraph "边关系"
-        E1["时序关系\nbefore/after/during"]
-        E2["语义关系\n因果/共现"]
+    subgraph "边关系\nEdge Relations"
+        E1["时序关系\nTemporal\nbefore/after/during"]
+        E2["语义关系\nSemantic\n因果/共现"]
     end
     
     S --> N1
@@ -212,189 +607,228 @@ flowchart LR
     style H fill:#3b82f6,color:#fff
     style M fill:#6366f1,color:#fff
     style S fill:#8b5cf6,color:#fff
-<code>`</code>
+                </div>
+            </div>
 
-<strong>关键设计</strong>:
-<li>每个时间粒度构建独立图结构</li>
-<li>节点包含事件 caption、时间戳、关键实体</li>
-<li>边编码时序和语义关系</li>
-<li>支持跨粒度检索和推理</li>
-
-<hr>
-
-<h3>自适应检索智能体</h3>
-
-<code>`</code>mermaid
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">自适应检索智能体</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
 flowchart TB
-    Q[用户查询] --> R{检索智能体\n迭代决策}
+    Q[用户查询\nUser Query] --> R{检索智能体\nRetrieval Agent}
     
-    R -->|选择记忆类型 | M1[情景式记忆]
-    R -->|选择记忆类型 | M2[语义式记忆]
-    R -->|选择记忆类型 | M3[视觉记忆]
+    R -->|选择记忆类型 | M1[情景式记忆\nEpisodic Memory]
+    R -->|选择记忆类型 | M2[语义式记忆\nSemantic Memory]
+    R -->|选择记忆类型 | M3[视觉记忆\nVisual Memory]
     
-    M1 -->|多粒度检索 | G1[秒级候选]
-    M1 -->|多粒度检索 | G2[分钟级候选]
-    M1 -->|多粒度检索 | G3[小时级候选]
+    M1 -->|多粒度检索 | G1[秒级候选\nSecond-level]
+    M1 -->|多粒度检索 | G2[分钟级候选\nMinute-level]
+    M1 -->|多粒度检索 | G3[小时级候选\nHour-level]
     
-    G1 --> J{信息充足？}
+    G1 --> J{信息充足？\nSufficient?}
     G2 --> J
     G3 --> J
     M2 --> J
     M3 --> J
     
-    J -->|否 | R
-    J -->|是 | A[聚合检索结果]
+    J -->|否\nNo | R
+    J -->|是\nYes | A[聚合检索结果\nAggregate Results]
     
-    A --> RESP[响应生成]
+    A --> RESP[响应生成\nResponse Generation]
     
     style R fill:#f59e0b,color:#fff
     style J fill:#10b981,color:#fff
     style M1 fill:#6366f1,color:#fff
     style M2 fill:#8b5cf6,color:#fff
     style M3 fill:#ec4899,color:#fff
-<code>`</code>
+                </div>
+            </div>
+        </div>
 
-<strong>迭代检索机制</strong>:
-1. 基于查询和已检索历史，选择最相关的记忆类型
-2. 如果选择情景式记忆，同时检索多个时间粒度
-3. 评估信息是否充足
-4. 如不足，继续迭代；如充足，聚合结果并生成响应
+        <!-- 核心洞见 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-lightbulb"></i> 核心洞见与本质分析</h2>
+            
+            <div class="insight-box">
+                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要多模态记忆？</div>
+                <p><strong>表面观察:</strong> 现有方法只用文本记忆</p>
+                <p><strong>本质洞见:</strong></p>
+                <ul>
+                    <li>视觉信息包含<strong>不可约简的空间和属性细节</strong></li>
+                    <li>文本 caption 必然丢失视觉信息 (信息论瓶颈)</li>
+                    <li>某些查询 (物体属性、空间布局)<strong>必须</strong>访问原始视觉特征</li>
+                </ul>
+                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 记忆系统的表示能力必须匹配任务需求</p>
+            </div>
 
-<hr>
+            <div class="insight-box">
+                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要多时间粒度？</div>
+                <p><strong>表面观察:</strong> 现有方法用固定长度片段检索</p>
+                <p><strong>本质洞见:</strong></p>
+                <ul>
+                    <li>现实世界事件的<strong>时间跨度天然可变</strong></li>
+                    <li>"眼镜在哪" → 秒级事件</li>
+                    <li>"比赛下半场" → 小时级事件</li>
+                    <li><strong>固定粒度 = 强制事件适应系统</strong> (本末倒置)</li>
+                </ul>
+                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 系统应该适应事件的时序结构，而非相反</p>
+            </div>
 
-<h2>💡 核心洞见与本质分析</h2>
+            <div class="insight-box">
+                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要自适应检索？</div>
+                <p><strong>表面观察:</strong> 现有方法检索固定数量的片段</p>
+                <p><strong>本质洞见:</strong></p>
+                <ul>
+                    <li>不同查询需要的<strong>信息量不同</strong></li>
+                    <li>强制配对模态 (总是检索文本 + 视觉) 会引入<strong>噪声干扰</strong></li>
+                    <li><strong>选择性注意</strong>是智能的核心特征</li>
+                </ul>
+                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 检索策略应该基于查询的信息需求动态调整</p>
+            </div>
+        </div>
 
-<h3>为什么需要多模态记忆？</h3>
+        <!-- 与本体论关联 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-link"></i> 与本体论的关联</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>本体论维度</th>
+                            <th>WorldMM 的贡献</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Form</strong></td>
+                            <td>证明混合存储 (Token + Latent) 的必要性</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Function</strong></td>
+                            <td>三类型记忆对应三种认知功能的实证</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamics</strong></td>
+                            <td>多粒度图结构支持灵活的时间推理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Context</strong></td>
+                            <td>长视频理解是记忆系统的理想测试场</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-<strong>表面观察</strong>: 现有方法只用文本记忆
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">与已读论文的关联</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>论文</th>
+                            <th>关系</th>
+                            <th>差异</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MAGMA</strong> (2026-01)</td>
+                            <td>都用图结构</td>
+                            <td>MAGMA 是多图 (对象/时空/语义)，WorldMM 是多粒度</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EverMemOS</strong> (2026-01)</td>
+                            <td>都强调自组织</td>
+                            <td>EverMemOS 是通用 OS，WorldMM 专注视频</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MemVerse</strong> (2025-12)</td>
+                            <td>都涉及多模态</td>
+                            <td>MemVerse 是终身学习，WorldMM 是长视频推理</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MMAG</strong> (2025-12)</td>
+                            <td>都混合记忆</td>
+                            <td>MMAG 是文本记忆混合，WorldMM 是模态混合</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<strong>本质洞见</strong>: 
-<li>视觉信息包含<strong>不可约简的空间和属性细节</strong></li>
-<li>文本 caption 必然丢失视觉信息 (信息论瓶颈)</li>
-<li>某些查询 (物体属性、空间布局)<strong>必须</strong>访问原始视觉特征</li>
+        <!-- 经验教训 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-book"></i> 经验教训</h2>
+            
+            <div class="cards-grid">
+                <div class="card" style="border-left: 4px solid var(--accent-green);">
+                    <div class="card-title" style="color: var(--accent-green);"><i class="fas fa-check-circle"></i> 值得学习的 design pattern</div>
+                    <div class="card-content">
+                        <ol>
+                            <li><strong>多模态互补:</strong> 不同模态记忆存储不同信息，而非简单冗余</li>
+                            <li><strong>自适应机制:</strong> 检索策略基于查询动态调整，而非固定规则</li>
+                            <li><strong>多粒度表示:</strong> 同一事件在不同时间尺度上都有表示</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="card" style="border-left: 4px solid var(--accent-orange);">
+                    <div class="card-title" style="color: var(--accent-orange);"><i class="fas fa-exclamation-triangle"></i> 需要注意的权衡</div>
+                    <div class="card-content">
+                        <ol>
+                            <li><strong>计算成本:</strong> 三类型记忆构建和检索的开销显著</li>
+                            <li><strong>系统复杂度:</strong> 多组件协同增加调试难度</li>
+                            <li><strong>超参数敏感:</strong> 迭代次数、时间粒度等需要仔细调优</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<strong>第一性原理</strong>: 记忆系统的表示能力必须匹配任务需求
-
-<hr>
-
-<h3>为什么需要多时间粒度？</h3>
-
-<strong>表面观察</strong>: 现有方法用固定长度片段检索
-
-<strong>本质洞见</strong>:
-<li>现实世界事件的<strong>时间跨度天然可变</strong></li>
-<li>"眼镜在哪" → 秒级事件</li>
-<li>"比赛下半场" → 小时级事件</li>
-<li><strong>固定粒度 = 强制事件适应系统</strong> (本末倒置)</li>
-
-<strong>第一性原理</strong>: 系统应该适应事件的时序结构，而非相反
-
-<hr>
-
-<h3>为什么需要自适应检索？</h3>
-
-<strong>表面观察</strong>: 现有方法检索固定数量的片段
-
-<strong>本质洞见</strong>:
-<li>不同查询需要的<strong>信息量不同</strong></li>
-<li>强制配对模态 (总是检索文本 + 视觉) 会引入<strong>噪声干扰</strong></li>
-<li><strong>选择性注意</strong>是智能的核心特征</li>
-
-<strong>第一性原理</strong>: 检索策略应该基于查询的信息需求动态调整
-
-<hr>
-
-<h2>🔗 与本体论的关联</h2>
-
-<h3>对 Agent Memory 领域的贡献</h3>
-
-<tr><td>本体论维度 | WorldMM 的贡献 |</td></tr>
-|-----------|--------------|
-<tr><td><strong>Form</strong> | 证明混合存储 (Token + Latent) 的必要性 |</td></tr>
-<tr><td><strong>Function</strong> | 三类型记忆对应三种认知功能的实证 |</td></tr>
-<tr><td><strong>Dynamics</strong> | 多粒度图结构支持灵活的时间推理 |</td></tr>
-<tr><td><strong>Context</strong> | 长视频理解是记忆系统的理想测试场 |</td></tr>
-
-<h3>与已读论文的关联</h3>
-
-<tr><td>论文 | 关系 | 差异 |</td></tr>
-|------|------|------|
-<tr><td><strong>MAGMA</strong> (2026-01) | 都用图结构 | MAGMA 是多图 (对象/时空/语义)，WorldMM 是多粒度 |</td></tr>
-<tr><td><strong>EverMemOS</strong> (2026-01) | 都强调自组织 | EverMemOS 是通用 OS，WorldMM 专注视频 |</td></tr>
-<tr><td><strong>MemVerse</strong> (2025-12) | 都涉及多模态 | MemVerse 是终身学习，WorldMM 是长视频推理 |</td></tr>
-<tr><td><strong>MMAG</strong> (2025-12) | 都混合记忆 | MMAG 是文本记忆混合，WorldMM 是模态混合 |</td></tr>
-
-<hr>
-
-<h2>📊 实验结果摘要</h2>
-
-<tr><td>基准 | WorldMM | 之前 SOTA | 提升 |</td></tr>
-|------|---------|----------|------|
-<tr><td><strong>LVBench</strong> | - | - | +X% |</td></tr>
-<tr><td><strong>VideoMME</strong> | - | - | +X% |</td></tr>
-<tr><td><strong>HourVideo</strong> | - | - | +X% |</td></tr>
-<tr><td><strong>平均</strong> | - | - | +8.4% |</td></tr>
-
-<strong>消融实验关键发现</strong>:
-<li>移除视觉记忆 → 物体/动作查询性能下降</li>
-<li>移除语义记忆 → 长时段推理性能下降</li>
-<li>移除多粒度 → 时间跨度变化查询性能下降</li>
-
-<hr>
-
-<h2>🎯 技术实现要点</h2>
-
-<h3>记忆构建</h3>
-
-1. <strong>细粒度 Caption</strong>: 使用视频 LLM 对单位时间片段生成描述
-2. <strong>图构建</strong>: 基于 caption 提取实体和关系，构建时序图
-3. <strong>视觉索引</strong>: 提取 CLIP 等视觉特征，建立向量索引
-
-<h3>检索策略</h3>
-
-1. <strong>记忆选择</strong>: 基于查询嵌入与记忆原型的相似度
-2. <strong>多粒度融合</strong>: 跨时间粒度候选的联合排序
-3. <strong>停止条件</strong>: 基于信息增益的迭代终止
-
-<hr>
-
-<h2>📝 经验教训</h2>
-
-<h3>✅ 值得学习的 design pattern</h3>
-
-1. <strong>多模态互补</strong>: 不同模态记忆存储不同信息，而非简单冗余
-2. <strong>自适应机制</strong>: 检索策略基于查询动态调整，而非固定规则
-3. <strong>多粒度表示</strong>: 同一事件在不同时间尺度上都有表示
-
-<h3>⚠️ 需要注意的权衡</h3>
-
-1. <strong>计算成本</strong>: 三类型记忆构建和检索的开销显著
-2. <strong>系统复杂度</strong>: 多组件协同增加调试难度
-3. <strong>超参数敏感</strong>: 迭代次数、时间粒度等需要仔细调优
-
-<hr>
-
-<h2>🔖 引用信息</h2>
-
-<code>`</code>bibtex
-@article{yeo2025worldmm,
+        <!-- 引用信息 -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-quote-left"></i> 引用信息</h2>
+            <pre>@article{yeo2025worldmm,
   title={WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning},
   author={Yeo, Woongyeong and Kim, Kangsan and Yoon, Jaehong and Hwang, Sung Ju},
   journal={arXiv preprint arXiv:2512.02425},
   year={2025}
-}
-<code>`</code>
+}</pre>
+        </div>
 
-<hr>
-
-<strong>阅读完成时间</strong>: 2026-03-22  
-<strong>阅读状态</strong>: ✅ 完成  
-<strong>下一篇</strong>: Memoria (2025-12) 或其他 2025-12 剩余论文
-
-        </content>
+        <!-- Footer -->
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+            <p>阅读完成时间：2026-03-22</p>
+            <p>AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 5 篇</p>
+            <p style="margin-top: 1rem;">
+                <a href="../../index.html"><i class="fas fa-home"></i> 返回首页</a> · 
+                <a href="../2025/"><i class="fas fa-folder"></i> 2025 年论文</a>
+            </p>
+        </div>
     </div>
+
     <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'Inter, sans-serif'
+        });
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const icon = document.querySelector('.theme-toggle i');
+            
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+            }
+        }
     </script>
 </body>
 </html>
