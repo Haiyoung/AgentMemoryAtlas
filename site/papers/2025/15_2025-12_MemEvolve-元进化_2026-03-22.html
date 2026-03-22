@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemEvolve: Meta-Evolution of Agent Memory Systems</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--bg-primary:#fff;--bg-secondary:#f8fafc;--bg-card:#fff;--bg-mermaid:#fff;--text-primary:#1e293b;--text-secondary:#64748b;--text-muted:#94a3b8;--accent-purple:#7c3aed;--accent-cyan:#0ea5e9;--accent-green:#16a34a;--accent-orange:#f97316;--accent-blue:#3b82f6;--border-color:#e2e8f0;--border-subtle:rgba(226,232,240,0.5);--shadow-sm:0 1px 3px rgba(0,0,0,0.05);--shadow-md:0 4px 12px rgba(0,0,0,0.08);--shadow-lg:0 10px 25px rgba(0,0,0,0.1);--radius-sm:6px;--radius-md:12px;--radius-lg:16px}[data-theme="dark"]{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-mermaid:#1e293b;--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--text-muted:#94a3b8;--accent-purple:#a78bfa;--accent-cyan:#67e8f9;--accent-green:#4ade80;--accent-orange:#fb923c;--accent-blue:#60a5fa;--border-color:#334155;--border-subtle:rgba(51,65,85,0.5);--shadow-sm:0 1px 3px rgba(0,0,0,0.2);--shadow-md:0 4px 12px rgba(0,0,0,0.3);--shadow-lg:0 10px 25px rgba(0,0,0,0.4)}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;font-size:16px;transition:background-color .3s ease,color .3s ease}main{max-width:1200px;margin:0 auto;padding:2rem}.hero{text-align:center;padding:3rem 2rem;background:var(--bg-card);border-radius:var(--radius-lg);margin-bottom:2.5rem;position:relative;overflow:hidden;box-shadow:var(--shadow-md);border:1px solid var(--border-color)}.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan),var(--accent-green))}.hero-title{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent-purple),var(--accent-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.2rem}.hero-subtitle{font-size:1.3rem;color:var(--text-secondary);margin:.8rem 0}.hero-subtitle-cn{font-size:1.2rem;color:var(--text-primary);opacity:.9;font-weight:600}.hero-meta{display:flex;justify-content:center;gap:1.2rem;margin-top:2.5rem;flex-wrap:wrap}.hero-meta-item{background:var(--bg-secondary);padding:.8rem 1.5rem;border-radius:var(--radius-md);border:1px solid var(--border-color);font-size:.95rem;color:var(--text-secondary);display:flex;align-items:center;gap:.5rem}.hero-actions{display:flex;justify-content:center;gap:1.2rem;margin-top:2rem;flex-wrap:wrap}.btn{padding:.8rem 1.8rem;border-radius:var(--radius-md);font-size:1rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none;transition:all .3s ease}.btn-primary{background:linear-gradient(135deg,var(--accent-purple),var(--accent-cyan));color:#fff;box-shadow:var(--shadow-sm)}.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}.btn-secondary{background:var(--bg-secondary);color:var(--text-primary);border:1px solid var(--border-color)}.btn-secondary:hover{background:var(--bg-card);border-color:var(--accent-cyan);color:var(--accent-cyan)}.rating-card{background:var(--bg-card);border-radius:var(--radius-lg);padding:2.5rem;margin-bottom:2.5rem;border:1px solid var(--border-color);box-shadow:var(--shadow-md)}.rating-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:2px solid var(--border-subtle)}.rating-title{font-size:1.6rem;font-weight:700;color:var(--accent-orange);display:flex;align-items:center;gap:.6rem}.rating-stars{display:flex;align-items:center;gap:.4rem}.star{font-size:1.8rem;color:#fbbf24}.rating-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-bottom:2rem}.rating-item{background:var(--bg-secondary);padding:1rem .8rem;border-radius:var(--radius-md);border:1px solid var(--border-subtle);text-align:center;display:flex;flex-direction:column;gap:.5rem}.rating-label{font-size:.85rem;color:var(--text-secondary);font-weight:600}.rating-score{font-size:1.1rem;font-weight:700;color:var(--text-primary)}.rating-summary{padding:1.5rem;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.04));border-radius:var(--radius-md);border-left:4px solid var(--accent-orange);color:var(--text-secondary);line-height:1.7}.rating-summary strong{color:var(--accent-orange);font-weight:600}.card{background:var(--bg-card);border-radius:var(--radius-lg);padding:2.5rem;margin-bottom:2.5rem;border:1px solid var(--border-color);box-shadow:var(--shadow-md)}.card-title{font-size:1.8rem;margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;color:var(--accent-cyan);font-weight:700}.card-title i{font-size:1.4rem}.highlight{background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(14,165,233,0.06));border-left:4px solid var(--accent-cyan);padding:2rem;border-radius:var(--radius-md);margin:1.5rem 0}.highlight p{margin:1rem 0;line-height:1.8}.highlight strong{color:var(--text-primary);font-weight:700}.tag-container{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}.tag{background:var(--bg-secondary);padding:.6rem 1.2rem;border-radius:20px;font-size:.9rem;color:var(--text-secondary);border:1px solid var(--border-color)}.tag strong{color:var(--text-primary)}.mermaid-wrapper{background:var(--bg-mermaid);border-radius:var(--radius-md);padding:2rem;margin:1.5rem 0;border:1px solid var(--border-color);overflow-x:auto}.keywords-container{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.keyword-tag{display:inline-flex;flex-direction:column;align-items:center;padding:1rem 1.5rem;background:var(--bg-secondary);border-radius:var(--radius-md);border:1px solid var(--border-color);min-width:140px}.keyword-tag strong{color:var(--text-primary);font-size:.95rem}.keyword-tag small{color:var(--text-muted);font-size:.8rem}.future-research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem}.future-item{display:flex;gap:1.2rem;padding:1.5rem;background:var(--bg-secondary);border-radius:var(--radius-md);border:1px solid var(--border-subtle)}.future-icon{font-size:2rem;color:var(--accent-purple);flex-shrink:0}.future-title{font-size:1.1rem;font-weight:600;color:var(--text-primary);margin-bottom:.5rem}.future-desc{font-size:.95rem;color:var(--text-secondary);line-height:1.6}.table-container{overflow-x:auto;margin:1.5rem 0;border-radius:var(--radius-md);border:1px solid var(--border-color)}table{width:100%;border-collapse:collapse;background:var(--bg-card)}th{background:var(--bg-secondary);padding:1rem 1.5rem;text-align:left;font-weight:600;border-bottom:2px solid var(--border-color)}td{padding:1rem 1.5rem;border-bottom:1px solid var(--border-subtle);color:var(--text-secondary)}tr:hover td{background:var(--bg-secondary)}@media(max-width:768px){main{padding:1rem}.hero-title{font-size:2rem}.rating-grid{grid-template-columns:repeat(3,1fr)}}
+    </style>
+</head>
+<body>
+    <main>
+        <div class="hero">
+            <h1 class="hero-title">MemEvolve</h1>
+            <p class="hero-subtitle">Meta-Evolution of Agent Memory Systems</p>
+            <p class="hero-subtitle-cn">智能体记忆系统的元进化</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i><span>2025 年 12 月</span></div>
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i><span>arXiv:2512.18746</span></div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.18746" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i>arXiv 论文</a>
+                <button onclick="toggleTheme()" class="btn btn-secondary"><i class="fas fa-moon"></i>切换主题</button>
+            </div>
+        </div>
+
+        <div class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-star"></i>论文综合评分<span class="rating-value">4.8/5.0</span></h2>
+                <div class="rating-stars"><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i></div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">期刊影响力</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">方法创新性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">技术壁垒</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">落地可行性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+            </div>
+            <div class="rating-summary"><strong>综合评价:</strong> MemEvolve 提出了一个元进化框架，共同进化智能体的经验知识和记忆架构。通过 EvolveLab 统一代码库（12 个代表性记忆系统的模块化设计空间），在 4 个智能体基准上实现高达 17.06% 的性能提升，并展现强大的跨任务和跨 LLM 泛化能力。</div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-brain"></i>本体论映射 (Ontology Mapping)</h2>
+            <div class="tag-container">
+                <div class="tag"><strong>记忆类型:</strong> Experiential + Meta-Memory</div>
+                <div class="tag"><strong>记忆结构:</strong> Modular Design Space</div>
+                <div class="tag"><strong>记忆操作:</strong> Meta-Evolution + Architecture Adaptation</div>
+                <div class="tag"><strong>记忆载体:</strong> Token-level + Architectural</div>
+                <div class="tag"><strong>功能定位:</strong> Self-Evolving Memory Systems</div>
+                <div class="tag"><strong>使用模式:</strong> Meta-Evolution + Cross-Task Transfer</div>
+                <div class="tag"><strong>验证公理:</strong> Meta-Adaptation, Architecture Evolution</div>
+            </div>
+            <div class="highlight"><p><strong>领域贡献:</strong> MemEvolve 将<strong>元进化</strong>引入自进化记忆系统领域，提出了<strong>共同进化经验和架构</strong>的框架。通过 EvolveLab 统一代码库，实现了记忆架构的元适应。</p></div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i>核心主张（通俗易懂版）</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有自进化记忆系统依赖手动设计的架构，记忆系统本身是静态的，无法元适应不同任务上下文。</p>
+                <p><strong>💡 解决方案是什么？</strong> MemEvolve 提出元进化框架，共同进化智能体的经验知识和记忆架构，提供 EvolveLab 统一代码库（12 个系统的模块化设计空间）。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 4 个基准上高达 17.06% 提升，强大的跨任务和跨 LLM 泛化，设计可迁移的记忆架构。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i>方法架构</h2>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 任务输入"]
+        Task[任务上下文\nTask Context]
+        Env[环境交互\nEnvironment]
+    end
+    
+    subgraph MemEvolve["🧠 MemEvolve 框架"]
+        subgraph EvolveLab["EvolveLab 代码库"]
+            Encode[编码\nEncode]
+            Store[存储\nStore]
+            Retrieve[检索\nRetrieve]
+            Manage[管理\nManage]
+        end
+        
+        subgraph MetaEvolution["元进化\nMeta-Evolution"]
+            Experience[经验知识\nExperiential Knowledge]
+            Architecture[记忆架构\nMemory Architecture]
+        end
+        
+        subgraph Adaptation["元适应\nMeta-Adaptation"]
+            Refine[精炼学习\nRefine Learning]
+            Transfer[架构迁移\nArchitecture Transfer]
+        end
+    end
+    
+    subgraph Output["💬 智能体性能"]
+        Performance[性能提升\nPerformance Gain]
+        Generalization[跨任务泛化\nCross-Task Generalization]
+    end
+    
+    Task --> Encode
+    Env --> Experience
+    Encode --> Store
+    Store --> Retrieve
+    Retrieve --> Manage
+    Experience --> Architecture
+    Architecture --> Refine
+    Refine --> Transfer
+    Transfer --> Performance
+    Performance --> Generalization
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i>实验结果</h2>
+            <div class="highlight"><p><strong>关键发现:</strong> MemEvolve 通过元进化实现了记忆架构的自适应，解决了静态架构的根本约束。</p></div>
+            
+            <h3 style="margin: 2rem 0 1rem;">主实验结果</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>模型</th><th>方法</th><th>性能提升</th><th>跨任务泛化</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td>基线</td><td>手动设计架构</td><td>基准</td><td>有限</td><td>静态架构</td></tr>
+                        <tr><td>SmolAgent</td><td>现有系统</td><td>-</td><td>-</td><td>手动设计</td></tr>
+                        <tr><td>Flash-Searcher</td><td>现有系统</td><td>-</td><td>-</td><td>手动设计</td></tr>
+                        <tr style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05));">
+                            <td style="font-weight: 700; color: var(--accent-purple);">MemEvolve</td><td>Ours</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">高达 17.06%</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">强大</td><td>元适应</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md);">
+                <p style="font-size: 0.95rem; color: var(--text-secondary);"><strong>基准测试:</strong> 4 个智能体基准</p>
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>关键数据:</strong></p>
+                <ul style="font-size: 0.95rem; color: var(--text-secondary); padding-left: 1.5rem;">
+                    <li>性能提升：<strong style="color: var(--accent-green);">高达 17.06%</strong> (SmolAgent, Flash-Searcher)</li>
+                    <li>跨任务泛化：<strong style="color: var(--accent-green);">强大</strong></li>
+                    <li>跨 LLM 泛化：<strong style="color: var(--accent-green);">强大</strong></li>
+                    <li>设计空间：<strong style="color: var(--accent-green);">12 个代表性系统</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i>关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag"><strong>元进化</strong><small>Meta-Evolution</small></div>
+                <div class="keyword-tag"><strong>自进化记忆系统</strong><small>Self-Evolving Memory Systems</small></div>
+                <div class="keyword-tag"><strong>EvolveLab</strong><small></small></div>
+                <div class="keyword-tag"><strong>模块化设计空间</strong><small>Modular Design Space</small></div>
+                <div class="keyword-tag"><strong>元适应</strong><small>Meta-Adaptation</small></div>
+                <div class="keyword-tag"><strong>跨任务泛化</strong><small>Cross-Task Generalization</small></div>
+                <div class="keyword-tag"><strong>跨 LLM 泛化</strong><small>Cross-LLM Generalization</small></div>
+                <div class="keyword-tag"><strong>记忆架构进化</strong><small>Memory Architecture Evolution</small></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i>局限性分析</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-calculator future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">计算开销</div><div class="future-desc">元进化过程需要额外计算资源。</div></div></div>
+                <div class="future-item"><i class="fas fa-clock future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">收敛时间</div><div class="future-desc">架构进化需要时间收敛。</div></div></div>
+                <div class="future-item"><i class="fas fa-globe future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">领域依赖</div><div class="future-desc">不同领域可能需要不同的设计空间。</div></div></div>
+                <div class="future-item"><i class="fas fa-database future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">初始化依赖</div><div class="future-desc">依赖 12 个代表性系统的先验知识。</div></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i>未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-tachometer-alt future-icon"></i><div><div class="future-title">更高效进化</div><div class="future-desc">优化元进化过程的效率。</div></div></div>
+                <div class="future-item"><i class="fas fa-brain future-icon"></i><div><div class="future-title">无监督进化</div><div class="future-desc">研究无需先验知识的进化方法。</div></div></div>
+                <div class="future-item"><i class="fas fa-users future-icon"></i><div><div class="future-title">多智能体扩展</div><div class="future-desc">支持多智能体记忆架构进化。</div></div></div>
+                <div class="future-item"><i class="fas fa-cog future-icon"></i><div><div class="future-title">自动化设计</div><div class="future-desc">全自动设计空间探索。</div></div></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
+            <p>阅读完成时间：2026-03-22</p>
+            <p style="font-size: 0.95rem;">AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 8 篇</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="../../index.html" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="../2025/" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-folder"></i> 2025 年论文</a>
+            </div>
+        </div>
+    </main>
+    <script>mermaid.initialize({startOnLoad:!0,theme:"default",securityLevel:"loose"});function toggleTheme(){const e=document.documentElement.getAttribute("data-theme")||"light",t="light"===e?"dark":"light";document.documentElement.setAttribute("data-theme",t),localStorage.setItem("theme",t)}</script>
+</body>
+</html>
