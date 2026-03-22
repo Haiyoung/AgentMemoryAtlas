@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindsight is 20/20: Building Agent Memory that Retains, Recalls, and Reflects</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--bg-primary:#fff;--bg-secondary:#f8fafc;--bg-card:#fff;--bg-mermaid:#fff;--text-primary:#1e293b;--text-secondary:#64748b;--text-muted:#94a3b8;--accent-purple:#7c3aed;--accent-cyan:#0ea5e9;--accent-green:#16a34a;--accent-orange:#f97316;--accent-blue:#3b82f6;--border-color:#e2e8f0;--border-subtle:rgba(226,232,240,0.5);--shadow-sm:0 1px 3px rgba(0,0,0,0.05);--shadow-md:0 4px 12px rgba(0,0,0,0.08);--shadow-lg:0 10px 25px rgba(0,0,0,0.1);--radius-sm:6px;--radius-md:12px;--radius-lg:16px}[data-theme="dark"]{--bg-primary:#0f172a;--bg-secondary:#1e293b;--bg-card:#1e293b;--bg-mermaid:#1e293b;--text-primary:#f1f5f9;--text-secondary:#cbd5e1;--text-muted:#94a3b8;--accent-purple:#a78bfa;--accent-cyan:#67e8f9;--accent-green:#4ade80;--accent-orange:#fb923c;--accent-blue:#60a5fa;--border-color:#334155;--border-subtle:rgba(51,65,85,0.5);--shadow-sm:0 1px 3px rgba(0,0,0,0.2);--shadow-md:0 4px 12px rgba(0,0,0,0.3);--shadow-lg:0 10px 25px rgba(0,0,0,0.4)}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;font-size:16px;transition:background-color .3s ease,color .3s ease}main{max-width:1200px;margin:0 auto;padding:2rem}.hero{text-align:center;padding:3rem 2rem;background:var(--bg-card);border-radius:var(--radius-lg);margin-bottom:2.5rem;position:relative;overflow:hidden;box-shadow:var(--shadow-md);border:1px solid var(--border-color)}.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan),var(--accent-green))}.hero-title{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent-purple),var(--accent-cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.2rem}.hero-subtitle{font-size:1.3rem;color:var(--text-secondary);margin:.8rem 0}.hero-subtitle-cn{font-size:1.2rem;color:var(--text-primary);opacity:.9;font-weight:600}.hero-meta{display:flex;justify-content:center;gap:1.2rem;margin-top:2.5rem;flex-wrap:wrap}.hero-meta-item{background:var(--bg-secondary);padding:.8rem 1.5rem;border-radius:var(--radius-md);border:1px solid var(--border-color);font-size:.95rem;color:var(--text-secondary);display:flex;align-items:center;gap:.5rem}.hero-actions{display:flex;justify-content:center;gap:1.2rem;margin-top:2rem;flex-wrap:wrap}.btn{padding:.8rem 1.8rem;border-radius:var(--radius-md);font-size:1rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;border:none;transition:all .3s ease}.btn-primary{background:linear-gradient(135deg,var(--accent-purple),var(--accent-cyan));color:#fff;box-shadow:var(--shadow-sm)}.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}.btn-secondary{background:var(--bg-secondary);color:var(--text-primary);border:1px solid var(--border-color)}.btn-secondary:hover{background:var(--bg-card);border-color:var(--accent-cyan);color:var(--accent-cyan)}.rating-card{background:var(--bg-card);border-radius:var(--radius-lg);padding:2.5rem;margin-bottom:2.5rem;border:1px solid var(--border-color);box-shadow:var(--shadow-md)}.rating-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:2px solid var(--border-subtle)}.rating-title{font-size:1.6rem;font-weight:700;color:var(--accent-orange);display:flex;align-items:center;gap:.6rem}.rating-stars{display:flex;align-items:center;gap:.4rem}.star{font-size:1.8rem;color:#fbbf24}.rating-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-bottom:2rem}.rating-item{background:var(--bg-secondary);padding:1rem .8rem;border-radius:var(--radius-md);border:1px solid var(--border-subtle);text-align:center;display:flex;flex-direction:column;gap:.5rem}.rating-label{font-size:.85rem;color:var(--text-secondary);font-weight:600}.rating-score{font-size:1.1rem;font-weight:700;color:var(--text-primary)}.rating-summary{padding:1.5rem;background:linear-gradient(135deg,rgba(249,115,22,0.08),rgba(249,115,22,0.04));border-radius:var(--radius-md);border-left:4px solid var(--accent-orange);color:var(--text-secondary);line-height:1.7}.rating-summary strong{color:var(--accent-orange);font-weight:600}.card{background:var(--bg-card);border-radius:var(--radius-lg);padding:2.5rem;margin-bottom:2.5rem;border:1px solid var(--border-color);box-shadow:var(--shadow-md)}.card-title{font-size:1.8rem;margin-bottom:1.8rem;display:flex;align-items:center;gap:.8rem;color:var(--accent-cyan);font-weight:700}.card-title i{font-size:1.4rem}.highlight{background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(14,165,233,0.06));border-left:4px solid var(--accent-cyan);padding:2rem;border-radius:var(--radius-md);margin:1.5rem 0}.highlight p{margin:1rem 0;line-height:1.8}.highlight strong{color:var(--text-primary);font-weight:700}.tag-container{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}.tag{background:var(--bg-secondary);padding:.6rem 1.2rem;border-radius:20px;font-size:.9rem;color:var(--text-secondary);border:1px solid var(--border-color)}.tag strong{color:var(--text-primary)}.mermaid-wrapper{background:var(--bg-mermaid);border-radius:var(--radius-md);padding:2rem;margin:1.5rem 0;border:1px solid var(--border-color);overflow-x:auto}.keywords-container{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}.keyword-tag{display:inline-flex;flex-direction:column;align-items:center;padding:1rem 1.5rem;background:var(--bg-secondary);border-radius:var(--radius-md);border:1px solid var(--border-color);min-width:140px}.keyword-tag strong{color:var(--text-primary);font-size:.95rem}.keyword-tag small{color:var(--text-muted);font-size:.8rem}.future-research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem}.future-item{display:flex;gap:1.2rem;padding:1.5rem;background:var(--bg-secondary);border-radius:var(--radius-md);border:1px solid var(--border-subtle)}.future-icon{font-size:2rem;color:var(--accent-purple);flex-shrink:0}.future-title{font-size:1.1rem;font-weight:600;color:var(--text-primary);margin-bottom:.5rem}.future-desc{font-size:.95rem;color:var(--text-secondary);line-height:1.6}.table-container{overflow-x:auto;margin:1.5rem 0;border-radius:var(--radius-md);border:1px solid var(--border-color)}table{width:100%;border-collapse:collapse;background:var(--bg-card)}th{background:var(--bg-secondary);padding:1rem 1.5rem;text-align:left;font-weight:600;border-bottom:2px solid var(--border-color)}td{padding:1rem 1.5rem;border-bottom:1px solid var(--border-subtle);color:var(--text-secondary)}tr:hover td{background:var(--bg-secondary)}@media(max-width:768px){main{padding:1rem}.hero-title{font-size:2rem}.rating-grid{grid-template-columns:repeat(3,1fr)}}
+    </style>
+</head>
+<body>
+    <main>
+        <div class="hero">
+            <h1 class="hero-title">Hindsight is 20/20</h1>
+            <p class="hero-subtitle">Building Agent Memory that Retains, Recalls, and Reflects</p>
+            <p class="hero-subtitle-cn">构建能保留、回忆和反思的智能体记忆</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i><span>2025 年 12 月</span></div>
+                <div class="hero-meta-item"><i class="fas fa-building"></i><span>Vectorize.io, Virginia Tech</span></div>
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i><span>arXiv:2512.12818</span></div>
+            </div>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.12818" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i>arXiv 论文</a>
+                <button onclick="toggleTheme()" class="btn btn-secondary"><i class="fas fa-moon"></i>切换主题</button>
+            </div>
+        </div>
+
+        <div class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-star"></i>论文综合评分<span class="rating-value">4.9/5.0</span></h2>
+                <div class="rating-stars"><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i></div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">期刊影响力</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">方法创新性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">技术壁垒</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">落地可行性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+            </div>
+            <div class="rating-summary"><strong>综合评价:</strong> Hindsight 提出了一个革命性的记忆架构，将记忆视为结构化的推理基础而非简单的检索层。通过 4 个逻辑网络和 3 个核心操作，该框架在 LongMemEval 上达到 91.4% 准确率，超越 GPT-4o full-context。这是首个证明结构化记忆可以超越全量上下文的开放系统。</div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-brain"></i>本体论映射 (Ontology Mapping)</h2>
+            <div class="tag-container">
+                <div class="tag"><strong>记忆类型:</strong> Factual + Experiential + Belief</div>
+                <div class="tag"><strong>记忆结构:</strong> 4 Logical Networks</div>
+                <div class="tag"><strong>记忆操作:</strong> Retain + Recall + Reflect</div>
+                <div class="tag"><strong>记忆载体:</strong> Token-level + Graph-based</div>
+                <div class="tag"><strong>功能定位:</strong> Multi-session Conversational Memory</div>
+                <div class="tag"><strong>使用模式:</strong> Temporal Entity-aware Retrieval</div>
+                <div class="tag"><strong>验证公理:</strong> Retain-Recall-Reflect 三元操作</div>
+            </div>
+            <div class="highlight"><p><strong>领域贡献:</strong> Hindsight 将<strong>结构化记忆</strong>和<strong>反思推理</strong>引入 Agent Memory 领域，提出了<strong>4 逻辑网络 +3 核心操作</strong>的创新架构。通过将记忆组织为可查询、可推理的结构化基础，该框架证明了结构化记忆可以超越全量上下文方法。</p></div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i>核心主张（通俗易懂版）</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有记忆系统将记忆视为外部检索层，模糊了证据和推理的界限，难以组织长时段信息，无法解释推理过程。</p>
+                <p><strong>💡 解决方案是什么？</strong> Hindsight 提出 4 逻辑网络（世界事实、代理经验、实体摘要、演化信念）+ 3 核心操作（retain, recall, reflect）的结构化记忆架构。</p>
+                <p><strong>🌟 核心优势是什么？</strong> LongMemEval 39% → 83.6% (20B 模型)，最高 91.4%，超越 GPT-4o full-context，支持可解释推理。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i>方法架构</h2>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 对话流"]
+        U[用户输入\nUser Input]
+        H[历史对话\nConversation History]
+    end
+    
+    subgraph Hindsight["🧠 Hindsight 记忆架构"]
+        subgraph Networks["4 逻辑网络\n4 Logical Networks"]
+            WF[世界事实\nWorld Facts]
+            AE[代理经验\nAgent Experiences]
+            ES[实体摘要\nEntity Summaries]
+            EB[演化信念\nEvolving Beliefs]
+        end
+        
+        subgraph Operations["3 核心操作\n3 Core Operations"]
+            Retain[保留\nRetain]
+            Recall[回忆\nRecall]
+            Reflect[反思\nReflect]
+        end
+        
+        subgraph Temporal["时间感知层\nTemporal Layer"]
+            TE[时间实体\nTemporal Entities]
+            TR[时间推理\nTemporal Reasoning]
+        end
+    end
+    
+    subgraph Output["💬 响应生成"]
+        Ans[可解释答案\nExplainable Answer]
+        Trace[推理轨迹\nReasoning Trace]
+    end
+    
+    U --> Retain
+    H --> Retain
+    Retain --> Networks
+    Networks --> Recall
+    Recall --> Reflect
+    Reflect --> Networks
+    Reflect --> Ans
+    Reflect --> Trace
+    Networks --> Temporal
+    Temporal --> Recall
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i>实验结果</h2>
+            <div class="highlight"><p><strong>关键发现:</strong> Hindsight 使用开源 20B 模型即可超越 GPT-4o full-context，证明了结构化记忆的有效性。</p></div>
+            
+            <h3 style="margin: 2rem 0 1rem;">主实验结果</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>模型</th><th>方法</th><th>LongMemEval</th><th>LoCoMo</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td>Full Context (20B)</td><td>全量上下文</td><td>39.0%</td><td>-</td><td>基线</td></tr>
+                        <tr><td>Hindsight (20B)</td><td>Ours</td><td style="color:var(--accent-green);font-weight:700;">83.6%</td><td style="color:var(--accent-green);font-weight:700;">89.61%</td><td>+44.6% 提升</td></tr>
+                        <tr><td>Hindsight (Scaled)</td><td>Scaled</td><td style="color:var(--accent-green);font-weight:700;">91.4%</td><td style="color:var(--accent-green);font-weight:700;">89.61%</td><td>最佳结果</td></tr>
+                        <tr><td>GPT-4o</td><td>Full Context</td><td>~85%</td><td>~75%</td><td>闭源 SOTA</td></tr>
+                        <tr><td>之前最佳开放系统</td><td>-</td><td>~75%</td><td>75.78%</td><td>-</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md);">
+                <p style="font-size: 0.95rem; color: var(--text-secondary);"><strong>基准测试:</strong> LongMemEval, LoCoMo</p>
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>关键数据:</strong></p>
+                <ul style="font-size: 0.95rem; color: var(--text-secondary); padding-left: 1.5rem;">
+                    <li>LongMemEval 最高：<strong style="color: var(--accent-green);">91.4%</strong> (Hindsight scaled)</li>
+                    <li>LoCoMo 最高：<strong style="color: var(--accent-green);">89.61%</strong> (Hindsight)</li>
+                    <li>相比基线提升：<strong style="color: var(--accent-green);">39% → 83.6%</strong> (+44.6%)</li>
+                    <li>超越 GPT-4o full-context</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i>关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag"><strong>结构化记忆</strong><small>Structured Memory</small></div>
+                <div class="keyword-tag"><strong>反思推理</strong><small>Reflective Reasoning</small></div>
+                <div class="keyword-tag"><strong>多会话记忆</strong><small>Multi-session Memory</small></div>
+                <div class="keyword-tag"><strong>实体感知</strong><small>Entity-aware</small></div>
+                <div class="keyword-tag"><strong>时间推理</strong><small>Temporal Reasoning</small></div>
+                <div class="keyword-tag"><strong>可解释 AI</strong><small>Explainable AI</small></div>
+                <div class="keyword-tag"><strong>记忆架构</strong><small>Memory Architecture</small></div>
+                <div class="keyword-tag"><strong>对话系统</strong><small>Dialogue Systems</small></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i>局限性分析</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-calculator future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">计算开销</div><div class="future-desc">4 逻辑网络和反思层增加计算成本。</div></div></div>
+                <div class="future-item"><i class="fas fa-network-wired future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">实体抽取依赖</div><div class="future-desc">性能依赖实体和关系抽取质量。</div></div></div>
+                <div class="future-item"><i class="fas fa-clock future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">时间推理复杂度</div><div class="future-desc">长时段推理需要复杂的时间对齐。</div></div></div>
+                <div class="future-item"><i class="fas fa-flask future-icon" style="color:var(--accent-orange)"></i><div><div class="future-title">领域适应性</div><div class="future-desc">在特定领域可能需要定制。</div></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i>未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-globe future-icon"></i><div><div class="future-title">跨领域验证</div><div class="future-desc">在法律、医疗等专业领域验证效果。</div></div></div>
+                <div class="future-item"><i class="fas fa-tachometer-alt future-icon"></i><div><div class="future-title">实时推理优化</div><div class="future-desc">优化反思层的计算效率。</div></div></div>
+                <div class="future-item"><i class="fas fa-image future-icon"></i><div><div class="future-title">多模态扩展</div><div class="future-desc">支持图像、语音等多模态记忆。</div></div></div>
+                <div class="future-item"><i class="fas fa-sync-alt future-icon"></i><div><div class="future-title">自我改进</div><div class="future-desc">通过反思层实现记忆的自我优化。</div></div></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
+            <p>阅读完成时间：2026-03-22</p>
+            <p style="font-size: 0.95rem;">AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 7 篇</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="../../index.html" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="../2025/" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-folder"></i> 2025 年论文</a>
+            </div>
+        </div>
+    </main>
+    <script>mermaid.initialize({startOnLoad:!0,theme:"default",securityLevel:"loose"});function toggleTheme(){const e=document.documentElement.getAttribute("data-theme")||"light",t="light"===e?"dark":"light";document.documentElement.setAttribute("data-theme",t),localStorage.setItem("theme",t)}</script>
+</body>
+</html>
