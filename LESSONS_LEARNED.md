@@ -105,11 +105,79 @@ with pdfplumber.open(pdf_path) as pdf:
         tables = page.extract_tables()
 ```
 
-### 数据提取策略
-1. 搜索关键词："Table 1", "Experiment", "Results", "Benchmark"
-2. 定位实验表格页面
-3. 提取表格数据（模型名、数据集、指标数值）
-4. 验证数据完整性（检查是否有 "+8.4%" 等关键数据）
+### 数据提取策略 ⭐ **优化**
+
+**核心原则**: 按需提取，而非固定提取 Table 1
+
+**1. 明确数据需求** (在提取前先思考)
+```
+需要提取什么？
+├─ 主实验结果？→ 找 "main results", "comparison with SOTA"
+├─ 消融实验？→ 找 "ablation study", "analysis"
+├─ 效率对比？→ 找 "efficiency", "runtime", "FLOPs"
+├─ 用户研究？→ 找 "user study", "human evaluation"
+└─ 特定基准？→ 找基准名称 "LVBench", "VideoMME" 等
+```
+
+**2. 智能定位表格**
+```python
+# 方法 1: 搜索关键词定位页面
+keywords = ["Table", "Benchmark", "Results", "Performance", "Comparison"]
+for i, page in enumerate(pdf.pages):
+    text = page.extract_text()
+    for keyword in keywords:
+        if keyword.lower() in text.lower():
+            print(f"找到 '{keyword}' 在第 {i+1} 页")
+            tables = page.extract_tables()
+            # 分析表格内容，判断是否需要
+
+# 方法 2: 直接提取所有表格，按需筛选
+all_tables = []
+for i, page in enumerate(pdf.pages):
+    tables = page.extract_tables()
+    for table in tables:
+        if table and len(table) > 2:  # 至少 3 行才是有效表格
+            all_tables.append({
+                'page': i+1,
+                'table': table,
+                'preview': str(table[0])[:100]  # 第一行预览
+            })
+
+# 根据预览判断哪些表格需要详细处理
+```
+
+**3. 按需提取具体数据**
+```
+根据论文类型和任务需求:
+
+长视频理解论文 (如 WorldMM):
+├─ 主实验：5 个基准的平均提升和各项数据
+├─ 消融实验：各组件贡献 (视觉记忆、语义记忆等)
+└─ 效率数据：推理时间、内存占用 (如有)
+
+RAG/检索论文:
+├─ 检索准确率：R@1, R@5, R@10
+├─ 生成质量：BLEU, ROUGE, METEOR
+└─ 端到端指标：F1, EM, Accuracy
+
+多模态论文:
+├─ 各模态贡献：text-only, image-only, multimodal
+├─ 跨模态检索：text→image, image→text
+└─ 生成质量：FID, CLIP Score 等
+```
+
+**4. 验证和整理**
+```python
+# 提取后验证数据完整性
+def validate_extracted_data(data):
+    checks = {
+        '有具体数值': any(str(c).replace('.','').isdigit() for c in data),
+        '有模型对比': len(set(data)) > 1,
+        '有基准名称': any(name in str(data) for name in ['LVBench', 'VideoMME']),
+        '有关键指标': any(metric in str(data) for metric in ['%', 'F1', 'Accuracy'])
+    }
+    return all(checks.values())
+```
 
 ---
 **最后更新**: 2026-03-22  
