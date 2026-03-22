@@ -98,7 +98,7 @@ for page in doc:
     text = page.get_text()
     tables = page.find_tables()
 
-# 方法 2: pdfplumber (表格提取更好)
+# 方法 2: pdfplumber (表格提取更好，已安装 ✅)
 import pdfplumber
 with pdfplumber.open(pdf_path) as pdf:
     for page in pdf.pages:
