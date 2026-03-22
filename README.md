@@ -1,4 +1,8 @@
-# AgentMemoryAtlas 🧠
+<div align="center">
+  
+![AgentMemoryAtlas Logo](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjMiIG9wYWNpdHk9IjAuMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBlYTVlOSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAsIDEwMCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMCIgcng9IjM1IiByeT0iMzAiIGZpbGw9IiNmNDcyYjYiIG9wYWNpdHk9IjAuOSIvPjxlbGxpcHNlIGN4PSItMjUiIGN5PSI1IiByeD0iMTUiIHJ5PSIyMCIgZmlsbD0iI2VjNDg5OSIgb3BhY2l0eT0iMC44Ii8+PGVsbGlwc2UgY3g9IjI1IiBjeT0iNSIgcng9IjE1IiByeT0iMjAiIGZpbGw9IiNkYjI3NzciIG9wYWNpdHk9IjAuOCIvPjxwYXRoIGQ9Ik0gLTE1IC0yMCBRIC0xMCAtMTAsIC0xNSAwIFEgLTEwIDEwLCAtMTUgMjAiIHN0cm9rZT0iIyJiZTE4NWQiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTSAwIC0yNSBRIDUgLTE1LCAwIC01IFEgNSA1LCAwIDE1IFEgNSAyNSwgMCAzMCIgc3Ryb2tlPSIjYmUxODVkIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNiIvPjxwYXRoIGQ9Ik0gMTUgLTIwIFEgMTAgLTEwLCAxNSAwIFEgMTAgMTAsIDE1IDIwIiBzdHJva2U9IiNiZTE4NWQiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PC9nPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjIwIiByPSI2IiBmaWxsPSIjM2I4MmY2Ii8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iMTAwIiByPSI2IiBmaWxsPSIjMGVhNWU5Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTgwIiByPSI2IiBmaWxsPSIjMTZhMzRhIi8+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMDAiIHI9IjYiIGZpbGw9IiNmNTllMGIiLz48bGluZSB4MT0iMTAwIiB5MT0iMjYiIHgyPSIxMDAiIHkyPSI3MCIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSIxNzQiIHkxPSIxMDAiIHgyPSIxMzUiIHkyPSIxMDAiIHN0cm9rZT0iIzBlYTVlOSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48bGluZSB4MT0iMTAwIiB5MT0iMTc0IiB4Mj0iMTAwIiB5Mj0iMTMwIiBzdHJva2U9IiMxNmEzNGEiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC41Ii8+PGxpbmUgeDE9IjI2IiB5MT0iMTAwIiB4Mj0iNjUiIHkyPSIxMDAiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4=)
+
+# AgentMemoryAtlas
 
 [![Stars](https://img.shields.io/github/stars/Haiyoung/AgentMemoryAtlas?style=social)](https://github.com/Haiyoung/AgentMemoryAtlas)
 [![Papers](https://img.shields.io/badge/papers-20%2F204-blue)](https://haiyoung.github.io/AgentMemoryAtlas/)
@@ -8,6 +12,8 @@
 > 🗺️ **系统性梳理 Agent Memory 领域研究版图**
 >
 > 基于**本体论方法论**的智能体记忆论文地图集 · 7 维度深度标注 · 可视化分析
+
+</div>
 
 ---
 
@@ -19,7 +25,7 @@
 |:---------:|:---------:|:-------:|:-----------:|
 | **204 篇** | **20 篇** | **9.8%** | **2/15** |
 
-**批次 1 (2026 年)**: 6/6 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **批次 2 (2025-12)**: 10/10 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **批次 3 (2025-11)**: 5/15 🟡
+**🚀 批次 1 (2026 年)**: 6/6 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **📅 批次 2 (2025-12)**: 10/10 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **📖 批次 3 (2025-11)**: 5/15 🟡
 
 </div>
 
@@ -64,7 +70,7 @@
 
 ## 📚 已完成论文
 
-### 批次 1: 2026 年 (6/6) ✅
+### 🚀 批次 1: 2026 年 (6/6) ✅
 
 | 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
 |------|------|---------|---------|------|
@@ -75,7 +81,7 @@
 | 5 | Agentic Memory | 2601.01885 | 智能体记忆统一框架 | ⭐⭐⭐⭐⭐ 4.5 |
 | 6 | Memory Matters More (v2) | 2601.04726 | 事件中心记忆 (增强版) | ⭐⭐⭐⭐⭐ 4.8 |
 
-### 批次 2: 2025-12 (10/10) ✅
+### 📅 批次 2: 2025-12 (10/10) ✅
 
 | 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
 |------|------|---------|---------|------|
@@ -90,7 +96,7 @@
 | 9 | ReMe | 2512.10696 | 动态过程记忆 | ⭐⭐⭐⭐⭐ 4.8 |
 | 10 | MemLoRA | 2512.04763 | 设备端记忆系统 | ⭐⭐⭐⭐⭐ 4.9 |
 
-### 批次 3: 2025-11 (5/15) 🟡
+### 📖 批次 3: 2025-11 (5/15) 🟡
 
 | 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
 |------|------|---------|---------|------|

@@ -57,8 +57,13 @@
         }
 
         .logo {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
@@ -375,7 +380,38 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="logo">🧠</div>
+            <div class="logo">
+                <svg width="120" height="120" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 外圆环 -->
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.3"/>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+                    
+                    <!-- 中心大脑图标 -->
+                    <g transform="translate(100, 100)">
+                        <!-- 大脑轮廓 -->
+                        <ellipse cx="0" cy="0" rx="35" ry="30" fill="#f472b6" opacity="0.9"/>
+                        <ellipse cx="-25" cy="5" rx="15" ry="20" fill="#ec4899" opacity="0.8"/>
+                        <ellipse cx="25" cy="5" rx="15" ry="20" fill="#db2777" opacity="0.8"/>
+                        
+                        <!-- 大脑纹理 -->
+                        <path d="M -15 -20 Q -10 -10, -15 0 Q -10 10, -15 20" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
+                        <path d="M 0 -25 Q 5 -15, 0 -5 Q 5 5, 0 15 Q 5 25, 0 30" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
+                        <path d="M 15 -20 Q 10 -10, 15 0 Q 10 10, 15 20" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
+                    </g>
+                    
+                    <!-- 连接节点 -->
+                    <circle cx="100" cy="20" r="6" fill="#3b82f6"/>
+                    <circle cx="180" cy="100" r="6" fill="#0ea5e9"/>
+                    <circle cx="100" cy="180" r="6" fill="#16a34a"/>
+                    <circle cx="20" cy="100" r="6" fill="#f59e0b"/>
+                    
+                    <!-- 连接线 -->
+                    <line x1="100" y1="26" x2="100" y2="70" stroke="#3b82f6" stroke-width="2" opacity="0.5"/>
+                    <line x1="174" y1="100" x2="135" y2="100" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
+                    <line x1="100" y1="174" x2="100" y2="130" stroke="#16a34a" stroke-width="2" opacity="0.5"/>
+                    <line x1="26" y1="100" x2="65" y2="100" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
+                </svg>
+            </div>
             <h1>AgentMemoryAtlas</h1>
             <p class="subtitle">系统性梳理 Agent Memory 领域研究版图 · 基于本体论方法论的智能体记忆论文地图集</p>
         </header>
