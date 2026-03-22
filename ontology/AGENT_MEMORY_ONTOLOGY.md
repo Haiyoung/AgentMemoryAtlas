@@ -21,14 +21,17 @@
 
 ### 形式维度网络 (Forms)
 - **Token-level Memory**: 显式离散存储
-  - *子类型*: Event Graph, Multi-Graph, Structural Tree
+  - *子类型*: Event Graph, Multi-Graph, Structural Tree, Experience Pool, Modular Design Space
   - *关系*: 可转化为 Parametric/Latent 表示
+  - *批次 2 新增*: Dynamic Experience Pool (ReMe), Expert Adapters (MemLoRA)
 - **Parametric Memory**: 隐式权重存储  
   - *子类型*: Fine-tuning, Adapter-based
   - *关系*: 通常不可逆，但效率高
+  - *批次 2 新增*: Memory Adapters (MemLoRA), Meta-Evolution Architecture (MemEvolve)
 - **Latent Memory**: 隐藏状态存储
-  - *子类型*: Hidden States, Attention Patterns
+  - *子类型*: Hidden States, Attention Patterns, Visual Features
   - *关系*: 动态性强，但可解释性差
+  - *批次 2 新增*: Visual Memory Corpus (WorldMM), SVLM Features (MemLoRA-V)
 
 ### 功能维度网络 (Functions)  
 - **Factual Memory**: 知识存储与检索
@@ -124,6 +127,44 @@
 - **LoCoMo**: 长时对话记忆基准 (Hindsight 89.61%)
 - **VideoMME (long)**: 长视频多模态评估 (WorldMM)
 - **LVBench**: 长视频基准 (WorldMM)
+- **BFCL-V3**: 智能体基准 (ReMe SOTA)
+- **AppWorld**: 智能体基准 (ReMe SOTA)
+- **AIME25**: 数学推理基准 (FLEX +23%)
+- **USPTO50k**: 化学逆合成基准 (FLEX +10%)
+- **ProteinGym**: 蛋白质适应性基准 (FLEX +14%)
+
+### 新增元进化概念 (MemEvolve)
+- **Meta-Evolution Framework**: 共同进化经验和记忆架构
+- **EvolveLab**: 统一自进化记忆代码库 (12 个系统的模块化设计空间)
+- **Modular Design Space**: encode, store, retrieve, manage
+
+### 新增过程记忆概念 (ReMe)
+- **Procedural Memory**: 过程性"how-to"知识
+- **Multi-faceted Distillation**: 成功模式识别、失败触发分析、比较洞见生成
+- **Context-Adaptive Reuse**: 情境感知索引
+- **Utility-based Refinement**: 自主添加有效记忆、剪枝过时记忆
+- **Memory-Scaling Effect**: Qwen3-8B + ReMe > Qwen3-14B (无记忆)
+
+### 新增设备端记忆概念 (MemLoRA)
+- **On-Device Memory Systems**: 设备端部署，无云依赖
+- **Knowledge Distillation**: 教师 LLM 蒸馏到学生 SLM
+- **Expert Adapters**: 知识提取、记忆更新、记忆增强生成
+- **MemLoRA-V**: 视觉扩展，小视觉语言模型 (SVLM)
+- **Privacy Preservation**: 隐私保护
+
+### 新增经验合成概念 (DreamGym)
+- **Experience Synthesis**: 合成多样化经验用于 RL 训练
+- **Reasoning-based Experience Model**: 推理基础经验模型
+- **Experience Replay Buffer**: 初始化于离线数据，持续丰富
+- **Curriculum Learning**: 自适应生成挑战性任务
+- **Sim-to-Real Transfer**: 合成→真实迁移
+
+### 新增经验前向学习概念 (FLEX)
+- **Forward Learning from Experience**: 经验前向学习
+- **Structured Experience Library**: 结构化经验库
+- **Continual Reflection**: 持续反思成功和失败
+- **Experience Inheritance**: 经验继承
+- **Gradient-Free Learning**: 无梯度学习范式
 - **HourVideo**: 小时级视频基准 (WorldMM)
 
 ## 未来发展方向
