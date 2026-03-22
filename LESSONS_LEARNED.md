@@ -55,7 +55,7 @@
 1. **Mermaid 语法验证**
    - 使用 `flowchart TB` 作为起始
    - subgraph 标题使用 `"emoji 标题"` 格式
-   - 节点内容使用 `名称[中文\nEnglish]` 格式
+   - 节点内容使用 `名称 [中文\nEnglish]` 格式
 
 2. **响应式设计**
    - 确保图表在移动端正常显示
@@ -67,42 +67,55 @@
    - 提交信息要明确说明修复内容
    - 保持 Git 历史的清晰可追溯
 
-## ⚠️ **批次处理关键提醒**
+4. **PDF 数据提取** ⭐ **新增**
+   - 优先下载 arXiv PDF 提取实验数据
+   - 使用 `pymupdf` (fitz) 或 `pdfplumber` 解析 PDF 表格
+   - 提取具体的实验数值（准确率、F1 分数等）
+   - 当 HTML 版本数据不完整时，必须使用 PDF
 
-### **批次完成必须执行完整12步流程**
-- **步骤9-12是批次价值的核心体现，绝不能遗漏**
-- **批次结束时必须生成分析报告、更新本体论、同步README和site/index.html**
-- **单篇处理完成后立即提交，但批次价值体现在整体分析中**
-- **批次最终提交必须包含远程推送和批次总结消息**
+5. **表格设计规范** ⭐ **新增**
+   - 主实验和消融实验分开成两个表格
+   - 消融实验使用 ✓/✗ 符号清晰标记组件有无
+   - 性能下降用颜色标记（橙色/红色）
+   - 完整模型行使用绿色渐变背景高亮
 
 ## 📥 PDF 下载和解析流程 ⭐ **新增**
 
 ### 何时使用 PDF
 - arXiv HTML 版本实验数据不完整
-- 需要提取具体数值（如 57.36, 38.84 等）
+- 需要提取具体数值（如 57.36, 38.84, 69.5% 等）
 - 表格数据在 HTML 中被截断
+- **WorldMM 案例**: HTML 只有 "+8.4%"，PDF 提取到完整对比数据
 
 ### 下载方法
 ```bash
 # arXiv PDF URL 格式
 https://arxiv.org/pdf/{arxiv_id}.pdf
 示例：https://arxiv.org/pdf/2512.02425.pdf
+
+# 命令行下载
+wget -q {PDF_URL} -O /tmp/{arxiv_id}.pdf
 ```
 
 ### 解析工具
 ```python
-# 方法 1: pymupdf (推荐，已安装)
+# 方法 1: pymupdf (推荐，已安装) - 适合提取文本
 import fitz
 doc = fitz.open(pdf_path)
 for page in doc:
     text = page.get_text()
-    tables = page.find_tables()
+    # 搜索关键词定位
+    if "Table 1" in text or "Experiment" in text:
+        print(f"找到实验数据在第{page.number}页")
 
 # 方法 2: pdfplumber (表格提取更好，已安装 ✅)
 import pdfplumber
 with pdfplumber.open(pdf_path) as pdf:
     for page in pdf.pages:
         tables = page.extract_tables()
+        for table in tables:
+            if table and len(table) > 2:
+                print(f"提取到表格：{len(table)}行")
 ```
 
 ### 数据提取策略 ⭐ **优化**
@@ -178,6 +191,41 @@ def validate_extracted_data(data):
     }
     return all(checks.values())
 ```
+
+### ⚠️ 常见问题和解决方案
+
+**问题 1: pdfplumber 提取不到表格**
+```
+原因：PDF 表格是图片格式或复杂布局
+解决：改用 pymupdf 提取文本，然后用正则表达式提取数字
+示例:
+  numbers = re.findall(r'\d+\.?\d*', text)
+  percentages = re.findall(r'\d+\.?\d*\s*%', text)
+```
+
+**问题 2: 提取到太多无关表格**
+```
+解决：使用预览筛选
+  if "LVBench" in str(table[0]) or "VideoMME" in str(table[0]):
+      # 这是我们需要的表格
+```
+
+**问题 3: 表格数据不完整**
+```
+解决：
+1. 检查是否跨页表格
+2. 尝试提取相邻页面的表格
+3. 手动搜索关键词定位
+```
+
+**WorldMM 案例经验**:
+- PDF 下载：3.8MB, /tmp/2512.02425.pdf
+- 关键词定位：第 5-8 页包含实验数据
+- 提取方法：pymupdf 提取文本 + 正则提取数字
+- 提取结果:
+  - GPT-5 基线：69.5% → WorldMM: 76.9% (+7.4%)
+  - Qwen3 基线：51.8% → WorldMM: 58.7% (+6.9%)
+  - 消融实验：-4.2%, -3.1%, -5.3%, -9.8%
 
 ---
 **最后更新**: 2026-03-22  
