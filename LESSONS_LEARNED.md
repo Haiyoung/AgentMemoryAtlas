@@ -48,6 +48,7 @@
 - [ ] 数据流向是否完整且准确？
 - [ ] 架构图是否真实反映论文内容？
 - [ ] MD 和 HTML 文档是否保持完全一致？
+- [ ] **实验数据是否从 PDF 提取（优先）或项目主页获取？**
 
 ## 🔧 技术实现要点
 
@@ -74,6 +75,42 @@
 - **单篇处理完成后立即提交，但批次价值体现在整体分析中**
 - **批次最终提交必须包含远程推送和批次总结消息**
 
+## 📥 PDF 下载和解析流程 ⭐ **新增**
+
+### 何时使用 PDF
+- arXiv HTML 版本实验数据不完整
+- 需要提取具体数值（如 57.36, 38.84 等）
+- 表格数据在 HTML 中被截断
+
+### 下载方法
+```bash
+# arXiv PDF URL 格式
+https://arxiv.org/pdf/{arxiv_id}.pdf
+示例：https://arxiv.org/pdf/2512.02425.pdf
+```
+
+### 解析工具
+```python
+# 方法 1: pymupdf (推荐，已安装)
+import fitz
+doc = fitz.open(pdf_path)
+for page in doc:
+    text = page.get_text()
+    tables = page.find_tables()
+
+# 方法 2: pdfplumber (表格提取更好)
+import pdfplumber
+with pdfplumber.open(pdf_path) as pdf:
+    for page in pdf.pages:
+        tables = page.extract_tables()
+```
+
+### 数据提取策略
+1. 搜索关键词："Table 1", "Experiment", "Results", "Benchmark"
+2. 定位实验表格页面
+3. 提取表格数据（模型名、数据集、指标数值）
+4. 验证数据完整性（检查是否有 "+8.4%" 等关键数据）
+
 ---
-**最后更新**: 2026-03-21  
+**最后更新**: 2026-03-22  
 **适用范围**: 所有后续论文处理
