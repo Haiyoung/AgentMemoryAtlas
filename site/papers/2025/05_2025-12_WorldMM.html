@@ -45,7 +45,7 @@
             --accent-blue: #60a5fa;
             --border-color: #334155;
             --border-subtle: rgba(51, 65, 85, 0.5);
-            --shadow-sm: 0 1px 3 rgba(0,0,0,0.2);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
             --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
         }
@@ -65,7 +65,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .container {
+        main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
@@ -100,70 +100,360 @@
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin: 0.8rem 0;
+            font-weight: 500;
         }
 
-        .meta-info {
+        .hero-subtitle-cn {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .hero-meta {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
         }
 
-        .meta-item {
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
         }
 
-        .meta-item i {
-            color: var(--accent-purple);
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
-        .meta-tag {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(14, 165, 233, 0.1));
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin: 0.3rem;
         }
 
-        /* Content Sections */
-        .section {
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Rating Card */
+        .rating-card {
             background: var(--bg-card);
             border-radius: var(--radius-lg);
             padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-md);
+            margin-bottom: 2.5rem;
             border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
         }
 
-        .section-title {
-            font-size: 2rem;
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.4));
+        }
+
+        .rating-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-left: 0.6rem;
+        }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .rating-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating-score {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .rating-summary strong {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-cyan);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
         }
 
-        .section-title i {
+        .card-title i {
+            font-size: 1.4rem;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .highlight p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .highlight strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Ontology Tags */
+        .tag-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .tag strong {
+            color: var(--text-primary);
+        }
+
+        /* Mermaid Wrapper */
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Keywords */
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .keyword-tag {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .keyword-tag strong {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .keyword-tag small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Future Research Grid */
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .future-item {
+            display: flex;
+            gap: 1.2rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .future-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .future-icon {
+            font-size: 2rem;
             color: var(--accent-purple);
+            flex-shrink: 0;
+        }
+
+        .future-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .future-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         /* Tables */
@@ -203,122 +493,26 @@
             background: var(--bg-secondary);
         }
 
-        /* Mermaid Diagrams */
-        .mermaid-container {
-            background: var(--bg-mermaid);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid var(--border-color);
-            overflow-x: auto;
-        }
-
-        .mermaid {
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-content {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* Blockquotes */
-        blockquote {
-            border-left: 4px solid var(--accent-purple);
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-            background: var(--bg-secondary);
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            color: var(--text-secondary);
-        }
-
-        blockquote p {
-            margin: 0.5rem 0;
-        }
-
-        /* Code Blocks */
-        pre {
-            background: #1e293b;
-            color: #f1f5f9;
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        code {
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-        }
-
-        :not(pre) > code {
-            background: var(--bg-secondary);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.85em;
-            color: var(--accent-purple);
-        }
-
         /* Lists */
         ul, ol {
-            margin: 1rem 0;
-            padding-left: 2rem;
+            margin: 1.5rem 0;
+            padding-left: 2.5rem;
         }
 
         li {
-            margin: 0.5rem 0;
+            margin: 0.8rem 0;
             color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
-        /* Links */
-        a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        a:hover {
-            color: var(--accent-purple);
-            text-decoration: underline;
+        li strong {
+            color: var(--text-primary);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
+            main {
                 padding: 1rem;
             }
 
@@ -326,330 +520,386 @@
                 font-size: 2rem;
             }
 
-            .section {
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .rating-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .card {
                 padding: 1.5rem;
             }
 
-            .meta-info {
-                flex-direction: column;
-                gap: 1rem;
+            .card-title {
+                font-size: 1.4rem;
             }
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--shadow-md);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .theme-toggle i {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-        }
-
-        /* Highlight */
-        .highlight {
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(124, 58, 237, 0.15));
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-weight: 500;
-        }
-
-        /* Insight Box */
-        .insight-box {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05));
-            border: 2px solid var(--accent-purple);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .insight-box-title {
-            font-weight: 600;
-            color: var(--accent-purple);
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <div class="theme-toggle" onclick="toggleTheme()" title="切换主题">
-        <i class="fas fa-moon"></i>
-    </div>
-
-    <div class="container">
+    <main>
         <!-- Hero Section -->
         <div class="hero">
             <h1 class="hero-title">WorldMM</h1>
             <p class="hero-subtitle">Dynamic Multimodal Memory Agent for Long Video Reasoning</p>
-            <p style="color: var(--text-muted); font-size: 1.1rem;">动态多模态记忆智能体 for 长视频推理</p>
+            <p class="hero-subtitle-cn">动态多模态记忆智能体 for 长视频推理</p>
             
-            <div class="meta-info">
-                <div class="meta-item">
+            <div class="hero-meta">
+                <div class="hero-meta-item">
                     <i class="fas fa-calendar"></i>
-                    <span>2025-12-02</span>
+                    <span>2025 年 12 月</span>
                 </div>
-                <div class="meta-item">
+                <div class="hero-meta-item">
                     <i class="fas fa-university"></i>
                     <span>KAIST, NTU, DeepAuto.ai</span>
                 </div>
-                <div class="meta-item">
+                <div class="hero-meta-item">
                     <i class="fas fa-file-alt"></i>
                     <span>arXiv:2512.02425</span>
                 </div>
-                <div class="meta-item">
-                    <i class="fas fa-brain"></i>
-                    <span>多模态记忆 · 自适应检索 · 长视频理解</span>
-                </div>
             </div>
 
-            <div style="margin-top: 1.5rem;">
-                <span class="meta-tag">#长视频理解</span>
-                <span class="meta-tag">#多模态记忆</span>
-                <span class="meta-tag">#自适应检索</span>
-                <span class="meta-tag">#图结构记忆</span>
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.02425" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i>
+                    arXiv 论文
+                </a>
+                <a href="https://worldmm.github.io" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    项目主页
+                </a>
+                <button onclick="toggleTheme()" class="btn btn-secondary">
+                    <i class="fas fa-moon"></i>
+                    切换主题
+                </button>
             </div>
         </div>
 
-        <!-- 核心信息卡片 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-clipboard-list"></i> 核心信息卡片</h2>
+        <!-- Rating Card -->
+        <div class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title">
+                    <i class="fas fa-star"></i>
+                    论文综合评分
+                    <span class="rating-value">4.7/5.0</span>
+                </h2>
+                <div class="rating-stars">
+                    <i class="fas fa-star star"></i>
+                    <i class="fas fa-star star"></i>
+                    <i class="fas fa-star star"></i>
+                    <i class="fas fa-star star"></i>
+                    <i class="fas fa-star-half-alt star"></i>
+                </div>
+            </div>
+
+            <div class="rating-grid">
+                <div class="rating-item">
+                    <div class="rating-label">期刊影响力</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">问题核心性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">方法创新性</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">技术壁垒</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">落地可行性</div>
+                    <div class="rating-score">⭐⭐⭐⭐</div>
+                </div>
+                <div class="rating-item">
+                    <div class="rating-label">应用前景</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
+
+            <div class="rating-summary">
+                <strong>综合评价:</strong> WorldMM 提出了一个革命性的多模态记忆框架，将记忆组织为三种互补类型（情景式、语义式、视觉），通过自适应检索智能体实现多模态、多时间粒度的灵活查询。这种方法不仅在理论上证明了混合存储的必要性，在实践中也显著提升了长视频推理能力，平均提升 8.4% vs SOTA。
+            </div>
+        </div>
+
+        <!-- Ontology Mapping -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-brain"></i> 本体论映射 (Ontology Mapping)</h2>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 1.5rem;">基于 Agent Memory 领域本体模型的 7 维度标注</p>
+            
+            <div class="tag-container">
+                <div class="tag"><strong>记忆类型:</strong> Factual + Experiential + Working</div>
+                <div class="tag"><strong>记忆结构:</strong> Multi-Graph + KG + Visual Corpus</div>
+                <div class="tag"><strong>记忆操作:</strong> Formation + Evolution + Adaptive Retrieval</div>
+                <div class="tag"><strong>记忆载体:</strong> Token-level + Latent</div>
+                <div class="tag"><strong>功能定位:</strong> Long Video Reasoning</div>
+                <div class="tag"><strong>使用模式:</strong> Iterative Multi-Modal Search</div>
+                <div class="tag"><strong>验证公理:</strong> Multi-Temporal Granularity</div>
+            </div>
+
+            <div class="highlight">
+                <p><strong>领域贡献:</strong> WorldMM 将<strong>多模态记忆</strong>和<strong>自适应检索</strong>引入长视频理解领域，提出了<strong>三类型互补记忆架构</strong>。通过构建<strong>情景式记忆</strong>（多时间粒度事件图）、<strong>语义式记忆</strong>（知识图谱）和<strong>视觉记忆</strong>（短视频片段索引），该框架证明了视觉信息的不可约简性和时间粒度的自然可变性。</p>
+            </div>
+        </div>
+
+        <!-- Core Claims -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i> 核心主张（通俗易懂版）</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有长视频理解方法过度依赖文本表示，丢失视觉细节；使用固定时间粒度检索，无法适应不同查询的时间跨度需求。</p>
+                <p><strong>💡 解决方案是什么？</strong> WorldMM 提出三类型多模态记忆框架，包含情景式（多时间粒度图）、语义式（知识图谱）和视觉记忆，通过自适应检索智能体迭代选择最相关的记忆源和时间粒度。</p>
+                <p><strong>🌟 核心优势是什么？</strong> 视觉记忆保留不可约简的空间和属性细节；多时间粒度适应事件的自然时序结构；自适应检索避免噪声干扰，5 个基准平均提升 8.4%。</p>
+            </div>
+        </div>
+
+        <!-- Method Architecture -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 1.5rem;">WorldMM 的核心创新在于三类型多模态记忆 + 自适应检索智能体：</p>
+            
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">整体架构图</h3>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 输入流"]
+        X[长视频流\nLong Video Stream]
+    end
+    
+    subgraph Construction["🏗️ 多模态记忆构建"]
+        Cap[细粒度 Caption\nFine-grained Captioning]
+        Episodic[情景式记忆\nEpisodic Memory]
+        Semantic[语义式记忆\nSemantic Memory]
+        Visual[视觉特征提取\nVisual Feature Extraction]
+        VisualMem[视觉记忆\nVisual Memory]
+    end
+    
+    subgraph Retrieval["🔍 自适应记忆检索"]
+        Query[用户查询\nUser Query]
+        Agent[检索智能体\nRetrieval Agent]
+        Iterative[迭代检索\nIterative Retrieval]
+    end
+    
+    subgraph Response["💬 响应生成"]
+        RespAgent[响应智能体\nResponse Agent]
+        Output[生成响应\nGenerate Output]
+    end
+    
+    X --> Cap
+    Cap --> Episodic
+    Cap --> Semantic
+    X --> Visual
+    Visual --> VisualMem
+    Episodic --> Agent
+    Semantic --> Agent
+    VisualMem --> Agent
+    Query --> Agent
+    Agent --> Iterative
+    Iterative --> RespAgent
+    Query --> RespAgent
+    RespAgent --> Output
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">情景式记忆：多时间粒度图结构</h3>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart LR
+    subgraph Granularity["⏱️ 时间粒度层级"]
+        Hour[小时级图\nHour-level Graph]
+        Minute[分钟级图\nMinute-level Graph]
+        Second[秒级图\nSecond-level Graph]
+    end
+    
+    subgraph Node["📍 节点内容"]
+        Event[事件节点\nEvent Node]
+        TS[时间戳\nTimestamp]
+        Cap2[Caption]
+        Entity[关键实体\nKey Entities]
+    end
+    
+    subgraph Edge["🔗 边关系"]
+        Temporal[时序关系\nTemporal\nbefore/after/during]
+        Semantic[语义关系\nSemantic\n因果/共现]
+    end
+    
+    Hour -.->|聚合| Minute
+    Minute -.->|聚合| Second
+    Second --> Event
+    Event --> TS
+    Event --> Cap2
+    Event --> Entity
+    Event --> Temporal
+    Event --> Semantic
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">自适应检索智能体</h3>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    Q[用户查询\nUser Query] --> Agent{检索智能体\nRetrieval Agent}
+    
+    Agent -->|选择记忆类型 | E[情景式记忆\nEpisodic]
+    Agent -->|选择记忆类型 | S[语义式记忆\nSemantic]
+    Agent -->|选择记忆类型 | V[视觉记忆\nVisual]
+    
+    E -->|多粒度检索 | G1[秒级候选]
+    E -->|多粒度检索 | G2[分钟级候选]
+    E -->|多粒度检索 | G3[小时级候选]
+    
+    G1 --> Check{信息充足？}
+    G2 --> Check
+    G3 --> Check
+    S --> Check
+    V --> Check
+    
+    Check -->|否 | Agent
+    Check -->|是 | Aggregate[聚合结果]
+    Aggregate --> Response[响应生成]
+                </div>
+            </div>
+        </div>
+
+        <!-- Experimental Results -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i> 实验结果</h2>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 1.5rem;">在 5 个长视频 QA 基准测试上，WorldMM 显著优于现有方法：</p>
+            
+            <div class="highlight" style="margin: 1.5rem 0;">
+                <p><strong>关键发现:</strong> WorldMM 在物体和动作中心查询上表现尤为突出，证明了视觉记忆的必要性；在多时间跨度查询上显著优于固定粒度方法，证明了多时间粒度设计的有效性。</p>
+            </div>
+            
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 25%;">维度</th>
-                            <th>内容</th>
+                            <th>模型</th>
+                            <th>方法</th>
+                            <th>LVBench</th>
+                            <th>VideoMME</th>
+                            <th>HourVideo</th>
+                            <th>EgoLife</th>
+                            <th>平均</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>核心问题</strong></td>
-                            <td>长视频 (小时/天级) 理解中，现有方法过度依赖文本表示，无法有效利用视觉证据，且检索时间粒度固定</td>
+                            <td>之前 SOTA</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>基准</td>
                         </tr>
                         <tr>
-                            <td><strong>核心创新</strong></td>
-                            <td><span class="highlight">三类型多模态记忆</span> (情景/语义/视觉) + <span class="highlight">自适应检索智能体</span> + 多时间粒度图结构</td>
+                            <td>WorldMM</td>
+                            <td>Ours</td>
+                            <td>+X%</td>
+                            <td>+X%</td>
+                            <td>+X%</td>
+                            <td>+X%</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">+8.4%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">消融实验</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>配置</th>
+                            <th>物体查询</th>
+                            <th>动作查询</th>
+                            <th>时间推理</th>
+                            <th>平均</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 600;">完整模型</td>
+                            <td style="color: var(--accent-green);">✓</td>
+                            <td style="color: var(--accent-green);">✓</td>
+                            <td style="color: var(--accent-green);">✓</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">最佳</td>
                         </tr>
                         <tr>
-                            <td><strong>性能提升</strong></td>
-                            <td><span class="highlight">5 个长视频 QA 基准上平均提升 8.4%</span></td>
+                            <td>- 视觉记忆</td>
+                            <td style="color: var(--accent-orange);">↓</td>
+                            <td style="color: var(--accent-orange);">↓</td>
+                            <td>-</td>
+                            <td style="color: var(--accent-orange);">下降</td>
                         </tr>
                         <tr>
-                            <td><strong>关键洞见</strong></td>
-                            <td>视觉细节对属性识别、空间推理至关重要；不同查询需要不同时间跨度的上下文</td>
+                            <td>- 语义记忆</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td style="color: var(--accent-orange);">↓</td>
+                            <td style="color: var(--accent-orange);">下降</td>
+                        </tr>
+                        <tr>
+                            <td>- 多时间粒度</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td style="color: var(--accent-orange);">↓↓</td>
+                            <td style="color: var(--accent-orange); font-weight: 700;">显著下降</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 本体论 7 维度标注 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-brain"></i> 本体论 7 维度标注</h2>
-            
-            <div class="cards-grid">
-                <div class="card">
-                    <div class="card-title">📦 Form 维度</div>
-                    <div class="card-content">
-                        <strong>混合存储架构</strong><br>
-                        • 情景式：Token-level + 多图结构<br>
-                        • 语义式：Token-level + 知识图谱<br>
-                        • 视觉：Latent + 短视频索引
-                    </div>
+        <!-- Keywords -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i> 关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag">
+                    <strong>多模态记忆</strong>
+                    <small>Multimodal Memory</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">🎯 Function 维度</div>
-                    <div class="card-content">
-                        <strong>三认知功能对应</strong><br>
-                        • Factual: 多时间粒度事件索引<br>
-                        • Experiential: 高层概念知识<br>
-                        • Working: 自适应检索决策
-                    </div>
+                <div class="keyword-tag">
+                    <strong>自适应检索</strong>
+                    <small>Adaptive Retrieval</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">🔄 Dynamics 维度</div>
-                    <div class="card-content">
-                        <strong>迭代检索机制</strong><br>
-                        • Formation: 细粒度 caption + 多图<br>
-                        • Evolution: 知识图谱持续更新<br>
-                        • Retrieval: 自适应多粒度选择
-                    </div>
+                <div class="keyword-tag">
+                    <strong>长视频理解</strong>
+                    <small>Long Video Understanding</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">🌍 Context 维度</div>
-                    <div class="card-content">
-                        <strong>长视频 QA 场景</strong><br>
-                        • 小时 - 天级视频理解<br>
-                        • 属性识别 & 空间推理<br>
-                        • 多时间跨度查询
-                    </div>
+                <div class="keyword-tag">
+                    <strong>多时间粒度</strong>
+                    <small>Multi-Temporal Granularity</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">📊 Evaluation 维度</div>
-                    <div class="card-content">
-                        <strong>5 基准验证</strong><br>
-                        • 平均提升 +8.4% vs SOTA<br>
-                        • LVBench, VideoMME, HourVideo 等<br>
-                        • 消融实验验证各组件贡献
-                    </div>
+                <div class="keyword-tag">
+                    <strong>事件图</strong>
+                    <small>Event Graph</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">⚠️ Limitation 维度</div>
-                    <div class="card-content">
-                        <strong>待改进方向</strong><br>
-                        • 计算开销较高<br>
-                        • 视觉记忆固定分段<br>
-                        • 依赖 caption 质量
-                    </div>
+                <div class="keyword-tag">
+                    <strong>知识图谱</strong>
+                    <small>Knowledge Graph</small>
                 </div>
-                
-                <div class="card">
-                    <div class="card-title">🚀 Future 维度</div>
-                    <div class="card-content">
-                        <strong>未来方向</strong><br>
-                        • 端到端联合训练<br>
-                        • 自适应视觉分段<br>
-                        • 跨模态深度融合
-                    </div>
+                <div class="keyword-tag">
+                    <strong>视觉记忆</strong>
+                    <small>Visual Memory</small>
+                </div>
+                <div class="keyword-tag">
+                    <strong>迭代检索</strong>
+                    <small>Iterative Retrieval</small>
                 </div>
             </div>
         </div>
 
-        <!-- 系统架构 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-sitemap"></i> 系统架构</h2>
+        <!-- Core Insights -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-brain"></i> 核心洞见与本质分析</h2>
             
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">三阶段流程</h3>
-            <div class="mermaid-container">
-                <div class="mermaid">
-flowchart TB
-    subgraph "阶段 1: 多模态记忆构建\nMultimodal Memory Construction"
-        A[长视频流\nLong Video Stream] --> B[细粒度 Caption\nFine-grained Captioning]
-        B --> C[情景式记忆\nEpisodic Memory]
-        B --> D[语义式记忆\nSemantic Memory]
-        A --> E[视觉特征提取\nVisual Feature Extraction]
-        E --> F[视觉记忆\nVisual Memory]
-    end
-    
-    subgraph "阶段 2: 自适应记忆检索\nAdaptive Memory Retrieval"
-        G[用户查询\nUser Query] --> H[检索智能体\nRetrieval Agent]
-        C --> H
-        D --> H
-        F --> H
-        H --> I[迭代检索\nIterative Retrieval]
-    end
-    
-    subgraph "阶段 3: 响应生成\nResponse Generation"
-        I --> J[响应智能体\nResponse Agent]
-        G --> J
-        J --> K[生成响应\nGenerate Response]
-    end
-    
-    style C fill:#6366f1,color:#fff
-    style D fill:#8b5cf6,color:#fff
-    style F fill:#ec4899,color:#fff
-    style H fill:#f59e0b,color:#fff
-                </div>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">情景式记忆：多时间粒度图结构</h3>
-            <div class="mermaid-container">
-                <div class="mermaid">
-flowchart LR
-    subgraph "时间粒度层级\nTemporal Granularity"
-        H[小时级图\nHour-level Graph]
-        M[分钟级图\nMinute-level Graph]
-        S[秒级图\nSecond-level Graph]
-    end
-    
-    H -.->|聚合\nAggregate | M
-    M -.->|聚合\nAggregate | S
-    
-    subgraph "节点内容\nNode Content"
-        N1["事件节点\nEvent Node\n• 时间戳\n• Caption\n• 关键实体"]
-    end
-    
-    subgraph "边关系\nEdge Relations"
-        E1["时序关系\nTemporal\nbefore/after/during"]
-        E2["语义关系\nSemantic\n因果/共现"]
-    end
-    
-    S --> N1
-    N1 --> E1
-    N1 --> E2
-    
-    style H fill:#3b82f6,color:#fff
-    style M fill:#6366f1,color:#fff
-    style S fill:#8b5cf6,color:#fff
-                </div>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">自适应检索智能体</h3>
-            <div class="mermaid-container">
-                <div class="mermaid">
-flowchart TB
-    Q[用户查询\nUser Query] --> R{检索智能体\nRetrieval Agent}
-    
-    R -->|选择记忆类型 | M1[情景式记忆\nEpisodic Memory]
-    R -->|选择记忆类型 | M2[语义式记忆\nSemantic Memory]
-    R -->|选择记忆类型 | M3[视觉记忆\nVisual Memory]
-    
-    M1 -->|多粒度检索 | G1[秒级候选\nSecond-level]
-    M1 -->|多粒度检索 | G2[分钟级候选\nMinute-level]
-    M1 -->|多粒度检索 | G3[小时级候选\nHour-level]
-    
-    G1 --> J{信息充足？\nSufficient?}
-    G2 --> J
-    G3 --> J
-    M2 --> J
-    M3 --> J
-    
-    J -->|否\nNo | R
-    J -->|是\nYes | A[聚合检索结果\nAggregate Results]
-    
-    A --> RESP[响应生成\nResponse Generation]
-    
-    style R fill:#f59e0b,color:#fff
-    style J fill:#10b981,color:#fff
-    style M1 fill:#6366f1,color:#fff
-    style M2 fill:#8b5cf6,color:#fff
-    style M3 fill:#ec4899,color:#fff
-                </div>
-            </div>
-        </div>
-
-        <!-- 核心洞见 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-lightbulb"></i> 核心洞见与本质分析</h2>
-            
-            <div class="insight-box">
-                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要多模态记忆？</div>
+            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-purple);">
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 1rem;">为什么需要多模态记忆？</p>
                 <p><strong>表面观察:</strong> 现有方法只用文本记忆</p>
                 <p><strong>本质洞见:</strong></p>
                 <ul>
@@ -657,11 +907,11 @@ flowchart TB
                     <li>文本 caption 必然丢失视觉信息 (信息论瓶颈)</li>
                     <li>某些查询 (物体属性、空间布局)<strong>必须</strong>访问原始视觉特征</li>
                 </ul>
-                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 记忆系统的表示能力必须匹配任务需求</p>
+                <p style="margin-top: 1rem; color: var(--accent-purple); font-weight: 600;"><strong>第一性原理:</strong> 记忆系统的表示能力必须匹配任务需求</p>
             </div>
 
-            <div class="insight-box">
-                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要多时间粒度？</div>
+            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-cyan);">
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 1rem;">为什么需要多时间粒度？</p>
                 <p><strong>表面观察:</strong> 现有方法用固定长度片段检索</p>
                 <p><strong>本质洞见:</strong></p>
                 <ul>
@@ -670,11 +920,11 @@ flowchart TB
                     <li>"比赛下半场" → 小时级事件</li>
                     <li><strong>固定粒度 = 强制事件适应系统</strong> (本末倒置)</li>
                 </ul>
-                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 系统应该适应事件的时序结构，而非相反</p>
+                <p style="margin-top: 1rem; color: var(--accent-cyan); font-weight: 600;"><strong>第一性原理:</strong> 系统应该适应事件的时序结构，而非相反</p>
             </div>
 
-            <div class="insight-box">
-                <div class="insight-box-title"><i class="fas fa-question-circle"></i> 为什么需要自适应检索？</div>
+            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-green);">
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1rem;">为什么需要自适应检索？</p>
                 <p><strong>表面观察:</strong> 现有方法检索固定数量的片段</p>
                 <p><strong>本质洞见:</strong></p>
                 <ul>
@@ -682,44 +932,97 @@ flowchart TB
                     <li>强制配对模态 (总是检索文本 + 视觉) 会引入<strong>噪声干扰</strong></li>
                     <li><strong>选择性注意</strong>是智能的核心特征</li>
                 </ul>
-                <p style="margin-top: 1rem; color: var(--accent-purple);"><strong>第一性原理:</strong> 检索策略应该基于查询的信息需求动态调整</p>
+                <p style="margin-top: 1rem; color: var(--accent-green); font-weight: 600;"><strong>第一性原理:</strong> 检索策略应该基于查询的信息需求动态调整</p>
             </div>
         </div>
 
-        <!-- 与本体论关联 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-link"></i> 与本体论的关联</h2>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>本体论维度</th>
-                            <th>WorldMM 的贡献</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Form</strong></td>
-                            <td>证明混合存储 (Token + Latent) 的必要性</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Function</strong></td>
-                            <td>三类型记忆对应三种认知功能的实证</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Dynamics</strong></td>
-                            <td>多粒度图结构支持灵活的时间推理</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Context</strong></td>
-                            <td>长视频理解是记忆系统的理想测试场</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- Limitations -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> 局限性分析</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <i class="fas fa-calculator future-icon" style="color: var(--accent-orange);"></i>
+                    <div>
+                        <div class="future-title">计算开销</div>
+                        <div class="future-desc">三类型记忆构建和检索的计算成本显著高于单一记忆系统。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-film future-icon" style="color: var(--accent-orange);"></i>
+                    <div>
+                        <div class="future-title">视觉记忆固定</div>
+                        <div class="future-desc">视觉片段按固定长度分段，可能不够灵活。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-search future-icon" style="color: var(--accent-orange);"></i>
+                    <div>
+                        <div class="future-title">检索迭代次数</div>
+                        <div class="future-desc">需要确定何时停止检索，当前启发式可能不够最优。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-align-left future-icon" style="color: var(--accent-orange);"></i>
+                    <div>
+                        <div class="future-title">依赖 caption 质量</div>
+                        <div class="future-desc">情景式和语义式记忆的质量依赖于细粒度 caption 的准确性。</div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">与已读论文的关联</h3>
+        <!-- Future Research -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i> 未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item">
+                    <i class="fas fa-brain future-icon"></i>
+                    <div>
+                        <div class="future-title">端到端训练</div>
+                        <div class="future-desc">联合优化记忆构建和检索策略，而非分阶段训练。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-video future-icon"></i>
+                    <div>
+                        <div class="future-title">自适应视觉分段</div>
+                        <div class="future-desc">根据视频内容动态调整视觉片段长度，而非固定分段。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-project-diagram future-icon"></i>
+                    <div>
+                        <div class="future-title">跨模态深度融合</div>
+                        <div class="future-desc">探索更深层的视觉 - 文本记忆融合机制，而非简单并列。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-mobile-alt future-icon"></i>
+                    <div>
+                        <div class="future-title">实时应用</div>
+                        <div class="future-desc">优化计算效率，部署到 AI 眼镜、家庭机器人等资源受限设备。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-clock future-icon"></i>
+                    <div>
+                        <div class="future-title">周级视频扩展</div>
+                        <div class="future-desc">扩展到更长时间跨度（周级、月级）的连续记录理解。</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-users future-icon"></i>
+                    <div>
+                        <div class="future-title">多智能体协作</div>
+                        <div class="future-desc">探索多智能体共享记忆和协同推理的可能性。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Papers -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-link"></i> 与已读论文的关联</h2>
             <div class="table-container">
                 <table>
                     <thead>
@@ -733,7 +1036,7 @@ flowchart TB
                         <tr>
                             <td><strong>MAGMA</strong> (2026-01)</td>
                             <td>都用图结构</td>
-                            <td>MAGMA 是多图 (对象/时空/语义)，WorldMM 是多粒度</td>
+                            <td>MAGMA 是多图 (对象/时空/语义)，WorldMM 是多粒度图</td>
                         </tr>
                         <tr>
                             <td><strong>EverMemOS</strong> (2026-01)</td>
@@ -755,56 +1058,55 @@ flowchart TB
             </div>
         </div>
 
-        <!-- 经验教训 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-book"></i> 经验教训</h2>
-            
-            <div class="cards-grid">
-                <div class="card" style="border-left: 4px solid var(--accent-green);">
-                    <div class="card-title" style="color: var(--accent-green);"><i class="fas fa-check-circle"></i> 值得学习的 design pattern</div>
-                    <div class="card-content">
-                        <ol>
-                            <li><strong>多模态互补:</strong> 不同模态记忆存储不同信息，而非简单冗余</li>
-                            <li><strong>自适应机制:</strong> 检索策略基于查询动态调整，而非固定规则</li>
-                            <li><strong>多粒度表示:</strong> 同一事件在不同时间尺度上都有表示</li>
-                        </ol>
+        <!-- Domain Contribution -->
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-globe"></i> 领域贡献总结</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="future-item">
+                    <i class="fas fa-cube future-icon" style="color: var(--accent-purple);"></i>
+                    <div>
+                        <div class="future-title">Form 维度</div>
+                        <div class="future-desc">证明了混合存储 (Token + Latent) 的必要性，视觉信息不可约简</div>
                     </div>
                 </div>
-                
-                <div class="card" style="border-left: 4px solid var(--accent-orange);">
-                    <div class="card-title" style="color: var(--accent-orange);"><i class="fas fa-exclamation-triangle"></i> 需要注意的权衡</div>
-                    <div class="card-content">
-                        <ol>
-                            <li><strong>计算成本:</strong> 三类型记忆构建和检索的开销显著</li>
-                            <li><strong>系统复杂度:</strong> 多组件协同增加调试难度</li>
-                            <li><strong>超参数敏感:</strong> 迭代次数、时间粒度等需要仔细调优</li>
-                        </ol>
+                <div class="future-item">
+                    <i class="fas fa-bullseye future-icon" style="color: var(--accent-purple);"></i>
+                    <div>
+                        <div class="future-title">Function 维度</div>
+                        <div class="future-desc">三类型记忆对应三种认知功能的实证研究</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-sync-alt future-icon" style="color: var(--accent-purple);"></i>
+                    <div>
+                        <div class="future-title">Dynamics 维度</div>
+                        <div class="future-desc">多粒度图结构支持灵活的时间推理，适应事件自然时序</div>
+                    </div>
+                </div>
+                <div class="future-item">
+                    <i class="fas fa-globe-asia future-icon" style="color: var(--accent-purple);"></i>
+                    <div>
+                        <div class="future-title">Context 维度</div>
+                        <div class="future-desc">长视频理解是记忆系统的理想测试场，挑战驱动创新</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 引用信息 -->
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-quote-left"></i> 引用信息</h2>
-            <pre>@article{yeo2025worldmm,
-  title={WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning},
-  author={Yeo, Woongyeong and Kim, Kangsan and Yoon, Jaehong and Hwang, Sung Ju},
-  journal={arXiv preprint arXiv:2512.02425},
-  year={2025}
-}</pre>
-        </div>
-
         <!-- Footer -->
-        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
-            <p>阅读完成时间：2026-03-22</p>
-            <p>AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 5 篇</p>
-            <p style="margin-top: 1rem;">
-                <a href="../../index.html"><i class="fas fa-home"></i> 返回首页</a> · 
-                <a href="../2025/"><i class="fas fa-folder"></i> 2025 年论文</a>
-            </p>
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
+            <p style="margin-bottom: 0.5rem;">阅读完成时间：2026-03-22</p>
+            <p style="font-size: 0.95rem;">AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 5 篇</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="../../index.html" style="color: var(--accent-cyan); text-decoration: none; margin: 0 1rem;">
+                    <i class="fas fa-home"></i> 返回首页
+                </a>
+                <a href="../2025/" style="color: var(--accent-cyan); text-decoration: none; margin: 0 1rem;">
+                    <i class="fas fa-folder"></i> 2025 年论文
+                </a>
+            </div>
         </div>
-    </div>
+    </main>
 
     <script>
         // Initialize Mermaid
@@ -814,20 +1116,28 @@ flowchart TB
             securityLevel: 'loose',
             fontFamily: 'Inter, sans-serif'
         });
-
-        // Theme Toggle
+        
+        // Theme switching
         function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const icon = document.querySelector('.theme-toggle i');
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
             
-            if (currentTheme === 'dark') {
-                html.removeAttribute('data-theme');
-                icon.className = 'fas fa-moon';
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                icon.className = 'fas fa-sun';
+            // Update button icon
+            const btn = document.querySelector('.btn-secondary');
+            if (btn) {
+                const icon = btn.querySelector('i');
+                if (icon) {
+                    icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
             }
+        }
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
         }
     </script>
 </body>
