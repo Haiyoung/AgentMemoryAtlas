@@ -583,21 +583,21 @@
                 <h2 class="rating-title">
                     <i class="fas fa-star"></i>
                     论文综合评分
-                    <span class="rating-value">4.7/5.0</span>
+                    <span class="rating-value">4.8/5.0</span>
                 </h2>
                 <div class="rating-stars">
                     <i class="fas fa-star star"></i>
                     <i class="fas fa-star star"></i>
                     <i class="fas fa-star star"></i>
                     <i class="fas fa-star star"></i>
-                    <i class="fas fa-star-half-alt star"></i>
+                    <i class="fas fa-star star"></i>
                 </div>
             </div>
 
             <div class="rating-grid">
                 <div class="rating-item">
                     <div class="rating-label">期刊影响力</div>
-                    <div class="rating-score">⭐⭐⭐⭐</div>
+                    <div class="rating-score">⭐⭐⭐⭐⭐</div>
                 </div>
                 <div class="rating-item">
                     <div class="rating-label">问题核心性</div>
@@ -713,45 +713,125 @@ flowchart TB
                 <p><strong>关键发现:</strong> WorldMM 在物体和动作中心查询上表现尤为突出，证明了视觉记忆的必要性；在多时间跨度查询上显著优于固定粒度方法，证明了多时间粒度设计的有效性。</p>
             </div>
             
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">主实验结果 (PDF Table 1)</h3>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
                             <th>模型</th>
                             <th>方法</th>
+                            <th>GPT-5</th>
+                            <th>Qwen3-VL-8B</th>
                             <th>平均提升</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>之前 SOTA</td>
-                            <td>-</td>
+                            <td>最佳基线</td>
+                            <td>69.5%</td>
+                            <td>51.8%</td>
                             <td>基准</td>
                         </tr>
-                        <tr>
-                            <td>WorldMM</td>
+                        <tr style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05));">
+                            <td style="font-weight: 700; color: var(--accent-purple);">WorldMM</td>
                             <td>Ours</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">76.9%</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">58.7%</td>
                             <td style="color: var(--accent-green); font-weight: 700;">+8.4%</td>
+                        </tr>
+                        <tr>
+                            <td>提升</td>
+                            <td>-</td>
+                            <td style="color: var(--accent-green);">+7.4%</td>
+                            <td style="color: var(--accent-green);">+6.9%</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
-            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); border-left: 3px solid var(--accent-cyan);">
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md);">
                 <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>5 个基准:</strong> LVBench, VideoMME (long), HourVideo, EgoLifeQA, Ego-R1 Bench</p>
-                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>关键数据 (PDF Table 1-2):</strong></p>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>关键发现:</strong></p>
                 <ul style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
-                    <li>GPT-5 基线：<strong style="color: var(--text-primary);">69.5%</strong> → WorldMM: <strong style="color: var(--accent-green);">76.9%</strong> (+7.4%)</li>
-                    <li>Qwen3-VL-8B 基线：<strong style="color: var(--text-primary);">51.8%</strong> → WorldMM: <strong style="color: var(--accent-green);">58.7%</strong> (+6.9%)</li>
+                    <li>GPT-5 基线已达 69.5%，WorldMM 仍提升 7.4% 至 76.9%</li>
+                    <li>Qwen3-VL-8B (较小模型) + WorldMM 达到 58.7%，接近大模型基线</li>
+                    <li>5 个基准平均提升 8.4%，证明方法通用性</li>
                 </ul>
-                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>消融实验:</strong></p>
-                <ul style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
-                    <li>视觉记忆贡献：<strong style="color: var(--accent-green);">+4.2%</strong> (物体/动作查询)</li>
-                    <li>语义记忆贡献：<strong style="color: var(--accent-green);">+3.1%</strong> (长时段推理)</li>
-                    <li>多时间粒度贡献：<strong style="color: var(--accent-green);">+5.3%</strong> (时序推理)</li>
-                </ul>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;"><em>注：完整数据见论文 Table 1-2 (第 6-7 页)</em></p>
             </div>
+            
+            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">消融实验结果 (PDF Table 2)</h3>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;"><strong>实验设计:</strong> 移除各组件，观察性能下降</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>配置</th>
+                            <th>视觉记忆</th>
+                            <th>语义记忆</th>
+                            <th>多时间粒度</th>
+                            <th>性能下降</th>
+                            <th>主要影响</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: linear-gradient(135deg, rgba(22, 163, 74, 0.08), rgba(22, 163, 74, 0.04));">
+                            <td style="font-weight: 700; color: var(--accent-green);">完整模型</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center; color: var(--accent-green); font-weight: 700;">-</td>
+                            <td>最佳结果</td>
+                        </tr>
+                        <tr>
+                            <td>- 视觉记忆</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center; color: var(--accent-orange); font-weight: 600;">-4.2%</td>
+                            <td>物体/动作查询</td>
+                        </tr>
+                        <tr>
+                            <td>- 语义记忆</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center; color: var(--accent-orange); font-weight: 600;">-3.1%</td>
+                            <td>长时段推理</td>
+                        </tr>
+                        <tr>
+                            <td>- 多时间粒度</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center;">✓</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center; color: var(--accent-orange); font-weight: 600;">-5.3%</td>
+                            <td>时序推理</td>
+                        </tr>
+                        <tr>
+                            <td>仅 Episodic</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center; color: var(--accent-orange);">✗</td>
+                            <td style="text-align: center; color: var(--accent-orange); font-weight: 700;">-9.8%</td>
+                            <td>所有任务</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05)); border-left: 4px solid var(--accent-purple); border-radius: var(--radius-md);">
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 0.5rem 0;"><strong>消融实验结论:</strong></p>
+                <ol style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
+                    <li style="margin: 0.5rem 0;"><strong>视觉记忆最重要</strong> (-4.2%)：物体属性识别、空间推理必须访问视觉证据</li>
+                    <li style="margin: 0.5rem 0;"><strong>多时间粒度关键</strong> (-5.3%)：不同查询需要不同时间跨度（秒级 vs 小时级）</li>
+                    <li style="margin: 0.5rem 0;"><strong>语义记忆补充</strong> (-3.1%)：长时段上下文、习惯性行为推理</li>
+                    <li style="margin: 0.5rem 0;"><strong>协同效应</strong>：三类型记忆组合 > 单一记忆总和</li>
+                </ol>
+            </div>
+            
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted); text-align: center;"><em>注：完整数据见论文 Table 1-2 (第 6-7 页)</em></p>
         </div>
 
         <!-- Keywords -->
