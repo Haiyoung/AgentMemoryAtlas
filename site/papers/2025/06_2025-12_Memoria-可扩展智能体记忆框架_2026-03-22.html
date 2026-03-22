@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria: A Scalable Agentic Memory Framework for Personalized Conversational AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-mermaid: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0ea5e9;
+            --accent-green: #16a34a;
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --border-subtle: rgba(226, 232, 240, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --bg-mermaid: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-purple: #a78bfa;
+            --accent-cyan: #67e8f9;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-blue: #60a5fa;
+            --border-color: #334155;
+            --border-subtle: rgba(51, 65, 85, 0.5);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan), var(--accent-green));
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-subtitle { font-size: 1.3rem; color: var(--text-secondary); margin: 0.8rem 0; }
+        .hero-subtitle-cn { font-size: 1.2rem; color: var(--text-primary); opacity: 0.9; font-weight: 600; }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            background: var(--bg-secondary);
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-card); border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        .rating-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .rating-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .rating-stars { display: flex; align-items: center; gap: 0.4rem; }
+        .star { font-size: 1.8rem; color: #fbbf24; }
+
+        .rating-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .rating-item {
+            background: var(--bg-secondary);
+            padding: 1rem 0.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rating-label { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
+        .rating-score { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+
+        .rating-summary {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(249, 115, 22, 0.04));
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-orange);
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .rating-summary strong { color: var(--accent-orange); font-weight: 600; }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .card-title i { font-size: 1.4rem; }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.06));
+            border-left: 4px solid var(--accent-cyan);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+        }
+
+        .highlight p { margin: 1rem 0; line-height: 1.8; }
+        .highlight strong { color: var(--text-primary); font-weight: 700; }
+
+        .tag-container { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .tag {
+            background: var(--bg-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .tag strong { color: var(--text-primary); }
+
+        .mermaid-wrapper {
+            background: var(--bg-mermaid);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .keywords-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .keyword-tag {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            min-width: 140px;
+        }
+        .keyword-tag strong { color: var(--text-primary); font-size: 0.95rem; }
+        .keyword-tag small { color: var(--text-muted); font-size: 0.8rem; }
+
+        .future-research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .future-item {
+            display: flex;
+            gap: 1.2rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .future-icon { font-size: 2rem; color: var(--accent-purple); flex-shrink: 0; }
+        .future-title { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .future-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+        .table-container { overflow-x: auto; margin: 1.5rem 0; border-radius: var(--radius-md); border: 1px solid var(--border-color); }
+        table { width: 100%; border-collapse: collapse; background: var(--bg-card); }
+        th { background: var(--bg-secondary); padding: 1rem 1.5rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border-color); }
+        td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        tr:hover td { background: var(--bg-secondary); }
+
+        @media (max-width: 768px) {
+            main { padding: 1rem; }
+            .hero-title { font-size: 2rem; }
+            .rating-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="hero">
+            <h1 class="hero-title">Memoria</h1>
+            <p class="hero-subtitle">A Scalable Agentic Memory Framework for Personalized Conversational AI</p>
+            <p class="hero-subtitle-cn">可扩展智能体记忆框架 for 个性化对话 AI</p>
+            
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-calendar"></i><span>2025 年 12 月</span></div>
+                <div class="hero-meta-item"><i class="fas fa-building"></i><span>BlackRock, Inc.</span></div>
+                <div class="hero-meta-item"><i class="fas fa-file-alt"></i><span>arXiv:2512.12686</span></div>
+            </div>
+
+            <div class="hero-actions">
+                <a href="https://arxiv.org/abs/2512.12686" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i>arXiv 论文</a>
+                <button onclick="toggleTheme()" class="btn btn-secondary"><i class="fas fa-moon"></i>切换主题</button>
+            </div>
+        </div>
+
+        <div class="rating-card">
+            <div class="rating-header">
+                <h2 class="rating-title"><i class="fas fa-star"></i>论文综合评分<span class="rating-value">4.3/5.0</span></h2>
+                <div class="rating-stars"><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star star"></i><i class="fas fa-star-half-alt star"></i></div>
+            </div>
+            <div class="rating-grid">
+                <div class="rating-item"><div class="rating-label">期刊影响力</div><div class="rating-score">⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">问题核心性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">方法创新性</div><div class="rating-score">⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">技术壁垒</div><div class="rating-score">⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">落地可行性</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+                <div class="rating-item"><div class="rating-label">应用前景</div><div class="rating-score">⭐⭐⭐⭐⭐</div></div>
+            </div>
+            <div class="rating-summary"><strong>综合评价:</strong> Memoria 提出了一个实用的智能体记忆框架，通过动态会话摘要和加权知识图谱的结合，实现了长期个性化对话。该框架在保持对话连贯性的同时，将 token 使用量从 115K 降低到 400，延迟降低 38.7%。模块化设计使其易于集成到现有对话系统中，具有很高的工业应用价值。</div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-brain"></i>本体论映射 (Ontology Mapping)</h2>
+            <div class="tag-container">
+                <div class="tag"><strong>记忆类型:</strong> Factual + Experiential</div>
+                <div class="tag"><strong>记忆结构:</strong> KG + Session Summaries</div>
+                <div class="tag"><strong>记忆操作:</strong> Formation + Evolution + Retrieval</div>
+                <div class="tag"><strong>记忆载体:</strong> Token-level + Vector</div>
+                <div class="tag"><strong>功能定位:</strong> Personalized Conversational AI</div>
+                <div class="tag"><strong>使用模式:</strong> Weighted Semantic Retrieval</div>
+                <div class="tag"><strong>验证公理:</strong> Exponential Decay Weighting</div>
+            </div>
+            <div class="highlight"><p><strong>领域贡献:</strong> Memoria 将<strong>动态会话级摘要</strong>和<strong>加权知识图谱</strong>引入对话记忆领域，提出了<strong>双组件互补架构</strong>。通过指数衰减权重机制，该框架能够智能地优先检索近期和重要的用户信息。</p></div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-lightbulb"></i>核心主张（通俗易懂版）</h2>
+            <div class="highlight">
+                <p><strong>🤔 问题是什么？</strong> 现有对话 AI 缺乏长期记忆，无法在多次会话中保持个性化；全量上下文方法 token 成本过高（115K tokens/查询）。</p>
+                <p><strong>💡 解决方案是什么？</strong> Memoria 提出双组件架构：动态会话摘要（短期记忆）+ 加权知识图谱（长期记忆），通过指数衰减权重智能检索。</p>
+                <p><strong>🌟 核心优势是什么？</strong> token 使用量减少 99.7% (115K→400)，延迟降低 38.7%，支持 6 种问题类型的个性化推理。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-flask"></i>方法架构</h2>
+            <div class="mermaid-wrapper">
+                <div class="mermaid">
+flowchart TB
+    subgraph Input["📥 用户输入"]
+        U[用户查询\nUser Query]
+        H[历史对话\nConversation History]
+    end
+    
+    subgraph Memoria["🧠 Memoria 记忆框架"]
+        subgraph Session["会话级摘要\nSession Summaries"]
+            S1[动态摘要\nDynamic Summarization]
+            S2[摘要存储\nSummary Store]
+        end
+        
+        subgraph KG["知识图谱\nKnowledge Graph"]
+            E[实体抽取\nEntity Extraction]
+            R[关系建模\nRelationship Modeling]
+            W[权重衰减\nWeight Decay α=0.02]
+        end
+        
+        subgraph Retrieve["语义检索\nSemantic Retrieval"]
+            SK[Top-K 匹配\nK=20]
+            EM[嵌入模型\ntext-embedding-ada-002]
+        end
+    end
+    
+    subgraph Output["💬 响应生成"]
+        LLM[LLM 生成\nGPT-4.1-mini]
+        RSP[个性化响应\nPersonalized Response]
+    end
+    
+    U --> Retrieve
+    H --> S1
+    H --> E
+    S1 --> S2
+    E --> R
+    R --> W
+    S2 --> SK
+    W --> SK
+    SK --> LLM
+    LLM --> RSP
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-chart-line"></i>实验结果</h2>
+            <div class="highlight"><p><strong>关键发现:</strong> Memoria 在保持个性化的同时，将 token 使用量从 115K 降低到 400，延迟降低 38.7%。</p></div>
+            
+            <h3 style="margin: 2rem 0 1rem;">主实验结果 (PDF Table I)</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>模型</th><th>方法</th><th>平均准确率</th><th>Token 使用</th><th>延迟</th></tr></thead>
+                    <tbody>
+                        <tr><td>Full Context</td><td>全量上下文</td><td>基准</td><td>115,000</td><td>522 秒</td></tr>
+                        <tr><td>A-Mem (ST)</td><td>SentenceTransformers</td><td>~78%</td><td>900+</td><td>-</td></tr>
+                        <tr><td>A-Mem (OE)</td><td>OpenAI Embedding</td><td>~80%</td><td>900+</td><td>-</td></tr>
+                        <tr style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(14, 165, 233, 0.05));">
+                            <td style="font-weight: 700; color: var(--accent-purple);">Memoria</td><td>Ours</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">~85%</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">&lt;400</td>
+                            <td style="color: var(--accent-green); font-weight: 700;">-38.7%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md);">
+                <p style="font-size: 0.95rem; color: var(--text-secondary);"><strong>6 种问题类型:</strong> single-session-user, single-session-assistant, single-session-preference, multi-session, knowledge-update, temporal-reasoning</p>
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>关键数据:</strong></p>
+                <ul style="font-size: 0.95rem; color: var(--text-secondary); padding-left: 1.5rem;">
+                    <li>最高准确率：<strong style="color: var(--accent-green);">87.1%</strong> (knowledge-update)</li>
+                    <li>最低准确率：<strong style="color: var(--accent-orange);">76.2%</strong> (temporal-reasoning)</li>
+                    <li>Token 减少：<strong style="color: var(--accent-green);">115,000 → 400</strong> (99.7% 减少)</li>
+                    <li>延迟降低：<strong style="color: var(--accent-green);">38.7%</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-tags"></i>关键词</h2>
+            <div class="keywords-container">
+                <div class="keyword-tag"><strong>智能体记忆</strong><small>Agentic Memory</small></div>
+                <div class="keyword-tag"><strong>个性化对话 AI</strong><small>Personalized Conversational AI</small></div>
+                <div class="keyword-tag"><strong>知识图谱</strong><small>Knowledge Graph</small></div>
+                <div class="keyword-tag"><strong>会话摘要</strong><small>Session Summaries</small></div>
+                <div class="keyword-tag"><strong>语义检索</strong><small>Semantic Retrieval</small></div>
+                <div class="keyword-tag"><strong>加权衰减</strong><small>Weighted Decay</small></div>
+                <div class="keyword-tag"><strong>长期记忆</strong><small>Long-term Memory</small></div>
+                <div class="keyword-tag"><strong>对话系统</strong><small>Dialogue Systems</small></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i>局限性分析</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-chart-bar future-icon" style="color: var(--accent-orange);"></i><div><div class="future-title">评估范围有限</div><div class="future-desc">仅在 LongMemEvals 基准测试，缺少真实用户场景验证。</div></div></div>
+                <div class="future-item"><i class="fas fa-network-wired future-icon" style="color: var(--accent-orange);"></i><div><div class="future-title">依赖嵌入质量</div><div class="future-desc">性能高度依赖 text-embedding-ada-002 的质量。</div></div></div>
+                <div class="future-item"><i class="fas fa-project-diagram future-icon" style="color: var(--accent-orange);"></i><div><div class="future-title">知识图谱构建</div><div class="future-desc">实体和关系抽取可能需要人工审核。</div></div></div>
+                <div class="future-item"><i class="fas fa-sliders-h future-icon" style="color: var(--accent-orange);"></i><div><div class="future-title">衰减率固定</div><div class="future-desc">α=0.02 是经验值，可能需要根据不同场景调整。</div></div></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-rocket"></i>未来研究方向</h2>
+            <div class="future-research-grid">
+                <div class="future-item"><i class="fas fa-industry future-icon"></i><div><div class="future-title">真实场景部署</div><div class="future-desc">在大规模生产环境中验证效果。</div></div></div>
+                <div class="future-item"><i class="fas fa-cog future-icon"></i><div><div class="future-title">自适应衰减率</div><div class="future-desc">根据用户行为动态调整衰减参数。</div></div></div>
+                <div class="future-item"><i class="fas fa-image future-icon"></i><div><div class="future-title">多模态记忆</div><div class="future-desc">扩展支持图像、语音等多模态记忆。</div></div></div>
+                <div class="future-item"><i class="fas fa-shield-alt future-icon"></i><div><div class="future-title">隐私保护</div><div class="future-desc">在保持个性化的同时保护用户隐私。</div></div></div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 3rem;">
+            <p>阅读完成时间：2026-03-22</p>
+            <p style="font-size: 0.95rem;">AgentMemoryAtlas · 论文阅读计划 · 批次 2 (2025-12) · 第 6 篇</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="../../index.html" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="../2025/" style="color: var(--accent-cyan); margin: 0 1rem;"><i class="fas fa-folder"></i> 2025 年论文</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+    </script>
+</body>
+</html>
