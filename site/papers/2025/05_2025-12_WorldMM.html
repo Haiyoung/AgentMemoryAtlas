@@ -661,7 +661,6 @@
             <h2 class="card-title"><i class="fas fa-flask"></i> 方法架构</h2>
             <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 1.5rem;">WorldMM 的核心创新在于三类型多模态记忆 + 自适应检索智能体：</p>
             
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">整体架构图</h3>
             <div class="mermaid-wrapper">
                 <div class="mermaid">
 flowchart TB
@@ -703,65 +702,6 @@ flowchart TB
     RespAgent --> Output
                 </div>
             </div>
-
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">情景式记忆：多时间粒度图结构</h3>
-            <div class="mermaid-wrapper">
-                <div class="mermaid">
-flowchart LR
-    subgraph Granularity["⏱️ 时间粒度层级"]
-        Hour[小时级图\nHour-level Graph]
-        Minute[分钟级图\nMinute-level Graph]
-        Second[秒级图\nSecond-level Graph]
-    end
-    
-    subgraph Node["📍 节点内容"]
-        Event[事件节点\nEvent Node]
-        TS[时间戳\nTimestamp]
-        Cap2[Caption]
-        Entity[关键实体\nKey Entities]
-    end
-    
-    subgraph Edge["🔗 边关系"]
-        Temporal[时序关系\nTemporal\nbefore/after/during]
-        Semantic[语义关系\nSemantic\n因果/共现]
-    end
-    
-    Hour -.->|聚合| Minute
-    Minute -.->|聚合| Second
-    Second --> Event
-    Event --> TS
-    Event --> Cap2
-    Event --> Entity
-    Event --> Temporal
-    Event --> Semantic
-                </div>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">自适应检索智能体</h3>
-            <div class="mermaid-wrapper">
-                <div class="mermaid">
-flowchart TB
-    Q[用户查询\nUser Query] --> Agent{检索智能体\nRetrieval Agent}
-    
-    Agent -->|选择记忆类型 | E[情景式记忆\nEpisodic]
-    Agent -->|选择记忆类型 | S[语义式记忆\nSemantic]
-    Agent -->|选择记忆类型 | V[视觉记忆\nVisual]
-    
-    E -->|多粒度检索 | G1[秒级候选]
-    E -->|多粒度检索 | G2[分钟级候选]
-    E -->|多粒度检索 | G3[小时级候选]
-    
-    G1 --> Check{信息充足？}
-    G2 --> Check
-    G3 --> Check
-    S --> Check
-    V --> Check
-    
-    Check -->|否 | Agent
-    Check -->|是 | Aggregate[聚合结果]
-    Aggregate --> Response[响应生成]
-                </div>
-            </div>
         </div>
 
         <!-- Experimental Results -->
@@ -790,65 +730,20 @@ flowchart TB
                         <tr>
                             <td>之前 SOTA</td>
                             <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>基准</td>
+                            <td>基准</td>
+                            <td>基准</td>
+                            <td>基准</td>
                             <td>基准</td>
                         </tr>
                         <tr>
                             <td>WorldMM</td>
                             <td>Ours</td>
-                            <td>+X%</td>
-                            <td>+X%</td>
-                            <td>+X%</td>
-                            <td>+X%</td>
+                            <td style="color: var(--accent-green);">+X%</td>
+                            <td style="color: var(--accent-green);">+X%</td>
+                            <td style="color: var(--accent-green);">+X%</td>
+                            <td style="color: var(--accent-green);">+X%</td>
                             <td style="color: var(--accent-green); font-weight: 700;">+8.4%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3 style="margin: 2rem 0 1rem; color: var(--text-primary);">消融实验</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>配置</th>
-                            <th>物体查询</th>
-                            <th>动作查询</th>
-                            <th>时间推理</th>
-                            <th>平均</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="font-weight: 600;">完整模型</td>
-                            <td style="color: var(--accent-green);">✓</td>
-                            <td style="color: var(--accent-green);">✓</td>
-                            <td style="color: var(--accent-green);">✓</td>
-                            <td style="color: var(--accent-green); font-weight: 700;">最佳</td>
-                        </tr>
-                        <tr>
-                            <td>- 视觉记忆</td>
-                            <td style="color: var(--accent-orange);">↓</td>
-                            <td style="color: var(--accent-orange);">↓</td>
-                            <td>-</td>
-                            <td style="color: var(--accent-orange);">下降</td>
-                        </tr>
-                        <tr>
-                            <td>- 语义记忆</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td style="color: var(--accent-orange);">↓</td>
-                            <td style="color: var(--accent-orange);">下降</td>
-                        </tr>
-                        <tr>
-                            <td>- 多时间粒度</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td style="color: var(--accent-orange);">↓↓</td>
-                            <td style="color: var(--accent-orange); font-weight: 700;">显著下降</td>
                         </tr>
                     </tbody>
                 </table>
@@ -891,48 +786,6 @@ flowchart TB
                     <strong>迭代检索</strong>
                     <small>Iterative Retrieval</small>
                 </div>
-            </div>
-        </div>
-
-        <!-- Core Insights -->
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-brain"></i> 核心洞见与本质分析</h2>
-            
-            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-purple);">
-                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 1rem;">为什么需要多模态记忆？</p>
-                <p><strong>表面观察:</strong> 现有方法只用文本记忆</p>
-                <p><strong>本质洞见:</strong></p>
-                <ul>
-                    <li>视觉信息包含<strong>不可约简的空间和属性细节</strong></li>
-                    <li>文本 caption 必然丢失视觉信息 (信息论瓶颈)</li>
-                    <li>某些查询 (物体属性、空间布局)<strong>必须</strong>访问原始视觉特征</li>
-                </ul>
-                <p style="margin-top: 1rem; color: var(--accent-purple); font-weight: 600;"><strong>第一性原理:</strong> 记忆系统的表示能力必须匹配任务需求</p>
-            </div>
-
-            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-cyan);">
-                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 1rem;">为什么需要多时间粒度？</p>
-                <p><strong>表面观察:</strong> 现有方法用固定长度片段检索</p>
-                <p><strong>本质洞见:</strong></p>
-                <ul>
-                    <li>现实世界事件的<strong>时间跨度天然可变</strong></li>
-                    <li>"眼镜在哪" → 秒级事件</li>
-                    <li>"比赛下半场" → 小时级事件</li>
-                    <li><strong>固定粒度 = 强制事件适应系统</strong> (本末倒置)</li>
-                </ul>
-                <p style="margin-top: 1rem; color: var(--accent-cyan); font-weight: 600;"><strong>第一性原理:</strong> 系统应该适应事件的时序结构，而非相反</p>
-            </div>
-
-            <div class="highlight" style="margin: 1.5rem 0; border-left-color: var(--accent-green);">
-                <p style="font-size: 1.2rem; font-weight: 700; color: var(--accent-green); margin-bottom: 1rem;">为什么需要自适应检索？</p>
-                <p><strong>表面观察:</strong> 现有方法检索固定数量的片段</p>
-                <p><strong>本质洞见:</strong></p>
-                <ul>
-                    <li>不同查询需要的<strong>信息量不同</strong></li>
-                    <li>强制配对模态 (总是检索文本 + 视觉) 会引入<strong>噪声干扰</strong></li>
-                    <li><strong>选择性注意</strong>是智能的核心特征</li>
-                </ul>
-                <p style="margin-top: 1rem; color: var(--accent-green); font-weight: 600;"><strong>第一性原理:</strong> 检索策略应该基于查询的信息需求动态调整</p>
             </div>
         </div>
 
@@ -1001,93 +854,6 @@ flowchart TB
                     <div>
                         <div class="future-title">实时应用</div>
                         <div class="future-desc">优化计算效率，部署到 AI 眼镜、家庭机器人等资源受限设备。</div>
-                    </div>
-                </div>
-                <div class="future-item">
-                    <i class="fas fa-clock future-icon"></i>
-                    <div>
-                        <div class="future-title">周级视频扩展</div>
-                        <div class="future-desc">扩展到更长时间跨度（周级、月级）的连续记录理解。</div>
-                    </div>
-                </div>
-                <div class="future-item">
-                    <i class="fas fa-users future-icon"></i>
-                    <div>
-                        <div class="future-title">多智能体协作</div>
-                        <div class="future-desc">探索多智能体共享记忆和协同推理的可能性。</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Related Papers -->
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-link"></i> 与已读论文的关联</h2>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>论文</th>
-                            <th>关系</th>
-                            <th>差异</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>MAGMA</strong> (2026-01)</td>
-                            <td>都用图结构</td>
-                            <td>MAGMA 是多图 (对象/时空/语义)，WorldMM 是多粒度图</td>
-                        </tr>
-                        <tr>
-                            <td><strong>EverMemOS</strong> (2026-01)</td>
-                            <td>都强调自组织</td>
-                            <td>EverMemOS 是通用 OS，WorldMM 专注视频</td>
-                        </tr>
-                        <tr>
-                            <td><strong>MemVerse</strong> (2025-12)</td>
-                            <td>都涉及多模态</td>
-                            <td>MemVerse 是终身学习，WorldMM 是长视频推理</td>
-                        </tr>
-                        <tr>
-                            <td><strong>MMAG</strong> (2025-12)</td>
-                            <td>都混合记忆</td>
-                            <td>MMAG 是文本记忆混合，WorldMM 是模态混合</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Domain Contribution -->
-        <div class="card">
-            <h2 class="card-title"><i class="fas fa-globe"></i> 领域贡献总结</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-                <div class="future-item">
-                    <i class="fas fa-cube future-icon" style="color: var(--accent-purple);"></i>
-                    <div>
-                        <div class="future-title">Form 维度</div>
-                        <div class="future-desc">证明了混合存储 (Token + Latent) 的必要性，视觉信息不可约简</div>
-                    </div>
-                </div>
-                <div class="future-item">
-                    <i class="fas fa-bullseye future-icon" style="color: var(--accent-purple);"></i>
-                    <div>
-                        <div class="future-title">Function 维度</div>
-                        <div class="future-desc">三类型记忆对应三种认知功能的实证研究</div>
-                    </div>
-                </div>
-                <div class="future-item">
-                    <i class="fas fa-sync-alt future-icon" style="color: var(--accent-purple);"></i>
-                    <div>
-                        <div class="future-title">Dynamics 维度</div>
-                        <div class="future-desc">多粒度图结构支持灵活的时间推理，适应事件自然时序</div>
-                    </div>
-                </div>
-                <div class="future-item">
-                    <i class="fas fa-globe-asia future-icon" style="color: var(--accent-purple);"></i>
-                    <div>
-                        <div class="future-title">Context 维度</div>
-                        <div class="future-desc">长视频理解是记忆系统的理想测试场，挑战驱动创新</div>
                     </div>
                 </div>
             </div>
