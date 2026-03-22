@@ -719,10 +719,6 @@ flowchart TB
                         <tr>
                             <th>模型</th>
                             <th>方法</th>
-                            <th>LVBench</th>
-                            <th>VideoMME</th>
-                            <th>HourVideo</th>
-                            <th>EgoLife</th>
                             <th>平均提升</th>
                         </tr>
                     </thead>
@@ -731,24 +727,26 @@ flowchart TB
                             <td>之前 SOTA</td>
                             <td>-</td>
                             <td>基准</td>
-                            <td>基准</td>
-                            <td>基准</td>
-                            <td>基准</td>
-                            <td>-</td>
                         </tr>
                         <tr>
                             <td>WorldMM</td>
                             <td>Ours</td>
-                            <td style="color: var(--accent-green); font-weight: 600;">显著优于</td>
-                            <td style="color: var(--accent-green); font-weight: 600;">显著优于</td>
-                            <td style="color: var(--accent-green); font-weight: 600;">显著优于</td>
-                            <td style="color: var(--accent-green); font-weight: 600;">显著优于</td>
                             <td style="color: var(--accent-green); font-weight: 700;">+8.4%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-muted);"><strong>注:</strong> 论文报告 5 个基准平均提升 8.4%，物体/动作查询提升最显著</p>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); border-left: 3px solid var(--accent-cyan);">
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>5 个基准:</strong> LVBench, VideoMME, HourVideo, EgoLife, +1 个基准</p>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>关键发现:</strong></p>
+                <ul style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
+                    <li>物体和动作中心查询提升最显著（视觉记忆贡献）</li>
+                    <li>多时间跨度查询表现优异（多粒度图贡献）</li>
+                    <li>长时段上下文推理增强（语义记忆贡献）</li>
+                </ul>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;"><em>注：具体各基准数据见论文 Table 1 (CVPR 2026 版本)</em></p>
+            </div>
         </div>
 
         <!-- Keywords -->
