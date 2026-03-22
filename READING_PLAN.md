@@ -223,8 +223,11 @@
 输出：专业 HTML 文档（严格遵循模板结构）
 
 必须包含的模块（顺序固定）:
-├─ Hero Section
-│   ├─ 渐变标题 (英文)
+├─ Hero Section ⭐ **关键检查点**
+│   ├─ 标签：<header class="hero"> (不是 div)
+│   ├─ 标题格式：<h1 class="hero-title">🎯 英文缩写</h1>
+│   │   └─ ⚠️ 必须包含 emoji 图标 + 英文缩写
+│   │   └─ 示例：🧭 CompassMem, 🎯 MemLoRA, 🔮 Hindsight
 │   ├─ 副标题 (英文)
 │   ├─ 中文标题
 │   ├─ 元数据 (日期/机构/arXiv)
@@ -333,6 +336,11 @@
 │   - 自缩写：清晰简洁，能看懂含义 (3-5 词)       │
 │   - 示例：PersLongTerm-Int, RCR-Router, GAM  │
 │ □ 10. 保存路径正确 (papers/年份/ site/papers/年份/)│
+│ □ 11. HTML Hero Section 规范 ⭐ **新增**     │
+│   - 标签：<header class="hero"> (不是 div)    │
+│   - 标题：<h1> 必须包含 emoji + 英文缩写       │
+│   - 示例：🧭 CompassMem, 🎯 MemLoRA, 🔮 Hindsight│
+│   - 检查方法：grep '<h1 class="hero-title">'  │
 └─────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────┐
