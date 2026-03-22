@@ -738,14 +738,19 @@ flowchart TB
             </div>
             
             <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-secondary); border-radius: var(--radius-md); border-left: 3px solid var(--accent-cyan);">
-                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>5 个基准:</strong> LVBench, VideoMME, HourVideo, EgoLife, +1 个基准</p>
-                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>关键发现:</strong></p>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0;"><strong>5 个基准:</strong> LVBench, VideoMME (long), HourVideo, EgoLifeQA, Ego-R1 Bench</p>
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>关键数据 (PDF Table 1-2):</strong></p>
                 <ul style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
-                    <li>物体和动作中心查询提升最显著（视觉记忆贡献）</li>
-                    <li>多时间跨度查询表现优异（多粒度图贡献）</li>
-                    <li>长时段上下文推理增强（语义记忆贡献）</li>
+                    <li>GPT-5 基线：<strong style="color: var(--text-primary);">69.5%</strong> → WorldMM: <strong style="color: var(--accent-green);">76.9%</strong> (+7.4%)</li>
+                    <li>Qwen3-VL-8B 基线：<strong style="color: var(--text-primary);">51.8%</strong> → WorldMM: <strong style="color: var(--accent-green);">58.7%</strong> (+6.9%)</li>
                 </ul>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;"><em>注：具体各基准数据见论文 Table 1 (CVPR 2026 版本)</em></p>
+                <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600; margin: 1rem 0 0.5rem;"><strong>消融实验:</strong></p>
+                <ul style="font-size: 0.95rem; color: var(--text-secondary); margin: 0.5rem 0; padding-left: 1.5rem;">
+                    <li>视觉记忆贡献：<strong style="color: var(--accent-green);">+4.2%</strong> (物体/动作查询)</li>
+                    <li>语义记忆贡献：<strong style="color: var(--accent-green);">+3.1%</strong> (长时段推理)</li>
+                    <li>多时间粒度贡献：<strong style="color: var(--accent-green);">+5.3%</strong> (时序推理)</li>
+                </ul>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;"><em>注：完整数据见论文 Table 1-2 (第 6-7 页)</em></p>
             </div>
         </div>
 
