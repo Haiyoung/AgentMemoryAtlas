@@ -65,32 +65,6 @@
             padding: 0 1.5rem;
         }
 
-        .filter-bar {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            padding: 0.75rem 0;
-            margin-bottom: 0.5rem;
-        }
-
-        .filter-btn {
-            padding: 0.35rem 0.9rem;
-            border: 1.5px solid var(--border-color);
-            border-radius: 20px;
-            background: var(--bg-primary);
-            color: var(--text-secondary);
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: #eff6ff;
-        }
-
         .wordcloud-section {
             background: var(--bg-primary);
             border-radius: var(--radius-lg);
@@ -357,8 +331,6 @@
     </header>
 
     <div class="container">
-        <div class="filter-bar" id="filter-bar"></div>
-
         <div class="wordcloud-section">
             <h2>🧠 本体概念全景图</h2>
             <div id="wordcloud-container">
@@ -390,36 +362,64 @@
     // ── Minimal word-cloud layout (Archimedean spiral + AABB collision) ──
     function computeWordCloudLayout(words, width, height) {
         var placed = [];
-        var cx = 0, cy = 0;
+        var PAD = 6; // extra padding between words
+
         function aabb(w) {
-            return { x1: w.x - w.width/2, y1: w.y - w.height/2, x2: w.x + w.width/2, y2: w.y + w.height/2 };
+            var hw = (w.width || 0) / 2 + PAD;
+            var hh = (w.height || 0) / 2 + PAD;
+            return { x1: w.x - hw, y1: w.y - hh, x2: w.x + hw, y2: w.y + hh };
         }
+
         function overlaps(a, b) {
-            var r = a.x2 > b.x1 && a.x2 < b.x2 || b.x2 > a.x1 && b.x2 < a.x2;
-            var c = a.y2 > b.y1 && a.y2 < b.y2 || b.y2 > a.y1 && b.y2 < a.y2;
+            var r = a.x1 < b.x2 && a.x2 > b.x1;
+            var c = a.y1 < b.y2 && a.y2 > b.y1;
             return r && c;
         }
-        for (var i = 0; i < words.length; i++) {
-            var w = words[i];
-            w.width = w.size * w.text.length * 0.55;
-            w.height = w.size * 1.2;
-            w.rotate = (~~(Math.random() * 3) - 1) * 10;
-            var a = 0, r = 0, step = 0.5;
+
+        // Sort largest first for better packing
+        var sorted = words.slice().sort(function(a, b) { return b.size - a.size; });
+        var idxMap = {};
+        for (var mi = 0; mi < words.length; mi++) idxMap[words[mi].text] = mi;
+
+        for (var i = 0; i < sorted.length; i++) {
+            var w = sorted[i];
+            // Better width estimate: CJK chars ~1.1em, ASCII ~0.55em
+            var cjkCount = 0, asciiCount = 0;
+            for (var ci = 0; ci < w.text.length; ci++) {
+                if (w.text.charCodeAt(ci) > 127) cjkCount++; else asciiCount++;
+            }
+            w.width = cjkCount * 1.1 * w.size + asciiCount * 0.55 * w.size;
+            w.height = w.size * 1.3;
+            w.rotate = 0; // no rotation for cleaner layout
+
+            var a = 0, r = 0, step = 0.3;
             var found = false;
-            while (r < Math.max(width, height)) {
+            while (r < Math.max(width, height) * 0.5) {
                 var x = Math.round(r * Math.cos(a));
-                var y = Math.round(r * Math.sin(a) * 0.65);
+                var y = Math.round(r * Math.sin(a) * 0.55);
                 w.x = x; w.y = y;
                 var box = aabb(w);
-                if (box.x1 < -width/2 || box.x2 > width/2 || box.y1 < -height/2 || box.y2 > height/2) { a += step; r += step * 0.3; continue; }
+                if (box.x1 < -width/2 || box.x2 > width/2 || box.y1 < -height/2 || box.y2 > height/2) {
+                    a += step; r += step * 0.5; continue;
+                }
                 var collide = false;
-                for (var j = 0; j < placed.length; j++) { if (overlaps(box, aabb(placed[j]))) { collide = true; break; } }
+                for (var j = 0; j < placed.length; j++) {
+                    if (overlaps(box, aabb(placed[j]))) { collide = true; break; }
+                }
                 if (!collide) { found = true; break; }
-                a += step; r += step * 0.3;
+                a += step; r += step * 0.5;
             }
             if (found) placed.push(w);
         }
-        return placed;
+        // Restore original order for rendering
+        var result = [];
+        for (var oi = 0; oi < words.length; oi++) {
+            var orig = words[oi];
+            for (var pi = 0; pi < placed.length; pi++) {
+                if (placed[pi].text === orig.text) { result.push(placed[pi]); break; }
+            }
+        }
+        return result;
     }
     </script>
     <script>
@@ -438,7 +438,6 @@
 
         var lexicon = null;
         var ontologyMarkdown = '';
-        var activeFilter = null;
         var hoveredWord = null;
         var layoutWords = [];
 
@@ -454,7 +453,6 @@
                 }
 
                 renderStats();
-                renderFilters();
                 renderWordCloud();
                 renderSidebar();
                 renderOntologyBody();
@@ -494,44 +492,14 @@
             document.getElementById('last-updated').textContent = lexicon.generatedAt || '2026-04-10';
         }
 
-        function renderFilters() {
-            var bar = document.getElementById('filter-bar');
-            var cats = lexicon.categories;
-            var html = '<button class="filter-btn active" data-cat="all">全部</button>';
-            for (var key in cats) {
-                if (cats.hasOwnProperty(key)) {
-                    html += '<button class="filter-btn" data-cat="' + key + '">' + cats[key].name + '</button>';
-                }
-            }
-            bar.innerHTML = html;
-
-            bar.addEventListener('click', function(e) {
-                if (!e.target.classList.contains('filter-btn')) return;
-                var btns = document.querySelectorAll('.filter-btn');
-                for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-                e.target.classList.add('active');
-                activeFilter = e.target.dataset.cat === 'all' ? null : e.target.dataset.cat;
-                layoutWords = [];
-                renderWordCloud();
-            });
-        }
-
         function renderWordCloud() {
             var container = document.getElementById('wordcloud-container');
             var width = container.clientWidth - 24;
             var height = 450;
 
             var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 3; });
-            if (activeFilter) {
-                concepts = concepts.filter(function(c) { return c.category === activeFilter; });
-            }
 
-            concepts = concepts.slice(0, 60);
-
-            if (concepts.length === 0) {
-                container.innerHTML = '<div class="wordcloud-error"><h3>暂无符合条件的概念</h3><p>该分类下没有 weight≥3 的核心概念</p></div>';
-                return;
-            }
+            if (concepts.length === 0) return;
 
             var words = concepts.map(function(c) {
                 return {
