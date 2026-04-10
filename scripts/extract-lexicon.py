@@ -16,6 +16,7 @@ import re
 import glob
 import os
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
 # Category definitions with colors
@@ -180,10 +181,18 @@ def main():
             unique_relations.append(r)
 
     concepts_list = []
+    seen_ids = set()
     for base, data in sorted(concept_map.items(), key=lambda x: -x[1]["weight"]):
         primary_name = max(data["display_names"], key=len)
+        concept_id = base.lower().replace(' ', '-').replace('_', '-')
+        if concept_id in seen_ids:
+            counter = 1
+            while f"{concept_id}-{counter}" in seen_ids:
+                counter += 1
+            concept_id = f"{concept_id}-{counter}"
+        seen_ids.add(concept_id)
         concept = {
-            "id": base.lower().replace(' ', '-').replace('_', '-'),
+            "id": concept_id,
             "name": primary_name,
             "category": list(data["categories"])[0] if data["categories"] else "memory_type",
             "weight": data["weight"],
@@ -207,7 +216,7 @@ def main():
 
     lexicon = {
         "version": "1.0.0",
-        "generatedAt": "2026-04-10",
+        "generatedAt": date.today().isoformat(),
         "conceptCount": len(concepts_list),
         "relationCount": len(relations_list),
         "concepts": concepts_list,

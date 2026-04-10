@@ -65,7 +65,7 @@
     {
       "id": "向量数据库",
       "name": "向量数据库 (Vector Database)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 9,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -235,7 +235,7 @@
     },
     {
       "id": "长期记忆",
-      "name": "长期记忆 (Long-Term Memory)",
+      "name": "长期记忆 (Long-term Memory)",
       "category": "memory_type",
       "weight": 3,
       "relatedConcepts": [],
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "id": "long-term-memory",
+      "id": "long-term-memory-1",
       "name": "Long-term Memory (LTM)",
       "category": "memory_type",
       "weight": 3,
@@ -356,7 +356,7 @@
     {
       "id": "external-vector-database",
       "name": "External Vector Database",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 3,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -462,7 +462,7 @@
       ]
     },
     {
-      "id": "short-term-memory",
+      "id": "short-term-memory-1",
       "name": "Short-term Memory (STM)",
       "category": "memory_type",
       "weight": 2,
@@ -660,7 +660,7 @@
     {
       "id": "external-memory-module",
       "name": "External Memory Module",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [
         "MemAgent Architecture"
@@ -706,7 +706,7 @@
     {
       "id": "structured-memory",
       "name": "Structured Memory",
-      "category": "memory_type",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [
         "Timeline Memory",
@@ -731,7 +731,7 @@
     {
       "id": "外部记忆库",
       "name": "外部记忆库 (External Memory Bank)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -789,7 +789,7 @@
     {
       "id": "上下文窗口",
       "name": "上下文窗口 (Context Window)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -811,7 +811,7 @@
     {
       "id": "faiss-vector-index",
       "name": "FAISS Vector Index (FAISS 向量索引)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -847,7 +847,7 @@
     {
       "id": "memcells",
       "name": "MemCells (记忆细胞)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -857,7 +857,7 @@
     {
       "id": "memscenes",
       "name": "MemScenes (记忆场景)",
-      "category": "memory_structure",
+      "category": "memory_carrier",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -9162,7 +9162,7 @@
       ]
     },
     {
-      "id": "update",
+      "id": "update-1",
       "name": "UPDATE",
       "category": "memory_operation",
       "weight": 1,
@@ -14114,7 +14114,7 @@
       ]
     },
     {
-      "id": "add",
+      "id": "add-1",
       "name": "Add",
       "category": "memory_operation",
       "weight": 1,
@@ -14124,7 +14124,7 @@
       ]
     },
     {
-      "id": "delete",
+      "id": "delete-1",
       "name": "Delete",
       "category": "memory_operation",
       "weight": 1,
