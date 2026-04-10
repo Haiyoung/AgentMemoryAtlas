@@ -92,21 +92,6 @@
             height: 100%;
         }
 
-        .wordcloud-svg .word {
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .wordcloud-svg .word:hover { opacity: 0.8; }
-        .wordcloud-svg .word.highlighted { font-weight: bold !important; }
-        .wordcloud-svg .word.dimmed { opacity: 0.2 !important; }
-
-        .wordcloud-svg .relation-line {
-            stroke-dasharray: 4, 4;
-            stroke-width: 1.5;
-            opacity: 0.6;
-        }
-
         .wordcloud-loading {
             display: flex;
             align-items: center;
@@ -359,68 +344,186 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-    // ── Word-cloud layout: Archimedean spiral + AABB with rotation ──
-    function computeWordCloudLayout(words, width, height) {
-        var halfW = width / 2, halfH = height / 2;
-        var PAD = 2;
-        var placedBoxes = []; // array of {x1,x2,y1,y2} for fast collision
+    // ── Dynamic word cloud: physics-based floating particles ──
+    function createDynamicWordCloud(containerId, words, width, height, colorMap) {
+        var container = document.getElementById(containerId);
+        if (!container) return;
 
-        function wordDims(w) {
+        // Cancel any previous animation
+        if (container._animId) cancelAnimationFrame(container._animId);
+        container._animId = null;
+
+        // Build DOM
+        container.innerHTML = '<div id="wordcloud-canvas" style="position:relative;width:' + width + 'px;height:' + height + 'px;overflow:hidden;cursor:grab;"></div>' +
+            '<svg id="wordcloud-lines" style="position:absolute;top:0;left:0;pointer-events:none;" width="' + width + '" height="' + height + '"></svg>';
+        var canvas = document.getElementById('wordcloud-canvas');
+        var linesSvg = document.getElementById('wordcloud-lines');
+
+        // Create word elements
+        var particles = [];
+        var PAD = 4;
+        for (var i = 0; i < words.length; i++) {
+            var w = words[i];
             var cjk = 0, ascii = 0;
             for (var ci = 0; ci < w.text.length; ci++) {
                 if (w.text.charCodeAt(ci) > 127) cjk++; else ascii++;
             }
-            return { ww: cjk * 1.05 * w.size + ascii * 0.55 * w.size, hh: w.size * 1.15 };
-        }
+            var ww = cjk * 1.05 * w.size + ascii * 0.55 * w.size;
+            var hh = w.size * 1.15;
 
-        function makeBox(w, angle) {
-            var d = wordDims(w);
-            var a = Math.abs(angle) * Math.PI / 180;
-            var cw = Math.cos(a) * d.ww + Math.sin(a) * d.hh;
-            var ch = Math.sin(a) * d.ww + Math.cos(a) * d.hh;
-            return {
-                x1: w.x - cw/2 - PAD, y1: w.y - ch/2 - PAD,
-                x2: w.x + cw/2 + PAD, y2: w.y + ch/2 + PAD
+            var el = document.createElement('span');
+            el.className = 'cloud-word';
+            el.textContent = w.text;
+            el.style.cssText = 'position:absolute;font-size:' + w.size + 'px;color:' + (colorMap[w.category] || '#94a3b8') +
+                ';white-space:nowrap;pointer-events:all;cursor:pointer;user-select:none;transition:opacity 0.3s,text-shadow 0.2s;' +
+                'font-family:Inter,sans-serif;';
+            el.setAttribute('data-id', w.id);
+            canvas.appendChild(el);
+
+            // Measure rendered size
+            var rw = el.offsetWidth || ww;
+            var rh = el.offsetHeight || hh;
+
+            var p = {
+                x: width / 2 + (Math.random() - 0.5) * width * 0.4,
+                y: height / 2 + (Math.random() - 0.5) * height * 0.4,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                w: rw, h: rh,
+                el: el,
+                concept: w._concept || w,
+                size: w.size,
+                weight: w._concept ? w._concept.weight : 1,
             };
+            particles.push(p);
         }
 
-        function collides(box) {
-            for (var j = 0; j < placedBoxes.length; j++) {
-                var b = placedBoxes[j];
-                if (box.x1 < b.x2 && box.x2 > b.x1 && box.y1 < b.y2 && box.y2 > b.y1) return true;
-            }
-            return false;
-        }
+        var hovered = null;
+        var animRunning = true;
 
-        var sorted = words.slice().sort(function(a, b) { return b.size - a.size; });
+        function update() {
+            if (!animRunning) return;
+            var n = particles.length;
+            var cx = width / 2, cy = height / 2;
 
-        for (var i = 0; i < sorted.length; i++) {
-            var w = sorted[i];
-            // rotate pattern: 0, -20, 20, 0, -10, 15, 0, 25, -15, 0...
-            var rotPattern = [0, -20, 20, 0, -10, 15, 0, 25, -15, 0, 10, -25];
-            var angle = rotPattern[i % rotPattern.length];
+            for (var i = 0; i < n; i++) {
+                var p = particles[i];
 
-            var a = 0, r = 0, step = 0.08;
-            var found = false;
-            var limit = Math.max(halfW, halfH) * 2.5;
-            while (r < limit) {
-                var x = r * Math.cos(a);
-                var y = r * Math.sin(a) * 0.65;
-                w.x = x; w.y = y; w.rotate = angle;
-                var box = makeBox(w, angle);
-                if (box.x1 < -halfW || box.x2 > halfW || box.y1 < -halfH || box.y2 > halfH) {
-                    a += step; r += step * 0.35; continue;
+                // Gentle random drift
+                p.vx += (Math.random() - 0.5) * 0.02;
+                p.vy += (Math.random() - 0.5) * 0.02;
+
+                // Soft attraction to center (weight-dependent: heavier = stays closer)
+                var gravStrength = 0.0001 * (1 + p.weight * 0.3);
+                p.vx += (cx - p.x) * gravStrength;
+                p.vy += (cy - p.y) * gravStrength;
+
+                // Mutual repulsion
+                for (var j = i + 1; j < n; j++) {
+                    var q = particles[j];
+                    var dx = p.x - q.x, dy = p.y - q.y;
+                    var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                    var minDist = (p.w + q.w) * 0.5 + PAD;
+                    if (dist < minDist) {
+                        var force = (minDist - dist) * 0.008;
+                        var fx = dx / dist * force, fy = dy / dist * force;
+                        p.vx += fx; p.vy += fy;
+                        q.vx -= fx; q.vy -= fy;
+                    }
                 }
-                if (!collides(box)) {
-                    placedBoxes.push(box);
-                    found = true;
-                    break;
-                }
-                a += step; r += step * 0.35;
+
+                // Damping
+                p.vx *= 0.98;
+                p.vy *= 0.98;
+
+                // Speed limit
+                var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (spd > 1.5) { p.vx *= 1.5 / spd; p.vy *= 1.5 / spd; }
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Wall bounce with padding
+                var hw = p.w / 2 + PAD, hh = p.h / 2 + PAD;
+                if (p.x < hw) { p.x = hw; p.vx = Math.abs(p.vx) * 0.5; }
+                if (p.x > width - hw) { p.x = width - hw; p.vx = -Math.abs(p.vx) * 0.5; }
+                if (p.y < hh) { p.y = hh; p.vy = Math.abs(p.vy) * 0.5; }
+                if (p.y > height - hh) { p.y = height - hh; p.vy = -Math.abs(p.vy) * 0.5; }
+
+                // Update DOM
+                p.el.style.left = (p.x - p.w / 2) + 'px';
+                p.el.style.top = (p.y - p.h / 2) + 'px';
             }
-            if (!found) console.warn('Could not place:', w.text);
+
+            // Update hover effect
+            updateHover();
+
+            container._animId = requestAnimationFrame(update);
         }
-        return words; // words have x/y/rotate set
+
+        function updateHover() {
+            var linesHtml = '';
+            if (hovered) {
+                var hw = null;
+                for (var i = 0; i < particles.length; i++) {
+                    if (particles[i].el.getAttribute('data-id') === hovered) { hw = particles[i]; break; }
+                }
+                if (hw) {
+                    var related = {};
+                    related[hw.concept.name] = true;
+                    (hw.concept.relatedConcepts || []).forEach(function(r) { related[r] = true; });
+                    for (var i = 0; i < particles.length; i++) {
+                        var p = particles[i];
+                        var isRel = related[p.concept.name] || p.el.getAttribute('data-id') === hovered;
+                        p.el.style.opacity = isRel ? '1' : '0.25';
+                        if (isRel && p.el.getAttribute('data-id') !== hovered) {
+                            linesHtml += '<line x1="' + hw.x + '" y1="' + hw.y +
+                                '" x2="' + p.x + '" y2="' + p.y +
+                                '" stroke="' + (colorMap[hw.concept.category] || '#94a3b8') +
+                                '" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>';
+                        }
+                    }
+                }
+            } else {
+                for (var i = 0; i < particles.length; i++) particles[i].el.style.opacity = '1';
+            }
+            linesSvg.innerHTML = linesHtml;
+        }
+
+        // Event listeners
+        for (var i = 0; i < particles.length; i++) {
+            (function(p) {
+                p.el.addEventListener('mouseenter', function() {
+                    hovered = p.el.getAttribute('data-id');
+                    p.el.style.textShadow = '0 0 12px currentColor';
+                });
+                p.el.addEventListener('mouseleave', function() {
+                    if (hovered === p.el.getAttribute('data-id')) hovered = null;
+                    p.el.style.textShadow = 'none';
+                });
+                p.el.addEventListener('click', function() {
+                    showPaperSection(p.concept);
+                });
+            })(particles[i]);
+        }
+
+        canvas.addEventListener('mouseleave', function() {
+            hovered = null;
+            for (var i = 0; i < particles.length; i++) {
+                particles[i].el.style.opacity = '1';
+                particles[i].el.style.textShadow = 'none';
+            }
+        });
+
+        // Start animation
+        update();
+
+        return {
+            stop: function() {
+                animRunning = false;
+                if (container._animId) cancelAnimationFrame(container._animId);
+            }
+        };
     }
     </script>
     <script>
@@ -439,7 +542,6 @@
 
         var lexicon = null;
         var ontologyMarkdown = '';
-        var hoveredWord = null;
 
         async function init() {
             try {
@@ -498,7 +600,6 @@
             var height = 450;
 
             var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 2; });
-
             if (concepts.length === 0) return;
 
             var words = concepts.map(function(c) {
@@ -519,93 +620,11 @@
             }
 
             try {
-                var placed = computeWordCloudLayout(words, width, height);
-                console.log('Word cloud placed:', placed.length, '/', words.length);
-                draw(placed, width, height, colorMap);
+                var wc = createDynamicWordCloud('wordcloud-container', words, width, height, colorMap);
+                window._wordCloud = wc; // keep reference to stop on page unload
             } catch (err) {
-                console.error('词云布局失败:', err);
+                console.error('词云渲染失败:', err);
                 container.innerHTML = '<div class="wordcloud-error"><h3>词云渲染失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
-            }
-        }
-
-        function draw(words, width, height, colorMap) {
-            var container = document.getElementById('wordcloud-container');
-
-            var html = '<svg id="wordcloud-svg" viewBox="0 0 ' + width + ' ' + height + '" class="wordcloud-svg">';
-            html += '<g transform="translate(' + (width/2) + ',' + (height/2) + ')">';
-
-            if (hoveredWord) {
-                var hwConcept = null;
-                for (var i = 0; i < words.length; i++) {
-                    if (words[i].id === hoveredWord) { hwConcept = words[i]._concept; break; }
-                }
-                if (hwConcept) {
-                    var relatedNames = {};
-                    (hwConcept.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
-                    var hoveredWordEl = null;
-                    var relatedWords = [];
-                    for (var j = 0; j < words.length; j++) {
-                        var w = words[j];
-                        if (w.id === hoveredWord) hoveredWordEl = w;
-                        if (relatedNames[w.text]) relatedWords.push(w);
-                    }
-                    if (hoveredWordEl) {
-                        relatedWords.forEach(function(rw) {
-                            html += '<line class="relation-line" x1="' + hoveredWordEl.x + '" y1="' + hoveredWordEl.y +
-                                '" x2="' + rw.x + '" y2="' + rw.y +
-                                '" stroke="' + (colorMap[hwConcept.category] || '#94a3b8') + '"/>';
-                        });
-                    }
-                }
-            }
-
-            for (var k = 0; k < words.length; k++) {
-                var d = words[k];
-                var cls = 'word';
-                if (hoveredWord) {
-                    var hw = null;
-                    for (var m = 0; m < words.length; m++) {
-                        if (words[m].id === hoveredWord) { hw = words[m]._concept; break; }
-                    }
-                    if (hw) {
-                        var relN = {};
-                        relN[hw.name] = true;
-                        (hw.relatedConcepts || []).forEach(function(r) { relN[r] = true; });
-                        cls += (d.text === hw.name || relN[d.text]) ? ' highlighted' : ' dimmed';
-                    }
-                }
-                var fill = colorMap[d.category] || '#94a3b8';
-                html += '<text class="' + cls + '" text-anchor="middle" ' +
-                    'transform="translate(' + d.x + ',' + d.y + ')rotate(' + d.rotate + ')" ' +
-                    'font-size="' + d.size + '" fill="' + fill + '" font-family="Inter, sans-serif" ' +
-                    'data-id="' + d.id + '">' + escapeHtml(d.text) + '</text>';
-            }
-
-            html += '</g></svg>';
-            container.innerHTML = html;
-
-            var svg = document.getElementById('wordcloud-svg');
-            var texts = svg.querySelectorAll('text.word');
-            for (var n = 0; n < texts.length; n++) {
-                (function(t) {
-                    t.addEventListener('mouseenter', function() {
-                        hoveredWord = t.getAttribute('data-id');
-                        renderWordCloud();
-                    });
-                    t.addEventListener('mouseleave', function() {
-                        hoveredWord = null;
-                        renderWordCloud();
-                    });
-                    t.addEventListener('click', function() {
-                        var id = t.getAttribute('data-id');
-                        for (var p = 0; p < words.length; p++) {
-                            if (words[p].id === id) {
-                                showPaperSection(words[p]);
-                                break;
-                            }
-                        }
-                    });
-                })(texts[n]);
             }
         }
 
