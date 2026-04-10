@@ -344,125 +344,113 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-    // ── Dynamic word cloud: physics-based floating particles ──
+    // ── Dynamic word cloud: spiral layout + gentle sinusoidal float ──
     function createDynamicWordCloud(containerId, words, width, height, colorMap) {
         var container = document.getElementById(containerId);
         if (!container) return;
+        if (container._wc) { container._wc.stop(); }
 
-        // Cancel any previous animation
-        if (container._animId) cancelAnimationFrame(container._animId);
-        container._animId = null;
+        // Measure text with hidden canvas
+        var ctx = document.createElement('canvas').getContext('2d');
+        ctx.font = '14px Inter, sans-serif';
 
-        // Build DOM
-        container.innerHTML = '<div id="wordcloud-canvas" style="position:relative;width:' + width + 'px;height:' + height + 'px;overflow:hidden;cursor:grab;"></div>' +
-            '<svg id="wordcloud-lines" style="position:absolute;top:0;left:0;pointer-events:none;" width="' + width + '" height="' + height + '"></svg>';
-        var canvas = document.getElementById('wordcloud-canvas');
-        var linesSvg = document.getElementById('wordcloud-lines');
+        function measureWord(w) {
+            ctx.font = w.size + 'px Inter, sans-serif';
+            var m = ctx.measureText(w.text);
+            return { w: m.width + 4, h: w.size * 1.15 + 2 };
+        }
 
-        // Create word elements
-        var particles = [];
-        var PAD = 4;
-        for (var i = 0; i < words.length; i++) {
-            var w = words[i];
-            var cjk = 0, ascii = 0;
-            for (var ci = 0; ci < w.text.length; ci++) {
-                if (w.text.charCodeAt(ci) > 127) cjk++; else ascii++;
+        var halfW = width / 2, halfH = height / 2;
+        var PAD = 3;
+        var sorted = words.slice().sort(function(a, b) { return b.size - a.size; });
+
+        // Spiral placement
+        for (var i = 0; i < sorted.length; i++) {
+            var w = sorted[i];
+            var dims = measureWord(w);
+            w._ww = dims.w; w._hh = dims.h;
+            w._angle = 0; // no rotation for readability
+
+            var a = Math.random() * Math.PI * 2, r = 0, step = 0.1;
+            var placed = false;
+            var limit = Math.max(halfW, halfH) * 2.2;
+            while (r < limit) {
+                w.x = r * Math.cos(a);
+                w.y = r * Math.sin(a) * 0.6;
+                var b = {
+                    x1: w.x - w._ww / 2 - PAD, y1: w.y - w._hh / 2 - PAD,
+                    x2: w.x + w._ww / 2 + PAD, y2: w.y + w._hh / 2 + PAD
+                };
+                if (b.x1 < -halfW || b.x2 > halfW || b.y1 < -halfH || b.y2 > halfH) {
+                    a += step; r += step * 0.4; continue;
+                }
+                var collide = false;
+                for (var j = 0; j < i; j++) {
+                    var prev = sorted[j];
+                    var pb = {
+                        x1: prev.x - prev._ww/2 - PAD, y1: prev.y - prev._hh/2 - PAD,
+                        x2: prev.x + prev._ww/2 + PAD, y2: prev.y + prev._hh/2 + PAD
+                    };
+                    if (b.x1 < pb.x2 && b.x2 > pb.x1 && b.y1 < pb.y2 && b.y2 > pb.y1) { collide = true; break; }
+                }
+                if (!collide) { placed = true; break; }
+                a += step; r += step * 0.4;
             }
-            var ww = cjk * 1.05 * w.size + ascii * 0.55 * w.size;
-            var hh = w.size * 1.15;
+            if (!placed) console.warn('未放置:', w.text);
+        }
 
+        // Create DOM elements
+        container.innerHTML = '<div id="wc-canvas" style="position:relative;width:' + width + 'px;height:' + height + 'px;overflow:hidden;"></div>' +
+            '<svg id="wc-lines" style="position:absolute;top:0;left:0;pointer-events:none;" width="' + width + '" height="' + height + '"></svg>';
+        var canvas = document.getElementById('wc-canvas');
+        var linesSvg = document.getElementById('wc-lines');
+
+        var particles = [];
+        var t0 = Date.now();
+        var hovered = null;
+
+        for (var i = 0; i < sorted.length; i++) {
+            var w = sorted[i];
             var el = document.createElement('span');
-            el.className = 'cloud-word';
             el.textContent = w.text;
             el.style.cssText = 'position:absolute;font-size:' + w.size + 'px;color:' + (colorMap[w.category] || '#94a3b8') +
-                ';white-space:nowrap;pointer-events:all;cursor:pointer;user-select:none;transition:opacity 0.3s,text-shadow 0.2s;' +
-                'font-family:Inter,sans-serif;';
+                ';white-space:nowrap;pointer-events:all;cursor:pointer;user-select:none;' +
+                'font-family:Inter,sans-serif;font-weight:' + (w.size >= 28 ? '600' : '400') + ';' +
+                'text-shadow:0 1px 2px rgba(0,0,0,0.04);transition:opacity 0.3s,transform 0.2s;';
             el.setAttribute('data-id', w.id);
             canvas.appendChild(el);
 
-            // Measure rendered size
-            var rw = el.offsetWidth || ww;
-            var rh = el.offsetHeight || hh;
+            // Read actual rendered size
+            var rw = el.offsetWidth, rh = el.offsetHeight;
 
-            var p = {
-                x: width / 2 + (Math.random() - 0.5) * width * 0.4,
-                y: height / 2 + (Math.random() - 0.5) * height * 0.4,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
+            var phase = Math.random() * Math.PI * 2;
+            particles.push({
+                baseX: halfW + w.x, baseY: halfH + w.y,
+                x: halfW + w.x, y: halfH + w.y,
                 w: rw, h: rh,
                 el: el,
                 concept: w._concept || w,
-                size: w.size,
-                weight: w._concept ? w._concept.weight : 1,
-            };
-            particles.push(p);
+                phase: phase,
+                ampX: 2 + Math.random() * 4,
+                ampY: 1.5 + Math.random() * 3,
+                freq: 0.3 + Math.random() * 0.5,
+            });
         }
 
-        var hovered = null;
-        var animRunning = true;
+        function animate() {
+            if (!container._wcRunning) return;
+            var t = (Date.now() - t0) / 1000;
+            var linesHtml = '';
 
-        function update() {
-            if (!animRunning) return;
-            var n = particles.length;
-            var cx = width / 2, cy = height / 2;
-
-            for (var i = 0; i < n; i++) {
+            for (var i = 0; i < particles.length; i++) {
                 var p = particles[i];
-
-                // Gentle random drift
-                p.vx += (Math.random() - 0.5) * 0.02;
-                p.vy += (Math.random() - 0.5) * 0.02;
-
-                // Soft attraction to center (weight-dependent: heavier = stays closer)
-                var gravStrength = 0.0001 * (1 + p.weight * 0.3);
-                p.vx += (cx - p.x) * gravStrength;
-                p.vy += (cy - p.y) * gravStrength;
-
-                // Mutual repulsion
-                for (var j = i + 1; j < n; j++) {
-                    var q = particles[j];
-                    var dx = p.x - q.x, dy = p.y - q.y;
-                    var dist = Math.sqrt(dx * dx + dy * dy) || 1;
-                    var minDist = (p.w + q.w) * 0.5 + PAD;
-                    if (dist < minDist) {
-                        var force = (minDist - dist) * 0.008;
-                        var fx = dx / dist * force, fy = dy / dist * force;
-                        p.vx += fx; p.vy += fy;
-                        q.vx -= fx; q.vy -= fy;
-                    }
-                }
-
-                // Damping
-                p.vx *= 0.98;
-                p.vy *= 0.98;
-
-                // Speed limit
-                var spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-                if (spd > 1.5) { p.vx *= 1.5 / spd; p.vy *= 1.5 / spd; }
-
-                p.x += p.vx;
-                p.y += p.vy;
-
-                // Wall bounce with padding
-                var hw = p.w / 2 + PAD, hh = p.h / 2 + PAD;
-                if (p.x < hw) { p.x = hw; p.vx = Math.abs(p.vx) * 0.5; }
-                if (p.x > width - hw) { p.x = width - hw; p.vx = -Math.abs(p.vx) * 0.5; }
-                if (p.y < hh) { p.y = hh; p.vy = Math.abs(p.vy) * 0.5; }
-                if (p.y > height - hh) { p.y = height - hh; p.vy = -Math.abs(p.vy) * 0.5; }
-
-                // Update DOM
+                p.x = p.baseX + Math.sin(t * p.freq + p.phase) * p.ampX;
+                p.y = p.baseY + Math.cos(t * p.freq * 0.7 + p.phase * 1.3) * p.ampY;
                 p.el.style.left = (p.x - p.w / 2) + 'px';
                 p.el.style.top = (p.y - p.h / 2) + 'px';
             }
 
-            // Update hover effect
-            updateHover();
-
-            container._animId = requestAnimationFrame(update);
-        }
-
-        function updateHover() {
-            var linesHtml = '';
+            // Hover lines
             if (hovered) {
                 var hw = null;
                 for (var i = 0; i < particles.length; i++) {
@@ -475,53 +463,53 @@
                     for (var i = 0; i < particles.length; i++) {
                         var p = particles[i];
                         var isRel = related[p.concept.name] || p.el.getAttribute('data-id') === hovered;
-                        p.el.style.opacity = isRel ? '1' : '0.25';
+                        p.el.style.opacity = isRel ? '1' : '0.18';
                         if (isRel && p.el.getAttribute('data-id') !== hovered) {
                             linesHtml += '<line x1="' + hw.x + '" y1="' + hw.y +
                                 '" x2="' + p.x + '" y2="' + p.y +
                                 '" stroke="' + (colorMap[hw.concept.category] || '#94a3b8') +
-                                '" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>';
+                                '" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>';
                         }
                     }
                 }
             } else {
-                for (var i = 0; i < particles.length; i++) particles[i].el.style.opacity = '1';
+                for (var i = 0; i < particles.length; i++) {
+                    particles[i].el.style.opacity = '1';
+                }
             }
             linesSvg.innerHTML = linesHtml;
+
+            requestAnimationFrame(animate);
         }
 
-        // Event listeners
+        // Events
         for (var i = 0; i < particles.length; i++) {
             (function(p) {
                 p.el.addEventListener('mouseenter', function() {
                     hovered = p.el.getAttribute('data-id');
-                    p.el.style.textShadow = '0 0 12px currentColor';
+                    p.el.style.textShadow = '0 0 14px currentColor';
                 });
                 p.el.addEventListener('mouseleave', function() {
                     if (hovered === p.el.getAttribute('data-id')) hovered = null;
-                    p.el.style.textShadow = 'none';
+                    p.el.style.textShadow = '0 1px 2px rgba(0,0,0,0.04)';
                 });
-                p.el.addEventListener('click', function() {
-                    showPaperSection(p.concept);
-                });
+                p.el.addEventListener('click', function() { showPaperSection(p.concept); });
             })(particles[i]);
         }
-
         canvas.addEventListener('mouseleave', function() {
             hovered = null;
             for (var i = 0; i < particles.length; i++) {
                 particles[i].el.style.opacity = '1';
-                particles[i].el.style.textShadow = 'none';
+                particles[i].el.style.textShadow = '0 1px 2px rgba(0,0,0,0.04)';
             }
         });
 
-        // Start animation
-        update();
+        container._wcRunning = true;
+        animate();
 
-        return {
+        container._wc = {
             stop: function() {
-                animRunning = false;
-                if (container._animId) cancelAnimationFrame(container._animId);
+                container._wcRunning = false;
             }
         };
     }
