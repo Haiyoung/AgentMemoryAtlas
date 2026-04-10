@@ -3,612 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentMemoryAtlas - Agent Memory 领域论文地图集</title>
-    <meta name="description" content="系统性梳理 Agent Memory 领域研究版图，基于本体论方法论的智能体记忆论文地图集">
+    <title>AgentMemoryAtlas - Agent Memory 领域本体论知识库</title>
+    <meta name="description" content="Agent Memory 领域本体论知识库 — 交互式词云浏览器">
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --secondary: #0ea5e9;
-            --success: #16a34a;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --purple: #8b5cf6;
             --bg-primary: #ffffff;
             --bg-secondary: #f8fafc;
-            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             --text-primary: #1e293b;
             --text-secondary: #64748b;
-            --text-light: #94a3b8;
             --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.2);
-            --radius-sm: 8px;
+            --primary: #3b82f6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
             --radius-md: 12px;
             --radius-lg: 20px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             color: var(--text-primary);
             line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
         }
 
         /* Header */
         header {
             text-align: center;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
+            padding: 2.5rem 1.5rem 1.5rem;
         }
 
-        .logo {
-            margin-bottom: 1.5rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-size: 3rem;
+        .header-title {
+            font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), #0ea5e9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
         }
 
-        .subtitle {
-            font-size: 1.2rem;
+        .header-subtitle {
+            font-size: 1.1rem;
             color: var(--text-secondary);
-            max-width: 800px;
+            margin-top: 0.25rem;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .stats-bar span { font-weight: 600; color: var(--primary); }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: var(--bg-primary);
-            padding: 2.5rem;
-            border-radius: var(--radius-lg);
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .stat-card.highlight {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .stat-card.highlight .stat-value,
-        .stat-card.highlight .stat-label {
-            color: white;
-        }
-
-        .stat-value {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        /* Progress Section */
-        .progress-section {
-            background: var(--bg-primary);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow-md);
-        }
-
-        .progress-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        /* Filter bar */
+        .filter-bar {
             display: flex;
-            align-items: center;
+            justify-content: center;
             gap: 0.5rem;
+            flex-wrap: wrap;
+            padding: 1rem 0;
+            margin-bottom: 1rem;
         }
 
-        .batch-list {
-            display: grid;
-            gap: 1rem;
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .batch-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 1.5rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            transition: all 0.3s ease;
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eff6ff;
         }
 
-        .batch-item:hover {
-            background: #f1f5f9;
+        /* Word cloud */
+        .wordcloud-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            min-height: 500px;
         }
 
-        .batch-name {
-            font-weight: 600;
+        .wordcloud-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
             color: var(--text-primary);
         }
 
-        .batch-progress {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        #wordcloud-svg {
+            width: 100%;
+            height: 500px;
         }
 
-        .progress-bar {
-            width: 200px;
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 4px;
-            overflow: hidden;
+        .wordcloud-svg .word {
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 0.3s ease;
+        .wordcloud-svg .word:hover { opacity: 0.8; }
+        .wordcloud-svg .word.highlighted {
+            font-weight: bold !important;
+        }
+        .wordcloud-svg .word.dimmed { opacity: 0.2 !important; }
+
+        .wordcloud-svg .relation-line {
+            stroke-dasharray: 4, 4;
+            stroke-width: 1.5;
+            opacity: 0.6;
         }
 
-        .batch-status {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .status-done { color: var(--success); }
-        .status-progress { color: var(--warning); }
-        .status-pending { color: var(--text-light); }
-
-        /* Papers Grid */
-        .papers-section {
+        /* Main content: sidebar + ontology body */
+        .main-content {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 1rem;
+            align-self: start;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .sidebar nav a {
+            display: block;
+            padding: 0.35rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .sidebar nav a:hover, .sidebar nav a.active {
+            color: var(--primary);
+            border-left-color: var(--primary);
+            background: #f0f7ff;
+        }
+
+        /* Ontology body */
+        .ontology-body {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ontology-body h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .ontology-body h2:first-child { margin-top: 0; }
+
+        .ontology-body h3 {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .ontology-body p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .ontology-body table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 1.5rem;
         }
 
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
+        .ontology-body table th,
+        .ontology-body table td {
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .ontology-body table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+
+        .ontology-body code {
+            background: var(--bg-secondary);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .ontology-body pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .ontology-body pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Paper brief section */
+        .paper-section {
+            margin-bottom: 3rem;
+        }
+
+        .paper-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .papers-grid {
+        .concept-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .paper-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
         }
 
         .paper-card {
             background: var(--bg-primary);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .paper-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .paper-emoji {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .paper-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .paper-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .paper-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .paper-arxiv {
-            font-size: 0.85rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .paper-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            text-decoration: none;
             border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid transparent;
+            transition: all 0.2s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .paper-card.highlighted {
+            border-color: var(--primary);
             box-shadow: var(--shadow-md);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+        .paper-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
         }
 
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
+        .paper-card .arxiv {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 600;
         }
+
+        .paper-card .desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        .paper-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .paper-link:hover { text-decoration: underline; }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 0;
-            margin-top: 3rem;
+            padding: 2rem;
             border-top: 1px solid var(--border-color);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-links a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-dark);
-        }
-
-        .copyright {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .stat-value {
-                font-size: 2.5rem;
-            }
-
-            .papers-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .batch-item {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-
-            .progress-bar {
-                width: 100%;
-            }
-        }
+        footer a { color: var(--primary); text-decoration: none; }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <h1 class="header-title">AgentMemoryAtlas</h1>
+        <p class="header-subtitle">Agent Memory 领域本体论知识库</p>
+        <div class="stats-bar" id="stats-bar"></div>
+    </header>
+
     <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo">
-                <svg width="120" height="120" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- 外圆环 -->
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.3"/>
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
-                    
-                    <!-- 中心大脑图标 -->
-                    <g transform="translate(100, 100)">
-                        <!-- 大脑轮廓 -->
-                        <ellipse cx="0" cy="0" rx="35" ry="30" fill="#f472b6" opacity="0.9"/>
-                        <ellipse cx="-25" cy="5" rx="15" ry="20" fill="#ec4899" opacity="0.8"/>
-                        <ellipse cx="25" cy="5" rx="15" ry="20" fill="#db2777" opacity="0.8"/>
-                        
-                        <!-- 大脑纹理 -->
-                        <path d="M -15 -20 Q -10 -10, -15 0 Q -10 10, -15 20" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
-                        <path d="M 0 -25 Q 5 -15, 0 -5 Q 5 5, 0 15 Q 5 25, 0 30" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
-                        <path d="M 15 -20 Q 10 -10, 15 0 Q 10 10, 15 20" stroke="#be185d" stroke-width="2" fill="none" opacity="0.6"/>
-                    </g>
-                    
-                    <!-- 连接节点 -->
-                    <circle cx="100" cy="20" r="6" fill="#3b82f6"/>
-                    <circle cx="180" cy="100" r="6" fill="#0ea5e9"/>
-                    <circle cx="100" cy="180" r="6" fill="#16a34a"/>
-                    <circle cx="20" cy="100" r="6" fill="#f59e0b"/>
-                    
-                    <!-- 连接线 -->
-                    <line x1="100" y1="26" x2="100" y2="70" stroke="#3b82f6" stroke-width="2" opacity="0.5"/>
-                    <line x1="174" y1="100" x2="135" y2="100" stroke="#0ea5e9" stroke-width="2" opacity="0.5"/>
-                    <line x1="100" y1="174" x2="100" y2="130" stroke="#16a34a" stroke-width="2" opacity="0.5"/>
-                    <line x1="26" y1="100" x2="65" y2="100" stroke="#f59e0b" stroke-width="2" opacity="0.5"/>
-                </svg>
-            </div>
-            <h1>AgentMemoryAtlas</h1>
-            <p class="subtitle">系统性梳理 Agent Memory 领域研究版图 · 基于本体论方法论的智能体记忆论文地图集</p>
-        </header>
+        <!-- Filter bar -->
+        <div class="filter-bar" id="filter-bar"></div>
 
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value">20</div>
-                <div class="stat-label">📚 已完成论文</div>
-            </div>
-            <div class="stat-card highlight">
-                <div class="stat-value">204</div>
-                <div class="stat-label">🎯 总目标</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">9.8%</div>
-                <div class="stat-label">📈 完成进度</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">2/15</div>
-                <div class="stat-label">✅ 完成批次</div>
-            </div>
+        <!-- Word cloud -->
+        <div class="wordcloud-section">
+            <h2>本概念全景图</h2>
+            <svg id="wordcloud-svg"></svg>
         </div>
 
-        <!-- Progress Section -->
-        <div class="progress-section">
-            <h2 class="progress-title">📊 当前进度</h2>
-            <div class="batch-list">
-                <div class="batch-item">
-                    <span class="batch-name">🚀 批次 1: 2026 年</span>
-                    <div class="batch-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%"></div>
-                        </div>
-                        <span class="batch-status status-done">6/6 ✅</span>
-                    </div>
-                </div>
-                <div class="batch-item">
-                    <span class="batch-name">📅 批次 2: 2025-12</span>
-                    <div class="batch-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%"></div>
-                        </div>
-                        <span class="batch-status status-done">10/10 ✅</span>
-                    </div>
-                </div>
-                <div class="batch-item">
-                    <span class="batch-name">📖 批次 3: 2025-11</span>
-                    <div class="batch-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 33%"></div>
-                        </div>
-                        <span class="batch-status status-progress">5/15 🟡</span>
-                    </div>
-                </div>
-                <div class="batch-item">
-                    <span class="batch-name">📚 批次 4: 2025-10</span>
-                    <div class="batch-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
-                        </div>
-                        <span class="batch-status status-pending">0/23 ⏳</span>
-                    </div>
-                </div>
-            </div>
+        <!-- Main content: sidebar + ontology body -->
+        <div class="main-content">
+            <aside class="sidebar">
+                <h3>目录</h3>
+                <nav id="sidebar-nav"></nav>
+            </aside>
+            <main class="ontology-body" id="ontology-body"></main>
         </div>
 
-        <!-- Papers Section: Batch 1 -->
-        <div class="papers-section">
-            <div class="section-header">
-                <h2 class="section-title">🚀 批次 1: 2026 年 (6/6) ✅</h2>
-            </div>
-            <div class="papers-grid">
-                <div class="paper-card">
-                    <div class="paper-emoji">🧭</div>
-                    <h3 class="paper-title">Memory Matters More</h3>
-                    <p class="paper-desc">事件中心记忆作为智能体搜索和推理的逻辑地图</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2601.04726</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.8</span>
-                    </div>
-                    <a href="papers/2026/01_2026-01_Memory-Matters-More-事件中心记忆作为逻辑地图_2026-03-21.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🌌</div>
-                    <h3 class="paper-title">MAGMA</h3>
-                    <p class="paper-desc">多图智能体记忆架构</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2601.03236</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.7</span>
-                    </div>
-                    <a href="papers/2026/02_2026-01_MAGMA-多图智能体记忆架构_2026-03-21.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🧠</div>
-                    <h3 class="paper-title">EverMemOS</h3>
-                    <p class="paper-desc">自组织记忆操作系统</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2601.02163</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.6</span>
-                    </div>
-                    <a href="papers/2026/03_2026-01_EverMemOS-自组织记忆操作系统_2026-03-21.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🤖</div>
-                    <h3 class="paper-title">MemRL</h3>
-                    <p class="paper-desc">运行时强化学习自进化智能体</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2601.03192</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.7</span>
-                    </div>
-                    <a href="papers/2026/04_2026-01_MemRL-运行时强化学习自进化智能体_2026-03-21.html" class="btn">阅读全文 →</a>
-                </div>
-            </div>
+        <!-- Paper brief section -->
+        <div class="paper-section" id="paper-section" style="display:none;">
+            <h2>相关论文: <span id="selected-concept"></span></h2>
+            <div class="paper-grid" id="paper-grid"></div>
         </div>
-
-        <!-- Papers Section: Batch 2 -->
-        <div class="papers-section">
-            <div class="section-header">
-                <h2 class="section-title">📅 批次 2: 2025-12 (10/10) ✅</h2>
-            </div>
-            <div class="papers-grid">
-                <div class="paper-card">
-                    <div class="paper-emoji">🔮</div>
-                    <h3 class="paper-title">Hindsight</h3>
-                    <p class="paper-desc">4 逻辑网络 +3 操作，LongMemEval 91.4%</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.12818</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.9</span>
-                    </div>
-                    <a href="papers/2025/07_2025-12_Hindsight-事后诸葛亮_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🎬</div>
-                    <h3 class="paper-title">WorldMM</h3>
-                    <p class="paper-desc">多模态记忆 (文本 + 视觉)，5 视频基准 +8.4%</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.02425</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.8</span>
-                    </div>
-                    <a href="papers/2025/05_2025-12_WorldMM-动态多模态记忆智能体_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🗂️</div>
-                    <h3 class="paper-title">Memoria</h3>
-                    <p class="paper-desc">动态摘要 + 加权 KG，Token 减少 99.7%</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.12686</span>
-                        <span class="paper-rating">⭐⭐⭐⭐ 4.3</span>
-                    </div>
-                    <a href="papers/2025/06_2025-12_Memoria-可扩展智能体记忆框架_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🧬</div>
-                    <h3 class="paper-title">MemEvolve</h3>
-                    <p class="paper-desc">元进化框架：共同进化经验和记忆架构</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.18746</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.8</span>
-                    </div>
-                    <a href="papers/2025/15_2025-12_MemEvolve-元进化_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">💎</div>
-                    <h3 class="paper-title">ReMe</h3>
-                    <p class="paper-desc">记住我，精炼我：动态过程记忆框架</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.10696</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.8</span>
-                    </div>
-                    <a href="papers/2025/16_2025-12_ReMe-记住我精炼我_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-                <div class="paper-card">
-                    <div class="paper-emoji">🎯</div>
-                    <h3 class="paper-title">MemLoRA</h3>
-                    <p class="paper-desc">设备端记忆系统：知识蒸馏专家适配器</p>
-                    <div class="paper-meta">
-                        <span class="paper-arxiv">2512.04763</span>
-                        <span class="paper-rating">⭐⭐⭐⭐⭐ 4.9</span>
-                    </div>
-                    <a href="papers/2025/17_2025-12_MemLoRA-设备端记忆_2026-03-22.html" class="btn">阅读全文 →</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <div class="footer-links">
-                <a href="https://github.com/Haiyoung/AgentMemoryAtlas" target="_blank">🐙 GitHub</a>
-                <a href="https://haiyoung.github.io/AgentMemoryAtlas/" target="_blank">🌐 GitHub Pages</a>
-                <a href="https://github.com/Shichun-Liu/Agent-Memory-Paper-List" target="_blank">📚 原始论文列表</a>
-            </div>
-            <p class="copyright">
-                © 2026 AgentMemoryAtlas · 最后更新：2026-03-22 · 
-                <a href="https://github.com/Haiyoung/AgentMemoryAtlas" style="color: var(--primary);">View on GitHub</a>
-            </p>
-        </footer>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 AgentMemoryAtlas · 最后更新: <span id="last-updated"></span> ·
+           <a href="https://github.com/Haiyoung/AgentMemoryAtlas">View on GitHub</a></p>
+    </footer>
+
+    <!-- Scripts: d3 + d3-cloud + marked -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.7/build/d3.layout.cloud.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+    (function() {
+        const LEXICON_URL = '../ontology/lexicon.json';
+        const ONTOLOGY_URL = '../ontology/ontology_base.md';
+        const GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';
+
+        let lexicon = null;
+        let ontologyMarkdown = '';
+        let activeFilter = null;
+        let hoveredWord = null;
+
+        async function init() {
+            try {
+                const [lexRes, ontoRes] = await Promise.all([
+                    fetch(LEXICON_URL),
+                    fetch(ONTOLOGY_URL)
+                ]);
+
+                if (!lexRes.ok) throw new Error('Failed to load lexicon.json');
+                lexicon = await lexRes.json();
+
+                if (ontoRes.ok) {
+                    ontologyMarkdown = await ontoRes.text();
+                }
+
+                renderStats();
+                renderFilters();
+                renderWordCloud();
+                renderSidebar();
+                renderOntologyBody();
+                renderFooter();
+            } catch (err) {
+                console.error('Failed to initialize:', err);
+                document.getElementById('ontology-body').innerHTML =
+                    '<p style="color:red;">Failed to load ontology data: ' + err.message + '</p>';
+            }
+        }
+
+        function renderStats() {
+            const bar = document.getElementById('stats-bar');
+            bar.innerHTML =
+                '概念: <span>' + lexicon.conceptCount + '</span> &nbsp;|&nbsp;' +
+                '关系: <span>' + lexicon.relationCount + '</span> &nbsp;|&nbsp;' +
+                '版本: <span>' + lexicon.version + '</span> &nbsp;|&nbsp;' +
+                '论文: <span>' + (lexicon.papersCovered || lexicon.conceptCount) + ' 篇';
+            document.getElementById('last-updated').textContent = lexicon.generatedAt || '2026-04-10';
+        }
+
+        function renderFilters() {
+            const bar = document.getElementById('filter-bar');
+            const cats = lexicon.categories;
+            let html = '<button class="filter-btn active" data-cat="all">全部</button>';
+            for (const [key, val] of Object.entries(cats)) {
+                html += '<button class="filter-btn" data-cat="' + key + '">' + val.name + '</button>';
+            }
+            bar.innerHTML = html;
+
+            bar.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('filter-btn')) return;
+                document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                e.target.classList.add('active');
+                activeFilter = e.target.dataset.cat === 'all' ? null : e.target.dataset.cat;
+                renderWordCloud();
+            });
+        }
+
+        function renderWordCloud() {
+            const svg = d3.select('#wordcloud-svg');
+            svg.selectAll('*').remove();
+
+            const container = document.querySelector('.wordcloud-section');
+            const width = container.clientWidth - 48;
+            const height = 500;
+
+            svg.attr('viewBox', '0 0 ' + width + ' ' + height);
+
+            let concepts = lexicon.concepts;
+            if (activeFilter) {
+                concepts = concepts.filter(function(c) { return c.category === activeFilter; });
+            }
+
+            concepts = concepts.slice(0, 100);
+
+            const words = concepts.map(function(c) {
+                return {
+                    text: c.name,
+                    size: Math.max(12, Math.min(48, 10 + c.weight * 3)),
+                    category: c.category,
+                    id: c.id,
+                };
+            });
+
+            const colorMap = {};
+            for (const [key, val] of Object.entries(lexicon.categories)) {
+                colorMap[key] = val.color;
+            }
+
+            const layout = d3.layout.cloud()
+                .size([width, height])
+                .words(words)
+                .padding(4)
+                .rotate(function() { return (~~(Math.random() * 3) - 1) * 15; })
+                .fontSize(function(d) { return d.size; })
+                .on('end', draw);
+
+            layout.start();
+
+            function draw(words) {
+                const g = svg.append('g')
+                    .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
+
+                const relationLayer = g.append('g').attr('class', 'relations');
+                if (hoveredWord) {
+                    const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
+                    if (hwConcept) {
+                        const relatedIds = {};
+                        (hwConcept.relatedConcepts || []).forEach(function(r) { relatedIds[r] = true; });
+                        const relatedWords = words.filter(function(w) { return relatedIds[w.text] || relatedIds[w.id]; });
+
+                        const hoveredWordEl = words.find(function(w) { return w.id === hoveredWord || w.text === hoveredWord; });
+                        if (hoveredWordEl) {
+                            relatedWords.forEach(function(rw) {
+                                relationLayer.append('line')
+                                    .attr('class', 'relation-line')
+                                    .attr('x1', hoveredWordEl.x)
+                                    .attr('y1', hoveredWordEl.y)
+                                    .attr('x2', rw.x)
+                                    .attr('y2', rw.y)
+                                    .attr('stroke', colorMap[hwConcept.category] || '#94a3b8');
+                            });
+                        }
+                    }
+                }
+
+                const textLayer = g.selectAll('text')
+                    .data(words)
+                    .enter()
+                    .append('text')
+                    .attr('class', function(d) {
+                        let cls = 'word';
+                        if (hoveredWord) {
+                            const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
+                            const relatedIds = {};
+                            (hwConcept?.relatedConcepts || []).forEach(function(r) { relatedIds[r] = true; });
+                            relatedIds[hoveredWord] = true;
+                            if (d.id === hoveredWord || relatedIds[d.text] || relatedIds[d.id]) {
+                                cls += ' highlighted';
+                            } else {
+                                cls += ' dimmed';
+                            }
+                        }
+                        return cls;
+                    })
+                    .attr('text-anchor', 'middle')
+                    .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')rotate(' + d.rotate + ')'; })
+                    .attr('font-size', function(d) { return d.size; })
+                    .attr('fill', function(d) { return colorMap[d.category] || '#94a3b8'; })
+                    .attr('font-family', 'Inter, sans-serif')
+                    .style('cursor', 'pointer')
+                    .text(function(d) { return d.text; })
+                    .on('mouseenter', function(event, d) {
+                        hoveredWord = d.id;
+                        renderWordCloud();
+                    })
+                    .on('mouseleave', function() {
+                        hoveredWord = null;
+                        renderWordCloud();
+                    })
+                    .on('click', function(event, d) {
+                        showPaperSection(d);
+                    });
+            }
+        }
+
+        function showPaperSection(concept) {
+            const section = document.getElementById('paper-section');
+            const title = document.getElementById('selected-concept');
+            const grid = document.getElementById('paper-grid');
+
+            const catInfo = lexicon.categories[concept.category] || {name: concept.category, color: '#94a3b8'};
+            title.textContent = concept.name;
+            title.style.color = catInfo.color;
+
+            const papers = concept.sourcePapers || [];
+            if (papers.length === 0) {
+                grid.innerHTML = '<p style="color:var(--text-secondary);">暂无关联论文</p>';
+            } else {
+                grid.innerHTML = papers.map(function(arxivId) {
+                    return '<div class="paper-card">' +
+                        '<span class="arxiv">' + arxivId + '</span>' +
+                        '<p class="desc">概念 "' + concept.name + '" 的来源论文</p>' +
+                        '<a href="' + GITHUB_PAGES_BASE + 'paper/search/' + arxivId + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
+                        '</div>';
+                }).join('');
+            }
+
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function renderSidebar() {
+            const nav = document.getElementById('sidebar-nav');
+            if (!ontologyMarkdown) {
+                nav.innerHTML = '<p style="font-size:0.85rem;color:var(--text-secondary);">加载中...</p>';
+                return;
+            }
+
+            const headings = [];
+            const regex = /^(#{2,3})\s+(.+)$/gm;
+            let match;
+            while ((match = regex.exec(ontologyMarkdown)) !== null) {
+                const level = match[1].length;
+                const text = match[2].replace(/[*_`]/g, '').trim();
+                const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
+                headings.push({ level: level, text: text, id: id });
+            }
+
+            nav.innerHTML = headings.map(function(h) {
+                const indent = (h.level - 2) * 0.75 + 0.75;
+                return '<a href="#' + h.id + '" style="padding-left:' + indent + 'rem">' + h.text + '</a>';
+            }).join('');
+        }
+
+        function renderOntologyBody() {
+            const body = document.getElementById('ontology-body');
+            if (!ontologyMarkdown) {
+                body.innerHTML = '<p style="color:var(--text-secondary);">本体论正文加载中...</p>';
+                return;
+            }
+
+            body.innerHTML = marked.parse(ontologyMarkdown);
+
+            body.querySelectorAll('h2, h3').forEach(function(h) {
+                const id = h.textContent.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
+                h.id = id;
+            });
+        }
+
+        function renderFooter() {
+        }
+
+        init();
+
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(renderWordCloud, 250);
+        });
+    })();
+    </script>
 </body>
 </html>
