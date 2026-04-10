@@ -378,14 +378,25 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
     (function() {
-        const LEXICON_URL = '../ontology/lexicon.json';
-        const ONTOLOGY_URL = '../ontology/ontology_base.md';
+        // Compute base path: works both locally and on GitHub Pages
+        const basePath = (function() {
+            const path = window.location.pathname;
+            // GitHub Pages: /AgentMemoryAtlas/site/index.html → /AgentMemoryAtlas
+            const siteIdx = path.indexOf('/site/');
+            if (siteIdx > 0) return path.substring(0, siteIdx);
+            // Local dev: /site/index.html → ''
+            if (path.endsWith('/site/index.html')) return path.replace('/site/index.html', '');
+            return '';
+        })();
+        const LEXICON_URL = basePath + '/ontology/lexicon.json';
+        const ONTOLOGY_URL = basePath + '/ontology/ontology_base.md';
         const GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';
 
         let lexicon = null;
         let ontologyMarkdown = '';
         let activeFilter = null;
         let hoveredWord = null;
+        let layoutWords = [];  // store d3-cloud positions to avoid re-layout on hover
 
         async function init() {
             try {
@@ -438,6 +449,7 @@
                 document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
                 e.target.classList.add('active');
                 activeFilter = e.target.dataset.cat === 'all' ? null : e.target.dataset.cat;
+                layoutWords = [];  // reset layout when filter changes
                 renderWordCloud();
             });
         }
@@ -465,6 +477,7 @@
                     size: Math.max(12, Math.min(48, 10 + c.weight * 3)),
                     category: c.category,
                     id: c.id,
+                    _concept: c,
                 };
             });
 
@@ -473,13 +486,27 @@
                 colorMap[key] = val.color;
             }
 
+            // If we have stored positions from a previous render with same filter, reuse them
+            if (layoutWords.length > 0 && layoutWords.length === words.length) {
+                for (var i = 0; i < words.length; i++) {
+                    words[i].x = layoutWords[i].x;
+                    words[i].y = layoutWords[i].y;
+                    words[i].rotate = layoutWords[i].rotate;
+                }
+                draw(words);
+                return;
+            }
+
             const layout = d3.layout.cloud()
                 .size([width, height])
                 .words(words)
                 .padding(4)
                 .rotate(function() { return (~~(Math.random() * 3) - 1) * 15; })
                 .fontSize(function(d) { return d.size; })
-                .on('end', draw);
+                .on('end', function(placedWords) {
+                    layoutWords = placedWords.slice();  // store positions
+                    draw(placedWords);
+                });
 
             layout.start();
 
@@ -491,11 +518,11 @@
                 if (hoveredWord) {
                     const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
                     if (hwConcept) {
-                        const relatedIds = {};
-                        (hwConcept.relatedConcepts || []).forEach(function(r) { relatedIds[r] = true; });
-                        const relatedWords = words.filter(function(w) { return relatedIds[w.text] || relatedIds[w.id]; });
+                        const relatedNames = {};
+                        (hwConcept.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
+                        const relatedWords = words.filter(function(w) { return relatedNames[w.text]; });
 
-                        const hoveredWordEl = words.find(function(w) { return w.id === hoveredWord || w.text === hoveredWord; });
+                        const hoveredWordEl = words.find(function(w) { return w.id === hoveredWord; });
                         if (hoveredWordEl) {
                             relatedWords.forEach(function(rw) {
                                 relationLayer.append('line')
@@ -518,10 +545,10 @@
                         let cls = 'word';
                         if (hoveredWord) {
                             const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
-                            const relatedIds = {};
-                            (hwConcept?.relatedConcepts || []).forEach(function(r) { relatedIds[r] = true; });
-                            relatedIds[hoveredWord] = true;
-                            if (d.id === hoveredWord || relatedIds[d.text] || relatedIds[d.id]) {
+                            const relatedNames = {};
+                            (hwConcept?.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
+                            relatedNames[hwConcept?.name] = true;
+                            if (d.text === hwConcept?.name || relatedNames[d.text]) {
                                 cls += ' highlighted';
                             } else {
                                 cls += ' dimmed';
@@ -550,23 +577,26 @@
             }
         }
 
-        function showPaperSection(concept) {
+        function showPaperSection(word) {
+            const concept = word._concept || word;
+            const name = concept.name || word.text;
+            const papers = concept.sourcePapers || [];
+
             const section = document.getElementById('paper-section');
             const title = document.getElementById('selected-concept');
             const grid = document.getElementById('paper-grid');
 
             const catInfo = lexicon.categories[concept.category] || {name: concept.category, color: '#94a3b8'};
-            title.textContent = concept.name;
+            title.textContent = name;
             title.style.color = catInfo.color;
 
-            const papers = concept.sourcePapers || [];
             if (papers.length === 0) {
                 grid.innerHTML = '<p style="color:var(--text-secondary);">暂无关联论文</p>';
             } else {
                 grid.innerHTML = papers.map(function(arxivId) {
                     return '<div class="paper-card">' +
                         '<span class="arxiv">' + arxivId + '</span>' +
-                        '<p class="desc">概念 "' + concept.name + '" 的来源论文</p>' +
+                        '<p class="desc">概念 "' + name + '" 的来源论文</p>' +
                         '<a href="' + GITHUB_PAGES_BASE + 'paper/search/' + arxivId + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
                         '</div>';
                 }).join('');
