@@ -31,16 +31,15 @@ jobs:
         run: |
           python scripts/build-site.py || echo "Site build failed, continuing with existing index.html"
 
-      - name: Generate Index
-        run: |
-          python scripts/generate-index.py || echo "Index generation skipped"
-
       - name: Copy papers to site
         run: |
-          mkdir -p site/papers
-          cp -r papers/2026 site/papers/ 2>/dev/null || echo "No 2026 papers"
-          cp -r papers/2025 site/papers/ 2>/dev/null || echo "No 2025 papers"
-          cp -r papers/2024 site/papers/ 2>/dev/null || echo "No 2024 papers"
+          mkdir -p site/paper
+          cp -r paper/2026 site/paper/ 2>/dev/null || echo "No 2026 papers"
+          cp -r paper/2025 site/paper/ 2>/dev/null || echo "No 2025 papers"
+          cp -r paper/2024 site/paper/ 2>/dev/null || echo "No 2024 papers"
+          cp -r paper/2023 site/paper/ 2>/dev/null || echo "No 2023 papers"
+          cp -r paper/2022 site/paper/ 2>/dev/null || echo "No 2022 papers"
+          cp -r paper/2021 site/paper/ 2>/dev/null || echo "No 2021 papers"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

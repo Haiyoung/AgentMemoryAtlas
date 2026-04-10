@@ -598,7 +598,7 @@
                     return '<div class="paper-card">' +
                         '<span class="arxiv">' + arxivId + '</span>' +
                         '<p class="desc">概念 "' + name + '" 的来源论文</p>' +
-                        '<a href="' + GITHUB_PAGES_BASE + (PAPER_MAP[arxivId] || (PAPER_MAP[arxivId] || 'paper/search/' + arxivId)) + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
+                        '<a href="' + GITHUB_PAGES_BASE + (PAPER_MAP[arxivId] || 'paper/search/' + arxivId) + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
                         '</div>';
                 }).join('');
             }
@@ -643,9 +643,6 @@
                 const id = h.textContent.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
                 h.id = id;
             });
-        }
-
-        function renderFooter() {
         }
 
         init();
