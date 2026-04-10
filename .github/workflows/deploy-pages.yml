@@ -27,6 +27,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Build site from lexicon
+        run: |
+          python scripts/build-site.py || echo "Site build failed, continuing with existing index.html"
+
       - name: Generate Index
         run: |
           python scripts/generate-index.py || echo "Index generation skipped"
