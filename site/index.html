@@ -358,16 +358,15 @@
             window._tagCloudInstance = null;
         }
 
-        // Clear container
         container.innerHTML = '';
 
-        // Build text array with styled spans for colors
         var texts = concepts.map(function(c) {
             var color = (colorMap[c.category]) || '#94a3b8';
             return '<span style="color:' + color + '">' + c.name + '</span>';
         });
 
-        var tagCloudInstance = TagCloud(container, texts, {
+        // TagCloud() takes (element, texts, config) and returns an array of instances
+        var instances = TagCloud(container, texts, {
             radius: 200,
             maxSpeed: 'normal',
             initSpeed: 'normal',
@@ -376,17 +375,22 @@
             useContainerInlineStyles: false
         });
 
-        // Click handler
-        tagCloudInstance.on('click', function (el) {
-            // el.content contains HTML like '<span style="color:...">Name</span>'
-            var text = el.content.replace(/<[^>]*>/g, '');
-            if (conceptLookup[text]) {
-                showPaperSection(conceptLookup[text]);
-            }
+        var instance = instances[0];
+        window._tagCloudInstance = instance;
+
+        // TagCloud creates .tagcloud-item spans — bind click handlers to them
+        var items = container.querySelectorAll('.tagcloud-item');
+        items.forEach(function(el) {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', function() {
+                var text = el.textContent;
+                if (conceptLookup[text]) {
+                    showPaperSection(conceptLookup[text]);
+                }
+            });
         });
 
-        window._tagCloudInstance = tagCloudInstance;
-        return tagCloudInstance;
+        return instance;
     }
     </script>
     <script>
