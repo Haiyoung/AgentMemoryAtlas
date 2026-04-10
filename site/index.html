@@ -343,7 +343,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+    <script src="wordcloud2.js"></script>
     <script>
     // ── wordcloud2.js powered word cloud ──
     function createWordCloud(containerId, words, width, height, colorMap, conceptLookup) {
@@ -358,7 +358,7 @@
 
         // Build weight list for wordcloud2: [[text, weight], ...]
         var list = words.map(function(w) {
-            return [w.text, Math.max(1, w.weight || Math.round((w.size - 12) / 4))];
+            return [w.name, Math.max(1, w.weight || 2)];
         });
 
         var hoveredWord = null;
