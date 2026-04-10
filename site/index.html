@@ -385,9 +385,43 @@
            <a href="https://github.com/Haiyoung/AgentMemoryAtlas">View on GitHub</a></p>
     </footer>
 
-    <!-- d3-cloud standalone (no d3 dependency) -->
-    <script src="https://unpkg.com/cloud-layout@1.0.0/build/cloud.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+    // ── Minimal word-cloud layout (Archimedean spiral + AABB collision) ──
+    function computeWordCloudLayout(words, width, height) {
+        var placed = [];
+        var cx = 0, cy = 0;
+        function aabb(w) {
+            return { x1: w.x - w.width/2, y1: w.y - w.height/2, x2: w.x + w.width/2, y2: w.y + w.height/2 };
+        }
+        function overlaps(a, b) {
+            var r = a.x2 > b.x1 && a.x2 < b.x2 || b.x2 > a.x1 && b.x2 < a.x2;
+            var c = a.y2 > b.y1 && a.y2 < b.y2 || b.y2 > a.y1 && b.y2 < a.y2;
+            return r && c;
+        }
+        for (var i = 0; i < words.length; i++) {
+            var w = words[i];
+            w.width = w.size * w.text.length * 0.55;
+            w.height = w.size * 1.2;
+            w.rotate = (~~(Math.random() * 3) - 1) * 10;
+            var a = 0, r = 0, step = 0.5;
+            var found = false;
+            while (r < Math.max(width, height)) {
+                var x = Math.round(r * Math.cos(a));
+                var y = Math.round(r * Math.sin(a) * 0.65);
+                w.x = x; w.y = y;
+                var box = aabb(w);
+                if (box.x1 < -width/2 || box.x2 > width/2 || box.y1 < -height/2 || box.y2 > height/2) { a += step; r += step * 0.3; continue; }
+                var collide = false;
+                for (var j = 0; j < placed.length; j++) { if (overlaps(box, aabb(placed[j]))) { collide = true; break; } }
+                if (!collide) { found = true; break; }
+                a += step; r += step * 0.3;
+            }
+            if (found) placed.push(w);
+        }
+        return placed;
+    }
+    </script>
     <script>
     (function() {
         var basePath = (function() {
@@ -407,7 +441,6 @@
         var activeFilter = null;
         var hoveredWord = null;
         var layoutWords = [];
-        var cloudLayout = null;
 
         async function init() {
             try {
@@ -528,18 +561,9 @@
             }
 
             try {
-                cloudLayout = new Cloud(words)
-                    .size([width, height])
-                    .padding(3)
-                    .rotate(function() { return (~~(Math.random() * 3) - 1) * 10; })
-                    .spiral('rectangular')
-                    .timeInterval(Infinity)
-                    .on('word', function() {})
-                    .on('end', function(placedWords) {
-                        layoutWords = placedWords.slice();
-                        draw(placedWords, width, height, colorMap);
-                    });
-                cloudLayout.start();
+                var placed = computeWordCloudLayout(words, width, height);
+                layoutWords = placed.slice();
+                draw(placed, width, height, colorMap);
             } catch (err) {
                 console.error('词云布局失败:', err);
                 container.innerHTML = '<div class="wordcloud-error"><h3>词云渲染失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
