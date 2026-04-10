@@ -72,7 +72,7 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             position: relative;
-            min-height: 520px;
+            min-height: 500px;
         }
 
         .wordcloud-section h2 {
@@ -83,10 +83,8 @@
 
         #wordcloud-container {
             width: 100%;
-            height: 520px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 500px;
+            position: relative;
         }
 
         #wordcloud-svg {
@@ -345,52 +343,53 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="TagCloud.min.js"></script>
+    <script src="wordcloud2.js"></script>
     <script>
-    // ── TagCloud.js: 3D spherical tag cloud ──
+    // ── wordcloud2.js: Canvas word cloud with weight-based sizing ──
     function createWordCloud(containerId, concepts, colorMap) {
         var container = document.getElementById(containerId);
         if (!container) return null;
 
-        // Destroy previous instance
-        if (window._tagCloudInstance) {
-            window._tagCloudInstance.destroy();
-            window._tagCloudInstance = null;
-        }
+        WordCloud.stop();
+        container.innerHTML = '<canvas id="wc-canvas" width="1200" height="500"></canvas>';
 
-        container.innerHTML = '';
+        var canvas = document.getElementById('wc-canvas');
+        var cw = container.clientWidth;
+        canvas.width = cw;
+        canvas.height = 500;
 
-        var texts = concepts.map(function(c) {
-            var color = (colorMap[c.category]) || '#94a3b8';
-            return '<span style="color:' + color + '">' + c.name + '</span>';
+        // Build list: [[name, weight], ...]
+        var list = concepts.map(function(c) {
+            return [c.name, c.weight || 2];
         });
 
-        // TagCloud() takes (element, texts, config) and returns an array of instances
-        var instances = TagCloud(container, texts, {
-            radius: 200,
-            maxSpeed: 'normal',
-            initSpeed: 'normal',
-            direction: 135,
-            keep: true,
-            useContainerInlineStyles: false
-        });
-
-        var instance = instances[0];
-        window._tagCloudInstance = instance;
-
-        // TagCloud creates .tagcloud-item spans — bind click handlers to them
-        var items = container.querySelectorAll('.tagcloud-item');
-        items.forEach(function(el) {
-            el.style.cursor = 'pointer';
-            el.addEventListener('click', function() {
-                var text = el.textContent;
-                if (conceptLookup[text]) {
-                    showPaperSection(conceptLookup[text]);
+        WordCloud(canvas, {
+            list: list,
+            gridSize: 8,
+            weightFactor: function(size) {
+                return Math.max(14, Math.min(52, 12 + size * 4));
+            },
+            fontFamily: '"Inter", "PingFang SC", "Microsoft YaHei", sans-serif',
+            color: function(word, weight) {
+                var c = conceptLookup[word];
+                return (c && colorMap[c.category]) || '#94a3b8';
+            },
+            backgroundColor: 'transparent',
+            rotateRatio: 0,
+            rotationSteps: 1,
+            drawOutOfBound: false,
+            shrinkToFit: true,
+            wait: 0,
+            shuffle: true,
+            hover: function(item) {
+                canvas.style.cursor = item ? 'pointer' : 'default';
+            },
+            click: function(item) {
+                if (item && conceptLookup[item[0]]) {
+                    showPaperSection(conceptLookup[item[0]]);
                 }
-            });
+            }
         });
-
-        return instance;
     }
     </script>
     <script>
@@ -566,9 +565,7 @@
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                if (window._tagCloudInstance) {
-                    window._tagCloudInstance.destroy();
-                }
+                WordCloud.stop();
                 renderWordCloud();
             }, 250);
         });
