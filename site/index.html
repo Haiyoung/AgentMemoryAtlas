@@ -363,44 +363,51 @@
     function computeWordCloudLayout(words, width, height) {
         var halfW = width / 2, halfH = height / 2;
         var placed = [];
-        var PAD = 4;
+        var PAD = 3;
 
-        function makeBox(w) {
+        function makeBox(w, rotate) {
             var cjk = 0, ascii = 0;
             for (var ci = 0; ci < w.text.length; ci++) {
                 if (w.text.charCodeAt(ci) > 127) cjk++; else ascii++;
             }
             var ww = cjk * 1.1 * w.size + ascii * 0.58 * w.size;
             var hh = w.size * 1.2;
+            // account for rotation: use diagonal as bounding box for collision
+            var angle = Math.abs(rotate || 0) * Math.PI / 180;
+            var cw = Math.abs(Math.cos(angle)) * ww + Math.abs(Math.sin(angle)) * hh;
+            var ch = Math.abs(Math.sin(angle)) * ww + Math.abs(Math.cos(angle)) * hh;
             return {
-                x1: w.x - ww / 2 - PAD, y1: w.y - hh / 2 - PAD,
-                x2: w.x + ww / 2 + PAD, y2: w.y + hh / 2 + PAD,
-                width: ww, height: hh
+                x1: w.x - cw / 2 - PAD, y1: w.y - ch / 2 - PAD,
+                x2: w.x + cw / 2 + PAD, y2: w.y + ch / 2 + PAD,
+                width: cw, height: ch
             };
         }
 
-        function collides(box, other) {
-            return box.x1 < other.x2 && box.x2 > other.x1 &&
-                   box.y1 < other.y2 && box.y2 > other.y1;
+        function collides(a, b) {
+            return a.x1 < b.x2 && a.x2 > b.x1 &&
+                   a.y1 < b.y2 && a.y2 > b.y1;
         }
 
-        // largest-first for better packing
         var sorted = words.slice().sort(function(a, b) { return b.size - a.size; });
 
         for (var i = 0; i < sorted.length; i++) {
             var w = sorted[i];
-            w.rotate = 0;
-            var a = 0, r = 0;
-            var step = 0.15;
+            // varied rotation for organic feel
+            var angles = [0, 0, 0, -25, 25, -15, 15, 0];
+            var rot = angles[i % angles.length] + (Math.random() - 0.5) * 5;
+            w.rotate = rot;
+
+            var a = Math.random() * Math.PI * 2, r = 0;
+            var step = 0.12;
             var found = false;
-            var limit = Math.max(halfW, halfH) * 1.6;
+            var limit = Math.max(halfW, halfH) * 2.0;
             while (r < limit) {
                 var x = r * Math.cos(a);
-                var y = r * Math.sin(a) * 0.6;
+                var y = r * Math.sin(a) * 0.65;
                 w.x = x; w.y = y;
-                var box = makeBox(w);
+                var box = makeBox(w, rot);
                 if (box.x1 < -halfW || box.x2 > halfW || box.y1 < -halfH || box.y2 > halfH) {
-                    a += step; r += step * 0.6; continue;
+                    a += step; r += step * 0.5; continue;
                 }
                 var hit = false;
                 for (var j = 0; j < placed.length; j++) {
@@ -408,15 +415,14 @@
                 }
                 if (!hit) {
                     w.width = box.width; w.height = box.height;
-                    box.w = w; // keep reference
+                    box.w = w;
                     placed.push({ x: x, y: y, box: box, w: w });
                     found = true;
                     break;
                 }
-                a += step; r += step * 0.6;
+                a += step; r += step * 0.5;
             }
         }
-        // restore original order
         var map = {};
         for (var pi = 0; pi < placed.length; pi++) map[placed[pi].w.text] = placed[pi];
         var result = [];
