@@ -72,7 +72,7 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             position: relative;
-            min-height: 450px;
+            min-height: 520px;
         }
 
         .wordcloud-section h2 {
@@ -83,8 +83,10 @@
 
         #wordcloud-container {
             width: 100%;
-            height: 450px;
-            position: relative;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #wordcloud-svg {
@@ -343,79 +345,48 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="wordcloud2.js"></script>
+    <script src="TagCloud.min.js"></script>
     <script>
-    // ── wordcloud2.js powered word cloud ──
-    function createWordCloud(containerId, words, width, height, colorMap, conceptLookup) {
+    // ── TagCloud.js: 3D spherical tag cloud ──
+    function createWordCloud(containerId, concepts, colorMap) {
         var container = document.getElementById(containerId);
-        if (!container) return;
+        if (!container) return null;
 
-        container.innerHTML = '<canvas id="wc-canvas" style="width:100%;height:100%;"></canvas>' +
-            '<div id="wc-overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0;background:rgba(255,255,255,0.85);transition:opacity 0.25s;"></div>';
+        // Destroy previous instance
+        if (window._tagCloudInstance) {
+            window._tagCloudInstance.destroy();
+            window._tagCloudInstance = null;
+        }
 
-        var canvas = document.getElementById('wc-canvas');
-        var overlay = document.getElementById('wc-overlay');
+        // Clear container
+        container.innerHTML = '';
 
-        // Build weight list for wordcloud2: [[text, weight], ...]
-        var list = words.map(function(w) {
-            return [w.name, Math.max(1, w.weight || 2)];
+        // Build text array with styled spans for colors
+        var texts = concepts.map(function(c) {
+            var color = (colorMap[c.category]) || '#94a3b8';
+            return '<span style="color:' + color + '">' + c.name + '</span>';
         });
 
-        var hoveredWord = null;
-        var hoveredConcept = null;
+        var tagCloudInstance = TagCloud(container, texts, {
+            radius: 200,
+            maxSpeed: 'normal',
+            initSpeed: 'normal',
+            direction: 135,
+            keep: true,
+            useContainerInlineStyles: false
+        });
 
-        WordCloud(canvas, {
-            list: list,
-            gridSize: Math.round(8 * width / 1024),
-            weightFactor: function(size) {
-                return Math.max(14, Math.min(52, 12 + size * 4));
-            },
-            fontFamily: '"Inter", "PingFang SC", "Microsoft YaHei", sans-serif',
-            color: function(word, weight) {
-                var c = conceptLookup[word];
-                return (c && colorMap[c.category]) || '#94a3b8';
-            },
-            backgroundColor: 'transparent',
-            rotateRatio: 0,
-            rotationSteps: 1,
-            drawOutOfBound: false,
-            shrinkToFit: true,
-            wait: 0,
-            hover: function(item, dimension, event) {
-                if (item) {
-                    var c = conceptLookup[item[0]];
-                    hoveredWord = item[0];
-                    hoveredConcept = c;
-                    canvas.style.cursor = 'pointer';
-                } else {
-                    hoveredWord = null;
-                    hoveredConcept = null;
-                    canvas.style.cursor = 'default';
-                }
-            },
-            click: function(item) {
-                if (item && conceptLookup[item[0]]) {
-                    showPaperSection(conceptLookup[item[0]]);
-                }
+        // Click handler
+        tagCloudInstance.on('click', function (el) {
+            // el.content contains HTML like '<span style="color:...">Name</span>'
+            var text = el.content.replace(/<[^>]*>/g, '');
+            if (conceptLookup[text]) {
+                showPaperSection(conceptLookup[text]);
             }
         });
 
-        // Hover dimming overlay
-        canvas.addEventListener('mousemove', function() {
-            if (hoveredWord) {
-                overlay.style.opacity = '1';
-                overlay.style.pointerEvents = 'auto';
-            } else {
-                overlay.style.opacity = '0';
-                overlay.style.pointerEvents = 'none';
-            }
-        });
-
-        return {
-            stop: function() {
-                WordCloud(canvas, { list: [] });
-            }
-        };
+        window._tagCloudInstance = tagCloudInstance;
+        return tagCloudInstance;
     }
     </script>
     <script>
@@ -434,6 +405,7 @@
 
         var lexicon = null;
         var ontologyMarkdown = '';
+        var conceptLookup = {};
 
         async function init() {
             try {
@@ -487,15 +459,11 @@
         }
 
         function renderWordCloud() {
-            var container = document.getElementById('wordcloud-container');
-            var width = container.clientWidth - 24;
-            var height = 450;
-
             var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 2; });
             if (concepts.length === 0) return;
 
-            // Build lookup: word text -> concept
-            var conceptLookup = {};
+            // Build lookup at IIFE scope for click handler
+            conceptLookup = {};
             concepts.forEach(function(c) { conceptLookup[c.name] = c; });
 
             var colorMap = {};
@@ -506,14 +474,11 @@
             }
 
             try {
-                // Stop previous instance
-                if (window._wordCloud && window._wordCloud.stop) window._wordCloud.stop();
-
-                var wc = createWordCloud('wordcloud-container', concepts, width, height, colorMap, conceptLookup);
-                window._wordCloud = wc;
+                createWordCloud('wordcloud-container', concepts, colorMap);
             } catch (err) {
                 console.error('词云渲染失败:', err);
-                container.innerHTML = '<div class="wordcloud-error"><h3>词云渲染失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
+                document.getElementById('wordcloud-container').innerHTML =
+                    '<div class="wordcloud-error"><h3>词云渲染失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
             }
         }
 
@@ -597,7 +562,9 @@
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                if (window._wordCloud && window._wordCloud.stop) window._wordCloud.stop();
+                if (window._tagCloudInstance) {
+                    window._tagCloudInstance.destroy();
+                }
                 renderWordCloud();
             }, 250);
         });
