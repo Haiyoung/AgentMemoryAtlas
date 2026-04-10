@@ -483,7 +483,7 @@
         function renderStats() {
             var bar = document.getElementById('stats-bar');
             var paperCount = getUniquePaperCount();
-            var coreCount = lexicon.concepts.filter(function(c) { return c.weight >= 3; }).length;
+            var coreCount = lexicon.concepts.filter(function(c) { return c.weight >= 2; }).length;
             bar.innerHTML =
                 '核心概念: <span>' + coreCount + '</span> &nbsp;|&nbsp;' +
                 '关系: <span>' + lexicon.relationCount + '</span> &nbsp;|&nbsp;' +
@@ -497,7 +497,7 @@
             var width = container.clientWidth - 24;
             var height = 450;
 
-            var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 3; });
+            var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 2; });
 
             if (concepts.length === 0) return;
 
