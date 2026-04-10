@@ -28,10 +28,9 @@
             line-height: 1.6;
         }
 
-        /* Header */
         header {
             text-align: center;
-            padding: 2.5rem 1.5rem 1.5rem;
+            padding: 2.5rem 1.5rem 1rem;
         }
 
         .header-title {
@@ -49,42 +48,39 @@
             margin-top: 0.25rem;
         }
 
-        /* Stats bar */
         .stats-bar {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
 
         .stats-bar span { font-weight: 600; color: var(--primary); }
 
-        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
 
-        /* Filter bar */
         .filter-bar {
             display: flex;
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-            padding: 1rem 0;
-            margin-bottom: 1rem;
+            padding: 0.75rem 0;
+            margin-bottom: 0.5rem;
         }
 
         .filter-btn {
-            padding: 0.4rem 1rem;
+            padding: 0.35rem 0.9rem;
             border: 1.5px solid var(--border-color);
             border-radius: 20px;
             background: var(--bg-primary);
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -95,7 +91,6 @@
             background: #eff6ff;
         }
 
-        /* Word cloud */
         .wordcloud-section {
             background: var(--bg-primary);
             border-radius: var(--radius-lg);
@@ -103,18 +98,24 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             position: relative;
-            min-height: 500px;
+            min-height: 450px;
         }
 
         .wordcloud-section h2 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
             color: var(--text-primary);
+        }
+
+        #wordcloud-container {
+            width: 100%;
+            height: 450px;
+            position: relative;
         }
 
         #wordcloud-svg {
             width: 100%;
-            height: 500px;
+            height: 100%;
         }
 
         .wordcloud-svg .word {
@@ -123,9 +124,7 @@
         }
 
         .wordcloud-svg .word:hover { opacity: 0.8; }
-        .wordcloud-svg .word.highlighted {
-            font-weight: bold !important;
-        }
+        .wordcloud-svg .word.highlighted { font-weight: bold !important; }
         .wordcloud-svg .word.dimmed { opacity: 0.2 !important; }
 
         .wordcloud-svg .relation-line {
@@ -134,7 +133,48 @@
             opacity: 0.6;
         }
 
-        /* Main content: sidebar + ontology body */
+        .wordcloud-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .wordcloud-error {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .wordcloud-error h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .concept-chip {
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1.5px solid transparent;
+        }
+
+        .concept-chip:hover {
+            border-color: currentColor;
+            transform: translateY(-1px);
+        }
+
         .main-content {
             display: grid;
             grid-template-columns: 220px 1fr;
@@ -146,7 +186,6 @@
             .main-content { grid-template-columns: 1fr; }
         }
 
-        /* Sidebar */
         .sidebar {
             position: sticky;
             top: 1rem;
@@ -155,6 +194,8 @@
             border-radius: var(--radius-md);
             padding: 1.5rem;
             box-shadow: var(--shadow-sm);
+            max-height: calc(100vh - 2rem);
+            overflow-y: auto;
         }
 
         .sidebar h3 {
@@ -165,10 +206,10 @@
 
         .sidebar nav a {
             display: block;
-            padding: 0.35rem 0.75rem;
+            padding: 0.3rem 0.75rem;
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             border-left: 2px solid transparent;
             transition: all 0.15s;
         }
@@ -179,7 +220,6 @@
             background: #f0f7ff;
         }
 
-        /* Ontology body */
         .ontology-body {
             background: var(--bg-primary);
             border-radius: var(--radius-md);
@@ -201,13 +241,9 @@
             font-size: 1.2rem;
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
-            color: var(--text-primary);
         }
 
-        .ontology-body p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
+        .ontology-body p { margin-bottom: 1rem; color: var(--text-secondary); }
 
         .ontology-body table {
             width: 100%;
@@ -217,10 +253,10 @@
 
         .ontology-body table th,
         .ontology-body table td {
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 0.75rem;
             border: 1px solid var(--border-color);
             text-align: left;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .ontology-body table th {
@@ -230,9 +266,9 @@
 
         .ontology-body code {
             background: var(--bg-secondary);
-            padding: 0.15rem 0.4rem;
+            padding: 0.1rem 0.35rem;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .ontology-body pre {
@@ -250,7 +286,6 @@
             color: inherit;
         }
 
-        /* Paper brief section */
         .paper-section {
             margin-bottom: 3rem;
         }
@@ -258,23 +293,11 @@
         .paper-section h2 {
             font-size: 1.4rem;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .concept-tag {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .paper-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1rem;
         }
 
@@ -292,13 +315,8 @@
             box-shadow: var(--shadow-md);
         }
 
-        .paper-card h4 {
-            font-size: 1rem;
-            margin-bottom: 0.4rem;
-        }
-
         .paper-card .arxiv {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--primary);
             font-weight: 600;
         }
@@ -306,7 +324,7 @@
         .paper-card .desc {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin: 0.5rem 0;
+            margin: 0.4rem 0;
         }
 
         .paper-link {
@@ -315,12 +333,11 @@
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .paper-link:hover { text-decoration: underline; }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
@@ -333,7 +350,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <h1 class="header-title">AgentMemoryAtlas</h1>
         <p class="header-subtitle">Agent Memory 领域本体论知识库</p>
@@ -341,74 +357,65 @@
     </header>
 
     <div class="container">
-        <!-- Filter bar -->
         <div class="filter-bar" id="filter-bar"></div>
 
-        <!-- Word cloud -->
         <div class="wordcloud-section">
-            <h2>本概念全景图</h2>
-            <svg id="wordcloud-svg"></svg>
+            <h2>🧠 本体概念全景图</h2>
+            <div id="wordcloud-container">
+                <div class="wordcloud-loading">加载词云数据中...</div>
+            </div>
         </div>
 
-        <!-- Main content: sidebar + ontology body -->
         <div class="main-content">
             <aside class="sidebar">
-                <h3>目录</h3>
+                <h3>📋 目录</h3>
                 <nav id="sidebar-nav"></nav>
             </aside>
             <main class="ontology-body" id="ontology-body"></main>
         </div>
 
-        <!-- Paper brief section -->
         <div class="paper-section" id="paper-section" style="display:none;">
-            <h2>相关论文: <span id="selected-concept"></span></h2>
+            <h2>📚 相关论文: <span id="selected-concept"></span></h2>
             <div class="paper-grid" id="paper-grid"></div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 AgentMemoryAtlas · 最后更新: <span id="last-updated"></span> ·
            <a href="https://github.com/Haiyoung/AgentMemoryAtlas">View on GitHub</a></p>
     </footer>
 
-    <!-- Scripts: d3 + d3-cloud + marked -->
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.7/build/d3.layout.cloud.min.js"></script>
+    <!-- d3-cloud standalone (no d3 dependency) -->
+    <script src="https://unpkg.com/cloud-layout@1.0.0/build/cloud.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
     (function() {
-        // Compute base path: works both locally and on GitHub Pages
-        const basePath = (function() {
-            const path = window.location.pathname;
-            // GitHub Pages: /AgentMemoryAtlas/site/index.html → /AgentMemoryAtlas
-            const siteIdx = path.indexOf('/site/');
+        var basePath = (function() {
+            var path = window.location.pathname;
+            var siteIdx = path.indexOf('/site/');
             if (siteIdx > 0) return path.substring(0, siteIdx);
-            // Local dev: /site/index.html → ''
-            if (path.endsWith('/site/index.html')) return path.replace('/site/index.html', '');
+            if (path.indexOf('/site/index.html') >= 0) return path.replace('/site/index.html', '');
             return '';
         })();
-        const LEXICON_URL = basePath + '/ontology/lexicon.json';
-        const ONTOLOGY_URL = basePath + '/ontology/ontology_base.md';
-        const GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';
-        const PAPER_MAP = {"2104.08164": "paper/2021/2104.08164_Editing Factual Knowledge in Language Models.md", "2207.07115": "paper/2022/2207.07115_XMem_ Long-Term Video Object Segmentation with an.md", "2302.04761": "paper/2023/2302.04761_Toolformer_ Language Models Can Teach Themselves t.md", "2303.11366": "paper/2023/2303.11366_Reflexion_ Language Agents with Verbal Reinforceme.md", "2304.03442": "paper/2023/2304.03442_Generative Agents_ Interactive Simulacra of Human.md", "2304.06975": "paper/2023/2304.06975_HuaTuo_ Tuning LLaMA Model with Chinese Medical Kn.md", "2304.13343": "paper/2023/2304.13343_SCM_ Enhancing Large Language Model with Self-Cont.md", "2305.10250": "paper/2023/2305.10250_MemoryBank_ Enhancing Large Language Models with L.md", "2305.13304": "paper/2023/2305.13304_RecurrentGPT_ Interactive Generation of _Arbitrari.md", "2305.14322": "paper/2023/2305.14322_RET-LLM_ Towards a General Read-Write Memory for L.md", "2307.06945": "paper/2023/2307.06945_In-context Autoencoder for Context Compression in.md", "2307.16789": "paper/2023/2307.16789_ToolLLM_ Facilitating Large Language Models to Mas.md", "2308.00352": "paper/2023/2308.00352_MetaGPT_ Meta Programming for A Multi-Agent Collab.md", "2308.02151": "paper/2023/2308.02151_Retroformer_ Retrospective Large Language Agents w.md", "2308.08239": "paper/2023/2308.08239_MemoChat_ Tuning LLMs to Use Memos for Consistent.md", "2308.09597": "paper/2023/2308.09597_ChatHaruhi_ Reviving Anime Character in Reality vi.md", "2308.15022": "paper/2023/2308.15022_Recursively Summarizing Enables Long-Term Dialogue.md", "2310.02172": "paper/2023/2310.02172_Lyfe Agents_ Generative agents for low-cost real-t.md", "2310.03052": "paper/2023/2310.03052_Memoria_ Resolving Fateful Forgetting Problem thro.md", "2310.08560": "paper/2023/2310.08560_MemGPT_ Towards LLMs as Operating Systems.md", "2403.17134": "paper/2024/2403.17134_RepairAgent_ An Autonomous_ LLM-Based Agent for Pr.md", "2404.09982": "paper/2024/2404.09982_INMS_ Memory Sharing for Large Language Model base.md", "2404.16130": "paper/2024/2404.16130_From Local to Global_ A Graph RAG Approach to Quer.md", "2405.14831": "paper/2024/2405.14831_HippoRAG_ Neurobiologically Inspired Long-Term Mem.md", "2405.16089": "paper/2024/2405.16089_Towards Completeness-Oriented Tool Retrieval for L.md", "2405.19686": "paper/2024/2405.19686_Knowledge Graph Tuning_ Real-time Large Language M.md", "2406.00057": "paper/2024/2406.00057_Toward Conversational Agents with Context and Time.md", "2406.06124": "paper/2024/2406.06124_Enhancing Long-Term Memory using Hierarchical Aggr.md", "2406.10996": "paper/2024/2406.10996_Towards Lifelong Dialogue Agents via Timeline-base.md", "2407.01178": "paper/2024/2407.01178___text_Memory__3__ Language Modeling with Explicit.md", "2407.04363": "paper/2024/2407.04363_AriGraph_ Learning Knowledge Graph World Models wi.md", "2407.06567": "paper/2024/2407.06567_FinCon_ A Synthesized LLM Multi-Agent System with.md", "2409.19401": "paper/2024/2409.19401_Crafting Personalized Agents through Retrieval-Aug.md", "2410.02355": "paper/2024/2410.02355_AlphaEdit_ Null-Space Constrained Knowledge Editin.md", "2410.03439": "paper/2024/2410.03439_ToolGen_ Unified Tool Retrieval and Calling via Ge.md", "2410.08164": "paper/2024/2410.08164_Agent S_ An Open Agentic Framework that Uses Compu.md", "2410.08197": "paper/2024/2410.08197_From Exploration to Mastery_ Enabling LLMs to Mast.md", "2410.12859": "paper/2024/2410.12859_Enhancing Long Context Performance in LLMs Through.md", "2410.14052": "paper/2024/2410.14052_From Isolated Conversations to Hierarchical Schema.md", "2411.11581": "paper/2024/2411.11581_OASIS_ Open Agent Social Interaction Simulations w.md", "2411.13093": "paper/2024/2411.13093_Video-RAG_ Visually-aligned Retrieval-Augmented Lo.md", "2412.01857": "paper/2024/2412.01857_Planning from Imagination_ Episodic Simulation and.md", "2412.13103": "paper/2024/2412.13103_AI PERSONA_ Towards Life-long Personalization of L.md", "2501.00358": "paper/2025/2501.00358_Embodied VideoAgent_ Persistent Memory from Egocen.md", "2501.00663": "paper/2025/2501.00663_Titans_ Learning to Memorize at Test Time.md", "2501.13956": "paper/2025/2501.13956_Zep_ A Temporal Knowledge Graph Architecture for A.md", "2502.00592": "paper/2025/2502.00592_M__ Extending MemoryLLM with Scalable Long-Term Me.md", "2502.04395": "paper/2025/2502.04395_Time-VLM_ Exploring Multimodal Vision-Language Mod.md", "2502.06049": "paper/2025/2502.06049_LM2_ Large Memory Models.md", "2502.13172": "paper/2025/2502.13172_Unveiling Privacy Risks in LLM Agent Memory.md", "2502.14254": "paper/2025/2502.14254_Mem2Ego_ Empowering Vision-Language Models with Gl.md", "2502.14802": "paper/2025/2502.14802_From RAG to Memory_ Non-Parametric Continual Learn.md", "2502.15957": "paper/2025/2502.15957_R__3_Mem_ Bridging Memory Retention and Retrieval.md", "2503.01763": "paper/2025/2503.01763_Retrieval Models Aren_t Tool-Savvy_ Benchmarking T.md", "2503.05193": "paper/2025/2503.05193_Memory-augmented Query Reconstruction for LLM-base.md", "2503.09263": "paper/2025/2503.09263_COLA_ A Scalable Multi-Agent Framework For Windows.md", "2504.06821": "paper/2025/2504.06821_Inducing Programmatic Skills for Agentic Tasks.md", "2504.07079": "paper/2025/2504.07079_SkillWeaver_ Web Agents can Self-Improve by Discov.md", "2504.07952": "paper/2025/2504.07952_Dynamic Cheatsheet_ Test-Time Learning with Adapti.md", "2504.13805": "paper/2025/2504.13805_LearnAct_ Few-Shot Mobile GUI Agent with a Unified.md", "2504.14603": "paper/2025/2504.14603_UFO2_ The Desktop AgentOS.md", "2504.19413": "paper/2025/2504.19413_Mem0_ Building Production-Ready AI Agents with Sca.md", "2505.15962": "paper/2025/2505.15962_Pre-training Limited Memory Language Models with I.md", "2505.16348": "paper/2025/2505.16348_Embodied Agents Meet Personalization_ Investigatin.md", "2505.17670": "paper/2025/2505.17670_Towards General Continuous Memory for Vision-Langu.md", "2505.20231": "paper/2025/2505.20231_MemGuide_ Intent-Driven Memory Selection for Goal-.md", "2505.20286": "paper/2025/2505.20286_Alita_ Generalist Agent Enabling Scalable Agentic.md", "2505.22954": "paper/2025/2505.22954_Darwin Godel Machine_ Open-Ended Evolution of Self.md", "2506.03141": "paper/2025/2506.03141_Context as Memory_ Scene-Consistent Interactive Lo.md", "2506.07398": "paper/2025/2506.07398_G-Memory_ Tracing Hierarchical Memory for Multi-Ag.md", "2506.15841": "paper/2025/2506.15841_MEM1_ Learning to Synergize Memory and Reasoning f.md", "2507.02259": "paper/2025/2507.02259_MemAgent_ Reshaping Long-Context LLM with Multi-Co.md", "2507.06229": "paper/2025/2507.06229_Agent KB_ Leveraging Cross-Domain Experience for A.md", "2507.07957": "paper/2025/2507.07957_MIRIX_ Multi-Agent Memory System for LLM-Based Age.md", "2507.21428": "paper/2025/2507.21428_MemTool_ Optimizing Short-Term Memory Management f.md", "2507.22925": "paper/2025/2507.22925_Hierarchical Memory for High-Efficiency Long-Term.md", "2508.01832": "paper/2025/2508.01832_MLP Memory_ A Retriever-Pretrained Memory for Larg.md", "2508.03341": "paper/2025/2508.03341_Nemori_ Self-Organizing Agent Memory Inspired by C.md", "2508.04664": "paper/2025/2508.04664_Sculptor_ Empowering LLMs with Cognitive Agency vi.md", "2508.04700": "paper/2025/2508.04700_SEAgent_ Self-Evolving Computer Use Agent with Aut.md", "2508.04903": "paper/2025/2508.04903_RCR-Router_ Efficient Role-Aware Context Routing f.md", "2508.06433": "paper/2025/2508.06433_Memp_ Exploring Agent Procedural Memory.md", "2508.08997": "paper/2025/2508.08997_Intrinsic Memory Agents_ Heterogeneous Multi-Agent.md", "2508.09736": "paper/2025/2508.09736_Seeing_ Listening_ Remembering_ and Reasoning_ A M.md", "2508.09874": "paper/2025/2508.09874_Memory Decoder_ A Pretrained_ Plug-and-Play Memory.md", "2508.10419": "paper/2025/2508.10419_Paper 2508_10419.md", "2508.12630": "paper/2025/2508.12630_Semantic Anchoring in Agentic Memory_ Leveraging L.md", "2508.15253": "paper/2025/2508.15253_Conflict-Aware Soft Prompting for Retrieval-Augmen.md", "2508.15294": "paper/2025/2508.15294_A Multi-Memory Segment System for Generating High-.md", "2508.16153": "paper/2025/2508.16153_Memento_ Fine-tuning LLM Agents without Fine-tunin.md", "2508.19005": "paper/2025/2508.19005_Building Self-Evolving Agents via Experience-Drive.md", "2508.19236": "paper/2025/2508.19236_MemoryVLA_ Perceptual-Cognitive Memory in Vision-L.md", "2508.19828": "paper/2025/2508.19828_Memory-R1_ Enhancing Large Language Model Agents t.md", "2509.05298": "paper/2025/2509.05298_Livia_ An Emotion-Aware AR Companion Powered by Mo.md", "2509.10852": "paper/2025/2509.10852_Pre-Storage Reasoning for Episodic Memory_ Shiftin.md", "2509.11860": "paper/2025/2509.11860_MOOM_ Maintenance_ Organization and Optimization o.md", "2509.12760": "paper/2025/2509.12760_Similarity-Distance-Magnitude Activations.md", "2509.12810": "paper/2025/2509.12810_H__2_R_ Hierarchical Hindsight Reflection for Mult.md", "2509.13310": "paper/2025/2509.13310_Scaling Agents via Continual Pre-training.md", "2509.13312": "paper/2025/2509.13312_WebWeaver_ Structuring Web-Scale Evidence with Dyn.md", "2509.17459": "paper/2025/2509.17459_PRINCIPLES_ Synthetic Strategy Memory for Proactiv.md", "2509.22315": "paper/2025/2509.22315_PRIME_ Planning and Retrieval-Integrated Memory fo.md", "2509.24704": "paper/2025/2509.24704_MemGen_ Weaving Generative Latent Memory for Self-.md", "2509.25140": "paper/2025/2509.25140_ReasoningBank_ Scaling Agent Self-Evolving with Re.md", "2509.25911": "paper/2025/2509.25911_Mem-α_ Learning Memory Construction via Reinforcem.md", "2510.00615": "paper/2025/2510.00615_ACON_ Optimizing Context Compression for Long-hori.md", "2510.02375": "paper/2025/2510.02375_Pretraining with hierarchical memories_ separating.md", "2510.04618": "paper/2025/2510.04618_Agentic Context Engineering_ Evolving Contexts for.md", "2510.04851": "paper/2025/2510.04851_LEGOMem_ Modular Procedural Memory for Multi-agent.md", "2510.05520": "paper/2025/2510.05520_CAM_ A Constructivist View of Agentic Memory for L.md", "2510.06664": "paper/2025/2510.06664_ToolMem_ Enhancing Multimodal Agents with Learnabl.md", "2510.07925": "paper/2025/2510.07925_Enabling Personalized Long-term Interactions in LL.md", "2510.08191": "paper/2025/2510.08191_Training-Free Group Relative Policy Optimization.md", "2510.08558": "paper/2025/2510.08558_Agent Learning via Early Experience.md", "2510.09038": "paper/2025/2510.09038_Auto-scaling Continuous Memory for GUI Agent.md", "2510.10666": "paper/2025/2510.10666_BrowserAgent_ Building Web Agents with Human-Inspi.md", "2510.12635": "paper/2025/2510.12635_Memory as Action_ Autonomous Context Curation for.md", "2510.13363": "paper/2025/2510.13363_D-SMART_ Enhancing LLM Dialogue Consistency via Dy.md", "2510.16392": "paper/2025/2510.16392_RGMem_ Renormalization Group-inspired Memory Evolu.md", "2510.18866": "paper/2025/2510.18866_LightMem_ Lightweight and Efficient Memory-Augment.md", "2510.21618": "paper/2025/2510.21618_DeepAgent_ A General Reasoning Agent with Scalable.md", "2510.23601": "paper/2025/2510.23601_Alita-G_ Self-Evolving Generative Agent for Agent.md", "2510.24699": "paper/2025/2510.24699_AgentFold_ Long-Horizon Web Agents with Proactive.md", "2511.02805": "paper/2025/2511.02805_MemSearcher_ Training LLMs to Reason_ Search and M.md", "2511.03773": "paper/2025/2511.03773_Scaling Agent Learning via Experience Synthesis.md", "2511.06449": "paper/2025/2511.06449_FLEX_ Continuous Agent Evolution via Forward Learn.md", "2511.07327": "paper/2025/2511.07327_IterResearch_ Rethinking Long-Horizon Agents with.md", "2511.10395": "paper/2025/2511.10395_AgentEvolver_ Towards Efficient Self-Evolving Agen.md", "2511.11007": "paper/2025/2511.11007_VisMem_ Latent Vision Memory Unlocks Potential of.md", "2511.13593": "paper/2025/2511.13593_O-Mem_ Omni Memory System for Personalized_ Long H.md", "2511.17208": "paper/2025/2511.17208_A Simple Yet Strong Baseline for Long-Term Convers.md", "2511.18423": "paper/2025/2511.18423_General Agentic Memory Via Deep Research.md", "2512.01710": "paper/2025/2512.01710_MMAG_ Mixed Memory-Augmented Generation for Large.md", "2512.02425": "paper/2025/2512.02425_WorldMM_ Dynamic Multimodal Memory Agent for Long.md", "2512.03627": "paper/2025/2512.03627_MemVerse_ Multimodal Memory for Lifelong Learning.md", "2512.04763": "paper/2025/2512.04763_MemLoRA_ Distilling Expert Adapters for On-Device.md", "2512.10696": "paper/2025/2512.10696_Remember Me_ Refine Me_ A Dynamic Procedural Memor.md", "2512.12686": "paper/2025/2512.12686_Memoria_ A Scalable Agentic Memory Framework for P.md", "2512.12818": "paper/2025/2512.12818_Hindsight is 20_20_ Building Agent Memory that Ret.md", "2512.13564": "paper/2025/2512.13564_Memory in the Age of AI Agents.md", "2512.14244": "paper/2025/2512.14244_From Context to EDUs_ Faithful and Structured Cont.md", "2512.18202": "paper/2025/2512.18202_Sophia_ A Persistent Agent Framework of Artificial.md", "2512.18746": "paper/2025/2512.18746_MemEvolve_ Meta-Evolution of Agent Memory Systems.md", "2601.01885": "paper/2026/2601.01885_Agentic Memory_ Learning Unified Long-Term and Sho.md", "2601.02163": "paper/2026/2601.02163_EverMemOS_ A Self-Organizing Memory Operating Syst.md", "2601.03192": "paper/2026/2601.03192_MemRL_ Self-Evolving Agents via Runtime Reinforcem.md", "2601.03236": "paper/2026/2601.03236_MAGMA_ A Multi-Graph based Agentic Memory Architec.md", "2601.04726": "paper/2026/2601.04726_Memory Matters More_ Event-Centric Memory as a Log.md"};
+        var LEXICON_URL = basePath + '/ontology/lexicon.json';
+        var ONTOLOGY_URL = basePath + '/ontology/ontology_base.md';
+        var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';
+        var PAPER_MAP = {"2104.08164": "paper/2021/2104.08164_Editing Factual Knowledge in Language Models.md", "2207.07115": "paper/2022/2207.07115_XMem_ Long-Term Video Object Segmentation with an.md", "2302.04761": "paper/2023/2302.04761_Toolformer_ Language Models Can Teach Themselves t.md", "2303.11366": "paper/2023/2303.11366_Reflexion_ Language Agents with Verbal Reinforceme.md", "2304.03442": "paper/2023/2304.03442_Generative Agents_ Interactive Simulacra of Human.md", "2304.06975": "paper/2023/2304.06975_HuaTuo_ Tuning LLaMA Model with Chinese Medical Kn.md", "2304.13343": "paper/2023/2304.13343_SCM_ Enhancing Large Language Model with Self-Cont.md", "2305.10250": "paper/2023/2305.10250_MemoryBank_ Enhancing Large Language Models with L.md", "2305.13304": "paper/2023/2305.13304_RecurrentGPT_ Interactive Generation of _Arbitrari.md", "2305.14322": "paper/2023/2305.14322_RET-LLM_ Towards a General Read-Write Memory for L.md", "2307.06945": "paper/2023/2307.06945_In-context Autoencoder for Context Compression in.md", "2307.16789": "paper/2023/2307.16789_ToolLLM_ Facilitating Large Language Models to Mas.md", "2308.00352": "paper/2023/2308.00352_MetaGPT_ Meta Programming for A Multi-Agent Collab.md", "2308.02151": "paper/2023/2308.02151_Retroformer_ Retrospective Large Language Agents w.md", "2308.08239": "paper/2023/2308.08239_MemoChat_ Tuning LLMs to Use Memos for Consistent.md", "2308.09597": "paper/2023/2308.09597_ChatHaruhi_ Reviving Anime Character in Reality vi.md", "2308.15022": "paper/2023/2308.15022_Recursively Summarizing Enables Long-Term Dialogue.md", "2310.02172": "paper/2023/2310.02172_Lyfe Agents_ Generative agents for low-cost real-t.md", "2310.03052": "paper/2023/2310.03052_Memoria_ Resolving Fateful Forgetting Problem thro.md", "2310.08560": "paper/2023/2310.08560_MemGPT_ Towards LLMs as Operating Systems.md", "2403.17134": "paper/2024/2403.17134_RepairAgent_ An Autonomous_ LLM-Based Agent for Pr.md", "2404.09982": "paper/2024/2404.09982_INMS_ Memory Sharing for Large Language Model base.md", "2404.16130": "paper/2024/2404.16130_From Local to Global_ A Graph RAG Approach to Quer.md", "2405.14831": "paper/2024/2405.14831_HippoRAG_ Neurobiologically Inspired Long-Term Mem.md", "2405.16089": "paper/2024/2405.16089_Towards Completeness-Oriented Tool Retrieval for L.md", "2405.19686": "paper/2024/2405.19686_Knowledge Graph Tuning_ Real-time Large Language M.md", "2406.00057": "paper/2024/2406.00057_Toward Conversational Agents with Context and Time.md", "2406.06124": "paper/2024/2406.06124_Enhancing Long-Term Memory using Hierarchical Aggr.md", "2406.10996": "paper/2024/2406.10996_Towards Lifelong Dialogue Agents via Timeline-base.md", "2407.01178": "paper/2024/2407.01178___text_Memory__3__ Language Modeling with Explicit.md", "2407.04363": "paper/2024/2407.04363_AriGraph_ Learning Knowledge Graph World Models wi.md", "2407.06567": "paper/2024/2407.06567_FinCon_ A Synthesized LLM Multi-Agent System with.md", "2409.19401": "paper/2024/2409.19401_Crafting Personalized Agents through Retrieval-Aug.md", "2410.02355": "paper/2024/2410.02355_AlphaEdit_ Null-Space Constrained Knowledge Editin.md", "2410.03439": "paper/2024/2410.03439_ToolGen_ Unified Tool Retrieval and Calling via Ge.md", "2410.08164": "paper/2024/2410.08164_Agent S_ An Open Agentic Framework that Uses Compu.md", "2410.08197": "paper/2024/2410.08197_From Exploration to Mastery_ Enabling LLMs to Mast.md", "2410.12859": "paper/2024/2410.12859_Enhancing Long Context Performance in LLMs Through.md", "2410.14052": "paper/2024/2410.14052_From Isolated Conversations to Hierarchical Schema.md", "2411.11581": "paper/2024/2411.11581_OASIS_ Open Agent Social Interaction Simulations w.md", "2411.13093": "paper/2024/2411.13093_Video-RAG_ Visually-aligned Retrieval-Augmented Lo.md", "2412.01857": "paper/2024/2412.01857_Planning from Imagination_ Episodic Simulation and.md", "2412.13103": "paper/2024/2412.13103_AI PERSONA_ Towards Life-long Personalization of L.md", "2501.00358": "paper/2025/2501.00358_Embodied VideoAgent_ Persistent Memory from Egocen.md", "2501.00663": "paper/2025/2501.00663_Titans_ Learning to Memorize at Test Time.md", "2501.13956": "paper/2025/2501.13956_Zep_ A Temporal Knowledge Graph Architecture for A.md", "2502.00592": "paper/2025/2502.00592_M__ Extending MemoryLLM with Scalable Long-Term Me.md", "2502.04395": "paper/2025/2502.04395_Time-VLM_ Exploring Multimodal Vision-Language Mod.md", "2502.06049": "paper/2025/2502.06049_LM2_ Large Memory Models.md", "2502.13172": "paper/2025/2502.13172_Unveiling Privacy Risks in LLM Agent Memory.md", "2502.14254": "paper/2025/2502.14254_Mem2Ego_ Empowering Vision-Language Models with Gl.md", "2502.14802": "paper/2025/2502.14802_From RAG to Memory_ Non-Parametric Continual Learn.md", "2502.15957": "paper/2025/2502.15957_R__3_Mem_ Bridging Memory Retention and Retrieval.md", "2503.01763": "paper/2025/2503.01763_Retrieval Models Aren_t Tool-Savvy_ Benchmarking T.md", "2503.05193": "paper/2025/2503.05193_Memory-augmented Query Reconstruction for LLM-base.md", "2503.09263": "paper/2025/2503.09263_COLA_ A Scalable Multi-Agent Framework For Windows.md", "2504.06821": "paper/2025/2504.06821_Inducing Programmatic Skills for Agentic Tasks.md", "2504.07079": "paper/2025/2504.07079_SkillWeaver_ Web Agents can Self-Improve by Discov.md", "2504.07952": "paper/2025/2504.07952_Dynamic Cheatsheet_ Test-Time Learning with Adapti.md", "2504.13805": "paper/2025/2504.13805_LearnAct_ Few-Shot Mobile GUI Agent with a Unified.md", "2504.14603": "paper/2025/2504.14603_UFO2_ The Desktop AgentOS.md", "2504.19413": "paper/2025/2504.19413_Mem0_ Building Production-Ready AI Agents with Sca.md", "2505.15962": "paper/2025/2505.15962_Pre-training Limited Memory Language Models with I.md", "2505.16348": "paper/2025/2505.16348_Embodied Agents Meet Personalization_ Investigatin.md", "2505.17670": "paper/2025/2505.17670_Towards General Continuous Memory for Vision-Langu.md", "2505.20231": "paper/2025/2505.20231_MemGuide_ Intent-Driven Memory Selection for Goal-.md", "2505.20286": "paper/2025/2505.20286_Alita_ Generalist Agent Enabling Scalable Agentic.md", "2505.22954": "paper/2025/2505.22954_Darwin Godel Machine_ Open-Ended Evolution of Self.md", "2506.03141": "paper/2025/2506.03141_Context as Memory_ Scene-Consistent Interactive Lo.md", "2506.07398": "paper/2025/2506.07398_G-Memory_ Tracing Hierarchical Memory for Multi-Ag.md", "2506.15841": "paper/2025/2506.15841_MEM1_ Learning to Synergize Memory and Reasoning f.md", "2507.02259": "paper/2025/2507.02259_MemAgent_ Reshaping Long-Context LLM with Multi-Co.md", "2507.06229": "paper/2025/2507.06229_Agent KB_ Leveraging Cross-Domain Experience for A.md", "2507.07957": "paper/2025/2507.07957_MIRIX_ Multi-Agent Memory System for LLM-Based Age.md", "2507.21428": "paper/2025/2507.21428_MemTool_ Optimizing Short-Term Memory Management f.md", "2507.22925": "paper/2025/2507.22925_Hierarchical Memory for High-Efficiency Long-Term.md", "2508.01832": "paper/2025/2508.01832_MLP Memory_ A Retriever-Pretrained Memory for Larg.md", "2508.03341": "paper/2025/2508.03341_Nemori_ Self-Organizing Agent Memory Inspired by C.md", "2508.04664": "paper/2025/2508.04664_Sculptor_ Empowering LLMs with Cognitive Agency vi.md", "2508.04700": "paper/2025/2508.04700_SEAgent_ Self-Evolving Computer Use Agent with Aut.md", "2508.04903": "paper/2025/2508.04903_RCR-Router_ Efficient Role-Aware Context Routing f.md", "2508.06433": "paper/2025/2508.06433_Memp_ Exploring Agent Procedural Memory.md", "2508.08997": "paper/2025/2508.08997_Intrinsic Memory Agents_ Heterogeneous Multi-Agent.md", "2508.09736": "paper/2025/2508.09736_Seeing_ Listening_ Remembering_ and Reasoning_ A M.md", "2508.09874": "paper/2025/2508.09874_Memory Decoder_ A Pretrained_ Plug-and-Play Memory.md", "2508.10419": "paper/2025/2508.10419_Paper 2508_10419.md", "2508.12630": "paper/2025/2508.12630_Semantic Anchoring in Agentic Memory_ Leveraging L.md", "2508.15253": "paper/2025/2508.15253_Conflict-Aware Soft Prompting for Retrieval-Augmen.md", "2508.15294": "paper/2025/2508.15294_A Multi-Memory Segment System for Generating High-.md", "2508.16153": "paper/2025/2508.16153_Memento_ Fine-tuning LLM Agents without Fine-tunin.md", "2508.19005": "paper/2025/2508.19005_Building Self-Evolving Agents via Experience-Drive.md", "2508.19236": "paper/2025/2508.19236_MemoryVLA_ Perceptual-Cognitive Memory in Vision-L.md", "2508.19828": "paper/2025/2508.19828_Memory-R1_ Enhancing Large Language Model Agents t.md", "2509.05298": "paper/2025/2509.05298_Livia_ An Emotion-Aware AR Companion Powered by Mo.md", "2509.10852": "paper/2025/2509.10852_Pre-Storage Reasoning for Episodic Memory_ Shiftin.md", "2509.11860": "paper/2025/2509.11860_MOOM_ Maintenance_ Organization and Optimization o.md", "2509.12760": "paper/2025/2509.12760_Similarity-Distance-Magnitude Activations.md", "2509.12810": "paper/2025/2509.12810_H__2_R_ Hierarchical Hindsight Reflection for Mult.md", "2509.13310": "paper/2025/2509.13310_Scaling Agents via Continual Pre-training.md", "2509.13312": "paper/2025/2509.13312_WebWeaver_ Structuring Web-Scale Evidence with Dyn.md", "2509.17459": "paper/2025/2509.17459_PRINCIPLES_ Synthetic Strategy Memory for Proactiv.md", "2509.22315": "paper/2025/2509.22315_PRIME_ Planning and Retrieval-Integrated Memory fo.md", "2509.24704": "paper/2025/2509.24704_MemGen_ Weaving Generative Latent Memory for Self-.md", "2509.25140": "paper/2025/2509.25140_ReasoningBank_ Scaling Agent Self-Evolving with Re.md", "2509.25911": "paper/2025/2509.25911_Mem-α_ Learning Memory Construction via Reinforcem.md", "2510.00615": "paper/2025/2510.00615_ACON_ Optimizing Context Compression for Long-hori.md", "2510.02375": "paper/2025/2510.02375_Pretraining with hierarchical memories_ separating.md", "2510.04618": "paper/2025/2510.04618_Agentic Context Engineering_ Evolving Contexts for.md", "2510.04851": "paper/2025/2510.04851_LEGOMem_ Modular Procedural Memory for Multi-agent.md", "2510.05520": "paper/2025/2510.05520_CAM_ A Constructivist View of Agentic Memory for L.md", "2510.06664": "paper/2025/2510.06664_ToolMem_ Enhancing Multimodal Agents with Learnabl.md", "2510.07925": "paper/2025/2510.07925_Enabling Personalized Long-term Interactions in LL.md", "2510.08191": "paper/2025/2510.08191_Training-Free Group Relative Policy Optimization.md", "2510.08558": "paper/2025/2510.08558_Agent Learning via Early Experience.md", "2510.09038": "paper/2025/2510.09038_Auto-scaling Continuous Memory for GUI Agent.md", "2510.10666": "paper/2025/2510.10666_BrowserAgent_ Building Web Agents with Human-Inspi.md", "2510.12635": "paper/2025/2510.12635_Memory as Action_ Autonomous Context Curation for.md", "2510.13363": "paper/2025/2510.13363_D-SMART_ Enhancing LLM Dialogue Consistency via Dy.md", "2510.16392": "paper/2025/2510.16392_RGMem_ Renormalization Group-inspired Memory Evolu.md", "2510.18866": "paper/2025/2510.18866_LightMem_ Lightweight and Efficient Memory-Augment.md", "2510.21618": "paper/2025/2510.21618_DeepAgent_ A General Reasoning Agent with Scalable.md", "2510.23601": "paper/2025/2510.23601_Alita-G_ Self-Evolving Generative Agent for Agent.md", "2510.24699": "paper/2025/2510.24699_AgentFold_ Long-Horizon Web Agents with Proactive.md", "2511.02805": "paper/2025/2511.02805_MemSearcher_ Training LLMs to Reason_ Search and M.md", "2511.03773": "paper/2025/2511.03773_Scaling Agent Learning via Experience Synthesis.md", "2511.06449": "paper/2025/2511.06449_FLEX_ Continuous Agent Evolution via Forward Learn.md", "2511.07327": "paper/2025/2511.07327_IterResearch_ Rethinking Long-Horizon Agents with.md", "2511.10395": "paper/2025/2511.10395_AgentEvolver_ Towards Efficient Self-Evolving Agen.md", "2511.11007": "paper/2025/2511.11007_VisMem_ Latent Vision Memory Unlocks Potential of.md", "2511.13593": "paper/2025/2511.13593_O-Mem_ Omni Memory System for Personalized_ Long H.md", "2511.17208": "paper/2025/2511.17208_A Simple Yet Strong Baseline for Long-Term Convers.md", "2511.18423": "paper/2025/2511.18423_General Agentic Memory Via Deep Research.md", "2512.01710": "paper/2025/2512.01710_MMAG_ Mixed Memory-Augmented Generation for Large.md", "2512.02425": "paper/2025/2512.02425_WorldMM_ Dynamic Multimodal Memory Agent for Long.md", "2512.03627": "paper/2025/2512.03627_MemVerse_ Multimodal Memory for Lifelong Learning.md", "2512.04763": "paper/2025/2512.04763_MemLoRA_ Distilling Expert Adapters for On-Device.md", "2512.10696": "paper/2025/2512.10696_Remember Me_ Refine Me_ A Dynamic Procedural Memor.md", "2512.12686": "paper/2025/2512.12686_Memoria_ A Scalable Agentic Memory Framework for P.md", "2512.12818": "paper/2025/2512.12818_Hindsight is 20_20_ Building Agent Memory that Ret.md", "2512.13564": "paper/2025/2512.13564_Memory in the Age of AI Agents.md", "2512.14244": "paper/2025/2512.14244_From Context to EDUs_ Faithful and Structured Cont.md", "2512.18202": "paper/2025/2512.18202_Sophia_ A Persistent Agent Framework of Artificial.md", "2512.18746": "paper/2025/2512.18746_MemEvolve_ Meta-Evolution of Agent Memory Systems.md", "2601.01885": "paper/2026/2601.01885_Agentic Memory_ Learning Unified Long-Term and Sho.md", "2601.02163": "paper/2026/2601.02163_EverMemOS_ A Self-Organizing Memory Operating Syst.md", "2601.03192": "paper/2026/2601.03192_MemRL_ Self-Evolving Agents via Runtime Reinforcem.md", "2601.03236": "paper/2026/2601.03236_MAGMA_ A Multi-Graph based Agentic Memory Architec.md", "2601.04726": "paper/2026/2601.04726_Memory Matters More_ Event-Centric Memory as a Log.md"};
 
-        let lexicon = null;
-        let ontologyMarkdown = '';
-        let activeFilter = null;
-        let hoveredWord = null;
-        let layoutWords = [];  // store d3-cloud positions to avoid re-layout on hover
+        var lexicon = null;
+        var ontologyMarkdown = '';
+        var activeFilter = null;
+        var hoveredWord = null;
+        var layoutWords = [];
+        var cloudLayout = null;
 
         async function init() {
             try {
-                const [lexRes, ontoRes] = await Promise.all([
-                    fetch(LEXICON_URL),
-                    fetch(ONTOLOGY_URL)
-                ]);
-
-                if (!lexRes.ok) throw new Error('Failed to load lexicon.json');
+                var lexRes = await fetch(LEXICON_URL);
+                if (!lexRes.ok) throw new Error('lexicon.json 加载失败 (' + lexRes.status + ')');
                 lexicon = await lexRes.json();
 
+                var ontoRes = await fetch(ONTOLOGY_URL);
                 if (ontoRes.ok) {
                     ontologyMarkdown = await ontoRes.text();
                 }
@@ -418,176 +425,218 @@
                 renderWordCloud();
                 renderSidebar();
                 renderOntologyBody();
-                renderFooter();
             } catch (err) {
-                console.error('Failed to initialize:', err);
+                console.error('初始化失败:', err);
                 document.getElementById('ontology-body').innerHTML =
-                    '<p style="color:red;">Failed to load ontology data: ' + err.message + '</p>';
+                    '<p style="color:#ef4444;">数据加载失败: ' + escapeHtml(err.message) + '</p>' +
+                    '<p style="color:var(--text-secondary);margin-top:0.5rem;">请确保通过 HTTP 服务器访问（如 python3 -m http.server），而非直接打开 HTML 文件。</p>';
+                document.getElementById('wordcloud-container').innerHTML =
+                    '<div class="wordcloud-error"><h3>数据加载失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
             }
         }
 
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
+        function getUniquePaperCount() {
+            var sources = {};
+            lexicon.concepts.forEach(function(c) {
+                (c.sourcePapers || []).forEach(function(s) { sources[s] = true; });
+            });
+            return Object.keys(sources).length;
+        }
+
         function renderStats() {
-            const bar = document.getElementById('stats-bar');
+            var bar = document.getElementById('stats-bar');
+            var paperCount = getUniquePaperCount();
+            var coreCount = lexicon.concepts.filter(function(c) { return c.weight >= 3; }).length;
             bar.innerHTML =
-                '概念: <span>' + lexicon.conceptCount + '</span> &nbsp;|&nbsp;' +
+                '核心概念: <span>' + coreCount + '</span> &nbsp;|&nbsp;' +
                 '关系: <span>' + lexicon.relationCount + '</span> &nbsp;|&nbsp;' +
                 '版本: <span>' + lexicon.version + '</span> &nbsp;|&nbsp;' +
-                '论文: <span>' + (lexicon.papersCovered || lexicon.conceptCount) + ' 篇';
+                '论文: <span>' + paperCount + ' 篇';
             document.getElementById('last-updated').textContent = lexicon.generatedAt || '2026-04-10';
         }
 
         function renderFilters() {
-            const bar = document.getElementById('filter-bar');
-            const cats = lexicon.categories;
-            let html = '<button class="filter-btn active" data-cat="all">全部</button>';
-            for (const [key, val] of Object.entries(cats)) {
-                html += '<button class="filter-btn" data-cat="' + key + '">' + val.name + '</button>';
+            var bar = document.getElementById('filter-bar');
+            var cats = lexicon.categories;
+            var html = '<button class="filter-btn active" data-cat="all">全部</button>';
+            for (var key in cats) {
+                if (cats.hasOwnProperty(key)) {
+                    html += '<button class="filter-btn" data-cat="' + key + '">' + cats[key].name + '</button>';
+                }
             }
             bar.innerHTML = html;
 
             bar.addEventListener('click', function(e) {
                 if (!e.target.classList.contains('filter-btn')) return;
-                document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                var btns = document.querySelectorAll('.filter-btn');
+                for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
                 e.target.classList.add('active');
                 activeFilter = e.target.dataset.cat === 'all' ? null : e.target.dataset.cat;
-                layoutWords = [];  // reset layout when filter changes
+                layoutWords = [];
                 renderWordCloud();
             });
         }
 
         function renderWordCloud() {
-            const svg = d3.select('#wordcloud-svg');
-            svg.selectAll('*').remove();
+            var container = document.getElementById('wordcloud-container');
+            var width = container.clientWidth - 24;
+            var height = 450;
 
-            const container = document.querySelector('.wordcloud-section');
-            const width = container.clientWidth - 48;
-            const height = 500;
-
-            svg.attr('viewBox', '0 0 ' + width + ' ' + height);
-
-            let concepts = lexicon.concepts;
+            var concepts = lexicon.concepts.filter(function(c) { return c.weight >= 3; });
             if (activeFilter) {
                 concepts = concepts.filter(function(c) { return c.category === activeFilter; });
             }
 
-            concepts = concepts.slice(0, 100);
+            concepts = concepts.slice(0, 60);
 
-            const words = concepts.map(function(c) {
+            if (concepts.length === 0) {
+                container.innerHTML = '<div class="wordcloud-error"><h3>暂无符合条件的概念</h3><p>该分类下没有 weight≥3 的核心概念</p></div>';
+                return;
+            }
+
+            var words = concepts.map(function(c) {
                 return {
                     text: c.name,
-                    size: Math.max(12, Math.min(48, 10 + c.weight * 3)),
+                    size: Math.max(14, Math.min(52, 12 + c.weight * 4)),
                     category: c.category,
                     id: c.id,
                     _concept: c,
                 };
             });
 
-            const colorMap = {};
-            for (const [key, val] of Object.entries(lexicon.categories)) {
-                colorMap[key] = val.color;
+            var colorMap = {};
+            for (var key in lexicon.categories) {
+                if (lexicon.categories.hasOwnProperty(key)) {
+                    colorMap[key] = lexicon.categories[key].color;
+                }
             }
 
-            // If we have stored positions from a previous render with same filter, reuse them
             if (layoutWords.length > 0 && layoutWords.length === words.length) {
                 for (var i = 0; i < words.length; i++) {
                     words[i].x = layoutWords[i].x;
                     words[i].y = layoutWords[i].y;
                     words[i].rotate = layoutWords[i].rotate;
                 }
-                draw(words);
+                draw(words, width, height, colorMap);
                 return;
             }
 
-            const layout = d3.layout.cloud()
-                .size([width, height])
-                .words(words)
-                .padding(4)
-                .rotate(function() { return (~~(Math.random() * 3) - 1) * 15; })
-                .fontSize(function(d) { return d.size; })
-                .on('end', function(placedWords) {
-                    layoutWords = placedWords.slice();  // store positions
-                    draw(placedWords);
-                });
+            try {
+                cloudLayout = new Cloud(words)
+                    .size([width, height])
+                    .padding(3)
+                    .rotate(function() { return (~~(Math.random() * 3) - 1) * 10; })
+                    .spiral('rectangular')
+                    .timeInterval(Infinity)
+                    .on('word', function() {})
+                    .on('end', function(placedWords) {
+                        layoutWords = placedWords.slice();
+                        draw(placedWords, width, height, colorMap);
+                    });
+                cloudLayout.start();
+            } catch (err) {
+                console.error('词云布局失败:', err);
+                container.innerHTML = '<div class="wordcloud-error"><h3>词云渲染失败</h3><p>' + escapeHtml(err.message) + '</p></div>';
+            }
+        }
 
-            layout.start();
+        function draw(words, width, height, colorMap) {
+            var container = document.getElementById('wordcloud-container');
 
-            function draw(words) {
-                const g = svg.append('g')
-                    .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')');
+            var html = '<svg id="wordcloud-svg" viewBox="0 0 ' + width + ' ' + height + '" class="wordcloud-svg">';
+            html += '<g transform="translate(' + (width/2) + ',' + (height/2) + ')">';
 
-                const relationLayer = g.append('g').attr('class', 'relations');
-                if (hoveredWord) {
-                    const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
-                    if (hwConcept) {
-                        const relatedNames = {};
-                        (hwConcept.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
-                        const relatedWords = words.filter(function(w) { return relatedNames[w.text]; });
-
-                        const hoveredWordEl = words.find(function(w) { return w.id === hoveredWord; });
-                        if (hoveredWordEl) {
-                            relatedWords.forEach(function(rw) {
-                                relationLayer.append('line')
-                                    .attr('class', 'relation-line')
-                                    .attr('x1', hoveredWordEl.x)
-                                    .attr('y1', hoveredWordEl.y)
-                                    .attr('x2', rw.x)
-                                    .attr('y2', rw.y)
-                                    .attr('stroke', colorMap[hwConcept.category] || '#94a3b8');
-                            });
-                        }
+            if (hoveredWord) {
+                var hwConcept = null;
+                for (var i = 0; i < words.length; i++) {
+                    if (words[i].id === hoveredWord) { hwConcept = words[i]._concept; break; }
+                }
+                if (hwConcept) {
+                    var relatedNames = {};
+                    (hwConcept.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
+                    var hoveredWordEl = null;
+                    var relatedWords = [];
+                    for (var j = 0; j < words.length; j++) {
+                        var w = words[j];
+                        if (w.id === hoveredWord) hoveredWordEl = w;
+                        if (relatedNames[w.text]) relatedWords.push(w);
+                    }
+                    if (hoveredWordEl) {
+                        relatedWords.forEach(function(rw) {
+                            html += '<line class="relation-line" x1="' + hoveredWordEl.x + '" y1="' + hoveredWordEl.y +
+                                '" x2="' + rw.x + '" y2="' + rw.y +
+                                '" stroke="' + (colorMap[hwConcept.category] || '#94a3b8') + '"/>';
+                        });
                     }
                 }
+            }
 
-                const textLayer = g.selectAll('text')
-                    .data(words)
-                    .enter()
-                    .append('text')
-                    .attr('class', function(d) {
-                        let cls = 'word';
-                        if (hoveredWord) {
-                            const hwConcept = concepts.find(function(c) { return c.id === hoveredWord; });
-                            const relatedNames = {};
-                            (hwConcept?.relatedConcepts || []).forEach(function(r) { relatedNames[r] = true; });
-                            relatedNames[hwConcept?.name] = true;
-                            if (d.text === hwConcept?.name || relatedNames[d.text]) {
-                                cls += ' highlighted';
-                            } else {
-                                cls += ' dimmed';
-                            }
-                        }
-                        return cls;
-                    })
-                    .attr('text-anchor', 'middle')
-                    .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')rotate(' + d.rotate + ')'; })
-                    .attr('font-size', function(d) { return d.size; })
-                    .attr('fill', function(d) { return colorMap[d.category] || '#94a3b8'; })
-                    .attr('font-family', 'Inter, sans-serif')
-                    .style('cursor', 'pointer')
-                    .text(function(d) { return d.text; })
-                    .on('mouseenter', function(event, d) {
-                        hoveredWord = d.id;
+            for (var k = 0; k < words.length; k++) {
+                var d = words[k];
+                var cls = 'word';
+                if (hoveredWord) {
+                    var hw = null;
+                    for (var m = 0; m < words.length; m++) {
+                        if (words[m].id === hoveredWord) { hw = words[m]._concept; break; }
+                    }
+                    if (hw) {
+                        var relN = {};
+                        relN[hw.name] = true;
+                        (hw.relatedConcepts || []).forEach(function(r) { relN[r] = true; });
+                        cls += (d.text === hw.name || relN[d.text]) ? ' highlighted' : ' dimmed';
+                    }
+                }
+                var fill = colorMap[d.category] || '#94a3b8';
+                html += '<text class="' + cls + '" text-anchor="middle" ' +
+                    'transform="translate(' + d.x + ',' + d.y + ')rotate(' + d.rotate + ')" ' +
+                    'font-size="' + d.size + '" fill="' + fill + '" font-family="Inter, sans-serif" ' +
+                    'data-id="' + d.id + '">' + escapeHtml(d.text) + '</text>';
+            }
+
+            html += '</g></svg>';
+            container.innerHTML = html;
+
+            var svg = document.getElementById('wordcloud-svg');
+            var texts = svg.querySelectorAll('text.word');
+            for (var n = 0; n < texts.length; n++) {
+                (function(t) {
+                    t.addEventListener('mouseenter', function() {
+                        hoveredWord = t.getAttribute('data-id');
                         renderWordCloud();
-                    })
-                    .on('mouseleave', function() {
+                    });
+                    t.addEventListener('mouseleave', function() {
                         hoveredWord = null;
                         renderWordCloud();
-                    })
-                    .on('click', function(event, d) {
-                        showPaperSection(d);
                     });
+                    t.addEventListener('click', function() {
+                        var id = t.getAttribute('data-id');
+                        for (var p = 0; p < words.length; p++) {
+                            if (words[p].id === id) {
+                                showPaperSection(words[p]);
+                                break;
+                            }
+                        }
+                    });
+                })(texts[n]);
             }
         }
 
         function showPaperSection(word) {
-            const concept = word._concept || word;
-            const name = concept.name || word.text;
-            const papers = concept.sourcePapers || [];
+            var concept = word._concept || word;
+            var name = concept.name || word.text;
+            var papers = concept.sourcePapers || [];
 
-            const section = document.getElementById('paper-section');
-            const title = document.getElementById('selected-concept');
-            const grid = document.getElementById('paper-grid');
+            var section = document.getElementById('paper-section');
+            var title = document.getElementById('selected-concept');
+            var grid = document.getElementById('paper-grid');
 
-            const catInfo = lexicon.categories[concept.category] || {name: concept.category, color: '#94a3b8'};
+            var catInfo = lexicon.categories[concept.category] || {name: concept.category, color: '#94a3b8'};
             title.textContent = name;
             title.style.color = catInfo.color;
 
@@ -595,10 +644,11 @@
                 grid.innerHTML = '<p style="color:var(--text-secondary);">暂无关联论文</p>';
             } else {
                 grid.innerHTML = papers.map(function(arxivId) {
+                    var paperPath = PAPER_MAP[arxivId] || 'paper/search/' + arxivId;
                     return '<div class="paper-card">' +
-                        '<span class="arxiv">' + arxivId + '</span>' +
-                        '<p class="desc">概念 "' + name + '" 的来源论文</p>' +
-                        '<a href="' + GITHUB_PAGES_BASE + (PAPER_MAP[arxivId] || 'paper/search/' + arxivId) + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
+                        '<span class="arxiv">' + escapeHtml(arxivId) + '</span>' +
+                        '<p class="desc">概念 "' + escapeHtml(name) + '" 的来源论文</p>' +
+                        '<a href="' + GITHUB_PAGES_BASE + paperPath + '" class="paper-link" target="_blank">查看完整报告 &rarr;</a>' +
                         '</div>';
                 }).join('');
             }
@@ -608,49 +658,58 @@
         }
 
         function renderSidebar() {
-            const nav = document.getElementById('sidebar-nav');
+            var nav = document.getElementById('sidebar-nav');
             if (!ontologyMarkdown) {
-                nav.innerHTML = '<p style="font-size:0.85rem;color:var(--text-secondary);">加载中...</p>';
+                nav.innerHTML = '<p style="font-size:0.82rem;color:var(--text-secondary);">本体正文未加载</p>';
                 return;
             }
 
-            const headings = [];
-            const regex = /^(#{2,3})\s+(.+)$/gm;
-            let match;
+            var headings = [];
+            var regex = /^(#{2,3})\s+(.+)$/gm;
+            var match;
             while ((match = regex.exec(ontologyMarkdown)) !== null) {
-                const level = match[1].length;
-                const text = match[2].replace(/[*_`]/g, '').trim();
-                const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
+                var level = match[1].length;
+                var text = match[2].replace(/[*_`]/g, '').trim();
+                var id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
                 headings.push({ level: level, text: text, id: id });
             }
 
             nav.innerHTML = headings.map(function(h) {
-                const indent = (h.level - 2) * 0.75 + 0.75;
+                var indent = (h.level - 2) * 0.75 + 0.75;
                 return '<a href="#' + h.id + '" style="padding-left:' + indent + 'rem">' + h.text + '</a>';
             }).join('');
         }
 
         function renderOntologyBody() {
-            const body = document.getElementById('ontology-body');
+            var body = document.getElementById('ontology-body');
             if (!ontologyMarkdown) {
                 body.innerHTML = '<p style="color:var(--text-secondary);">本体论正文加载中...</p>';
                 return;
             }
 
-            body.innerHTML = marked.parse(ontologyMarkdown);
+            try {
+                body.innerHTML = marked.parse(ontologyMarkdown);
+            } catch (err) {
+                body.innerHTML = '<p style="color:#ef4444;">正文渲染失败: ' + escapeHtml(err.message) + '</p>';
+                return;
+            }
 
-            body.querySelectorAll('h2, h3').forEach(function(h) {
-                const id = h.textContent.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
-                h.id = id;
-            });
+            var h2h3 = body.querySelectorAll('h2, h3');
+            for (var i = 0; i < h2h3.length; i++) {
+                var id = h2h3[i].textContent.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
+                h2h3[i].id = id;
+            }
         }
 
         init();
 
-        let resizeTimer;
+        var resizeTimer;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(renderWordCloud, 250);
+            resizeTimer = setTimeout(function() {
+                layoutWords = [];
+                renderWordCloud();
+            }, 250);
         });
     })();
     </script>
