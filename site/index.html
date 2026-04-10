@@ -359,65 +359,69 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-    // ── Minimal word-cloud layout (Archimedean spiral + AABB collision) ──
+    // ── Word-cloud layout: Archimedean spiral + AABB collision ──
     function computeWordCloudLayout(words, width, height) {
+        var halfW = width / 2, halfH = height / 2;
         var placed = [];
-        var PAD = 6; // extra padding between words
+        var PAD = 4;
 
-        function aabb(w) {
-            var hw = (w.width || 0) / 2 + PAD;
-            var hh = (w.height || 0) / 2 + PAD;
-            return { x1: w.x - hw, y1: w.y - hh, x2: w.x + hw, y2: w.y + hh };
+        function makeBox(w) {
+            var cjk = 0, ascii = 0;
+            for (var ci = 0; ci < w.text.length; ci++) {
+                if (w.text.charCodeAt(ci) > 127) cjk++; else ascii++;
+            }
+            var ww = cjk * 1.1 * w.size + ascii * 0.58 * w.size;
+            var hh = w.size * 1.2;
+            return {
+                x1: w.x - ww / 2 - PAD, y1: w.y - hh / 2 - PAD,
+                x2: w.x + ww / 2 + PAD, y2: w.y + hh / 2 + PAD,
+                width: ww, height: hh
+            };
         }
 
-        function overlaps(a, b) {
-            var r = a.x1 < b.x2 && a.x2 > b.x1;
-            var c = a.y1 < b.y2 && a.y2 > b.y1;
-            return r && c;
+        function collides(box, other) {
+            return box.x1 < other.x2 && box.x2 > other.x1 &&
+                   box.y1 < other.y2 && box.y2 > other.y1;
         }
 
-        // Sort largest first for better packing
+        // largest-first for better packing
         var sorted = words.slice().sort(function(a, b) { return b.size - a.size; });
-        var idxMap = {};
-        for (var mi = 0; mi < words.length; mi++) idxMap[words[mi].text] = mi;
 
         for (var i = 0; i < sorted.length; i++) {
             var w = sorted[i];
-            // Better width estimate: CJK chars ~1.1em, ASCII ~0.55em
-            var cjkCount = 0, asciiCount = 0;
-            for (var ci = 0; ci < w.text.length; ci++) {
-                if (w.text.charCodeAt(ci) > 127) cjkCount++; else asciiCount++;
-            }
-            w.width = cjkCount * 1.1 * w.size + asciiCount * 0.55 * w.size;
-            w.height = w.size * 1.3;
-            w.rotate = 0; // no rotation for cleaner layout
-
-            var a = 0, r = 0, step = 0.3;
+            w.rotate = 0;
+            var a = 0, r = 0;
+            var step = 0.15;
             var found = false;
-            while (r < Math.max(width, height) * 0.5) {
-                var x = Math.round(r * Math.cos(a));
-                var y = Math.round(r * Math.sin(a) * 0.55);
+            var limit = Math.max(halfW, halfH) * 1.6;
+            while (r < limit) {
+                var x = r * Math.cos(a);
+                var y = r * Math.sin(a) * 0.6;
                 w.x = x; w.y = y;
-                var box = aabb(w);
-                if (box.x1 < -width/2 || box.x2 > width/2 || box.y1 < -height/2 || box.y2 > height/2) {
-                    a += step; r += step * 0.5; continue;
+                var box = makeBox(w);
+                if (box.x1 < -halfW || box.x2 > halfW || box.y1 < -halfH || box.y2 > halfH) {
+                    a += step; r += step * 0.6; continue;
                 }
-                var collide = false;
+                var hit = false;
                 for (var j = 0; j < placed.length; j++) {
-                    if (overlaps(box, aabb(placed[j]))) { collide = true; break; }
+                    if (collides(box, placed[j].box)) { hit = true; break; }
                 }
-                if (!collide) { found = true; break; }
-                a += step; r += step * 0.5;
+                if (!hit) {
+                    w.width = box.width; w.height = box.height;
+                    box.w = w; // keep reference
+                    placed.push({ x: x, y: y, box: box, w: w });
+                    found = true;
+                    break;
+                }
+                a += step; r += step * 0.6;
             }
-            if (found) placed.push(w);
         }
-        // Restore original order for rendering
+        // restore original order
+        var map = {};
+        for (var pi = 0; pi < placed.length; pi++) map[placed[pi].w.text] = placed[pi];
         var result = [];
         for (var oi = 0; oi < words.length; oi++) {
-            var orig = words[oi];
-            for (var pi = 0; pi < placed.length; pi++) {
-                if (placed[pi].text === orig.text) { result.push(placed[pi]); break; }
-            }
+            if (map[words[oi].text]) result.push(words[oi]);
         }
         return result;
     }
@@ -439,7 +443,6 @@
         var lexicon = null;
         var ontologyMarkdown = '';
         var hoveredWord = null;
-        var layoutWords = [];
 
         async function init() {
             try {
@@ -518,19 +521,9 @@
                 }
             }
 
-            if (layoutWords.length > 0 && layoutWords.length === words.length) {
-                for (var i = 0; i < words.length; i++) {
-                    words[i].x = layoutWords[i].x;
-                    words[i].y = layoutWords[i].y;
-                    words[i].rotate = layoutWords[i].rotate;
-                }
-                draw(words, width, height, colorMap);
-                return;
-            }
-
             try {
                 var placed = computeWordCloudLayout(words, width, height);
-                layoutWords = placed.slice();
+                console.log('Word cloud placed:', placed.length, '/', words.length);
                 draw(placed, width, height, colorMap);
             } catch (err) {
                 console.error('词云布局失败:', err);
