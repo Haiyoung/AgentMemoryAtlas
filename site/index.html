@@ -345,18 +345,28 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="wordcloud2.js"></script>
     <script>
-    // ── wordcloud2.js: Canvas word cloud with weight-based sizing ──
+    // ── wordcloud2.js: Canvas mode with Retina fix + hover overlay ──
     function createWordCloud(containerId, concepts, colorMap) {
         var container = document.getElementById(containerId);
         if (!container) return null;
 
         WordCloud.stop();
-        container.innerHTML = '<canvas id="wc-canvas" width="1200" height="500"></canvas>';
+        container.innerHTML = '';
 
-        var canvas = document.getElementById('wc-canvas');
-        var cw = container.clientWidth;
-        canvas.width = cw;
-        canvas.height = 500;
+        // Canvas with high-DPI scaling
+        var dpr = window.devicePixelRatio || 1;
+        var w = container.clientWidth;
+        var h = 500;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        container.appendChild(canvas);
+
+        var ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
 
         // Build list: [[name, weight], ...]
         var list = concepts.map(function(c) {
