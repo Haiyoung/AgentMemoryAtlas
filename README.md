@@ -1,115 +1,93 @@
 <p align="center">
-  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjMiIG9wYWNpdHk9IjAuMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBlYTVlOSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAsIDEwMCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMCIgcng9IjM1IiByeT0iMzAiIGZpbGw9IiNmNDcyYjYiIG9wYWNpdHk9IjAuOSIvPjxlbGxpcHNlIGN4PSItMjUiIGN5PSI1IiByeD0iMTUiIHJ5PSIyMCIgZmlsbD0iI2VjNDg5OSIgb3BhY2l0eT0iMC44Ii8+PGVsbGlwc2UgY3g9IjI1IiBjeT0iNSIgcng9IjE1IiByeT0iMjAiIGZpbGw9IiNkYjI3NzciIG9wYWNpdHk9IjAuOCIvPjxwYXRoIGQ9Ik0gLTE1IC0yMCBRIC0xMCAtMTAsIC0xNSAwIFEgLTEwIDEwLCAtMTUgMjAiIHN0cm9rZT0iI2JlMTg1ZCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjYiLz48cGF0aCBkPSJNIDAgLTI1IFEgNSAtMTUsIDAgLTUgUSA1IDUsIDAgMTUgUSA1IDI1LCAwIDMwIiBzdHJva2U9IiNiZTE4NWQiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTSAxNSAtMjAgUSAxMCAtMTAsIDE1IDAgUSAxMCAxMCwgMTUgMjAiIHN0cm9rZT0iI2JlMTg1ZCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjYiLz48L2c+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMjAiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48Y2lyY2xlIGN4PSIxODAiIGN5PSIxMDAiIHI9IjYiIGZpbGw9IiMwZWE1ZTkiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxODAiIHI9IjYiIGZpbGw9IiMxNmEzNGEiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjEwMCIgcj0iNiIgZmlsbD0iI2Y1OWUwYiIvPjxsaW5lIHgxPSIxMDAiIHkxPSIyNiIgeDI9IjEwMCIgeTI9IjcwIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC41Ii8+PGxpbmUgeDE9IjE3NCIgeTE9IjEwMCIgeDI9IjEzNSIgeTI9IjEwMCIgc3Ryb2tlPSIjMGVhNWU5IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSIxMDAiIHkxPSIxNzQiIHgyPSIxMDAiIHkyPSIxMzAiIHN0cm9rZT0iIzE2YTM0YSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48bGluZSB4MT0iMjYiIHkxPSIxMDAiIHgyPSI2NSIgeTI9IjEwMCIgc3Ryb2tlPSIjZjU5ZTBiIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjwvc3ZnPg==" alt="logo" width="120">
+  <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOGI1Y2Y2Ii8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzYjgyZjYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNlZjQ0NDQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjIwIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC45Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMzAiIHI9IjEyIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC43Ii8+PGNpcmNsZSBjeD0iMTcwIiBjeT0iMTAwIiByPSIxMiIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjE3MCIgcj0iMTIiIHN0cm9rZT0idXJsKCNnKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjciLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjEwMCIgcj0iMTIiIHN0cm9rZT0idXJsKCNnKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjciLz48Y2lyY2xlIGN4PSIxNTUiIGN5PSI0NSIgcj0iOCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNiIvPjxjaXJjbGUgY3g9IjE1NSIgY3k9IjE1NSIgcj0iOCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNiIvPjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTU1IiByPSI4IiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PGNpcmNsZSBjeD0iNDUiIGN5PSI0NSIgcj0iOCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNiIvPjxsaW5lIHgxPSIxMDAiIHkxPSI4MCIgeDI9IjEwMCIgeTI9IjQyIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC41Ii8+PGxpbmUgeDE9IjEyMCIgeTE9IjEwMCIgeDI9IjE1OCIgeTI9IjEwMCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSIxMDAiIHkxPSIxMjAiIHgyPSIxMDAiIHkyPSIxNTgiIHN0cm9rZT0idXJsKCNnKSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48bGluZSB4MT0iODAiIHkxPSIxMDAiIHgyPSI0MiIgeTI9IjEwMCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSIxMTIiIHkxPSI4OCIgeDI9IjE0OCIgeTI9IjUyIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC40Ii8+PGxpbmUgeDE9IjExMiIgeTE9IjExMiIgeDI9IjE0OCIgeTI9IjE0OCIgc3Ryb2tlPSJ1cmwoI2cpIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNCIvPjxsaW5lIHgxPSI4OCIgeTE9IjExMiIgeDI9IjUyIiB5Mj0iMTQ4IiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC40Ii8+PGxpbmUgeDE9Ijg4IiB5MT0iODgiIHgyPSI1MiIgeTI9IjUyIiBzdHJva2U9InVybCgjZykiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC40Ii8+PC9zdmc+" alt="logo" width="100">
 </p>
 
 <h1 align="center">AgentMemoryAtlas</h1>
+
 <p align="center">
   <strong>Agent Memory 领域本体论 · 论文阅读简报库</strong>
-</p>
-<p align="center">
-  <a href="https://haiyoung.github.io/AgentMemoryAtlas/">在线浏览</a> ·
-  <a href="#本体论领域模型">本体论</a> ·
-  <a href="#论文阅读简报">论文简报</a>
 </p>
 
 ---
 
 ## 关于
 
-AgentMemoryAtlas 是 Agent Memory 领域的**系统性知识基础设施**，从 148 篇论文中提炼出统一的概念框架与阅读简报。
+AgentMemoryAtlas 是一个系统梳理 **Agent Memory（智能体记忆）** 领域研究的开源项目。
 
-```
-┌─────────────────────┐      ┌─────────────────────┐
-│   本体论领域模型      │      │   论文阅读简报库      │
-│  · 三维正交分类      │      │  · 148 篇论文        │
-│  · 8 个顶层类        │◄────►│  · 7 维度标注        │
-│  · 5 类公理体系      │      │  · 多维度评价        │
-│  · 5 种架构范式      │      │  · 结构化分析        │
-└─────────────────────┘      └─────────────────────┘
-```
+Agent Memory 是 LLM Agent 方向最活跃的研究领域之一——从 2023 年的 MemoryBank、MemGPT 到如今的多模态记忆、记忆操作系统、自进化记忆，论文数量快速增长但缺乏统一的概念框架。本项目的目标是：
 
----
+- **构建统一的领域本体论**——从大量论文中归纳提炼出 Agent Memory 的概念体系，形成一个内聚、简洁、可扩展的领域模型
+- **提供结构化的论文阅读简报**——每篇论文从记忆类型、记忆结构、记忆操作、功能定位等 7 个本体维度进行标注，帮助快速定位论文贡献并理解其在领域中的位置
 
-## 本体论领域模型
-
-采用**"三维正交分类 + 类层级"**双轨架构，为 Agent Memory 领域建立统一的概念空间。
-
-| 维度 | 内容 | 说明 |
-|:---:|------|------|
-| **载体** | Token-level · Parametric · External · Latent | 记忆的物质承载形式 |
-| **功能** | Factual · Semantic · Episodic · Procedural · Experiential · Working · Reflection | 记忆的认知功能定位 |
-| **动态** | Formation · Retrieval · Evolution · Forgetting · Reflection · Association | 记忆的生命周期操作 |
-
-| 顶层类 | Agent | Memory | MemorySystem | MemoryEvent |
-|:---:|:---:|:---:|:---:|:---:|
-| **核心定位** | 记忆主体 | 记忆载体 | 管理架构 | 触发源 |
-
-| 顶层类 | MemoryOperation | Context | Entity | Policy |
-|:---:|:---:|:---:|:---:|:---:|
-| **核心定位** | 操作行为 | 关联场景 | 关联对象 | 操作规则 |
-
-> 完整本体论：[ontology_base.md](ontology/ontology_base.md)（318 行）
-> 完整词库：[lexicon.json](ontology/lexicon.json)（1411 概念，744 关系）
-
----
-
-## 论文阅读简报
-
-每篇论文从 **7 个本体维度** + **7 个评价维度**进行结构化分析：
-
-| 维度 | 说明 |
-|:---:|------|
-| **记忆类型** | Factual / Episodic / Procedural / Semantic / Working / Long-term |
-| **记忆结构** | Graph / Vector / Hierarchical / Context Window / Adapter |
-| **记忆操作** | Formation / Retrieval / Evolution / Forgetting / Reflection |
-| **功能定位** | Reasoning / Planning / Learning / Dialogue / Perception |
-| **设计模式** | RAG / Self-Evolving / OS-Inspired / Multi-Agent |
-| **公理约束** | Stability-Plasticity / Generalization / Privacy |
-| **记忆载体** | Token / External / Parametric / Latent |
-
-| 评价维度 | 说明 |
-|:---:|------|
-| 理论基础 | 理论扎实程度 |
-| 问题核心性 | 解决核心痛点的能力 |
-| 方法创新性 | 技术创新水平 |
-| 技术壁垒 | 实现难度与护城河 |
-| 实验严谨性 | 实验设计与验证 |
-| 落地可行性 | 工程实现路径 |
-| 应用前景 | 商业/应用价值 |
+随着新论文不断涌现，本项目将持续补充论文简报并迭代本体论模型。
 
 ---
 
 ## 快速开始
 
-### 在线浏览
+### 在线阅读
 
 访问 [GitHub Pages 站点](https://haiyoung.github.io/AgentMemoryAtlas/)：
-- **顶部**：Agent Memory 核心概念动态词云
-- **中部**：本体论正文（8 节凝练模型）
-- **底部**：按年份浏览论文阅读简报
+
+| 页面区域 | 内容 |
+|:---:|------|
+| **顶部** | Agent Memory 核心概念动态词云（按论文出现频次排列，鼠标悬停可点击） |
+| **中部** | 本体论正文——三维正交分类、核心类、公理体系、架构范式、功能范式、生命周期、安全治理 |
+| **底部** | 论文阅读简报列表，按年份分组，点击可跳转阅读 |
 
 ### 本地阅读
 
 ```bash
 git clone https://github.com/Haiyoung/AgentMemoryAtlas.git
 cd AgentMemoryAtlas
-
-# 阅读本体论
-cat ontology/ontology_base.md
-
-# 浏览论文简报
-ls paper/2025/
 ```
 
-### 增量更新
+**阅读本体论**：
 
 ```bash
-# 1. 将新增论文的本体论分析文档放入 ontology/ 目录
-# 2. 运行更新命令
-claude /ontology-update
+cat ontology/ontology_base.md
 ```
 
-自动完成：备份 → 概念归并 → 关系更新 → 公理演化 → 生成 changelog → 重建站点
+本体论正文约 300 行，8 个章节，建议从头到尾完整阅读以建立领域框架认知。
+
+**阅读论文简报**：
+
+```bash
+ls paper/2025/          # 浏览论文列表
+cat paper/2025/2512.12818_Hindsight_is_20_20_*.md   # 阅读具体论文
+```
+
+每篇简报包含：基础元数据 → 多维度量化评价 → 7 维度本体标注 → 核心主张 → 实验结果 → 局限性。
+
+### 本地部署站点
+
+```bash
+python3 -m http.server 8081
+# 浏览器访问 http://localhost:8081/site/index.html
+```
+
+---
+
+## 本体论概览
+
+本体论采用 **"三维正交分类 + 类层级"** 双轨架构，涵盖 1400+ 概念、700+ 关系：
+
+**三维正交分类**——每个概念由三个维度的坐标唯一确定：
+
+| 载体 (Carrier) | 功能 (Function) | 动态 (Dynamic) |
+|:---:|:---:|:---:|
+| Token-level | Factual | Formation |
+| Parametric | Semantic | Retrieval |
+| External | Episodic | Evolution |
+| Latent | Procedural | Forgetting |
+| | Experiential | Reflection |
+| | Working | Association |
+
+**8 个顶层类**——Agent / Memory / MemorySystem / MemoryEvent / MemoryOperation / Context / Entity / Policy
+
+**5 类公理**——存在公理、操作公理、质量公理、安全公理、演进公理
+
+完整本体论详见 [ontology_base.md](ontology/ontology_base.md)，完整概念词库详见 [lexicon.json](ontology/lexicon.json)。
 
 ---
 
@@ -118,26 +96,44 @@ claude /ontology-update
 ```
 AgentMemoryAtlas/
 ├── ontology/              # 本体论领域模型
-│   ├── ontology_base.md   # 本体论正文（318 行）
-│   ├── lexicon.json       # 完整词库（1411 概念）
+│   ├── ontology_base.md   # 本体论正文（~300 行）
+│   ├── lexicon.json       # 完整概念词库（1411 概念，744 关系）
 │   ├── changelogs/        # 模型更新日志
 │   └── {year}/            # 每篇论文的本体论分析文档
 │
-├── paper/                 # 论文阅读简报（148 篇）
+├── paper/                 # 论文阅读简报（按年份）
 │   ├── 2021/              # 1 篇
 │   ├── 2022/              # 1 篇
 │   ├── 2023/              # 18 篇
 │   ├── 2024/              # 23 篇
-│   ├── 2025/              # 100 篇
+│   ├── 2025/              # 100+ 篇
 │   └── 2026/              # 5 篇
 │
 ├── site/                  # GitHub Pages 站点
 │   └── index.html         # 词云 + 本体论 + 论文浏览
 │
 └── scripts/               # 构建脚本
-    ├── extract-lexicon.py # 词库提取
-    └── build-site.py      # 站点构建
+    ├── extract-lexicon.py # 从分析文档提取概念词库
+    └── build-site.py      # 构建 GitHub Pages 站点
 ```
+
+---
+
+## 持续更新
+
+本仓库是**持续演进**的：
+
+- **新论文**：随着 Agent Memory 领域新论文发布，将持续补充阅读简报
+- **本体论迭代**：每批新增论文将触发本体论模型的增量更新——概念归并、关系演化、公理修正
+- **模型版本**：本体论遵循语义化版本管理，每次更新生成 changelog 并保留历史备份
+
+增量更新可通过 `claude /ontology-update` 命令自动化完成。
+
+---
+
+## 许可证
+
+本项目采用 [MIT 许可证](LICENSE)——最宽松的开源许可，你可以自由使用、修改、分发本项目内容，包括用于商业用途。
 
 ---
 
