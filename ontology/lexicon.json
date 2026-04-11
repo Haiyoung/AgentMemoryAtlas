@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-04-10",
+  "generatedAt": "2026-04-11",
   "conceptCount": 1411,
   "relationCount": 744,
   "concepts": [
@@ -65,7 +65,7 @@
     {
       "id": "向量数据库",
       "name": "向量数据库 (Vector Database)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 9,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -235,7 +235,7 @@
     },
     {
       "id": "长期记忆",
-      "name": "长期记忆 (Long-term Memory)",
+      "name": "长期记忆 (Long-Term Memory)",
       "category": "memory_type",
       "weight": 3,
       "relatedConcepts": [],
@@ -356,7 +356,7 @@
     {
       "id": "external-vector-database",
       "name": "External Vector Database",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 3,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -660,7 +660,7 @@
     {
       "id": "external-memory-module",
       "name": "External Memory Module",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [
         "MemAgent Architecture"
@@ -731,7 +731,7 @@
     {
       "id": "外部记忆库",
       "name": "外部记忆库 (External Memory Bank)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -789,7 +789,7 @@
     {
       "id": "上下文窗口",
       "name": "上下文窗口 (Context Window)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -811,7 +811,7 @@
     {
       "id": "faiss-vector-index",
       "name": "FAISS Vector Index (FAISS 向量索引)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -847,7 +847,7 @@
     {
       "id": "memcells",
       "name": "MemCells (记忆细胞)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -857,7 +857,7 @@
     {
       "id": "memscenes",
       "name": "MemScenes (记忆场景)",
-      "category": "memory_carrier",
+      "category": "memory_structure",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
