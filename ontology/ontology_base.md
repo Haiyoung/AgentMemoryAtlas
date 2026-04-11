@@ -79,61 +79,63 @@ Agent Memory 本体遵循"三维正交分类 + 类层级"双轨架构。
 
 ---
 
-## 三、概念关系网络
+## 三、概念分布总览
 
-### 3.1 形式维度网络 (Forms)
+本领域本体论共收录 **1092** 个唯一概念，分布在三维分类体系的 33 个子类别中。以下展示各维度的概念分布——完整概念枚举见 [lexicon.json](./lexicon.json)。
 
-包含 **322** 个概念，描述记忆的结构化表示形式。
+### 3.1 形式维度 (Forms) — 322 个概念
 
-核心子类群：
+| 子类 | 数量 | 占比 | 代表结构 |
+|------|------|------|----------|
+| Memory Storage | 78 | 24% | Memory Stream, 混合记忆架构, Hierarchical Memory Storage |
+| Other Structure | 115 | 36% | 各种实现相关的辅助结构 |
+| Graph/Tree Structure | 44 | 14% | 知识三元组, Directed Weighted Graph, Hierarchical Aggregate Tree |
+| Context Window | 23 | 7% | 滑动窗口上下文, Prompt Context, Token Sequence |
+| Index Structure | 16 | 5% | Vector Index, FAISS, Self-Generated Graph Index |
+| Architecture/Framework | 14 | 4% | 分层交互系统, Agent Foundation Model |
+| Network Layer/State | 12 | 4% | Finite State Machine, Shared State Space |
+| Vector/Embedding | 11 | 3% | Patch Embedding, Vector Database Storage |
+| Buffer/Pool | 9 | 3% | Replay Buffer, Experience Pool, STM Buffer |
 
-- **Architecture/Framework** (14) — 可逆 Transformer 架构, Minimalist Single-Core Architecture, Four-Layer Semantic Architecture, 时空语义系统, 模块化 AI 代理架构, 分层交互系统, SDM Activation Module, Agent Foundation Model Architecture (+6)
-- **Buffer/Pool** (9) — Natural Language Summary Buffer, Replay Buffer for Offline RL, 备忘录存储, Historical Session Buffer, Action Trajectory Buffer, Dynamic Tool Pool, 经验池, STM Buffer (+1)
-- **Context Window** (23) — Tool-Augmented Context Window, 滑动窗口上下文, Prompt Sequences, Prompt Context Window, Token Sequence Context, Dynamic Prompt Context Buffer, Enhanced Prompt with Retrieved Context (+15)
-- **Graph/Tree Structure** (44) — 知识三元组, Directed Weighted Graph, Hierarchical Community Tree, Dual-view Bipartite Graph, Query-Scene-Tool Interaction Graph, 外部知识图谱, 事实知识三元组, Hierarchical Aggregate Tree (+36)
-- **Index Structure** (16) — Vector Index, LSH 向量索引表, 神经 API 检索索引, Vector Space Index, Self-Generated Graph Index, 海马体式索引, 原子索引映射, FAISS Vector Index for Video Semantics (+8)
-- **Memory Storage** (78) — Memory Stream, 混合记忆架构, Structured Memory, Hierarchical Memory Architecture, 记忆原型, Hierarchical Memory Storage, Memory Strength Parameter, 三阶段记忆循环 (+70)
-- **Network Layer/State** (12) — Finite State Machine, Rule-based Decomposed Statements, Three-layer Hierarchical Structure, 代码库状态快照, Distilled Knowledge Statements, Interpolation Integration Layer, 持久化世界状态, Shared State Space (+4)
-- **Other Structure** (115) — Hyper-network Weight Generator, GRU 隐藏状态, 高分辨率键值对, 自我提示库, SUS 评估体系, 问答对结构, 可学习令牌序列, 深度优先搜索决策树 (+107)
-- **Vector/Embedding** (11) — Perturbation Vector, API-Embedded Text Sequence, Vector Database Storage, 固定长度连续向量, Patch Embedding, 8-Vector Compressed Sequence, Intermediate Layer Embedding Slot, Vector-Text Dual Storage (+3)
+形式维度中，Memory Storage（24%）和 Other Structure（36%）占主导，说明领域仍在探索多样化的结构化表示方式。
 
-### 3.2 功能维度网络 (Functions)
+### 3.2 功能维度 (Functions) — 325 个概念
 
-包含 **325** 个概念，描述记忆的功能定位。
+| 子类 | 数量 | 占比 | 认知定位 |
+|------|------|------|----------|
+| Other Memory Type | 233 | 72% | 领域专用记忆类型（用户画像、对话记忆等） |
+| Long-Term Memory | 16 | 5% | 跨会话持久存储 |
+| Semantic Memory | 13 | 4% | 概念关联与知识网络 |
+| Episodic Memory | 9 | 3% | 交互事件与时间线索 |
+| Procedural Memory | 9 | 3% | 可执行技能与操作流程 |
+| Experiential Memory | 8 | 3% | 成功/失败轨迹经验 |
+| Short-Term Memory | 8 | 3% | 近期操作与感知保留 |
+| Working Memory | 7 | 2% | 即时认知工作区 |
+| Parametric Memory | 7 | 2% | 权重嵌入的知识 |
+| Factual Memory | 5 | 2% | 离散客观信息 |
+| Sensory Memory | 4 | 1% | 原始感知瞬时保留 |
+| Retrieval Memory | 4 | 1% | 检索增强记忆 |
+| Reflection Memory | 2 | <1% | 元认知与自我觉察 |
 
-核心功能群：
+功能维度中，Other Memory Type（72%）占绝对多数，反映领域在通用记忆类型之上涌现了大量场景化、领域化的记忆子类。
 
-- **Episodic Memory** (9) — Episodic Memory, 情景记忆, Local Episodic Memory, Episodic Memory Graph, Episodic Simulation, Episodic Demonstration Memory (+3)
-- **Experiential Memory** (8) — 经验记忆, Cross-Domain Experience, Experiential Knowledge, Early Experience, 结构化经验, 成功/失败轨迹经验 (+2)
-- **Factual Memory** (5) — 事实记忆, 结构化事实备忘录, 个性化事实知识, Externalized Factual Memory, 世界事实
-- **Long-Term Memory** (16) — Long-Term Memory, 长期记忆, Long-term Memory, Long-term Reflection Memory, 神经生物学启发的长期记忆, 时间敏感长期记忆 (+10)
-- **Other Memory Type** (233) — Agentic Memory, Summarized Memory, User Profile Memory, 持久记忆, Hierarchical Memory, Query Memory (+227)
-- **Parametric Memory** (7) — Parametric Memory, Parametric Factual Knowledge, 参数化记忆, Non-Parametric Continual Learning, Parametric Knowledge, 非参数化策略记忆 (+1)
-- **Procedural Memory** (9) — 程序记忆, Programmatic Skills, Procedural Skill Memory, 程序性记忆, 技能模式记忆, Procedural Memory (+3)
-- **Reflection Memory** (2) — Reflection Memory, 反思经验
-- **Retrieval Memory** (4) — 生成式检索记忆, MLP Memory, Retriever-Pretrained Memory, Implicit Retrieval Memory
-- **Semantic Memory** (13) — Semantic Memory, 语义记忆, API 语义记忆, Global Semantic Memory, Semantic-Graph Hybrid Memory, Implicit Semantic Memory (+7)
-- **Sensory Memory** (4) — 感官记忆, Sensory Memory, 感官情境记忆, SensoryMemory
-- **Short-Term Memory** (8) — Short-Term Memory, Short-term Memory, Short-term Trajectory Memory, 短期记忆, Short-term Operation History, 短期注意力记忆 (+2)
-- **Working Memory** (7) — Working Memory, 工作记忆, Active Working Memory, 动态工作记忆, 动态上下文工作区, 短期工作记忆 (+1)
+### 3.3 动态维度 (Dynamics) — 445 个概念
 
-### 3.3 动态维度网络 (Dynamics)
+| 子类 | 数量 | 占比 | 生命周期阶段 |
+|------|------|------|----------|
+| Other Operation | 228 | 51% | 各种实现相关的辅助操作 |
+| Retrieval | 79 | 18% | 记忆召回（领域最密集的操作） |
+| Summarization | 33 | 7% | 信息压缩与知识提取 |
+| Evolution (Update) | 42 | 9% | 知识更新与整合 |
+| Reflection | 15 | 3% | 元层次评估与重构 |
+| Formation (Store/Write) | 16 | 4% | 记忆创建与编码 |
+| Forgetting | 10 | 2% | 低价值记忆淘汰 |
+| Association | 8 | 2% | 跨记忆关联建立 |
+| Scoring/Ranking | 6 | 1% | 价值评估与排序 |
+| Learning | 6 | 1% | 参数化知识协同进化 |
+| Deduplication | 2 | <1% | 语义去重 |
 
-包含 **445** 个概念，描述记忆的生命周期操作。
-
-核心操作群：
-
-- **Association** (8) — In-Context Memory Integration, Relation-aware Linking, Context Integration, 概率插值集成, Parameter-Free Model Integration, 记忆整合 (+2)
-- **Deduplication** (2) — API 生成清洗, 语义去重
-- **Evolution (Update)** (42) — 记忆巩固, Memory Update, Memory Consolidation, Update, 动态更新, Constraint-based Editing (+36)
-- **Forgetting** (10) — Memory Decay, Summarize-and-Forget, 时间衰减, 权重衰减遗忘机制, Forget Operation, Forgetting Curve Decay (+4)
-- **Formation (Store/Write)** (16) — 轨迹存储, MEM_WRITE, 可微分记忆读写, Read/Write Separation, Gated Write/Update, Overwrite Strategy (+10)
-- **Learning** (6) — Collaborative Graph Learning, 强化学习路径选择, 约束生成, Database-driven Unlearning, Agentic Continual Pre-training, Post-training Alignment via SFT/RL
-- **Other Operation** (228) — Conflict Resolution, 记忆增强, LFU 淘汰, Autonomous API Invocation, Result Injection & Continuation, Tool Usage Filtering (+222)
-- **Reflection** (15) — 反思生成, Reflective Synthesis, Reflection Generation, 风险触发式自我反思, Multi-turn Reasoning, 推理困境检测 (+9)
-- **Retrieval** (79) — 记忆检索, Memory Retrieval, Semantic Retrieval, 语义检索, Similarity-based Retrieval, Hierarchical Retrieval (+73)
-- **Scoring/Ranking** (6) — Importance Scoring, Personalized PageRank Propagation, Weighted Fusion Ranking, 记忆距离加权评分, 动态重要性记忆过滤, Sub-Tree Ranking
-- **Summarization** (33) — State Summarization, 上下文编码压缩, LLM-driven Entity-Relation Extraction, 基于反馈的知识提取, Recursive Summary Aggregation, 记忆编码与压缩 (+27)
+动态维度中，Retrieval（18%）和 Other Operation（51%）占据主导——检索是 Agent Memory 系统中最受关注的操作类型，而大量"其他操作"反映了领域在操作语义上尚未收敛。
 
 ---
 
