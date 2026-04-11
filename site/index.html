@@ -565,11 +565,11 @@
 
         async function init() {
             try {
-                var lexRes = await fetch(LEXICON_URL);
+                var lexRes = await fetch(LEXICON_URL + '?t=' + Date.now());
                 if (!lexRes.ok) throw new Error('lexicon.json 加载失败 (' + lexRes.status + ')');
                 lexicon = await lexRes.json();
 
-                var ontoRes = await fetch(ONTOLOGY_URL);
+                var ontoRes = await fetch(ONTOLOGY_URL + '?t=' + Date.now());
                 if (ontoRes.ok) {
                     ontologyMarkdown = await ontoRes.text();
                 }
