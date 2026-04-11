@@ -1,245 +1,115 @@
 <div align="center">
-  
-![AgentMemoryAtlas Logo](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjMiIG9wYWNpdHk9IjAuMyIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBlYTVlOSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAsIDEwMCkiPjxlbGxpcHNlIGN4PSIwIiBjeT0iMCIgcng9IjM1IiByeT0iMzAiIGZpbGw9IiNmNDcyYjYiIG9wYWNpdHk9IjAuOSIvPjxlbGxpcHNlIGN4PSItMjUiIGN5PSI1IiByeD0iMTUiIHJ5PSIyMCIgZmlsbD0iI2VjNDg5OSIgb3BhY2l0eT0iMC44Ii8+PGVsbGlwc2UgY3g9IjI1IiBjeT0iNSIgcng9IjE1IiByeT0iMjAiIGZpbGw9IiNkYjI3NzciIG9wYWNpdHk9IjAuOCIvPjxwYXRoIGQ9Ik0gLTE1IC0yMCBRIC0xMCAtMTAsIC0xNSAwIFEgLTEwIDEwLCAtMTUgMjAiIHN0cm9rZT0iIyJiZTE4NWQiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTSAwIC0yNSBRIDUgLTE1LCAwIC01IFEgNSA1LCAwIDE1IFEgNSAyNSwgMCAzMCIgc3Ryb2tlPSIjYmUxODVkIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuNiIvPjxwYXRoIGQ9Ik0gMTUgLTIwIFEgMTAgLTEwLCAxNSAwIFEgMTAgMTAsIDE1IDIwIiBzdHJva2U9IiNiZTE4NWQiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PC9nPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjIwIiByPSI2IiBmaWxsPSIjM2I4MmY2Ii8+PGNpcmNsZSBjeD0iMTgwIiBjeT0iMTAwIiByPSI2IiBmaWxsPSIjMGVhNWU5Ii8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTgwIiByPSI2IiBmaWxsPSIjMTZhMzRhIi8+PGNpcmNsZSBjeD0iMjAiIGN5PSIxMDAiIHI9IjYiIGZpbGw9IiNmNTllMGIiLz48bGluZSB4MT0iMTAwIiB5MT0iMjYiIHgyPSIxMDAiIHkyPSI3MCIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSIxNzQiIHkxPSIxMDAiIHgyPSIxMzUiIHkyPSIxMDAiIHN0cm9rZT0iIzBlYTVlOSIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48bGluZSB4MT0iMTAwIiB5MT0iMTc0IiB4Mj0iMTAwIiB5Mj0iMTMwIiBzdHJva2U9IiMxNmEzNGEiIHN0cm9rZS13aWR0aD0iMiIgb3BhY2l0eT0iMC41Ii8+PGxpbmUgeDE9IjI2IiB5MT0iMTAwIiB4Mj0iNjUiIHkyPSIxMDAiIHN0cm9rZT0iI2Y1OWUwYiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4=)
 
 # AgentMemoryAtlas
 
-[![Stars](https://img.shields.io/github/stars/Haiyoung/AgentMemoryAtlas?style=social)](https://github.com/Haiyoung/AgentMemoryAtlas)
-[![Papers](https://img.shields.io/badge/papers-20%2F204-blue)](https://haiyoung.github.io/AgentMemoryAtlas/)
-[![License](https://img.shields.io/badge/license-MIT--0-yellow)](LICENSE)
-[![Last Update](https://img.shields.io/badge/update-2026--03--22-green)](https://github.com/Haiyoung/AgentMemoryAtlas)
-
-> 🗺️ **系统性梳理 Agent Memory 领域研究版图**
->
-> 基于**本体论方法论**的智能体记忆论文地图集 · 7 维度深度标注 · 可视化分析
+**Agent Memory 领域本体论 · 论文阅读简报库**
 
 </div>
 
 ---
 
-## 📊 实时进度
+## 关于本项目
 
-<div align="center">
+AgentMemoryAtlas 是 Agent Memory 领域的系统性知识基础设施，包含两大核心内容：
 
-| 📚 总目标 | ✅ 已完成 | 📈 进度 | 🎯 完成批次 |
-|:---------:|:---------:|:-------:|:-----------:|
-| **204 篇** | **20 篇** | **9.8%** | **2/15** |
+### 1. Agent Memory 领域本体论
 
-**🚀 批次 1 (2026 年)**: 6/6 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **📅 批次 2 (2025-12)**: 10/10 ✅ &nbsp;&nbsp;|&nbsp;&nbsp; **📖 批次 3 (2025-11)**: 5/15 🟡
+从 146+ 篇 Agent Memory 领域论文中归纳提炼出的**统一概念框架**，采用"三维正交分类 + 类层级"双轨架构：
 
-</div>
+- **三维正交分类**：载体维度（Carrier）× 功能维度（Function）× 动态维度（Dynamic），为每个概念提供精确坐标
+- **类层级体系**：8 个顶层核心类（Agent / Memory / MemorySystem / MemoryEvent / MemoryOperation / Context / Entity / Policy）
+- **核心公理体系**：存在、操作、质量、安全、演进五大类公理，构成领域的推理基础
+- **架构范式归纳**：外部检索、上下文窗口、参数化、图结构、混合多层五种主导架构
+- **功能范式归纳**：陈述性、程序与经验、工作、长期、反思五大功能范式
+- **生命周期模型**：形成 → 组织 → 巩固 → 检索 → 遗忘 → 反思的闭环
+- **安全与治理**：隐私、一致性、质量、演化约束、结构完整性五大治理维度
 
----
+阅读本体论：
+- 在线：[GitHub Pages → 本体论](https://haiyoung.github.io/AgentMemoryAtlas/)
+- 本地：[ontology/ontology_base.md](ontology/ontology_base.md)（318 行凝练模型）
+- 完整词库：[ontology/lexicon.json](ontology/lexicon.json)（1411 个概念，744 条关系）
 
-## 🌟 项目亮点
+### 2. Agent Memory 论文阅读简报
 
-### 🧠 本体论驱动的深度分析
+按年份组织的论文阅读简报库，每篇论文从多个维度进行结构化分析：
 
-使用**7 维度本体模型**系统化标注每篇论文，构建领域知识图谱：
+- **基础元数据**：标题、作者、发表渠道、研究领域
+- **7 维度本体标注**：记忆类型 / 记忆结构 / 记忆操作 / 功能定位 / 设计模式 / 公理约束 / 记忆载体
+- **综合评价**：理论基础、问题核心性、方法创新性、技术壁垒、实验严谨性、落地可行性、应用前景
+- **核心主张**：问题 / 方案 / 优势的通俗概括
+- **实验结果**：关键性能指标与对比数据
+- **局限性与未来方向**
 
-| 维度 | 核心概念 | 示例 |
-|------|---------|------|
-| **记忆类型** | Factual/Experiential/Working/Procedural | Hindsight: 4 Logical Networks |
-| **记忆结构** | Graph/Vector/Hierarchical/Adapter | WorldMM: Multi-Temporal Graphs |
-| **记忆操作** | Formation/Evolution/Retrieval/Reflect | ReMe: Multi-faceted Distillation |
-| **功能定位** | Reasoning/Planning/Learning | Memoria: Personalized Conversational AI |
-| **设计模式** | RAG/Self-Evolving/OS-inspired | MemEvolve: Meta-Evolution |
-| **公理约束** | Stability-Plasticity/Generalization | MemLoRA: Knowledge Distillation |
-| **记忆载体** | Token/External/Parametric/Latent | MemLoRA: Expert Adapters |
-
-### 📊 可视化论文总结
-
-每篇论文生成交互式 HTML 报告，包含：
-
-- ✅ **Mermaid 架构图** (居中显示，支持深色模式)
-- ✅ **6 维度综合评分** (期刊影响力/问题核心性/方法创新性/技术壁垒/落地可行性/应用前景)
-- ✅ **本体论 7 维度标签** (快速定位论文贡献)
-- ✅ **核心主张** (通俗易懂版：问题/方案/优势)
-- ✅ **实验结果** (性能对比表格 + 关键数据)
-- ✅ **局限性与未来方向** (客观分析)
-- ✅ **🌙深色/☀️浅色主题切换**
-
-### 🔗 双轨阅读体验
-
-| 阅读方式 | 特点 | 链接 |
-|---------|------|------|
-| **📝 MD 文档** | 完整技术细节，支持代码块 | [papers/](papers/) |
-| **🌐 HTML 报告** | 在线精美可视化，交互体验 | [GitHub Pages](https://haiyoung.github.io/AgentMemoryAtlas/) |
+阅读论文简报：
+- 在线：[GitHub Pages → 论文列表](https://haiyoung.github.io/AgentMemoryAtlas/)（按年份浏览）
+- 本地：`paper/{year}/` 目录下的 Markdown 文档
 
 ---
 
-## 📚 已完成论文
-
-### 🚀 批次 1: 2026 年 (6/6) ✅
-
-| 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
-|------|------|---------|---------|------|
-| 1 | Memory Matters More | 2601.04726 | 事件中心记忆作为逻辑地图 | ⭐⭐⭐⭐⭐ 4.8 |
-| 2 | MAGMA | 2601.03236 | 多图智能体记忆架构 | ⭐⭐⭐⭐⭐ 4.7 |
-| 3 | EverMemOS | 2601.02163 | 自组织记忆操作系统 | ⭐⭐⭐⭐⭐ 4.6 |
-| 4 | MemRL | 2601.03192 | 运行时强化学习自进化 | ⭐⭐⭐⭐⭐ 4.7 |
-| 5 | Agentic Memory | 2601.01885 | 智能体记忆统一框架 | ⭐⭐⭐⭐⭐ 4.5 |
-| 6 | Memory Matters More (v2) | 2601.04726 | 事件中心记忆 (增强版) | ⭐⭐⭐⭐⭐ 4.8 |
-
-### 📅 批次 2: 2025-12 (10/10) ✅
-
-| 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
-|------|------|---------|---------|------|
-| 1 | From Context to EDUs | 2512.14244 | EDU 上下文压缩 | ⭐⭐⭐⭐ 4.3 |
-| 2 | MemVerse | 2512.03627 | 多模态终身学习记忆 | ⭐⭐⭐⭐⭐ 4.5 |
-| 3 | MMAG | 2512.01710 | 混合记忆增强生成 | ⭐⭐⭐⭐⭐ 4.4 |
-| 4 | Sophia | 2512.18202 | 持久化人工生命框架 | ⭐⭐⭐⭐⭐ 4.6 |
-| 5 | WorldMM | 2512.02425 | 多模态记忆 (文本 + 视觉) | ⭐⭐⭐⭐⭐ 4.8 |
-| 6 | Memoria | 2512.12686 | 动态摘要 + 加权 KG | ⭐⭐⭐⭐ 4.3 |
-| 7 | Hindsight | 2512.12818 | 4 逻辑网络 +3 操作 | ⭐⭐⭐⭐⭐ 4.9 |
-| 8 | MemEvolve | 2512.18746 | 元进化框架 | ⭐⭐⭐⭐⭐ 4.8 |
-| 9 | ReMe | 2512.10696 | 动态过程记忆 | ⭐⭐⭐⭐⭐ 4.8 |
-| 10 | MemLoRA | 2512.04763 | 设备端记忆系统 | ⭐⭐⭐⭐⭐ 4.9 |
-
-### 📖 批次 3: 2025-11 (5/15) 🟡
-
-| 序号 | 论文 | arXiv ID | 核心贡献 | 评分 |
-|------|------|---------|---------|------|
-| 1 | EMem | 2511.17208 | 简单而强大的基线 | ⭐⭐⭐⭐ 4.4 |
-| 2 | GAM | 2511.18423 | 通用智能体记忆 | ⭐⭐⭐⭐ 4.4 |
-| 3 | O-Mem | 2511.13593 | 全向记忆系统 | ⭐⭐⭐⭐ 4.4 |
-| 4 | FLEX | 2511.06449 | 经验前向学习 | ⭐⭐⭐⭐⭐ 4.7 |
-| 5 | DreamGym | 2511.03773 | 经验合成 RL 训练 | ⭐⭐⭐⭐⭐ 4.8 |
-
----
-
-## 🏆 最佳性能记录
-
-| 基准 | 最佳结果 | 论文 | 模型 |
-|------|---------|------|------|
-| **LongMemEval** | 91.4% | Hindsight | Scaled |
-| **LoCoMo** | 89.61% | Hindsight | 20B |
-| **5 视频基准** | +8.4% | WorldMM | GPT-5 |
-| **BFCL-V3** | SOTA | ReMe | Qwen3-8B + ReMe |
-| **AppWorld** | SOTA | ReMe | Qwen3-8B + ReMe |
-| **AIME25** | +23% | FLEX | - |
-| **Token 减少** | 99.7% | Memoria | - |
-| **延迟降低** | 41.1% | DreamGym | - |
-| **记忆缩放** | 8B+ReMe > 14B | ReMe | Qwen3 |
-| **设备端性能** | 媲美 120B | MemLoRA | SLM+Adapter |
-
----
-
-## 🧭 本体论概念
-
-### 核心概念统计
-
-| 类别 | 数量 | 代表概念 |
-|------|------|---------|
-| **记忆结构类型** | 15 | Multi-Temporal Graphs, Expert Adapters |
-| **记忆操作机制** | 20 | Retain-Recall-Reflect, Meta-Evolution |
-| **记忆载体类型** | 8 | Visual Memory Corpus, Parametric Adapters |
-| **验证公理** | 20 | Memory-Scaling Effect, On-Device Deployment |
-| **功能定位** | 8 | Long Video Reasoning, On-Device Memory |
-| **评估基准** | 11 | LongMemEval, LoCoMo, BFCL-V3 |
-
-### 技术演进路径
+## 目录结构
 
 ```
-第 1 代 (2024-): 简单向量检索
-  ↓
-第 2 代 (2025): 结构化记忆 ← 当前主流 (70% 图结构)
-  ↓
-第 3 代 (2025-26): 反思推理 (Hindsight, ReMe)
-  ↓
-第 4 代 (未来): 自进化记忆 (MemEvolve, MemLoRA)
+AgentMemoryAtlas/
+├── ontology/              # 本体论领域模型
+│   ├── ontology_base.md   # 本体论正文（318 行，8 节）
+│   ├── lexicon.json       # 完整词库（1411 概念，744 关系）
+│   ├── changelogs/        # 模型更新日志
+│   └── backups/           # 历史版本备份
+│
+├── paper/                 # 论文阅读简报
+│   ├── 2021/              # 1 篇
+│   ├── 2022/              # 1 篇
+│   ├── 2023/              # 18 篇
+│   ├── 2024/              # 23 篇
+│   ├── 2025/              # 100 篇
+│   └── 2026/              # 5 篇
+│
+├── site/                  # GitHub Pages 站点源码
+│   └── index.html         # 动态词云 + 本体论正文 + 论文导航
+│
+├── scripts/               # 构建脚本
+│   ├── extract-lexicon.py # 从分析文档提取词库
+│   └── build-site.py      # 构建 GitHub Pages 站点
+│
+└── .claude/commands/      # Claude Code 技能
+    └── ontology-update.md # 增量更新本体论的自动化命令
 ```
 
 ---
 
-## 🚀 快速开始
+## 使用方式
 
 ### 在线阅读
 
-[**🌐 访问 GitHub Pages**](https://haiyoung.github.io/AgentMemoryAtlas/) 查看：
-
-- 📊 **实时进度统计** (20/204)
-- 📄 **所有论文 HTML 总结** (带 emoji 图标)
-- 🧠 **本体论核心概念展示** (可视化图谱)
-- 🔍 **按年份分类浏览** (2026/2025/...)
+访问 [GitHub Pages 站点](https://haiyoung.github.io/AgentMemoryAtlas/)：
+- 顶部为 Agent Memory 核心概念词云（基于词频权重动态排列）
+- 中部为本体论正文
+- 底部按年份浏览论文阅读简报
 
 ### 本地阅读
-
-克隆仓库查看完整 MD 文档：
 
 ```bash
 git clone https://github.com/Haiyoung/AgentMemoryAtlas.git
 cd AgentMemoryAtlas
+
+# 阅读本体论
+cat ontology/ontology_base.md
+
+# 浏览论文简报
+ls paper/2025/
 ```
 
-### 论文阅读
+### 增量更新本体论
 
-1. **浏览列表**: 查看上方"已完成论文"表格
-2. **点击链接**: 跳转到对应 HTML 报告
-3. **深度阅读**: 下载 MD 文档查看技术细节
-
----
-
-## 📂 目录结构
-
-```
-AgentMemoryAtlas/
-├── 📄 papers/              # 论文 MD 文档 (按年份分类)
-│   ├── 2026/              # 2026 年论文 (6 篇)
-│   └── 2025/              # 2025 年论文 (14 篇)
-├── 🧠 ontology/           # 本体论文档
-│   ├── AGENT_MEMORY_ONTOLOGY.md   # 核心本体论
-│   ├── ONTOLOGY_CHANGELOG.md      # 版本更新日志
-│   └── BATCH_X_ANALYSIS.md        # 批次深度分析
-├── 🌐 site/               # GitHub Pages 源码
-│   ├── index.html         # 导航首页
-│   └── papers/            # HTML 论文报告
-├── 📄 README.md           # 项目门面 (本文档)
-└── 📄 CONTRIBUTING.md     # 贡献指南
+```bash
+# 将新增论文的本体论分析文档放入 ontology/ 目录后
+claude /ontology-update
 ```
 
----
-
-## 📈 里程碑
-
-- [x] **2026-03-21**: 项目启动，完成批次 1 (6 篇)
-- [x] **2026-03-22**: 完成批次 2 (10 篇) + 阶段 2 知识整合
-- [ ] **2026-03-XX**: 完成批次 3 (15 篇)
-- [ ] **2026-04-XX**: 完成所有 204 篇论文
-- [ ] **2026-05-XX**: 发布 v1.0 完整版
+该命令自动完成：备份 → 识别增量 → 概念归并 → 关系图更新 → 公理演化 → 生成 changelog → 重建站点
 
 ---
 
-## 🤝 贡献指南
+## 许可证
 
-欢迎贡献！你可以：
-
-- 📝 **提交新的论文分析** (按 v4.1 流程)
-- 🧠 **完善本体论模型** (更新 AGENT_MEMORY_ONTOLOGY.md)
-- 🎨 **改进可视化设计** (优化 HTML 模板)
-- 🐛 **报告问题或建议** (创建 Issue)
-
-查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详细指南.
-
----
-
-## 📊 统计信息
-
-| 指标 | 数值 |
-|------|------|
-| 📚 总论文数 | 204 篇 |
-| ✅ 已完成 | 20 篇 (9.8%) |
-| 🎯 完成批次 | 2/15 (13.3%) |
-| 🧠 本体概念 | 82+ 核心概念 |
-| 📄 HTML 报告 | 20 篇 |
-| ⭐ 平均评分 | 4.6/5.0 |
-
----
-
-<div align="center">
-  
-**AgentMemoryAtlas - 用本体论照亮 Agent Memory 研究之路** 🧠
-
-[📚 开始阅读](#-已完成论文) · [🌐 在线访问](https://haiyoung.github.io/AgentMemoryAtlas/) · [🤝 参与贡献](CONTRIBUTING.md)
-
-</div>
+MIT
