@@ -122,16 +122,15 @@ def main():
         print("Injected PAPER_LIST into site/index.html")
 
     # 3. Replace search-based fallback with actual mapping lookup
-    old_link = "'paper/search/' + arxivId"
-    new_link = "(PAPER_MAP[arxivId] || 'paper/search/' + arxivId)"
+    old_link = "PAPER_MAP[arxivId] || 'paper/search/'"
+    new_link = "PAPER_MAP[arxivId] || ('paper/search/'"
 
-    if old_link in html and "PAPER_MAP[arxivId] || 'paper/search/'" not in html:
+    # Only replace if old_link exists without being already wrapped
+    if old_link in html:
         html = html.replace(old_link, new_link)
         print("Updated paper links to use PAPER_MAP lookup")
-    elif "PAPER_MAP[arxivId] || 'paper/search/'" in html:
-        print("Paper links already use PAPER_MAP lookup, skipping")
     else:
-        print("WARNING: Could not find placeholder paper link pattern in site/index.html")
+        print("Paper links already use PAPER_MAP lookup, skipping")
 
     # 4. Inject paper browsing section after the ontology-body div, before footer
     if 'class="papers-section"' not in html:
