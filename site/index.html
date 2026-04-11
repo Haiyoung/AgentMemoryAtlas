@@ -738,7 +738,7 @@
                 grid.innerHTML = '<p style="color:var(--text-secondary);">暂无关联论文</p>';
             } else {
                 grid.innerHTML = papers.map(function(arxivId) {
-                    var paperPath = PAPER_MAP[arxivId] || ((PAPER_MAP[arxivId] || 'paper/search/' + arxivId)));
+                    var paperPath = PAPER_MAP[arxivId] || ('paper/search/' + arxivId));
                     return '<div class="paper-card">' +
                         '<span class="arxiv">' + escapeHtml(arxivId) + '</span>' +
                         '<p class="desc">概念 "' + escapeHtml(name) + '" 的来源论文</p>' +
