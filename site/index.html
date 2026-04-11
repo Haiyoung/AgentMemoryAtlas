@@ -295,6 +295,9 @@
         }
 
         footer a { color: var(--primary); text-decoration: none; }
+
+        .mermaid { text-align: center; margin: 1.5rem 0; }
+        .mermaid svg { max-width: 100%; height: auto; }
     </style>
 </head>
 <body>
@@ -351,6 +354,8 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:false,theme:'default'});</script>
     <script>
     // ── Custom Canvas word cloud: spiral layout + fish-like swim ──
     function createWordCloud(containerId, concepts, colorMap) {
@@ -683,6 +688,26 @@
 
             try {
                 body.innerHTML = marked.parse(cleanMd);
+
+                // Convert mermaid code blocks to divs for mermaid rendering
+                var mermaidBlocks = body.querySelectorAll('code.language-mermaid');
+                for (var i = 0; i < mermaidBlocks.length; i++) {
+                    var code = mermaidBlocks[i];
+                    var pre = code.parentElement;
+                    var div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = code.textContent;
+                    pre.replaceWith(div);
+                }
+
+                // Render all mermaid diagrams
+                if (body.querySelectorAll('.mermaid').length > 0) {
+                    try {
+                        mermaid.run({nodes: body.querySelectorAll('.mermaid')});
+                    } catch (e) {
+                        console.warn('Mermaid render failed:', e);
+                    }
+                }
             } catch (err) {
                 body.innerHTML = '<p style="color:#ef4444;">正文渲染失败: ' + escapeHtml(err.message) + '</p>';
                 return;
