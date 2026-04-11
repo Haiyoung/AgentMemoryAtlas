@@ -343,24 +343,25 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="wordcloud2.js"></script>
     <script>
-    // ── wordcloud2.js: Canvas mode with Retina fix + hover overlay ──
+    // ── Custom Canvas word cloud: spiral layout + crisp rendering ──
     function createWordCloud(containerId, concepts, colorMap) {
         var container = document.getElementById(containerId);
         if (!container) return null;
 
-        WordCloud.stop();
-        container.innerHTML = '';
+        // Clear container
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
 
-        // Canvas with high-DPI scaling
+        // Create high-DPI canvas
         var dpr = window.devicePixelRatio || 1;
         var w = container.clientWidth;
         var h = 500;
 
         var canvas = document.createElement('canvas');
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
         container.appendChild(canvas);
@@ -368,38 +369,118 @@
         var ctx = canvas.getContext('2d');
         ctx.scale(dpr, dpr);
 
-        // Build list: [[name, weight], ...]
-        var list = concepts.map(function(c) {
-            return [c.name, c.weight || 2];
-        });
+        var halfW = w / 2, halfH = h / 2;
 
-        WordCloud(canvas, {
-            list: list,
-            gridSize: 8,
-            weightFactor: function(size) {
-                return Math.max(14, Math.min(52, 12 + size * 4));
-            },
-            fontFamily: '"Inter", "PingFang SC", "Microsoft YaHei", sans-serif',
-            color: function(word, weight) {
-                var c = conceptLookup[word];
-                return (c && colorMap[c.category]) || '#94a3b8';
-            },
-            backgroundColor: 'transparent',
-            rotateRatio: 0,
-            rotationSteps: 1,
-            drawOutOfBound: false,
-            shrinkToFit: true,
-            wait: 0,
-            shuffle: true,
-            hover: function(item) {
-                canvas.style.cursor = item ? 'pointer' : 'default';
-            },
-            click: function(item) {
-                if (item && conceptLookup[item[0]]) {
-                    showPaperSection(conceptLookup[item[0]]);
+        // Build word entries with measured sizes
+        ctx.font = '14px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
+        var words = [];
+        for (var i = 0; i < concepts.length; i++) {
+            var c = concepts[i];
+            var fontSize = Math.max(14, Math.min(52, 12 + (c.weight || 2) * 4));
+            ctx.font = 'bold ' + fontSize + 'px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
+            var tw = ctx.measureText(c.name).width;
+            words.push({
+                text: c.name,
+                w: tw + 4,
+                h: fontSize + 4,
+                size: fontSize,
+                weight: c.weight || 2,
+                category: c.category,
+                color: colorMap[c.category] || '#94a3b8',
+                concept: c
+            });
+        }
+
+        // Sort largest first
+        words.sort(function(a, b) { return b.size - a.size; });
+
+        // Spiral placement
+        var PAD = 4;
+        var halfW2 = halfW, halfH2 = halfH;
+        for (var i = 0; i < words.length; i++) {
+            var wd = words[i];
+            var angle = Math.random() * Math.PI * 2;
+            var radius = 0;
+            var placed = false;
+            var step = 0.15;
+            var limit = Math.max(halfW, halfH) * 3;
+
+            while (radius < limit) {
+                wd.x = radius * Math.cos(angle);
+                wd.y = radius * Math.sin(angle) * 0.55;
+
+                var bx1 = wd.x - wd.w / 2 - PAD;
+                var by1 = wd.y - wd.h / 2 - PAD;
+                var bx2 = wd.x + wd.w / 2 + PAD;
+                var by2 = wd.y + wd.h / 2 + PAD;
+
+                if (bx1 < -halfW2 || bx2 > halfW2 || by1 < -halfH2 || by2 > halfH2) {
+                    angle += step; radius += step * 0.5; continue;
+                }
+
+                var collide = false;
+                for (var j = 0; j < i; j++) {
+                    var p = words[j];
+                    if (bx1 < p.x + p.w / 2 + PAD && bx2 > p.x - p.w / 2 - PAD &&
+                        by1 < p.y + p.h / 2 + PAD && by2 > p.y - p.h / 2 - PAD) {
+                        collide = true; break;
+                    }
+                }
+                if (!collide) { placed = true; break; }
+                angle += step; radius += step * 0.5;
+            }
+            if (!placed) {
+                console.warn('Word not placed:', wd.text);
+            }
+        }
+
+        // Draw all words
+        for (var i = 0; i < words.length; i++) {
+            var wd = words[i];
+            ctx.font = (wd.size >= 28 ? 'bold ' : '400 ') + wd.size + 'px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
+            ctx.fillStyle = wd.color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(wd.text, halfW + wd.x, halfH + wd.y);
+        }
+
+        // Store words for hover/click hit detection
+        canvas._wcWords = words;
+        canvas._wcHW = halfW;
+        canvas._wcHH = halfH;
+
+        // Click handler with hit detection
+        canvas.addEventListener('click', function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var mx = (e.clientX - rect.left) * (canvas.width / rect.width / dpr);
+            var my = (e.clientY - rect.top) * (canvas.height / rect.height / dpr);
+
+            for (var i = 0; i < words.length; i++) {
+                var wd = words[i];
+                if (mx >= halfW + wd.x - wd.w/2 && mx <= halfW + wd.x + wd.w/2 &&
+                    my >= halfH + wd.y - wd.h/2 && my <= halfH + wd.y + wd.h/2) {
+                    if (wd.concept) showPaperSection(wd.concept);
+                    return;
                 }
             }
         });
+
+        canvas.addEventListener('mousemove', function(e) {
+            var rect = canvas.getBoundingClientRect();
+            var mx = (e.clientX - rect.left) * (canvas.width / rect.width / dpr);
+            var my = (e.clientY - rect.top) * (canvas.height / rect.height / dpr);
+            var over = false;
+            for (var i = 0; i < words.length; i++) {
+                var wd = words[i];
+                if (mx >= halfW + wd.x - wd.w/2 && mx <= halfW + wd.x + wd.w/2 &&
+                    my >= halfH + wd.y - wd.h/2 && my <= halfH + wd.y + wd.h/2) {
+                    over = true; break;
+                }
+            }
+            canvas.style.cursor = over ? 'pointer' : 'default';
+        });
+
+        console.log('Word cloud rendered:', words.length, 'words');
     }
     </script>
     <script>
@@ -575,7 +656,6 @@
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                WordCloud.stop();
                 renderWordCloud();
             }, 250);
         });
