@@ -48,17 +48,6 @@
             margin-top: 0.25rem;
         }
 
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .stats-bar span { font-weight: 600; color: var(--primary); }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -312,12 +301,31 @@
     <header>
         <h1 class="header-title">AgentMemoryAtlas</h1>
         <p class="header-subtitle">Agent Memory 领域本体论知识库</p>
-        <div class="stats-bar" id="stats-bar"></div>
     </header>
 
     <div class="container">
         <div class="wordcloud-section">
-            <h2>🧠 本体概念全景图</h2>
+            <h2>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;">
+                    <defs>
+                        <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8b5cf6"/>
+                            <stop offset="50%" style="stop-color:#3b82f6"/>
+                            <stop offset="100%" style="stop-color:#ef4444"/>
+                        </linearGradient>
+                    </defs>
+                    <g stroke="url(#iconGrad)" stroke-width="1.2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="12" cy="2" r="1.5"/><circle cx="22" cy="12" r="1.5"/><circle cx="12" cy="22" r="1.5"/><circle cx="2" cy="12" r="1.5"/>
+                    <circle cx="19" cy="5" r="1.5"/><circle cx="19" cy="19" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="5" cy="5" r="1.5"/>
+                    <line x1="12" y1="9" x2="12" y2="3.5"/><line x1="15" y1="12" x2="20.5" y2="12"/>
+                    <line x1="12" y1="15" x2="12" y2="20.5"/><line x1="9" y1="12" x2="3.5" y2="12"/>
+                    <line x1="14.1" y1="9.9" x2="17.9" y2="6.1"/><line x1="14.1" y1="14.1" x2="17.9" y2="17.9"/>
+                    <line x1="9.9" y1="14.1" x2="6.1" y2="17.9"/><line x1="9.9" y1="9.9" x2="6.1" y2="6.1"/>
+                    </g>
+                </svg>
+                <span style="background:linear-gradient(135deg,#8b5cf6,#3b82f6,#16a34a,#f59e0b,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1.1rem;">AgentMemory 核心概念</span>
+            </h2>
             <div id="wordcloud-container">
                 <div class="wordcloud-loading">加载词云数据中...</div>
             </div>
@@ -338,23 +346,21 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 AgentMemoryAtlas · 最后更新: <span id="last-updated"></span> ·
+        <p>&copy; 2026 AgentMemoryAtlas ·
            <a href="https://github.com/Haiyoung/AgentMemoryAtlas">View on GitHub</a></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-    // ── Custom Canvas word cloud: spiral layout + sinusoidal float ──
+    // ── Custom Canvas word cloud: spiral layout + fish-like swim ──
     function createWordCloud(containerId, concepts, colorMap) {
         var container = document.getElementById(containerId);
         if (!container) return null;
 
-        // Clear container
         while (container.firstChild) {
             container.removeChild(container.firstChild);
         }
 
-        // Create high-DPI canvas
         var dpr = window.devicePixelRatio || 1;
         var w = container.clientWidth;
         var h = 500;
@@ -371,7 +377,7 @@
 
         var halfW = w / 2, halfH = h / 2;
 
-        // Build word entries with measured sizes
+        // Build word entries
         ctx.font = '14px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
         var words = [];
         for (var i = 0; i < concepts.length; i++) {
@@ -388,83 +394,105 @@
                 category: c.category,
                 color: colorMap[c.category] || '#94a3b8',
                 concept: c,
-                // Animation parameters
-                phase: Math.random() * Math.PI * 2,
-                freq: 0.3 + Math.random() * 0.4,
-                ampX: 3 + Math.random() * 5,
-                ampY: 2 + Math.random() * 4,
             });
         }
 
-        // Sort largest first for placement
+        // Sort largest first for initial placement
         words.sort(function(a, b) { return b.size - a.size; });
 
-        // Spiral placement (base positions)
+        // Spiral initial placement
         var PAD = 4;
-        var halfW2 = halfW, halfH2 = halfH;
         for (var i = 0; i < words.length; i++) {
             var wd = words[i];
             var angle = Math.random() * Math.PI * 2;
-            var radius = 0;
-            var placed = false;
-            var step = 0.15;
-            var limit = Math.max(halfW, halfH) * 3;
-
+            var radius = 0, step = 0.15, limit = Math.max(halfW, halfH) * 2.5;
             while (radius < limit) {
                 wd.baseX = radius * Math.cos(angle);
                 wd.baseY = radius * Math.sin(angle) * 0.55;
-
-                var bx1 = wd.baseX - wd.w / 2 - PAD;
-                var by1 = wd.baseY - wd.h / 2 - PAD;
-                var bx2 = wd.baseX + wd.w / 2 + PAD;
-                var by2 = wd.baseY + wd.h / 2 + PAD;
-
-                if (bx1 < -halfW2 || bx2 > halfW2 || by1 < -halfH2 || by2 > halfH2) {
+                var bx1 = wd.baseX - wd.w/2 - PAD, by1 = wd.baseY - wd.h/2 - PAD;
+                var bx2 = wd.baseX + wd.w/2 + PAD, by2 = wd.baseY + wd.h/2 + PAD;
+                if (bx1 < -halfW || bx2 > halfW || by1 < -halfH || by2 > halfH) {
                     angle += step; radius += step * 0.5; continue;
                 }
-
                 var collide = false;
                 for (var j = 0; j < i; j++) {
                     var p = words[j];
-                    if (bx1 < p.baseX + p.w / 2 + PAD && bx2 > p.baseX - p.w / 2 - PAD &&
-                        by1 < p.baseY + p.h / 2 + PAD && by2 > p.baseY - p.h / 2 - PAD) {
+                    if (bx1 < p.baseX + p.w/2 + PAD && bx2 > p.baseX - p.w/2 - PAD &&
+                        by1 < p.baseY + p.h/2 + PAD && by2 > p.baseY - p.h/2 - PAD) {
                         collide = true; break;
                     }
                 }
-                if (!collide) { placed = true; break; }
+                if (!collide) break;
                 angle += step; radius += step * 0.5;
-            }
-            if (!placed) {
-                wd.baseX = (Math.random() - 0.5) * w * 0.8;
-                wd.baseY = (Math.random() - 0.5) * h * 0.8;
             }
         }
 
-        // Animation state
+        // Assign velocity vectors (fish-like swimming)
+        for (var i = 0; i < words.length; i++) {
+            var wd = words[i];
+            wd.x = wd.baseX;
+            wd.y = wd.baseY;
+            var angle = Math.random() * Math.PI * 2;
+            var speed = 0.4 + Math.random() * 0.3;
+            wd.vx = Math.cos(angle) * speed;
+            wd.vy = Math.sin(angle) * speed;
+            // Gentle direction change over time
+            wd.turnSpeed = 0.02 + Math.random() * 0.03;
+            wd.turnPhase = Math.random() * Math.PI * 2;
+        }
+
+        // Animation
         var t0 = Date.now();
         var running = true;
         var hovered = null;
 
-        // Render loop
-        function render() {
+        function render(timestamp) {
             if (!running) return;
-            var t = (Date.now() - t0) / 1000;
+            var t = (timestamp - t0) / 1000;
 
             ctx.clearRect(0, 0, w, h);
 
+            // Update positions
             for (var i = 0; i < words.length; i++) {
                 var wd = words[i];
-                // Sinusoidal displacement
-                wd.x = wd.baseX + Math.sin(t * wd.freq + wd.phase) * wd.ampX;
-                wd.y = wd.baseY + Math.cos(t * wd.freq * 0.7 + wd.phase * 1.3) * wd.ampY;
 
-                var fontSize = (wd.size >= 28 ? 'bold ' : '400 ') + wd.size + 'px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
-                ctx.font = fontSize;
+                // Slow direction change (gentle turning like fish)
+                var turnAngle = Math.sin(t * wd.turnSpeed + wd.turnPhase) * wd.turnSpeed;
+                var currentAngle = Math.atan2(wd.vy, wd.vx);
+                var newAngle = currentAngle + turnAngle;
+                var speed = Math.sqrt(wd.vx * wd.vx + wd.vy * wd.vy);
+                wd.vx = Math.cos(newAngle) * speed;
+                wd.vy = Math.sin(newAngle) * speed;
+
+                // Move
+                wd.x += wd.vx;
+                wd.y += wd.vy;
+
+                // Bounce off walls
+                var margin = 10;
+                if (wd.x - wd.w/2 < -halfW + margin) {
+                    wd.x = -halfW + wd.w/2 + margin;
+                    wd.vx = Math.abs(wd.vx);
+                }
+                if (wd.x + wd.w/2 > halfW - margin) {
+                    wd.x = halfW - wd.w/2 - margin;
+                    wd.vx = -Math.abs(wd.vx);
+                }
+                if (wd.y - wd.h/2 < -halfH + margin) {
+                    wd.y = -halfH + wd.h/2 + margin;
+                    wd.vy = Math.abs(wd.vy);
+                }
+                if (wd.y + wd.h/2 > halfH - margin) {
+                    wd.y = halfH - wd.h/2 - margin;
+                    wd.vy = -Math.abs(wd.vy);
+                }
+
+                // Draw
+                ctx.font = (wd.size >= 28 ? 'bold ' : '400 ') + wd.size + 'px "Inter", "PingFang SC", "Microsoft YaHei", sans-serif';
                 ctx.fillStyle = wd.color;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                // Hover glow
                 if (hovered === i) {
                     ctx.save();
                     ctx.shadowColor = wd.color;
@@ -478,14 +506,13 @@
 
             requestAnimationFrame(render);
         }
-        render();
+        requestAnimationFrame(render);
 
         // Hit detection
         function hitTest(clientX, clientY) {
             var rect = canvas.getBoundingClientRect();
             var mx = (clientX - rect.left) * (canvas.width / rect.width / dpr);
             var my = (clientY - rect.top) * (canvas.height / rect.height / dpr);
-
             for (var i = words.length - 1; i >= 0; i--) {
                 var wd = words[i];
                 if (mx >= halfW + wd.x - wd.w/2 && mx <= halfW + wd.x + wd.w/2 &&
@@ -498,9 +525,7 @@
 
         canvas.addEventListener('click', function(e) {
             var idx = hitTest(e.clientX, e.clientY);
-            if (idx >= 0 && words[idx].concept) {
-                showPaperSection(words[idx].concept);
-            }
+            if (idx >= 0 && words[idx].concept) showPaperSection(words[idx].concept);
         });
 
         canvas.addEventListener('mousemove', function(e) {
@@ -513,11 +538,9 @@
             hovered = null;
         });
 
-        container._wcRunning = true;
         return {
             stop: function() {
                 running = false;
-                container._wcRunning = false;
             }
         };
     }
@@ -551,7 +574,6 @@
                     ontologyMarkdown = await ontoRes.text();
                 }
 
-                renderStats();
                 renderWordCloud();
                 renderSidebar();
                 renderOntologyBody();
@@ -569,26 +591,6 @@
             var div = document.createElement('div');
             div.appendChild(document.createTextNode(str));
             return div.innerHTML;
-        }
-
-        function getUniquePaperCount() {
-            var sources = {};
-            lexicon.concepts.forEach(function(c) {
-                (c.sourcePapers || []).forEach(function(s) { sources[s] = true; });
-            });
-            return Object.keys(sources).length;
-        }
-
-        function renderStats() {
-            var bar = document.getElementById('stats-bar');
-            var paperCount = getUniquePaperCount();
-            var coreCount = lexicon.concepts.filter(function(c) { return c.weight >= 2; }).length;
-            bar.innerHTML =
-                '核心概念: <span>' + coreCount + '</span> &nbsp;|&nbsp;' +
-                '关系: <span>' + lexicon.relationCount + '</span> &nbsp;|&nbsp;' +
-                '版本: <span>' + lexicon.version + '</span> &nbsp;|&nbsp;' +
-                '论文: <span>' + paperCount + ' 篇';
-            document.getElementById('last-updated').textContent = lexicon.generatedAt || '2026-04-10';
         }
 
         function renderWordCloud() {
@@ -652,10 +654,11 @@
                 return;
             }
 
+            var cleanMd = ontologyMarkdown.replace(/^---\n[\s\S]*?\n---\n?/, '');
             var headings = [];
             var regex = /^(#{2,3})\s+(.+)$/gm;
             var match;
-            while ((match = regex.exec(ontologyMarkdown)) !== null) {
+            while ((match = regex.exec(cleanMd)) !== null) {
                 var level = match[1].length;
                 var text = match[2].replace(/[*_`]/g, '').trim();
                 var id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-');
@@ -675,8 +678,11 @@
                 return;
             }
 
+            // Strip YAML frontmatter (--- ... ---)
+            var cleanMd = ontologyMarkdown.replace(/^---\n[\s\S]*?\n---\n?/, '');
+
             try {
-                body.innerHTML = marked.parse(ontologyMarkdown);
+                body.innerHTML = marked.parse(cleanMd);
             } catch (err) {
                 body.innerHTML = '<p style="color:#ef4444;">正文渲染失败: ' + escapeHtml(err.message) + '</p>';
                 return;

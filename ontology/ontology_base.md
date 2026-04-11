@@ -20,12 +20,12 @@ Agent Memory 本体遵循"三维正交分类 + 类层级"双轨架构。
 
 | 载体维度 (Carrier) | 功能维度 (Function) | 动态维度 (Dynamic) |
 |--------------------|--------------------|--------------------|
-| Token-level | Factual | Formation |
-| Parametric | Experiential | Evolution |
-| External | Procedural | Retrieval |
-| Latent | Working | Forgetting |
-| | Episodic | Reflection |
-| | Semantic | Association |
+| Token-level (标记级) | Factual (事实) | Formation (形成) |
+| Parametric (参数) | Experiential (经验) | Evolution (演化) |
+| External (外部) | Procedural (程序) | Retrieval (检索) |
+| Latent (隐式) | Working (工作) | Forgetting (遗忘) |
+| | Episodic (情景) | Reflection (反思) |
+| | Semantic (语义) | Association (关联) |
 
 ### 1.2 顶层核心类（8个）
 
@@ -87,24 +87,15 @@ Agent Memory 本体遵循"三维正交分类 + 类层级"双轨架构。
 
 核心子类群：
 
-**Architecture/Framework** (14): 可逆 Transformer 架构, Minimalist Single-Core Architecture, Four-Layer Semantic Architecture, 时空语义系统, 模块化 AI 代理架构, 分层交互系统, SDM Activation Module, Agent Foundation Model Architecture
-  ... 及其他 6 个概念
-**Buffer/Pool** (9): Natural Language Summary Buffer, Replay Buffer for Offline RL, 备忘录存储, Historical Session Buffer, Action Trajectory Buffer, Dynamic Tool Pool, 经验池, STM Buffer
-  ... 及其他 1 个概念
-**Context Window** (23): Tool-Augmented Context Window, 滑动窗口上下文, Prompt Sequences, Prompt Context Window, Token Sequence Context, Dynamic Prompt Context Buffer, , Enhanced Prompt with Retrieved Context
-  ... 及其他 15 个概念
-**Graph/Tree Structure** (44): 知识三元组, Directed Weighted Graph, Hierarchical Community Tree, Dual-view Bipartite Graph, Query-Scene-Tool Interaction Graph, 外部知识图谱, 事实知识三元组, Hierarchical Aggregate Tree
-  ... 及其他 36 个概念
-**Index Structure** (16): Vector Index, LSH 向量索引表, 神经 API 检索索引, Vector Space Index, Self-Generated Graph Index, 海马体式索引, 原子索引映射, FAISS Vector Index for Video Semantics
-  ... 及其他 8 个概念
-**Memory Storage** (78): Memory Stream, 混合记忆架构, Structured Memory, Hierarchical Memory Architecture, 记忆原型, Hierarchical Memory Storage, Memory Strength Parameter, 三阶段记忆循环
-  ... 及其他 70 个概念
-**Network Layer/State** (12): Finite State Machine, Rule-based Decomposed Statements, Three-layer Hierarchical Structure, 代码库状态快照, Distilled Knowledge Statements, Interpolation Integration Layer, 持久化世界状态, Shared State Space
-  ... 及其他 4 个概念
-**Other Structure** (115): Hyper-network Weight Generator, GRU 隐藏状态, 高分辨率键值对, 自我提示库, SUS 评估体系, 问答对结构, 可学习令牌序列, 深度优先搜索决策树
-  ... 及其他 107 个概念
-**Vector/Embedding** (11): Perturbation Vector, API-Embedded Text Sequence, Vector Database Storage, 固定长度连续向量, Patch Embedding, 8-Vector Compressed Sequence, Intermediate Layer Embedding Slot, Vector-Text Dual Storage
-  ... 及其他 3 个概念
+- **Architecture/Framework** (14) — 可逆 Transformer 架构, Minimalist Single-Core Architecture, Four-Layer Semantic Architecture, 时空语义系统, 模块化 AI 代理架构, 分层交互系统, SDM Activation Module, Agent Foundation Model Architecture (+6)
+- **Buffer/Pool** (9) — Natural Language Summary Buffer, Replay Buffer for Offline RL, 备忘录存储, Historical Session Buffer, Action Trajectory Buffer, Dynamic Tool Pool, 经验池, STM Buffer (+1)
+- **Context Window** (23) — Tool-Augmented Context Window, 滑动窗口上下文, Prompt Sequences, Prompt Context Window, Token Sequence Context, Dynamic Prompt Context Buffer, Enhanced Prompt with Retrieved Context (+15)
+- **Graph/Tree Structure** (44) — 知识三元组, Directed Weighted Graph, Hierarchical Community Tree, Dual-view Bipartite Graph, Query-Scene-Tool Interaction Graph, 外部知识图谱, 事实知识三元组, Hierarchical Aggregate Tree (+36)
+- **Index Structure** (16) — Vector Index, LSH 向量索引表, 神经 API 检索索引, Vector Space Index, Self-Generated Graph Index, 海马体式索引, 原子索引映射, FAISS Vector Index for Video Semantics (+8)
+- **Memory Storage** (78) — Memory Stream, 混合记忆架构, Structured Memory, Hierarchical Memory Architecture, 记忆原型, Hierarchical Memory Storage, Memory Strength Parameter, 三阶段记忆循环 (+70)
+- **Network Layer/State** (12) — Finite State Machine, Rule-based Decomposed Statements, Three-layer Hierarchical Structure, 代码库状态快照, Distilled Knowledge Statements, Interpolation Integration Layer, 持久化世界状态, Shared State Space (+4)
+- **Other Structure** (115) — Hyper-network Weight Generator, GRU 隐藏状态, 高分辨率键值对, 自我提示库, SUS 评估体系, 问答对结构, 可学习令牌序列, 深度优先搜索决策树 (+107)
+- **Vector/Embedding** (11) — Perturbation Vector, API-Embedded Text Sequence, Vector Database Storage, 固定长度连续向量, Patch Embedding, 8-Vector Compressed Sequence, Intermediate Layer Embedding Slot, Vector-Text Dual Storage (+3)
 
 ### 3.2 功能维度网络 (Functions)
 
@@ -112,28 +103,19 @@ Agent Memory 本体遵循"三维正交分类 + 类层级"双轨架构。
 
 核心功能群：
 
-**Episodic Memory** (9): Episodic Memory, 情景记忆, Local Episodic Memory, Episodic Memory Graph, Episodic Simulation, Episodic Demonstration Memory
-  ... 及其他 3 个概念
-**Experiential Memory** (8): 经验记忆, Cross-Domain Experience, Experiential Knowledge, Early Experience, 结构化经验, 成功/失败轨迹经验
-  ... 及其他 2 个概念
-**Factual Memory** (5): 事实记忆, 结构化事实备忘录, 个性化事实知识, Externalized Factual Memory, 世界事实
-**Long-Term Memory** (16): Long-Term Memory, 长期记忆, Long-term Memory, Long-term Reflection Memory, 神经生物学启发的长期记忆, 时间敏感长期记忆
-  ... 及其他 10 个概念
-**Other Memory Type** (233): Agentic Memory, Summarized Memory, User Profile Memory, 持久记忆, Hierarchical Memory, Query Memory
-  ... 及其他 227 个概念
-**Parametric Memory** (7): Parametric Memory, Parametric Factual Knowledge, 参数化记忆, Non-Parametric Continual Learning, Parametric Knowledge, 非参数化策略记忆
-  ... 及其他 1 个概念
-**Procedural Memory** (9): 程序记忆, Programmatic Skills, Procedural Skill Memory, 程序性记忆, 技能模式记忆, Procedural Memory
-  ... 及其他 3 个概念
-**Reflection Memory** (2): Reflection Memory, 反思经验
-**Retrieval Memory** (4): 生成式检索记忆, MLP Memory, Retriever-Pretrained Memory, Implicit Retrieval Memory
-**Semantic Memory** (13): Semantic Memory, 语义记忆, API 语义记忆, Global Semantic Memory, Semantic-Graph Hybrid Memory, Implicit Semantic Memory
-  ... 及其他 7 个概念
-**Sensory Memory** (4): 感官记忆, Sensory Memory, 感官情境记忆, SensoryMemory
-**Short-Term Memory** (8): Short-Term Memory, Short-term Memory, Short-term Trajectory Memory, 短期记忆, Short-term Operation History, 短期注意力记忆
-  ... 及其他 2 个概念
-**Working Memory** (7): Working Memory, 工作记忆, Active Working Memory, 动态工作记忆, 动态上下文工作区, 短期工作记忆
-  ... 及其他 1 个概念
+- **Episodic Memory** (9) — Episodic Memory, 情景记忆, Local Episodic Memory, Episodic Memory Graph, Episodic Simulation, Episodic Demonstration Memory (+3)
+- **Experiential Memory** (8) — 经验记忆, Cross-Domain Experience, Experiential Knowledge, Early Experience, 结构化经验, 成功/失败轨迹经验 (+2)
+- **Factual Memory** (5) — 事实记忆, 结构化事实备忘录, 个性化事实知识, Externalized Factual Memory, 世界事实
+- **Long-Term Memory** (16) — Long-Term Memory, 长期记忆, Long-term Memory, Long-term Reflection Memory, 神经生物学启发的长期记忆, 时间敏感长期记忆 (+10)
+- **Other Memory Type** (233) — Agentic Memory, Summarized Memory, User Profile Memory, 持久记忆, Hierarchical Memory, Query Memory (+227)
+- **Parametric Memory** (7) — Parametric Memory, Parametric Factual Knowledge, 参数化记忆, Non-Parametric Continual Learning, Parametric Knowledge, 非参数化策略记忆 (+1)
+- **Procedural Memory** (9) — 程序记忆, Programmatic Skills, Procedural Skill Memory, 程序性记忆, 技能模式记忆, Procedural Memory (+3)
+- **Reflection Memory** (2) — Reflection Memory, 反思经验
+- **Retrieval Memory** (4) — 生成式检索记忆, MLP Memory, Retriever-Pretrained Memory, Implicit Retrieval Memory
+- **Semantic Memory** (13) — Semantic Memory, 语义记忆, API 语义记忆, Global Semantic Memory, Semantic-Graph Hybrid Memory, Implicit Semantic Memory (+7)
+- **Sensory Memory** (4) — 感官记忆, Sensory Memory, 感官情境记忆, SensoryMemory
+- **Short-Term Memory** (8) — Short-Term Memory, Short-term Memory, Short-term Trajectory Memory, 短期记忆, Short-term Operation History, 短期注意力记忆 (+2)
+- **Working Memory** (7) — Working Memory, 工作记忆, Active Working Memory, 动态工作记忆, 动态上下文工作区, 短期工作记忆 (+1)
 
 ### 3.3 动态维度网络 (Dynamics)
 
@@ -141,25 +123,17 @@ Agent Memory 本体遵循"三维正交分类 + 类层级"双轨架构。
 
 核心操作群：
 
-**Association** (8): In-Context Memory Integration, Relation-aware Linking, Context Integration, 概率插值集成, Parameter-Free Model Integration, 记忆整合
-  ... 及其他 2 个概念
-**Deduplication** (2): API 生成清洗, 语义去重
-**Evolution (Update)** (42): 记忆巩固, Memory Update, Memory Consolidation, Update, 动态更新, Constraint-based Editing
-  ... 及其他 36 个概念
-**Forgetting** (10): Memory Decay, Summarize-and-Forget, 时间衰减, 权重衰减遗忘机制, Forget Operation, Forgetting Curve Decay
-  ... 及其他 4 个概念
-**Formation (Store/Write)** (16): 轨迹存储, MEM_WRITE, 可微分记忆读写, Read/Write Separation, Gated Write/Update, Overwrite Strategy
-  ... 及其他 10 个概念
-**Learning** (6): Collaborative Graph Learning, 强化学习路径选择, 约束生成, Database-driven Unlearning, Agentic Continual Pre-training, Post-training Alignment via SFT/RL
-**Other Operation** (228): Conflict Resolution, 记忆增强, LFU 淘汰, Autonomous API Invocation, Result Injection & Continuation, Tool Usage Filtering
-  ... 及其他 222 个概念
-**Reflection** (15): 反思生成, Reflective Synthesis, Reflection Generation, 风险触发式自我反思, Multi-turn Reasoning, 推理困境检测
-  ... 及其他 9 个概念
-**Retrieval** (79): 记忆检索, Memory Retrieval, Semantic Retrieval, 语义检索, Similarity-based Retrieval, Hierarchical Retrieval
-  ... 及其他 73 个概念
-**Scoring/Ranking** (6): Importance Scoring, Personalized PageRank Propagation, Weighted Fusion Ranking, 记忆距离加权评分, 动态重要性记忆过滤, Sub-Tree Ranking
-**Summarization** (33): State Summarization, 上下文编码压缩, LLM-driven Entity-Relation Extraction, 基于反馈的知识提取, Recursive Summary Aggregation, 记忆编码与压缩
-  ... 及其他 27 个概念
+- **Association** (8) — In-Context Memory Integration, Relation-aware Linking, Context Integration, 概率插值集成, Parameter-Free Model Integration, 记忆整合 (+2)
+- **Deduplication** (2) — API 生成清洗, 语义去重
+- **Evolution (Update)** (42) — 记忆巩固, Memory Update, Memory Consolidation, Update, 动态更新, Constraint-based Editing (+36)
+- **Forgetting** (10) — Memory Decay, Summarize-and-Forget, 时间衰减, 权重衰减遗忘机制, Forget Operation, Forgetting Curve Decay (+4)
+- **Formation (Store/Write)** (16) — 轨迹存储, MEM_WRITE, 可微分记忆读写, Read/Write Separation, Gated Write/Update, Overwrite Strategy (+10)
+- **Learning** (6) — Collaborative Graph Learning, 强化学习路径选择, 约束生成, Database-driven Unlearning, Agentic Continual Pre-training, Post-training Alignment via SFT/RL
+- **Other Operation** (228) — Conflict Resolution, 记忆增强, LFU 淘汰, Autonomous API Invocation, Result Injection & Continuation, Tool Usage Filtering (+222)
+- **Reflection** (15) — 反思生成, Reflective Synthesis, Reflection Generation, 风险触发式自我反思, Multi-turn Reasoning, 推理困境检测 (+9)
+- **Retrieval** (79) — 记忆检索, Memory Retrieval, Semantic Retrieval, 语义检索, Similarity-based Retrieval, Hierarchical Retrieval (+73)
+- **Scoring/Ranking** (6) — Importance Scoring, Personalized PageRank Propagation, Weighted Fusion Ranking, 记忆距离加权评分, 动态重要性记忆过滤, Sub-Tree Ranking
+- **Summarization** (33) — State Summarization, 上下文编码压缩, LLM-driven Entity-Relation Extraction, 基于反馈的知识提取, Recursive Summary Aggregation, 记忆编码与压缩 (+27)
 
 ---
 
