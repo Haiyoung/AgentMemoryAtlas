@@ -41,6 +41,12 @@ jobs:
           cp -r paper/2022 site/paper/ 2>/dev/null || echo "No 2022 papers"
           cp -r paper/2021 site/paper/ 2>/dev/null || echo "No 2021 papers"
 
+      - name: Copy ontology data to site
+        run: |
+          mkdir -p site/ontology
+          cp ontology/lexicon.json site/ontology/
+          cp ontology/ontology_base.md site/ontology/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
