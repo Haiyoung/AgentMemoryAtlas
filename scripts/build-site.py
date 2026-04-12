@@ -34,6 +34,7 @@ def extract_paper_title(md_path):
 def main():
     repo_root = Path(__file__).parent.parent
     lexicon_path = repo_root / "ontology" / "lexicon.json"
+    ontology_path = repo_root / "ontology" / "ontology_base.md"
     site_path = repo_root / "site" / "index.html"
 
     if not lexicon_path.exists():
@@ -44,6 +45,13 @@ def main():
         lexicon = json.load(f)
 
     print(f"Lexicon loaded: {lexicon['conceptCount']} concepts, {lexicon['relationCount']} relations, version {lexicon['version']}")
+
+    # Load ontology markdown for embedding
+    ontology_md = ""
+    if ontology_path.exists():
+        with open(ontology_path, 'r', encoding='utf-8') as f:
+            ontology_md = f.read()
+        print(f"Ontology loaded: {len(ontology_md)} chars")
 
     if not site_path.exists():
         print("ERROR: site/index.html not found.")
@@ -86,6 +94,36 @@ def main():
 
     # ── Inject into HTML ──
     mapping_json = json.dumps(arxiv_to_path, ensure_ascii=False)
+
+    # 0. Inject LEXICON_EMBEDDED (lexicon data embedded at build time)
+    lexicon_json = json.dumps(lexicon, ensure_ascii=False)
+    lexicon_marker = "/* LEXICON_EMBEDDED_MARKER */"
+    if lexicon_marker in html:
+        html = html.replace(lexicon_marker, lexicon_json)
+        print("Updated LEXICON_EMBEDDED in site/index.html")
+    else:
+        # Add after GITHUB_PAGES_BASE line
+        inject_lexicon = f"        var LEXICON_EMBEDDED = {lexicon_json};"
+        html = html.replace(
+            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
+            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_lexicon
+        )
+        print("Injected LEXICON_EMBEDDED into site/index.html")
+
+    # 0b. Inject ONTOLOGY_EMBEDDED (ontology markdown embedded at build time)
+    # Escape backticks for JS string
+    safe_ontology_md = ontology_md.replace('\\', '\\\\').replace('`', '\\`').replace('$', '\\$')
+    onto_marker = "/* ONTOLOGY_EMBEDDED_MARKER */"
+    if onto_marker in html:
+        html = html.replace(onto_marker, safe_ontology_md)
+        print("Updated ONTOLOGY_EMBEDDED in site/index.html")
+    else:
+        inject_ontology = f"        var ONTOLOGY_EMBEDDED = `{safe_ontology_md}`;"
+        html = html.replace(
+            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
+            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_ontology
+        )
+        print("Injected ONTOLOGY_EMBEDDED into site/index.html")
 
     # 1. Inject or update PAPER_MAP const
     inject_const = f"        var PAPER_MAP = {mapping_json};"
