@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="50%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#ef4444"/>
+    </linearGradient>
+  </defs>
+  <circle cx="14" cy="14" r="3.5" fill="url(#g)" opacity="0.95"/>
+  <circle cx="14" cy="3.5" r="2.5" fill="url(#g)" opacity="0.8"/>
+  <circle cx="24.5" cy="14" r="2.5" fill="url(#g)" opacity="0.8"/>
+  <circle cx="14" cy="24.5" r="2.5" fill="url(#g)" opacity="0.8"/>
+  <circle cx="3.5" cy="14" r="2.5" fill="url(#g)" opacity="0.8"/>
+  <circle cx="22" cy="6" r="2" fill="url(#g)" opacity="0.65"/>
+  <circle cx="22" cy="22" r="2" fill="url(#g)" opacity="0.65"/>
+  <circle cx="6" cy="22" r="2" fill="url(#g)" opacity="0.65"/>
+  <circle cx="6" cy="6" r="2" fill="url(#g)" opacity="0.65"/>
+  <line x1="14" y1="10.5" x2="14" y2="6" stroke="url(#g)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="17.5" y1="14" x2="22" y2="14" stroke="url(#g)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="14" y1="17.5" x2="14" y2="22" stroke="url(#g)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="10.5" y1="14" x2="6" y2="14" stroke="url(#g)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <line x1="16.4" y1="11.6" x2="20.6" y2="7.4" stroke="url(#g)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="16.4" y1="16.4" x2="20.6" y2="20.6" stroke="url(#g)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="11.6" y1="16.4" x2="7.4" y2="20.6" stroke="url(#g)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="11.6" y1="11.6" x2="7.4" y2="7.4" stroke="url(#g)" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+</svg>
