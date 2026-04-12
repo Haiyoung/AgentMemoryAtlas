@@ -22,14 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Build site from lexicon
         run: |
-          python scripts/build-site.py || echo "Site build failed, continuing with existing index.html"
+          python3 scripts/build-site.py || echo "Site build failed, continuing with existing index.html"
 
       - name: Copy papers to site
         run: |
@@ -42,10 +42,10 @@ jobs:
           cp -r paper/2021 site/paper/ 2>/dev/null || echo "No 2021 papers"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './site'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
