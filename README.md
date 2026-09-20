@@ -1,3 +1,5 @@
+
+
 <h1 align="center">
   <img src="site/logo.svg" alt="logo" width="36" height="36" style="vertical-align: middle; margin-right: 8px;">
   AgentMemoryAtlas
@@ -126,7 +128,7 @@ AgentMemoryAtlas/
 - **本体论迭代**：每批新增论文将触发本体论模型的增量更新——概念归并、关系演化、公理修正
 - **模型版本**：本体论遵循语义化版本管理，每次更新生成 changelog 并保留历史备份
 
-增量更新可通过 `claude /ontology-update` 命令自动化完成。
+增量更新可通过 `/ontology-update` 命令自动化完成。
 
 ---
 
