@@ -1,14 +1,37 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-04-11",
-  "conceptCount": 1411,
-  "relationCount": 744,
+  "generatedAt": "2026-10-07",
+  "conceptCount": 1749,
+  "relationCount": 965,
   "concepts": [
     {
+      "id": "vector-embeddings",
+      "name": "Vector Embeddings",
+      "category": "memory_structure",
+      "weight": 14,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2304.03442",
+        "2305.13304",
+        "2310.08560",
+        "2410.12859",
+        "2411.13093",
+        "2507.22925",
+        "2508.03341",
+        "2511.10395",
+        "2512.12686",
+        "2601.03236",
+        "2603.27910",
+        "2604.07791",
+        "2604.07798",
+        "2604.08206"
+      ]
+    },
+    {
       "id": "llm-context-window",
-      "name": "LLM Context Window (大模型上下文窗口)",
+      "name": "LLM Context Window (LLM 上下文窗口)",
       "category": "memory_carrier",
-      "weight": 11,
+      "weight": 12,
       "relatedConcepts": [],
       "sourcePapers": [
         "2308.15022",
@@ -21,33 +44,15 @@
         "2508.04903",
         "2510.08558",
         "2510.16392",
-        "2511.02805"
-      ]
-    },
-    {
-      "id": "vector-embeddings",
-      "name": "Vector Embeddings",
-      "category": "memory_carrier",
-      "weight": 10,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2304.03442",
-        "2305.13304",
-        "2310.08560",
-        "2410.12859",
-        "2411.13093",
-        "2507.22925",
-        "2508.03341",
-        "2511.10395",
-        "2512.12686",
-        "2601.03236"
+        "2511.02805",
+        "2604.08064"
       ]
     },
     {
       "id": "episodic-memory",
-      "name": "Episodic Memory (Interaction History)",
+      "name": "Episodic Memory (Raw Dialogue Snippets)",
       "category": "memory_type",
-      "weight": 10,
+      "weight": 12,
       "relatedConcepts": [],
       "sourcePapers": [
         "2407.04363",
@@ -59,14 +64,16 @@
         "2512.03627",
         "2512.12686",
         "2512.18202",
-        "2601.03192"
+        "2601.03192",
+        "2603.27910",
+        "2604.08216"
       ]
     },
     {
       "id": "向量数据库",
       "name": "向量数据库 (Vector Database)",
       "category": "memory_structure",
-      "weight": 9,
+      "weight": 10,
       "relatedConcepts": [],
       "sourcePapers": [
         "2406.00057",
@@ -77,7 +84,8 @@
         "2509.11860",
         "2509.25140",
         "2510.04618",
-        "2510.07925"
+        "2510.07925",
+        "2604.08224"
       ]
     },
     {
@@ -116,6 +124,36 @@
       ]
     },
     {
+      "id": "short-term-memory",
+      "name": "Short-Term Memory (Light2/STM)",
+      "category": "memory_type",
+      "weight": 6,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2310.03052",
+        "2410.12859",
+        "2502.00592",
+        "2510.18866",
+        "2601.01885",
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "long-term-memory",
+      "name": "Long-Term Memory (Light3/LTM)",
+      "category": "memory_type",
+      "weight": 6,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2310.03052",
+        "2502.00592",
+        "2510.18866",
+        "2601.01885",
+        "2604.07798",
+        "2604.08000"
+      ]
+    },
+    {
       "id": "working-memory",
       "name": "Working Memory (工作记忆)",
       "category": "memory_type",
@@ -130,30 +168,58 @@
       ]
     },
     {
-      "id": "short-term-memory",
-      "name": "Short-Term Memory (Light2/STM)",
-      "category": "memory_type",
+      "id": "vector-database",
+      "name": "Vector Database (向量数据库)",
+      "category": "memory_carrier",
       "weight": 5,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2310.03052",
-        "2410.12859",
-        "2502.00592",
-        "2510.18866",
-        "2601.01885"
+        "2504.13805",
+        "2509.13312",
+        "2510.09038",
+        "2601.03192",
+        "2604.07798"
       ]
     },
     {
-      "id": "long-term-memory",
-      "name": "Long-Term Memory (Light3/LTM)",
+      "id": "long-term-memory-1",
+      "name": "Long-term Memory (Vector Database)",
       "category": "memory_type",
       "weight": 4,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2310.03052",
-        "2502.00592",
-        "2510.18866",
-        "2601.01885"
+        "2304.13343",
+        "2305.13304",
+        "2512.03627",
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "memory-update",
+      "name": "Memory Update",
+      "category": "memory_operation",
+      "weight": 4,
+      "relatedConcepts": [
+        "Retrieve-Refine Mechanism"
+      ],
+      "sourcePapers": [
+        "2304.13343",
+        "2511.02805",
+        "2512.04763",
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "memory-retrieval",
+      "name": "Memory Retrieval (Embedding Query)",
+      "category": "memory_operation",
+      "weight": 4,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2304.13343",
+        "2505.16348",
+        "2508.09736",
+        "2604.08000"
       ]
     },
     {
@@ -183,16 +249,16 @@
       ]
     },
     {
-      "id": "vector-database",
-      "name": "Vector Database (向量数据库)",
-      "category": "memory_carrier",
+      "id": "参数化记忆",
+      "name": "参数化记忆 (Parametric Memory)",
+      "category": "memory_type",
       "weight": 4,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2504.13805",
-        "2509.13312",
-        "2510.09038",
-        "2601.03192"
+        "2410.03439",
+        "2604.04503",
+        "2604.07894",
+        "2609.23466"
       ]
     },
     {
@@ -258,6 +324,18 @@
       ]
     },
     {
+      "id": "reflection-memory",
+      "name": "Reflection Memory (High-order Reflections)",
+      "category": "memory_type",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2304.03442",
+        "2509.22315",
+        "2603.27910"
+      ]
+    },
+    {
       "id": "memory-stream",
       "name": "Memory Stream",
       "category": "memory_structure",
@@ -271,50 +349,6 @@
         "2304.03442",
         "2304.13343",
         "2310.02172"
-      ]
-    },
-    {
-      "id": "long-term-memory-1",
-      "name": "Long-term Memory (LTM)",
-      "category": "memory_type",
-      "weight": 3,
-      "relatedConcepts": [
-        "Memory Type",
-        "MemVerse Framework",
-        "Episodic Memory",
-        "Semantic Memory",
-        "Parametric Memory"
-      ],
-      "sourcePapers": [
-        "2304.13343",
-        "2305.13304",
-        "2512.03627"
-      ]
-    },
-    {
-      "id": "memory-update",
-      "name": "Memory Update",
-      "category": "memory_operation",
-      "weight": 3,
-      "relatedConcepts": [
-        "Retrieve-Refine Mechanism"
-      ],
-      "sourcePapers": [
-        "2304.13343",
-        "2511.02805",
-        "2512.04763"
-      ]
-    },
-    {
-      "id": "memory-retrieval",
-      "name": "Memory Retrieval (Embedding Query)",
-      "category": "memory_operation",
-      "weight": 3,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2304.13343",
-        "2505.16348",
-        "2508.09736"
       ]
     },
     {
@@ -366,6 +400,54 @@
       ]
     },
     {
+      "id": "fact-memory",
+      "name": "Fact Memory (Atomic Facts)",
+      "category": "memory_type",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2502.14802",
+        "2603.27910",
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "hierarchical-retrieval",
+      "name": "Hierarchical Retrieval (分层检索)",
+      "category": "memory_operation",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2506.07398",
+        "2511.13593",
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "hybrid-retrieval",
+      "name": "Hybrid Retrieval (混合检索)",
+      "category": "memory_operation",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2507.06229",
+        "2508.12630",
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "语义记忆",
+      "name": "语义记忆 (Semantic Memory)",
+      "category": "memory_type",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2507.07957",
+        "2509.25911",
+        "2604.16839"
+      ]
+    },
+    {
       "id": "parametric-memory",
       "name": "Parametric Memory (参数化记忆)",
       "category": "memory_type",
@@ -396,14 +478,27 @@
       ]
     },
     {
-      "id": "reflection-memory",
-      "name": "Reflection Memory",
+      "id": "事实记忆",
+      "name": "事实记忆 (Factual Memory)",
       "category": "memory_type",
-      "weight": 2,
+      "weight": 3,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2304.03442",
-        "2509.22315"
+        "2509.10852",
+        "2512.13564",
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "上下文窗口",
+      "name": "上下文窗口 (Context Window)",
+      "category": "memory_structure",
+      "weight": 3,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2510.04618",
+        "2512.13564",
+        "2604.08224"
       ]
     },
     {
@@ -521,6 +616,17 @@
       ]
     },
     {
+      "id": "时间衰减",
+      "name": "时间衰减 (Time-based Decay)",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2407.06567",
+        "2604.16839"
+      ]
+    },
+    {
       "id": "update",
       "name": "Update (State/Network)",
       "category": "memory_operation",
@@ -554,6 +660,17 @@
       ]
     },
     {
+      "id": "memory-pruning",
+      "name": "Memory Pruning",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2412.01857",
+        "2604.07645"
+      ]
+    },
+    {
       "id": "持久记忆",
       "name": "持久记忆 (Persistent Memory)",
       "category": "memory_type",
@@ -584,6 +701,17 @@
       "sourcePapers": [
         "2502.14802",
         "2511.17208"
+      ]
+    },
+    {
+      "id": "knowledge-graph-triples",
+      "name": "Knowledge Graph Triples",
+      "category": "memory_structure",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2502.14802",
+        "2604.07798"
       ]
     },
     {
@@ -634,6 +762,28 @@
       ]
     },
     {
+      "id": "context-injection",
+      "name": "Context Injection (上下文注入)",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2504.13805",
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "图数据库",
+      "name": "图数据库 (Graph Database)",
+      "category": "memory_carrier",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2504.19413",
+        "2604.16839"
+      ]
+    },
+    {
       "id": "对话历史",
       "name": "对话历史 (Dialogue History)",
       "category": "memory_carrier",
@@ -642,19 +792,6 @@
       "sourcePapers": [
         "2504.19413",
         "2509.10852"
-      ]
-    },
-    {
-      "id": "hierarchical-retrieval",
-      "name": "Hierarchical Retrieval",
-      "category": "memory_operation",
-      "weight": 2,
-      "relatedConcepts": [
-        "Efficiency-Performance Balance"
-      ],
-      "sourcePapers": [
-        "2506.07398",
-        "2511.13593"
       ]
     },
     {
@@ -671,17 +808,6 @@
       ]
     },
     {
-      "id": "hybrid-retrieval",
-      "name": "Hybrid Retrieval (混合检索)",
-      "category": "memory_operation",
-      "weight": 2,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2507.06229",
-        "2508.12630"
-      ]
-    },
-    {
       "id": "核心记忆",
       "name": "核心记忆 (Core Memory)",
       "category": "memory_type",
@@ -693,14 +819,14 @@
       ]
     },
     {
-      "id": "语义记忆",
-      "name": "语义记忆 (Semantic Memory)",
+      "id": "episode-memory",
+      "name": "Episode Memory (片段记忆)",
       "category": "memory_type",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2507.07957",
-        "2509.25911"
+        "2507.22925",
+        "2604.08256"
       ]
     },
     {
@@ -740,6 +866,28 @@
       ]
     },
     {
+      "id": "向量嵌入",
+      "name": "向量嵌入 (Vector Embeddings)",
+      "category": "memory_carrier",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2508.06433",
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "structured-memory-entries",
+      "name": "Structured Memory Entries",
+      "category": "memory_structure",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2508.19828",
+        "2604.07877"
+      ]
+    },
+    {
       "id": "推理记忆",
       "name": "推理记忆 (Reasoning Memory)",
       "category": "memory_type",
@@ -748,17 +896,6 @@
       "sourcePapers": [
         "2509.10852",
         "2509.25140"
-      ]
-    },
-    {
-      "id": "事实记忆",
-      "name": "事实记忆 (Factual Memory)",
-      "category": "memory_type",
-      "weight": 2,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2509.10852",
-        "2512.13564"
       ]
     },
     {
@@ -787,14 +924,25 @@
       ]
     },
     {
-      "id": "上下文窗口",
-      "name": "上下文窗口 (Context Window)",
-      "category": "memory_structure",
+      "id": "query-decomposition",
+      "name": "Query Decomposition",
+      "category": "memory_operation",
       "weight": 2,
       "relatedConcepts": [],
       "sourcePapers": [
-        "2510.04618",
-        "2512.13564"
+        "2509.22315",
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "procedural-memory",
+      "name": "Procedural Memory (程序性记忆)",
+      "category": "memory_type",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2509.24704",
+        "2604.08064"
       ]
     },
     {
@@ -820,6 +968,28 @@
       ]
     },
     {
+      "id": "memory-compression",
+      "name": "Memory Compression (记忆压缩)",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2510.10666",
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "write",
+      "name": "Write (写入总结内容)",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2510.12635",
+        "2604.07877"
+      ]
+    },
+    {
       "id": "event-centric-memory",
       "name": "Event-Centric Memory (EMem)",
       "category": "memory_type",
@@ -842,6 +1012,30 @@
       "sourcePapers": [
         "2512.02425",
         "2512.04763"
+      ]
+    },
+    {
+      "id": "structured-experience-memory",
+      "name": "Structured Experience Memory",
+      "category": "memory_type",
+      "weight": 2,
+      "relatedConcepts": [
+        "Knowledge Accumulation"
+      ],
+      "sourcePapers": [
+        "2512.10696",
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "retrieve",
+      "name": "Retrieve",
+      "category": "memory_operation",
+      "weight": 2,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.01885",
+        "2604.07877"
       ]
     },
     {
@@ -3540,16 +3734,6 @@
       ]
     },
     {
-      "id": "时间衰减",
-      "name": "时间衰减 (Time-based Decay)",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2407.06567"
-      ]
-    },
-    {
       "id": "风险触发式自我反思",
       "name": "风险触发式自我反思 (Risk-triggered Self-Reflection)",
       "category": "memory_operation",
@@ -3797,16 +3981,6 @@
       "relatedConcepts": [],
       "sourcePapers": [
         "2410.02355"
-      ]
-    },
-    {
-      "id": "参数化记忆",
-      "name": "参数化记忆 (Parametric Memory)",
-      "category": "memory_type",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2410.03439"
       ]
     },
     {
@@ -4494,16 +4668,6 @@
       "id": "imagination-tree",
       "name": "Imagination Tree",
       "category": "memory_structure",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2412.01857"
-      ]
-    },
-    {
-      "id": "memory-pruning",
-      "name": "Memory Pruning",
-      "category": "memory_operation",
       "weight": 1,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -5377,16 +5541,6 @@
       ]
     },
     {
-      "id": "fact-memory",
-      "name": "Fact Memory",
-      "category": "memory_type",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2502.14802"
-      ]
-    },
-    {
       "id": "contextual-memory",
       "name": "Contextual Memory",
       "category": "memory_type",
@@ -5462,16 +5616,6 @@
     {
       "id": "text-passages",
       "name": "Text Passages",
-      "category": "memory_carrier",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2502.14802"
-      ]
-    },
-    {
-      "id": "knowledge-graph-triples",
-      "name": "Knowledge Graph Triples",
       "category": "memory_carrier",
       "weight": 1,
       "relatedConcepts": [],
@@ -6100,16 +6244,6 @@
       ]
     },
     {
-      "id": "context-injection",
-      "name": "Context Injection",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2504.13805"
-      ]
-    },
-    {
       "id": "learngui-dataset",
       "name": "LearnGUI Dataset",
       "category": "memory_carrier",
@@ -6263,16 +6397,6 @@
       "id": "动态显著信息提取",
       "name": "动态显著信息提取 (Dynamic Significant Information Extraction)",
       "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2504.19413"
-      ]
-    },
-    {
-      "id": "图数据库",
-      "name": "图数据库 (Graph Database)",
-      "category": "memory_carrier",
       "weight": 1,
       "relatedConcepts": [],
       "sourcePapers": [
@@ -6571,6 +6695,7 @@
       "relatedConcepts": [
         "LM2 Architecture",
         "Long-tail Knowledge",
+        "PRIME Framework",
         "Input Tokens"
       ],
       "sourcePapers": [
@@ -7499,16 +7624,6 @@
       ]
     },
     {
-      "id": "episode-memory",
-      "name": "Episode Memory",
-      "category": "memory_type",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2507.22925"
-      ]
-    },
-    {
       "id": "four-layer-semantic-architecture",
       "name": "Four-Layer Semantic Architecture",
       "category": "memory_structure",
@@ -8111,16 +8226,6 @@
     {
       "id": "文本轨迹",
       "name": "文本轨迹 (Text Trajectory)",
-      "category": "memory_carrier",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2508.06433"
-      ]
-    },
-    {
-      "id": "向量嵌入",
-      "name": "向量嵌入 (Vector Embeddings)",
       "category": "memory_carrier",
       "weight": 1,
       "relatedConcepts": [],
@@ -9132,16 +9237,6 @@
       ]
     },
     {
-      "id": "structured-memory-entries",
-      "name": "Structured Memory Entries",
-      "category": "memory_structure",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2508.19828"
-      ]
-    },
-    {
       "id": "shared-state-space",
       "name": "Shared State Space",
       "category": "memory_structure",
@@ -10056,16 +10151,6 @@
       ]
     },
     {
-      "id": "query-decomposition",
-      "name": "Query Decomposition",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2509.22315"
-      ]
-    },
-    {
       "id": "reasoning-trajectory-logs",
       "name": "Reasoning Trajectory Logs",
       "category": "memory_carrier",
@@ -10116,19 +10201,6 @@
       "weight": 1,
       "relatedConcepts": [
         "Generative Latent Memory"
-      ],
-      "sourcePapers": [
-        "2509.24704"
-      ]
-    },
-    {
-      "id": "procedural-memory",
-      "name": "Procedural Memory",
-      "category": "memory_type",
-      "weight": 1,
-      "relatedConcepts": [
-        "Orchestrator Memory",
-        "Task Agent Memory"
       ],
       "sourcePapers": [
         "2509.24704"
@@ -11276,16 +11348,6 @@
       ]
     },
     {
-      "id": "memory-compression",
-      "name": "Memory Compression (记忆压缩)",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2510.10666"
-      ]
-    },
-    {
       "id": "key-conclusion-extraction",
       "name": "Key Conclusion Extraction (关键结论提取)",
       "category": "memory_operation",
@@ -11378,16 +11440,6 @@
     {
       "id": "prune",
       "name": "Prune (删除冗余上下文 ID)",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2510.12635"
-      ]
-    },
-    {
-      "id": "write",
-      "name": "Write (写入总结内容)",
       "category": "memory_operation",
       "weight": 1,
       "relatedConcepts": [],
@@ -13274,16 +13326,6 @@
       ]
     },
     {
-      "id": "structured-experience-memory",
-      "name": "Structured Experience Memory",
-      "category": "memory_type",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2512.10696"
-      ]
-    },
-    {
       "id": "keypoint-level-experience-structure",
       "name": "Keypoint-level Experience Structure",
       "category": "memory_structure",
@@ -14134,16 +14176,6 @@
       ]
     },
     {
-      "id": "retrieve",
-      "name": "Retrieve",
-      "category": "memory_operation",
-      "weight": 1,
-      "relatedConcepts": [],
-      "sourcePapers": [
-        "2601.01885"
-      ]
-    },
-    {
       "id": "summary",
       "name": "Summary",
       "category": "memory_operation",
@@ -14487,6 +14519,3446 @@
       ],
       "sourcePapers": [
         "2601.04726"
+      ]
+    },
+    {
+      "id": "结构化子任务记忆：以-<precondition,-goal>-为单元的复用型长程记忆",
+      "name": "结构化子任务记忆 (Structured Subtask Memory)：以 <Precondition, Goal> 为单元的复用型长程记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "轨迹记忆解构单元：由长交互轨迹拆分而来的原子记忆片段",
+      "name": "轨迹记忆解构单元 (Decomposed Trajectory Unit)：由长交互轨迹拆分而来的原子记忆片段",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "进化式记忆生态：可拆分、可检索、可变异、可淘汰的动态记忆池",
+      "name": "进化式记忆生态 (Evolutionary Memory Ecosystem)：可拆分、可检索、可变异、可淘汰的动态记忆池",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "毒性/过时先验记忆：污染上下文并引发负迁移的低价值记忆",
+      "name": "毒性/过时先验记忆 (Toxic/Stale Prior Memory)：污染上下文并引发负迁移的低价值记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "高置信记忆：通过双因子检索命中的可执行记忆轨迹",
+      "name": "高置信记忆 (High-Confidence Memory)：通过双因子检索命中的可执行记忆轨迹",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "单步原子动作记忆：被系统显式过滤的细粒度单步记忆（边界情形）",
+      "name": "单步原子动作记忆 (Atomic Action Memory)：被系统显式过滤的细粒度单步记忆（边界情形）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "记忆单元-m-=：预条件-轨迹-元数据三元组",
+      "name": "记忆单元 m = (p, τ, s_meta)：预条件-轨迹-元数据三元组",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "子任务单元-p-i-=-<precondition,-goal>：预条件与目标组成的结构化键值单元",
+      "name": "子任务单元 p_i = <Precondition, Goal>：预条件与目标组成的结构化键值单元",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "贝叶斯声誉模型：以-beta-分布参数刻画计划可靠性",
+      "name": "贝叶斯声誉模型 (Beta-Binomial Reputation)：以 Beta 分布参数 (α, β) 刻画计划可靠性",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "生存值-s-=-utility-×-adaptive-decay-×-reliability：记忆存续的复合评分结构",
+      "name": "生存值 S = Utility × Adaptive Decay × Reliability：记忆存续的复合评分结构",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "动态风险阈值-t-i-=-μ-i-−-σ-i：由声誉分布均值-标准差导出的准入阈值",
+      "name": "动态风险阈值 T_i = μ_i − σ_i：由声誉分布均值-标准差导出的准入阈值",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "记忆纯度-q-t-与稳态纯度比-q-ss：刻画记忆库健康度的随机流状态量",
+      "name": "记忆纯度 Q_t 与稳态纯度比 Q_ss：刻画记忆库健康度的随机流状态量",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "双因子检索：precondition-与-goal-余弦相似度之积作为匹配分数",
+      "name": "双因子检索 (Dual-Factor Retrieval)：precondition 与 goal 余弦相似度之积作为匹配分数",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "ε-变异进化：以概率-ε-强制探索新轨迹并在更优时替换记忆",
+      "name": "ε-变异进化 (ε-Mutation)：以概率 ε 强制探索新轨迹并在更优时替换记忆",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "生存选择与剪枝：按生存值淘汰长尾记忆",
+      "name": "生存选择与剪枝 (Survival Selection & Elbow Method Pruning)：按生存值淘汰长尾记忆",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "贝叶斯声誉更新：利用执行结果更新-beta-binomial-后验",
+      "name": "贝叶斯声誉更新 (Bayesian Reputation Update)：利用执行结果更新 Beta-Binomial 后验",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "k-验证策略：累计-k-次-strike-才删除记忆的验证/淘汰机制",
+      "name": "K-验证策略 (K-Verification Policy)：累计 K 次 strike 才删除记忆的验证/淘汰机制",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "strike-反馈写入：失败路径写入负反馈计数",
+      "name": "Strike 反馈写入 (Strike Feedback Writing)：失败路径写入负反馈计数",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "记忆回写与替换：成功且更短的轨迹替换旧记忆",
+      "name": "记忆回写与替换 (Memory Write-Back/Replacement)：成功且更短的轨迹替换旧记忆",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "动态阈值准入：以-t-i-抑制高风险计划执行",
+      "name": "动态阈值准入 (Dynamic Threshold Gating)：以 T_i 抑制高风险计划执行",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "外挂式向量记忆层：基于余弦相似度的检索载体",
+      "name": "外挂式向量记忆层 (External Vector Memory Layer)：基于余弦相似度的检索载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "轻量级状态存储：稳定内存占用的持久化载体",
+      "name": "轻量级状态存储 (~5 MB)：稳定内存占用的持久化载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "planner-actor-通用-mllm：作为记忆消费与生成的智能体载体",
+      "name": "Planner-Actor 通用 MLLM：作为记忆消费与生成的智能体载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "自然语言描述：语义化记忆表达载体",
+      "name": "自然语言描述 (Natural Language Precondition/Goal)：语义化记忆表达载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "gui-交互轨迹：原始经验来源载体",
+      "name": "GUI 交互轨迹 (GUI Interaction Trajectory)：原始经验来源载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2601.22528"
+      ]
+    },
+    {
+      "id": "semantic-decision-rule-memory",
+      "name": "Semantic Decision Rule Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "Playbook"
+      ],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "episodic-trajectory-memory",
+      "name": "Episodic Trajectory Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "structured-natural-language-playbook",
+      "name": "Structured Natural Language Playbook",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "context-window-state-representation",
+      "name": "Context Window State Representation",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "offline-reflection-update",
+      "name": "Offline Reflection Update",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "state-conditioned-retrieval",
+      "name": "State-Conditioned Retrieval",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "in-context-decision-evolution",
+      "name": "In-context Decision Evolution",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "llm-context-tokens",
+      "name": "LLM Context Tokens",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "external-text-storage",
+      "name": "External Text Storage",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27306"
+      ]
+    },
+    {
+      "id": "自适应上下文管理策略",
+      "name": "自适应上下文管理策略",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "静态上下文管理策略",
+      "name": "静态上下文管理策略",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "并行上下文分支轨迹",
+      "name": "并行上下文分支轨迹",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "上下文窗口状态",
+      "name": "上下文窗口状态",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "上下文保留",
+      "name": "上下文保留",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "上下文丢弃",
+      "name": "上下文丢弃",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "上下文压缩",
+      "name": "上下文压缩",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "前瞻路由评估",
+      "name": "前瞻路由评估",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "web-浏览轨迹",
+      "name": "Web 浏览轨迹",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "令牌窗口",
+      "name": "令牌窗口 (Token Window)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27490"
+      ]
+    },
+    {
+      "id": "concept-memory",
+      "name": "Concept Memory (Theme Nodes)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "concept-mediated-knowledge-graph",
+      "name": "Concept-mediated Knowledge Graph",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "Knowledge Graph"
+      ],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "hierarchical-long-term-memory-architecture",
+      "name": "Hierarchical Long-term Memory Architecture",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "hybrid-retrieval-mechanism",
+      "name": "Hybrid Retrieval Mechanism",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "lightweight-ppr-enhancement",
+      "name": "Lightweight PPR Enhancement",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "hub-dampening",
+      "name": "Hub Dampening",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "semantic-similarity-knn",
+      "name": "Semantic Similarity KNN",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "multi-session-dialogue-text",
+      "name": "Multi-session Dialogue Text",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "atomic-fact-nodes",
+      "name": "Atomic Fact Nodes",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "concept-theme-nodes",
+      "name": "Concept Theme Nodes",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2603.27910"
+      ]
+    },
+    {
+      "id": "agent-behavior-memory",
+      "name": "Agent Behavior Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "privacy-sensitive-interaction-memory",
+      "name": "Privacy-Sensitive Interaction Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "executable-forgetting-prompt",
+      "name": "Executable Forgetting Prompt",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "environment-interaction-log",
+      "name": "Environment Interaction Log",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "secure-forgetting",
+      "name": "Secure Forgetting",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "prompt-conversion",
+      "name": "Prompt Conversion",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "non-parameter-unlearning",
+      "name": "Non-Parameter Unlearning",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "llm-api-context-window",
+      "name": "LLM API Context Window",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "natural-language-request",
+      "name": "Natural Language Request",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.00430"
+      ]
+    },
+    {
+      "id": "experience-memory",
+      "name": "Experience Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "task-interaction-logs",
+      "name": "Task Interaction Logs",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "flexible-memory-topology",
+      "name": "Flexible Memory Topology",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "LLMA-Mem Architecture"
+      ],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "joint-scaling-view",
+      "name": "Joint Scaling View",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "experience-reuse",
+      "name": "Experience Reuse",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Dynamic Procedural Memory Framework",
+        "Scenario-aware Retrieval"
+      ],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "cross-agent-retrieval",
+      "name": "Cross-Agent Retrieval",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "multi-environment-trajectories",
+      "name": "Multi-Environment Trajectories",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "experience-memory-bank",
+      "name": "Experience Memory Bank",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.03295"
+      ]
+    },
+    {
+      "id": "非参数化记忆",
+      "name": "非参数化记忆 (Non-parametric Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "压缩的历史搜索轨迹",
+      "name": "压缩的历史搜索轨迹 (Compressed Search Trajectories)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "搜索计划",
+      "name": "搜索计划 (Search Plans)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "双向记忆转换",
+      "name": "双向记忆转换 (Bidirectional Memory Conversion)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "测试时学习",
+      "name": "测试时学习 (Test-time Learning)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "无监督判断",
+      "name": "无监督判断 (Unsupervised Judgment)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "记忆管理器",
+      "name": "记忆管理器 (Memory Manager)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "规划器",
+      "name": "规划器 (Planner)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "执行器",
+      "name": "执行器 (Executor)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04503"
+      ]
+    },
+    {
+      "id": "规划技能",
+      "name": "规划技能 (Planning Skill)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "功能技能",
+      "name": "功能技能 (Functional Skill)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "原子技能",
+      "name": "原子技能 (Atomic Skill)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "多层级技能知识库",
+      "name": "多层级技能知识库 (Multi-Level Skill Knowledge Base)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "伪计划",
+      "name": "伪计划 (Pseudo-Plan)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "技能提取",
+      "name": "技能提取 (Skill Extraction)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "迭代技能优化",
+      "name": "迭代技能优化 (Iterative Skill Optimization)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "探索性技能扩展",
+      "name": "探索性技能扩展 (Exploratory Skill Expansion)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "两阶段检索",
+      "name": "两阶段检索 (Two-Stage Retrieval)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "技能知识库",
+      "name": "技能知识库 (文本/结构化描述)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.04804"
+      ]
+    },
+    {
+      "id": "boundary-guided-long-term-memory",
+      "name": "Boundary Guided Long-Term Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "Long-Term Memory"
+      ],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "scalable-dialogue-memory",
+      "name": "Scalable Dialogue Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "hyperedge-index-structure",
+      "name": "Hyperedge Index Structure (Person/Time/Location/Topic)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "event-boundary-based-memory-segments",
+      "name": "Event-Boundary Based Memory Segments",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "boundary-extraction",
+      "name": "Boundary Extraction",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "query-adaptive-retrieval",
+      "name": "Query Adaptive Retrieval",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "retrieval-planning",
+      "name": "Retrieval Planning (What/How Much)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "dialogue-text",
+      "name": "Dialogue Text",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "super-edge-index-interface",
+      "name": "Super-edge Index Interface",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.06845"
+      ]
+    },
+    {
+      "id": "形式化知识记忆",
+      "name": "形式化知识记忆 (Formalized Knowledge Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "经验模式记忆",
+      "name": "经验模式记忆 (Experiential Pattern Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "双重记忆模块",
+      "name": "双重记忆模块 (Dual-Memory Module)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "推理---记忆联合优化框架",
+      "name": "推理 - 记忆联合优化框架 (Reasoning-Memory Joint Optimization Framework)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "经验收集",
+      "name": "经验收集 (Experience Collection)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "模式检索",
+      "name": "模式检索 (Pattern Retrieval)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "联合策略更新",
+      "name": "联合策略更新 (Joint Strategy Update)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "临床病例文本",
+      "name": "临床病例文本 (Clinical Case Text)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "诊断规则",
+      "name": "诊断规则 (Diagnostic Rules)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "经验记忆向量",
+      "name": "经验记忆向量 (Experience Memory Vectors)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07269"
+      ]
+    },
+    {
+      "id": "golden-zone-memory",
+      "name": "Golden Zone Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "warning-zone-memory",
+      "name": "Warning Zone Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "context-action-result-lesson-tuple",
+      "name": "Context-Action-Result-Lesson Tuple",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "three-zone-semantic-partition",
+      "name": "Three-Zone Semantic Partition",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "memory-mutation",
+      "name": "Memory Mutation",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "memory-generalization",
+      "name": "Memory Generalization",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "memory-crossover",
+      "name": "Memory Crossover",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "credit-assignment",
+      "name": "Credit Assignment",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Memory Evolution"
+      ],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "external-memory-bank",
+      "name": "External Memory Bank",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "retrieval-augmented-prompt",
+      "name": "Retrieval-Augmented Prompt",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07645"
+      ]
+    },
+    {
+      "id": "tool-graph-memory",
+      "name": "Tool Graph Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "External Memory",
+        "Tool Node"
+      ],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "policy-integrated-memory",
+      "name": "Policy-Integrated Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "directed-tool-dependency-graph",
+      "name": "Directed Tool Dependency Graph",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "tool-anchor-clusters",
+      "name": "Tool Anchor Clusters",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "dynamic-tool-registration",
+      "name": "Dynamic Tool Registration",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "tool-merging",
+      "name": "Tool Merging",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "external-graph-store",
+      "name": "External Graph Store",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07791"
+      ]
+    },
+    {
+      "id": "medium-term-memory",
+      "name": "Medium-Term Memory (MTM)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "Agent Memory",
+        "Long-Term Memory (LTM)"
+      ],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "structured-retrieval-plan",
+      "name": "Structured Retrieval Plan",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "slm-intent-planning",
+      "name": "SLM Intent Planning",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Online Interaction Link"
+      ],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "two-stage-retrieval",
+      "name": "Two-Stage Retrieval",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "offline-consolidation",
+      "name": "Offline Consolidation",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "online-writing",
+      "name": "Online Writing",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "small-language-models",
+      "name": "Small Language Models (SLM)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [
+        "Memory Control"
+      ],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "knowledge-graph-storage",
+      "name": "Knowledge Graph Storage",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07798"
+      ]
+    },
+    {
+      "id": "learned-graph-memory",
+      "name": "Learned Graph Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "agentic-multi-modal-web-history-memory",
+      "name": "Agentic Multi-Modal Web History Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "sparse-correlation-graph",
+      "name": "Sparse Correlation Graph",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "temporal-multi-modal-sequence",
+      "name": "Temporal Multi-modal Sequence",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "task-adaptive-retrieval",
+      "name": "Task-Adaptive Retrieval",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "modality-specific-decay",
+      "name": "Modality-Specific Decay",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Graph Memory Construction Module"
+      ],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "policy-gradient-graph-construction",
+      "name": "Policy Gradient Graph Construction",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "webpage-screenshots",
+      "name": "Webpage Screenshots",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "html-content",
+      "name": "HTML Content",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "structured-interaction-signals",
+      "name": "Structured Interaction Signals",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07863"
+      ]
+    },
+    {
+      "id": "passive-transcription-memory",
+      "name": "Passive Transcription Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "active-extraction-memory",
+      "name": "Active Extraction Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "dialogue-context-fragments",
+      "name": "Dialogue Context Fragments",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "defer",
+      "name": "Defer",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "discard",
+      "name": "Discard",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "memos-system",
+      "name": "MemOS System",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "memreader-model-weights",
+      "name": "MemReader Model Weights (0.6B/4B)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07877"
+      ]
+    },
+    {
+      "id": "演进记忆",
+      "name": "演进记忆 (Evolving Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "动态记忆演进机制",
+      "name": "动态记忆演进机制 (Dynamic Memory Evolution Mechanism)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "上下文蒸馏模块",
+      "name": "上下文蒸馏模块 (Context Distillation Module)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "自学习内部化",
+      "name": "自学习内部化 (Self-Learning Internalization)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "非破坏性更新",
+      "name": "非破坏性更新 (Non-Destructive Update)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "模型参数",
+      "name": "模型参数 (Model Parameters)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "用户交互历史",
+      "name": "用户交互历史 (User Interaction History)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.07894"
+      ]
+    },
+    {
+      "id": "hybrid-memory",
+      "name": "Hybrid Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "working-area",
+      "name": "Working Area",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "Hybrid Memory Structure"
+      ],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "user-memory",
+      "name": "User Memory",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "Hybrid Memory Structure"
+      ],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "global-memory",
+      "name": "Global Memory",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "Hybrid Memory Structure"
+      ],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "consistency-update",
+      "name": "Consistency Update",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "memory-evolution",
+      "name": "Memory Evolution",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Prediction-Calibration",
+        "Experience Collection",
+        "Credit Assignment",
+        "Policy Optimization"
+      ],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "streaming-context-data",
+      "name": "Streaming Context Data",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "user-consensus-behavior-logs",
+      "name": "User Consensus Behavior Logs",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "hybrid-memory-bank",
+      "name": "Hybrid Memory Bank",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08000"
+      ]
+    },
+    {
+      "id": "implicit-memory",
+      "name": "Implicit Memory (隐性记忆)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "priming-effect",
+      "name": "Priming Effect (启动效应)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "classical-conditioning",
+      "name": "Classical Conditioning (经典条件反射)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "learning-interference-test-protocol",
+      "name": "Learning-Interference-Test Protocol (学习 - 干扰 - 测试协议)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "three-stage-evaluation-framework",
+      "name": "Three-Stage Evaluation Framework (三阶段评估框架)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "unconscious-behavioral-adaptation",
+      "name": "Unconscious Behavioral Adaptation (无意识行为适应)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "first-try-accuracy-measurement",
+      "name": "First-Try Accuracy Measurement (首次尝试准确率测量)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "priming-influence-scoring",
+      "name": "Priming Influence Scoring (启动影响评分)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "implicitmembench-dataset",
+      "name": "ImplicitMemBench Dataset (300 项评估数据集)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08064"
+      ]
+    },
+    {
+      "id": "short-term-working-memory",
+      "name": "Short-term Working Memory (Stage)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "core-self-memory",
+      "name": "Core Self Memory (Identity Carrier)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "global-workspace-agentarchitecture",
+      "name": "Global Workspace Agent (GWA) Architecture",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "spotlight-attention-bridge",
+      "name": "Spotlight Attention Bridge",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "cognitive-tick-cycle",
+      "name": "Cognitive Tick Cycle",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "entropy-driven-exploration",
+      "name": "Entropy-driven Exploration",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "meta-cognitive-arbitration",
+      "name": "Meta-cognitive Arbitration",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "global-broadcast",
+      "name": "Global Broadcast",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "central-state-tensors",
+      "name": "Central State Tensors",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "instruction-prompts",
+      "name": "Instruction Prompts",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08206"
+      ]
+    },
+    {
+      "id": "multi-view-long-term-memory",
+      "name": "Multi-view Long-term Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "task-conditioned-dual-short-term-memory",
+      "name": "Task-Conditioned Dual Short-term Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "semantic-state-memory",
+      "name": "Semantic State Memory",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "Short-term Memory"
+      ],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "test-time-memory-scaling-framework",
+      "name": "Test-Time Memory Scaling Framework",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "memory-driven-chain-of-thought",
+      "name": "Memory-Driven Chain-of-Thought",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "Test-Time Scaling"
+      ],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "zoom-in-evidence-localization",
+      "name": "Zoom In Evidence Localization",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Multi-view Long-term Memory Module"
+      ],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "zoom-out-context-expansion",
+      "name": "Zoom Out Context Expansion",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "Multi-view Long-term Memory Module"
+      ],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "iterative-pruning",
+      "name": "Iterative Pruning",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "fragmented-long-text-context",
+      "name": "Fragmented Long Text Context",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "semantic-states",
+      "name": "Semantic States",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "event-trajectories",
+      "name": "Event Trajectories",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08216"
+      ]
+    },
+    {
+      "id": "外部化记忆",
+      "name": "外部化记忆 (Externalized Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "状态记忆",
+      "name": "状态记忆 (State Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "程序性知识记忆",
+      "name": "程序性知识记忆 (Procedural Knowledge Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "分层记忆编排",
+      "name": "分层记忆编排 (Hierarchical Memory Orchestration)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "存储库",
+      "name": "存储库 (Storage Repository)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "检索",
+      "name": "检索 (Retrieval)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "协调",
+      "name": "协调 (Coordination)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "治理",
+      "name": "治理 (Governance)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "上下文状态",
+      "name": "上下文状态 (Context State)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "工具注册表",
+      "name": "工具注册表 (Tool Registry)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08224"
+      ]
+    },
+    {
+      "id": "topic-memory",
+      "name": "Topic Memory (主题记忆)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "hypergraph-memory",
+      "name": "Hypergraph Memory (超图记忆)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "three-layer-hierarchy",
+      "name": "Three-layer Hierarchy (三层分层结构)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "streaming-boundary-detection",
+      "name": "Streaming Boundary Detection (流式边界检测)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "hyperedge-aggregation",
+      "name": "Hyperedge Aggregation (超边聚合)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "structured-hypergraph-nodes",
+      "name": "Structured Hypergraph Nodes (结构化超图节点)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "llm-stream-buffer",
+      "name": "LLM Stream Buffer (LLM 流式缓冲区)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08256"
+      ]
+    },
+    {
+      "id": "shared-personal-context",
+      "name": "Shared Personal Context (共享个人上下文)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "module-state-snapshot",
+      "name": "Module State Snapshot (模块状态快照)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "persistent-gui-state",
+      "name": "Persistent GUI State (持久化 GUI 状态)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "shared-personal-context-registry",
+      "name": "Shared Personal Context Registry (共享个人上下文注册表)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "context-summary-block",
+      "name": "Context Summary Block (上下文摘要块)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "toolkitdataprovider-protocol",
+      "name": "ToolkitDataProvider Protocol (工具包数据提供者协议)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "read/write-context",
+      "name": "Read/Write Context (上下文读写)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "state-sync",
+      "name": "State Sync (状态同步)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "buildcontextsummary",
+      "name": "buildContextSummary (构建上下文摘要)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "chat-agent-messages",
+      "name": "Chat Agent Messages (聊天代理消息)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "persistent-gui-interface",
+      "name": "Persistent GUI Interface (持久化 GUI 界面)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "personal-context-snapshots",
+      "name": "Personal Context Snapshots (个人上下文快照)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.08529"
+      ]
+    },
+    {
+      "id": "hebbian联想情景记忆图",
+      "name": "Hebbian联想情景记忆图 (Hebbian Associative Episodic Memory Graph)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "用户模型记忆",
+      "name": "用户模型记忆 (User Model Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "agent知识记忆",
+      "name": "Agent知识记忆 (Agent Knowledge Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "基础激活记忆",
+      "name": "基础激活记忆 (Base Activation Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "扩散激活记忆",
+      "name": "扩散激活记忆 (Spreading Activation Memory)",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "对话轮次为节点的情景记忆图",
+      "name": "对话轮次为节点的情景记忆图",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "带hebbian边权的动态联想网络",
+      "name": "带Hebbian边权的动态联想网络",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "高关联hub节点",
+      "name": "高关联hub节点 (High-Association Hub Node)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "结构化语义记忆三元层",
+      "name": "结构化语义记忆三元层",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "双路径检索结构",
+      "name": "双路径检索结构 (Top-k基础 ∪ Top-m翻转)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "孤立节点集合",
+      "name": "孤立节点集合",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "hebbian共激活权重更新",
+      "name": "Hebbian共激活权重更新 (Hebbian Co-activation Weight Update)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "hebbian蒸馏",
+      "name": "Hebbian蒸馏 (Hebbian Distillation)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "反思巩固",
+      "name": "反思巩固 (Reflective Consolidation)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "双路径检索",
+      "name": "双路径检索 (Dual-Path Retrieval)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "扩散激活",
+      "name": "扩散激活 (Spreading Activation)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "基础激活检索",
+      "name": "基础激活检索 (Base Activation Retrieval)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "自适应遗忘",
+      "name": "自适应遗忘 (Adaptive Forgetting)",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "对话轮次编码节点",
+      "name": "对话轮次编码节点 (Conversation Turn Node)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "共激活关系边权",
+      "name": "共激活关系边权 (Co-activation Edge Weight)",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "llm-backbone作为蒸馏与生成载体",
+      "name": "LLM backbone (如 GPT-4o / Qwen2.5) 作为蒸馏与生成载体",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "reflective-agent-模块",
+      "name": "Reflective Agent 模块",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2604.16839"
+      ]
+    },
+    {
+      "id": "epistemic-working-memory（认知工作记忆）：语言智能体外部化的回合内认知状态，替代隐式上下文记忆",
+      "name": "Epistemic Working Memory（认知工作记忆）：语言智能体外部化的回合内认知状态，替代隐式上下文记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "confirmed-facts（确认事实）：有来源支持、单调累积、永不撤回的事实记忆",
+      "name": "Confirmed Facts（确认事实）：有来源支持、单调累积、永不撤回的事实记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "active-hypotheses（活跃假设）：带置信度与支持/矛盾事实id的候选答案记忆",
+      "name": "Active Hypotheses（活跃假设）：带置信度与支持/矛盾事实ID的候选答案记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "open-questions（开放问题）：待解决不确定性的优先级排序问题记忆",
+      "name": "Open Questions（开放问题）：待解决不确定性的优先级排序问题记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "tool-call-trajectory（工具调用轨迹）：检索与查询动作的历史记录形态",
+      "name": "Tool Call Trajectory（工具调用轨迹）：检索与查询动作的历史记录形态",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "test-time-reasoning-organization（测试时推理组织）：独立于模型能力的推理组织维度",
+      "name": "Test-Time Reasoning Organization（测试时推理组织）：独立于模型能力的推理组织维度",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "epistemic-state-三元组结构（confirmed-facts-—-active-hypotheses-—-open-questions）",
+      "name": "Epistemic State 三元组结构（Confirmed Facts — Active Hypotheses — Open Questions）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "假设排序结构（按证据排序-+-置信度标注-+-支持/矛盾事实id引用）",
+      "name": "假设排序结构（按证据排序 + 置信度标注 + 支持/矛盾事实ID引用）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "开放问题优先级队列（最高优先级问题映射为下一动作）",
+      "name": "开放问题优先级队列（最高优先级问题映射为下一动作）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "单调事实累积结构（append-only，不可撤回）",
+      "name": "单调事实累积结构（append-only，不可撤回）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "承诺触发结构（预算阈值-≥70%-且确认事实-≥2-的组合条件判定）",
+      "name": "承诺触发结构（预算阈值 ≥70% 且确认事实 ≥2 的组合条件判定）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "track（追踪/事实提取）：每轮工具调用后抽取有来源的确认事实",
+      "name": "Track（追踪/事实提取）：每轮工具调用后抽取有来源的确认事实",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "rank（排序）：依据支持/矛盾事实id与置信度对候选假设排序",
+      "name": "Rank（排序）：依据支持/矛盾事实ID与置信度对候选假设排序",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "crack（破局/承诺）：触发承诺机制从结构化状态直接综合答案",
+      "name": "Crack（破局/承诺）：触发承诺机制从结构化状态直接综合答案",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "update-protocol（更新协议）：提取事实-→-更新假设-→-更新问题-→-选择动作",
+      "name": "Update Protocol（更新协议）：提取事实 → 更新假设 → 更新问题 → 选择动作",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "priority-selection（优先级选择）：由最高优先级开放问题决定下一步工具调用",
+      "name": "Priority Selection（优先级选择）：由最高优先级开放问题决定下一步工具调用",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "monotonic-accumulation（单调累积）：事实永不撤回的写入操作",
+      "name": "Monotonic Accumulation（单调累积）：事实永不撤回的写入操作",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "commitment-nudge（承诺提示）：预算消耗-≥70%-且事实-≥2-时触发",
+      "name": "Commitment Nudge（承诺提示）：预算消耗 ≥70% 且事实 ≥2 时触发",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "runtime-enforcement（运行时强制执行）：系统级校验输出协议遵循度",
+      "name": "Runtime Enforcement（运行时强制执行）：系统级校验输出协议遵循度",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "自然语言-epistemic-state-表示",
+      "name": "自然语言 Epistemic State 表示",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "prompt-模板（三元状态模板与工具-schema-对齐）",
+      "name": "Prompt 模板（三元状态模板与工具 schema 对齐）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "指令遵循型-llm（claude-sonnet-4.6-/-glm-5）",
+      "name": "指令遵循型 LLM（Claude Sonnet 4.6 / GLM-5）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "工具集（search-/-lookup-/-finish）",
+      "name": "工具集（search / lookup / finish）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "工具调用轨迹与检索段落（top-k=3）",
+      "name": "工具调用轨迹与检索段落（top-k=3）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "运行时协议校验器",
+      "name": "运行时协议校验器",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.12267"
+      ]
+    },
+    {
+      "id": "中层残差记忆（mid-layer-residual-memory）：缓存第-j-层每-token-的残差张量-h-j，作为位置无关的语义记忆",
+      "name": "中层残差记忆（Mid-layer Residual Memory）：缓存第 j 层每 token 的残差张量 h_j，作为位置无关的语义记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "分块上下文记忆（chunked-context-memory）：将长上下文按-512-token-分块，每块独立前向至第-j-层后缓存",
+      "name": "分块上下文记忆（Chunked Context Memory）：将长上下文按 512 token 分块，每块独立前向至第 j 层后缓存",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "有界读记忆（bounded-read-memory）：固定-k/chunk/query-长度时在线读计算与-kv-工作内存不随存储上下文长度增长",
+      "name": "有界读记忆（Bounded-Read Memory）：固定 k/chunk/query 长度时在线读计算与 KV 工作内存不随存储上下文长度增长",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "残差张量-h-j（第-j-层每-token-残差，bf16，8kb/token）",
+      "name": "残差张量 h_j（第 j 层每 token 残差，bf16，8KB/token）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "512-token-上下文分块（chunk）",
+      "name": "512-token 上下文分块（Chunk）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "write-操作：上下文分块后仅前向至第-j-层并缓存残差-h-j（分块局部-rope，位置无关）",
+      "name": "Write 操作：上下文分块后仅前向至第 j 层并缓存残差 h_j（分块局部 RoPE，位置无关）",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "中层残差张量-h-j（核心记忆载体）",
+      "name": "中层残差张量 h_j（核心记忆载体）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "外部存储库（按块组织、支持-bm25-检索）",
+      "name": "外部存储库（按块组织、支持 BM25 检索）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "lora-适配器（rank-32，j=12-处读写接口修复）",
+      "name": "LoRA 适配器（rank-32，j=12 处读写接口修复）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "文本上下文-/-pg-19-长文档（自蒸馏素材）",
+      "name": "文本上下文 / PG-19 长文档（自蒸馏素材）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "kv-工作内存（对比基线-kv-direct-的-144kb/token）",
+      "name": "KV 工作内存（对比基线 KV-Direct 的 144KB/token）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2607.28263"
+      ]
+    },
+    {
+      "id": "实体记忆（entity-node）",
+      "name": "实体记忆（entity node）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "事件记忆（event-node）",
+      "name": "事件记忆（event node）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "情节记忆（episode-node）",
+      "name": "情节记忆（episode node）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "事实记忆（fact-node）",
+      "name": "事实记忆（fact node）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "使用中演化型记忆（区别于静态存储型记忆）",
+      "name": "使用中演化型记忆（区别于静态存储型记忆）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "紧凑证据聚类（compact-evidence-cluster）",
+      "name": "紧凑证据聚类（compact evidence cluster）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "异质认知图-g=",
+      "name": "异质认知图 G=(V,E)",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "实体/事件/情节/事实节点",
+        "逻辑/因果/层级/联想边"
+      ],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "激活子图-g-q（检索诱导的证据子图）",
+      "name": "激活子图 G_q（检索诱导的证据子图）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "四类边结构：logical-/-causal-/-hierarchical-/-associative",
+      "name": "四类边结构：logical / causal / hierarchical / associative",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "主题结构（thematic-structure，由反馈推断的-key/noise-分组）",
+      "name": "主题结构（thematic structure，由反馈推断的 key/noise 分组）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "结构化子图（支持集体回忆的证据组织形态）",
+      "name": "结构化子图（支持集体回忆的证据组织形态）",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "自主组织操作：add-/-merge-/-skip",
+      "name": "自主组织操作：add / merge / skip",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "关系推断（自动为新观察推断逻辑、因果、层级、联想边）",
+      "name": "关系推断（自动为新观察推断逻辑、因果、层级、联想边）",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "自适应检索原子动作：seeding-→-expanding-→-filtering",
+      "name": "自适应检索原子动作：seeding → expanding → filtering",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "检索策略原子组合-π-=-π-seed-⊕-π-expand-⊕-π-filter",
+      "name": "检索策略原子组合 π = π_seed ⊕ π_expand ⊕ π_filter",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "记忆再巩固操作：create-/-strengthen-/-weaken-边",
+      "name": "记忆再巩固操作：create / strengthen / weaken 边",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "有界边权更新（基于学习率-η-与置信度-c）",
+      "name": "有界边权更新（基于学习率 η 与置信度 c）",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "访问分数更新与-top-k-重排",
+      "name": "访问分数更新与 Top-K 重排",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "检索反馈流入（retrieval-feedback回流为记忆进化信号）",
+      "name": "检索反馈流入（retrieval feedback回流为记忆进化信号）",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "异质认知图-g-t（随时间演化的记忆载体）",
+      "name": "异质认知图 G_t（随时间演化的记忆载体）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "图的节点与边（记忆单元与记忆关系）",
+      "name": "图的节点与边（记忆单元与记忆关系）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "边权重（可演化的连接强度）",
+      "name": "边权重（可演化的连接强度）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "访问分数（访问频次/新鲜度的载体）",
+      "name": "访问分数（访问频次/新鲜度的载体）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "反馈信号-f（retrieve-阶段输出的反馈）",
+      "name": "反馈信号 f（Retrieve 阶段输出的反馈）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "激活子图-g-q（本次查询激活的记忆切片）",
+      "name": "激活子图 G_q（本次查询激活的记忆切片）",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.16053"
+      ]
+    },
+    {
+      "id": "跨会话长期记忆",
+      "name": "跨会话长期记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [
+        "长期记忆"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "潜在记忆（latent-memory）",
+      "name": "潜在记忆（Latent Memory）",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "循环参数记忆",
+      "name": "循环参数记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "模型无关记忆",
+      "name": "模型无关记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "骨干特定lora参数记忆",
+      "name": "骨干特定LoRA参数记忆",
+      "category": "memory_type",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "固定形状latent-memory",
+      "name": "固定形状Latent Memory",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "单会话latent记忆-q-t",
+      "name": "单会话Latent记忆 q_t",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "跨会话累积记忆状态-h-t",
+      "name": "跨会话累积记忆状态 h_t",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "循环门控状态-z-t",
+      "name": "循环门控状态 z_t",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "backbone-specific-lora参数",
+      "name": "Backbone-specific LoRA参数",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "session-encoder",
+      "name": "Session Encoder",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "RPMem两阶段架构"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "recurrent-gate",
+      "name": "Recurrent Gate",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "跨会话记忆整合模块"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "model-specific-decoder",
+      "name": "Model-Specific Decoder",
+      "category": "memory_structure",
+      "weight": 1,
+      "relatedConcepts": [
+        "模型特定解码阶段"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "单会话记忆编译",
+      "name": "单会话记忆编译",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "fixed-fkl分布匹配编译",
+      "name": "Fixed FKL分布匹配编译",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "循环门控整合",
+      "name": "循环门控整合",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [
+        "记忆整合算子"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "选择性保留与写入",
+      "name": "选择性保留与写入",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "模型特定解码",
+      "name": "模型特定解码",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "跨骨干迁移",
+      "name": "跨骨干迁移",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "冻结部署与前向更新",
+      "name": "冻结部署与前向更新",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "记忆查询",
+      "name": "记忆查询",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "记忆修订与遗忘",
+      "name": "记忆修订与遗忘",
+      "category": "memory_operation",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "固定形状latent向量",
+      "name": "固定形状Latent向量",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "lora参数",
+      "name": "LoRA参数",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [
+        "当前Backbone适配参数",
+        "Latent Memory"
+      ],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "循环门控参数矩阵-w-g",
+      "name": "循环门控参数矩阵 W_g",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "累积记忆状态向量-h-t",
+      "name": "累积记忆状态向量 h_t",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "session-encoder参数",
+      "name": "Session Encoder参数",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "model-specific-decoder参数",
+      "name": "Model-Specific Decoder参数",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
+      ]
+    },
+    {
+      "id": "冻结的backbone参数",
+      "name": "冻结的Backbone参数",
+      "category": "memory_carrier",
+      "weight": 1,
+      "relatedConcepts": [],
+      "sourcePapers": [
+        "2609.23466"
       ]
     },
     {
@@ -18978,6 +22450,1332 @@
       "to": "Event Nodes",
       "type": "related_to",
       "description": "Connected via explicit causal or temporal logical relations"
+    },
+    {
+      "from": "Darwinian Memory System (DMS)",
+      "to": "Memory System",
+      "type": "is_a",
+      "description": "DMS 是一种免训练、自调节的智能体记忆系统"
+    },
+    {
+      "from": "Subtask Memory Unit",
+      "to": "Episodic Memory",
+      "type": "is_a",
+      "description": "子任务记忆单元是长程情景记忆的结构化实例"
+    },
+    {
+      "from": "ε-Mutation",
+      "to": "Evolutionary Operation",
+      "type": "is_a",
+      "description": "ε-变异是达尔文式生态中的探索/变异操作"
+    },
+    {
+      "from": "Memory Ecosystem",
+      "to": "Stochastic Flow System",
+      "type": "is_a",
+      "description": "记忆库被建模为带纯度状态量的随机流生态系统"
+    },
+    {
+      "from": "Survival Selection",
+      "to": "Evolutionary Selection Mechanism",
+      "type": "is_a",
+      "description": "生存选择对应自然选择式的记忆淘汰机制"
+    },
+    {
+      "from": "Precondition",
+      "to": "Memory Unit m",
+      "type": "part_of",
+      "description": "预条件是记忆单元的组成部分"
+    },
+    {
+      "from": "Goal",
+      "to": "Memory Unit m",
+      "type": "part_of",
+      "description": "目标是记忆单元的组成部分"
+    },
+    {
+      "from": "s_meta",
+      "to": "Memory Unit m",
+      "type": "part_of",
+      "description": "元数据是记忆单元的组成部分"
+    },
+    {
+      "from": "Dual-Factor Retrieval",
+      "to": "DMS",
+      "type": "part_of",
+      "description": "双因子检索是 DMS 的核心检索模块"
+    },
+    {
+      "from": "Bayesian Feedback",
+      "to": "DMS",
+      "type": "part_of",
+      "description": "贝叶斯反馈是 DMS 的闭环调节模块"
+    },
+    {
+      "from": "Survival Selection",
+      "to": "DMS",
+      "type": "part_of",
+      "description": "生存选择是 DMS 的自调节模块"
+    },
+    {
+      "from": "Planner",
+      "to": "Planner-Actor Framework",
+      "type": "part_of",
+      "description": "Planner 是 Planner-Actor 框架的组成组件"
+    },
+    {
+      "from": "Actor",
+      "to": "Planner-Actor Framework",
+      "type": "part_of",
+      "description": "Actor 是 Planner-Actor 框架的组成组件"
+    },
+    {
+      "from": "Memory Purity Q_t",
+      "to": "K-Verification Policy",
+      "type": "related_to",
+      "description": "提高 K 可使有效假阴性率 P_FN^effective≈(P_FN)^K 指数衰减，从而提升记忆纯度至 Q_ss→1"
+    },
+    {
+      "from": "Negative Transfer",
+      "to": "Single-Factor (Goal-Only) Key",
+      "type": "related_to",
+      "description": "仅用 goal 作检索键会引发严重负迁移，性能降至 29.7%（低于无记忆基线）"
+    },
+    {
+      "from": "Dynamic Threshold T_i",
+      "to": "Beta-Binomial Reputation",
+      "type": "related_to",
+      "description": "动态阈值由声誉分布均值与标准差导出，用于抑制高风险计划"
+    },
+    {
+      "from": "Survival Selection",
+      "to": "Memory/Storage Efficiency",
+      "type": "related_to",
+      "description": "移除自调节导致内存/磁盘 +258%、时间 +18.8%，表明生存选择兼顾性能与资源效率"
+    },
+    {
+      "from": "ε-Mutation",
+      "to": "Convergence Speed",
+      "type": "related_to",
+      "description": "ε 在稳态纯度比中相互抵消，但显著影响系统收敛速度"
+    },
+    {
+      "from": "Bayesian Feedback",
+      "to": "Risk Suppression",
+      "type": "related_to",
+      "description": "贝叶斯反馈是抑制风险计划的核心机制，移除后性能下降 26.3%"
+    },
+    {
+      "from": "Memory Reuse Rate",
+      "to": "Long-Term Stability",
+      "type": "related_to",
+      "description": "记忆复用率从 12% 升至 30%–36%，反映系统长期运行的持续复用稳定性"
+    },
+    {
+      "from": "Playbook",
+      "to": "Semantic Decision Rule Memory",
+      "type": "is_a",
+      "description": "The Playbook serves as a structured form of semantic memory storing executable decision rules."
+    },
+    {
+      "from": "Offline Reflection Loop",
+      "to": "GUIDE Framework",
+      "type": "part_of",
+      "description": "The reflection loop is a core component responsible for evolving the memory content."
+    },
+    {
+      "from": "Trajectory Data",
+      "to": "Playbook Updates",
+      "type": "related_to",
+      "description": "Historical trajectory data drives the iterative refinement of the playbook rules."
+    },
+    {
+      "from": "上下文压缩策略",
+      "to": "上下文管理策略",
+      "type": "is_a",
+      "description": "压缩策略是上下文管理的一种具体类型，用于优化容量"
+    },
+    {
+      "from": "并行分支",
+      "to": "AgentSwing 架构",
+      "type": "part_of",
+      "description": "并行分支是 AgentSwing 核心架构的组成部分，用于扩展探索路径"
+    },
+    {
+      "from": "搜索效率",
+      "to": "终端精度",
+      "type": "related_to",
+      "description": "两者共同表征长程任务成功的概率框架，互为互补维度"
+    },
+    {
+      "from": "Concept-mediated Knowledge Graph",
+      "to": "Knowledge Graph",
+      "type": "is_a",
+      "description": "A specific type of KG using concept themes instead of entities as connectors"
+    },
+    {
+      "from": "Reflection Memory",
+      "to": "High-order Memory",
+      "type": "is_a",
+      "description": "Reflections represent abstracted high-order memory derived from facts"
+    },
+    {
+      "from": "Atomic Facts",
+      "to": "Memory Store",
+      "type": "part_of",
+      "description": "Facts are a component layer within the hierarchical memory store"
+    },
+    {
+      "from": "Concept Nodes",
+      "to": "Graph Structure",
+      "type": "part_of",
+      "description": "Concepts form the mediating nodes of the graph structure"
+    },
+    {
+      "from": "Facts",
+      "to": "Episodes",
+      "type": "related_to",
+      "description": "Facts are DERIVED_FROM raw dialogue episodes"
+    },
+    {
+      "from": "Reflections",
+      "to": "Facts",
+      "type": "related_to",
+      "description": "Reflections are DERIVED_FROM_FACT atomic facts"
+    },
+    {
+      "from": "Concepts",
+      "to": "Facts",
+      "type": "related_to",
+      "description": "Concepts HAS_CONCEPT relationship with facts"
+    },
+    {
+      "from": "Episodes",
+      "to": "Episodes",
+      "type": "related_to",
+      "description": "Episodes have NEXT temporal relationship"
+    },
+    {
+      "from": "Agent Behavior Forgetting",
+      "to": "Machine Unlearning",
+      "type": "is_a",
+      "description": "Distinguished from traditional model parameter unlearning as environment-dependent"
+    },
+    {
+      "from": "Conversion Model",
+      "to": "Secure Forgetting Framework",
+      "type": "part_of",
+      "description": "Core component translating high-level requests to executable prompts"
+    },
+    {
+      "from": "Forgetting Request",
+      "to": "Task Performance",
+      "type": "related_to",
+      "description": "Forgetting operations must not degrade original task success rate"
+    },
+    {
+      "from": "LLMA-Mem",
+      "to": "Memory Enhanced Lifelong Learning Framework",
+      "type": "is_a",
+      "description": "LLMA-Mem is defined as a framework enabling lifelong learning via memory in LLM MAS"
+    },
+    {
+      "from": "Flexible Memory Topology",
+      "to": "LLMA-Mem Architecture",
+      "type": "part_of",
+      "description": "Memory topology is a core component of the proposed architecture"
+    },
+    {
+      "from": "Team Size",
+      "to": "Memory Design",
+      "type": "related_to",
+      "description": "Team scaling and memory scaling are jointly considered in the scaling view"
+    },
+    {
+      "from": "Token Cost",
+      "to": "Memory Efficiency",
+      "type": "related_to",
+      "description": "Optimized memory design correlates with reduced token consumption"
+    },
+    {
+      "from": "记忆智能体 (MIA)",
+      "to": "深度研究智能体 (DRA)",
+      "type": "is_a",
+      "description": "MIA 是专为深度研究场景设计的智能体类型"
+    },
+    {
+      "from": "记忆管理器",
+      "to": "MIA 架构",
+      "type": "part_of",
+      "description": "管理器是 MIA 三元架构的组成部分，负责非参数化存储"
+    },
+    {
+      "from": "规划器",
+      "to": "MIA 架构",
+      "type": "part_of",
+      "description": "规划器是 MIA 三元架构的组成部分，负责参数化记忆与计划生成"
+    },
+    {
+      "from": "执行器",
+      "to": "MIA 架构",
+      "type": "part_of",
+      "description": "执行器是 MIA 三元架构的组成部分，负责搜索与分析"
+    },
+    {
+      "from": "参数化记忆",
+      "to": "规划器",
+      "type": "related_to",
+      "description": "参数化记忆主要驻留于规划器内部权重中"
+    },
+    {
+      "from": "非参数化记忆",
+      "to": "记忆管理器",
+      "type": "related_to",
+      "description": "非参数化记忆由管理器以压缩轨迹形式存储"
+    },
+    {
+      "from": "双向记忆转换",
+      "to": "记忆演化",
+      "type": "related_to",
+      "description": "通过双向转换实现记忆的自主演化与效率提升"
+    },
+    {
+      "from": "规划技能",
+      "to": "技能",
+      "type": "is_a",
+      "description": "规划技能是技能的一种高层抽象类型，用于任务分解"
+    },
+    {
+      "from": "功能技能",
+      "to": "技能",
+      "type": "is_a",
+      "description": "功能技能是技能的中层实现类型，用于具体功能模块"
+    },
+    {
+      "from": "原子技能",
+      "to": "技能",
+      "type": "is_a",
+      "description": "原子技能是技能的底层执行类型，用于 API 细节调用"
+    },
+    {
+      "from": "技能",
+      "to": "技能知识库",
+      "type": "part_of",
+      "description": "单个技能是技能知识库的基本组成单元"
+    },
+    {
+      "from": "原子技能",
+      "to": "功能技能",
+      "type": "part_of",
+      "description": "原子技能作为功能技能的底层细节支撑与补充"
+    },
+    {
+      "from": "执行反馈",
+      "to": "迭代技能优化",
+      "type": "related_to",
+      "description": "执行反馈数据直接驱动技能的迭代优化过程"
+    },
+    {
+      "from": "伪计划",
+      "to": "规划技能检索",
+      "type": "related_to",
+      "description": "伪计划作为规划技能检索后的中间查询产物，不注入最终 Prompt"
+    },
+    {
+      "from": "Boundary Guided Long-Term Memory",
+      "to": "Long-Term Memory",
+      "type": "is_a",
+      "description": "A specialized memory type for managing long-context dialogues"
+    },
+    {
+      "from": "Memory Segment",
+      "to": "Memory Structure",
+      "type": "part_of",
+      "description": "Segments constitute the stored content within the memory structure"
+    },
+    {
+      "from": "Event Boundary",
+      "to": "Memory Write Trigger",
+      "type": "related_to",
+      "description": "Changes in four elements trigger the boundary and memory writing"
+    },
+    {
+      "from": "自学习诊断智能体 (SEA)",
+      "to": "医疗诊断代理 (Medical Diagnostic Agent)",
+      "type": "is_a",
+      "description": "SEA 是一种具备持续学习能力和经验复用机制的特定医疗诊断代理"
+    },
+    {
+      "from": "形式化知识记忆",
+      "to": "记忆类型",
+      "type": "is_a",
+      "description": "属于认知启发双重记忆理论中的一种特定记忆分类"
+    },
+    {
+      "from": "双重记忆模块",
+      "to": "SEA 架构",
+      "type": "part_of",
+      "description": "双重记忆模块是 SEA 核心架构的关键组成部分"
+    },
+    {
+      "from": "经验模式记忆",
+      "to": "双重记忆模块",
+      "type": "part_of",
+      "description": "经验模式记忆是双重记忆模块的子组件之一，与形式化知识记忆并列"
+    },
+    {
+      "from": "推理引擎",
+      "to": "双重记忆模块",
+      "type": "related_to",
+      "description": "通过强化学习框架进行联合优化，推理策略与记忆管理策略相互影响"
+    },
+    {
+      "from": "Structured Experience Memory",
+      "to": "Knowledge Accumulation",
+      "type": "is_a",
+      "description": "Memory is defined as a form of knowledge accumulation rather than parameter weight updates."
+    },
+    {
+      "from": "Memory Bank",
+      "to": "PRIME Framework",
+      "type": "part_of",
+      "description": "The memory bank is a core component within the iterative evolution loop of the framework."
+    },
+    {
+      "from": "Credit Assignment",
+      "to": "Memory Evolution",
+      "type": "related_to",
+      "description": "Credit assignment strategies determine which experiences are selected for evolution or pruning."
+    },
+    {
+      "from": "Tool Graph Memory",
+      "to": "External Memory",
+      "type": "is_a",
+      "description": "A structured form of external memory specifically for tool storage and reuse"
+    },
+    {
+      "from": "Tool Node",
+      "to": "Tool Graph Memory",
+      "type": "part_of",
+      "description": "Basic functional unit representing a skill or tool within the graph"
+    },
+    {
+      "from": "Policy Optimization",
+      "to": "Memory Evolution",
+      "type": "related_to",
+      "description": "Jointly optimized through reinforcement learning to enhance generalization"
+    },
+    {
+      "from": "Medium-Term Memory (MTM)",
+      "to": "Agent Memory",
+      "type": "is_a",
+      "description": "MTM is a specialized type of agent memory for storing personalized interaction summaries"
+    },
+    {
+      "from": "Long-Term Memory (LTM)",
+      "to": "Agent Memory",
+      "type": "is_a",
+      "description": "LTM is a type of agent memory storing abstracted knowledge graph nodes"
+    },
+    {
+      "from": "SLM Intent Planning",
+      "to": "Online Interaction Link",
+      "type": "part_of",
+      "description": "Intent planning is a component of the online interaction processing chain"
+    },
+    {
+      "from": "Offline Consolidation Module",
+      "to": "LightMem System",
+      "type": "part_of",
+      "description": "Consolidation module is a part of the overall LightMem architecture"
+    },
+    {
+      "from": "Medium-Term Memory (MTM)",
+      "to": "Long-Term Memory (LTM)",
+      "type": "related_to",
+      "description": "MTM entries are abstracted into LTM through the consolidation process"
+    },
+    {
+      "from": "Small Language Models (SLM)",
+      "to": "Memory Control",
+      "type": "related_to",
+      "description": "SLMs are used to control memory operations instead of generation"
+    },
+    {
+      "from": "ACGM",
+      "to": "Learned Graph-Memory Retriever",
+      "type": "is_a",
+      "description": "ACGM is a specific implementation of a retriever based on learned graph memory."
+    },
+    {
+      "from": "Modality-Specific Decay",
+      "to": "Graph Memory Construction Module",
+      "type": "part_of",
+      "description": "Visual and text decay mechanisms are components of the graph construction process."
+    },
+    {
+      "from": "Task Success Signal",
+      "to": "Policy Gradient Optimization",
+      "type": "related_to",
+      "description": "Task success signals provide the reward feedback for optimizing the graph structure."
+    },
+    {
+      "from": "Active Extraction",
+      "to": "Memory Management Paradigm",
+      "type": "is_a",
+      "description": "Defines active extraction as a reasoning-based paradigm shift from passive transcription"
+    },
+    {
+      "from": "MemReader-4B",
+      "to": "Active Decision Maker",
+      "type": "is_a",
+      "description": "The 4B model serves as the reasoning engine for memory decisions"
+    },
+    {
+      "from": "0.6B Passive Extractor",
+      "to": "MemReader Architecture",
+      "type": "part_of",
+      "description": "Low-cost module for structured output generation"
+    },
+    {
+      "from": "4B Active Decider",
+      "to": "MemReader Architecture",
+      "type": "part_of",
+      "description": "Reasoning module for value assessment and action selection"
+    },
+    {
+      "from": "GRPO",
+      "to": "Active Decision Optimization",
+      "type": "related_to",
+      "description": "Group Relative Policy Optimization used to train the decision maker"
+    },
+    {
+      "from": "Memory Pollution",
+      "to": "Passive Transcription",
+      "type": "related_to",
+      "description": "Identified as a core pain point caused by passive methods"
+    },
+    {
+      "from": "演进记忆",
+      "to": "个性化记忆",
+      "type": "is_a",
+      "description": "一种随时间适应用户行为变化而非静态存储的记忆类型"
+    },
+    {
+      "from": "上下文蒸馏",
+      "to": "记忆读取模块",
+      "type": "part_of",
+      "description": "蒸馏是优化记忆检索与内部化的核心技术组件"
+    },
+    {
+      "from": "参数化记忆",
+      "to": "Token 预算降低",
+      "type": "related_to",
+      "description": "将记忆内部化为参数可减少对外部检索 Token 的依赖"
+    },
+    {
+      "from": "Pask System",
+      "to": "Proactive AI Agent",
+      "type": "is_a",
+      "description": "Pask is an instantiated proactive agent system with long-term memory capabilities"
+    },
+    {
+      "from": "IntentFlow",
+      "to": "Streaming Intent Detection Model",
+      "type": "is_a",
+      "description": "IntentFlow is a specific model designed for real-time streaming intent detection"
+    },
+    {
+      "from": "Working Area",
+      "to": "Hybrid Memory Structure",
+      "type": "part_of",
+      "description": "Working Area is one of the three layers in the hybrid memory structure"
+    },
+    {
+      "from": "User Memory",
+      "to": "Hybrid Memory Structure",
+      "type": "part_of",
+      "description": "User Memory is one of the three layers storing user preferences"
+    },
+    {
+      "from": "Global Memory",
+      "to": "Hybrid Memory Structure",
+      "type": "part_of",
+      "description": "Global Memory is one of the three layers storing general knowledge"
+    },
+    {
+      "from": "Demand Detection",
+      "to": "Memory Modeling",
+      "type": "related_to",
+      "description": "Demand detection is coupled with memory evolution in the DD-MM-PAS paradigm"
+    },
+    {
+      "from": "Procedural Memory",
+      "to": "Implicit Memory",
+      "type": "is_a",
+      "description": "程序性记忆是隐性记忆的一种类型"
+    },
+    {
+      "from": "Priming Effect",
+      "to": "Implicit Memory",
+      "type": "is_a",
+      "description": "启动效应是隐性记忆的一种类型"
+    },
+    {
+      "from": "Classical Conditioning",
+      "to": "Implicit Memory",
+      "type": "is_a",
+      "description": "经典条件反射是隐性记忆的一种类型"
+    },
+    {
+      "from": "Learning-Interference-Test Protocol",
+      "to": "ImplicitMemBench",
+      "type": "part_of",
+      "description": "学习 - 干扰 - 测试协议是 ImplicitMemBench 基准的核心组成部分"
+    },
+    {
+      "from": "Three Evaluation Paradigms",
+      "to": "ImplicitMemBench",
+      "type": "part_of",
+      "description": "三大认知范式模块构成 ImplicitMemBench 的评估体系"
+    },
+    {
+      "from": "Implicit Memory",
+      "to": "Unconscious Behavioral Adaptation",
+      "type": "related_to",
+      "description": "隐性记忆与无意识行为适应能力密切相关"
+    },
+    {
+      "from": "Explicit Memory",
+      "to": "Implicit Memory",
+      "type": "related_to",
+      "description": "显式记忆与隐性记忆形成对比，前者无法替代后者"
+    },
+    {
+      "from": "Global Workspace Agent",
+      "to": "Cognitive Architecture",
+      "type": "is_a",
+      "description": "GWA is a specific implementation of cognitive architecture for LLMs based on GWT"
+    },
+    {
+      "from": "Stage",
+      "to": "Global Workspace Agent",
+      "type": "part_of",
+      "description": "Stage serves as the Short-term Memory component within the GWA"
+    },
+    {
+      "from": "Spotlight",
+      "to": "Global Workspace Agent",
+      "type": "part_of",
+      "description": "Spotlight acts as the attention mechanism bridging STM and LTM"
+    },
+    {
+      "from": "Audience",
+      "to": "Global Workspace Agent",
+      "type": "part_of",
+      "description": "Audience comprises heterogeneous agent groups within the architecture"
+    },
+    {
+      "from": "Entropy Drive",
+      "to": "Cognitive Deadlock",
+      "type": "related_to",
+      "description": "Entropy drive mechanism prevents cognitive stagnation and deadlocks"
+    },
+    {
+      "from": "Core Self",
+      "to": "Identity Consistency",
+      "type": "related_to",
+      "description": "Core Self injection maintains agent identity consistency over long tasks"
+    },
+    {
+      "from": "Stage",
+      "to": "Long-term Memory",
+      "type": "related_to",
+      "description": "Stage interacts with LTM via the Spotlight attention mechanism"
+    },
+    {
+      "from": "Semantic State Memory",
+      "to": "Short-term Memory",
+      "type": "is_a",
+      "description": "Semantic State Memory is a specific type of short-term memory recording historical decision states."
+    },
+    {
+      "from": "Episodic Memory",
+      "to": "Short-term Memory",
+      "type": "is_a",
+      "description": "Episodic Memory is a specific type of short-term memory recording event trajectories."
+    },
+    {
+      "from": "Zoom In Evidence Localization",
+      "to": "Multi-view Long-term Memory Module",
+      "type": "part_of",
+      "description": "Zoom In is a sub-operation within the long-term memory perception module."
+    },
+    {
+      "from": "Zoom Out Context Expansion",
+      "to": "Multi-view Long-term Memory Module",
+      "type": "part_of",
+      "description": "Zoom Out is a sub-operation within the long-term memory perception module."
+    },
+    {
+      "from": "Memory-Driven Chain-of-Thought",
+      "to": "Test-Time Scaling",
+      "type": "related_to",
+      "description": "Memory mechanisms drive the reasoning process enabling test-time computation scaling."
+    },
+    {
+      "from": "外部化记忆",
+      "to": "认知人工制品",
+      "type": "is_a",
+      "description": "外部记忆模块被视为辅助模型认知的认知人工制品"
+    },
+    {
+      "from": "架构工程层",
+      "to": "统一协调层",
+      "type": "is_a",
+      "description": "架构工程是管理外部模块执行的统一协调层"
+    },
+    {
+      "from": "记忆模块",
+      "to": "外部认知基础设施",
+      "type": "part_of",
+      "description": "记忆模块是外部认知基础设施的核心组成部分"
+    },
+    {
+      "from": "技能模块",
+      "to": "外部认知基础设施",
+      "type": "part_of",
+      "description": "技能模块是外部认知基础设施的核心组成部分"
+    },
+    {
+      "from": "模型权重",
+      "to": "外部架构",
+      "type": "related_to",
+      "description": "智能体进化依赖模型与外部架构的协同演进关系"
+    },
+    {
+      "from": "认知负担",
+      "to": "外部化形式",
+      "type": "related_to",
+      "description": "认知负担需转化为模型可可靠解决的外部形式"
+    },
+    {
+      "from": "Topic Memory",
+      "to": "Memory Node",
+      "type": "is_a",
+      "description": "主题记忆是记忆节点的一种高层抽象类型"
+    },
+    {
+      "from": "Episode Memory",
+      "to": "Memory Node",
+      "type": "is_a",
+      "description": "片段记忆是记忆节点的一种时间连续单元类型"
+    },
+    {
+      "from": "Fact Memory",
+      "to": "Memory Node",
+      "type": "is_a",
+      "description": "事实记忆是记忆节点的一种原子语义类型"
+    },
+    {
+      "from": "Fact Memory",
+      "to": "Episode Memory",
+      "type": "part_of",
+      "description": "事实记忆在逻辑上归属于特定的对话片段"
+    },
+    {
+      "from": "Episode Memory",
+      "to": "Topic Memory",
+      "type": "part_of",
+      "description": "对话片段在语义上归属于特定的主题范畴"
+    },
+    {
+      "from": "Memory Nodes",
+      "to": "Memory Nodes",
+      "type": "related_to",
+      "description": "通过超边连接任意数量的节点以建模高阶关联"
+    },
+    {
+      "from": "AI Generated Module",
+      "to": "Instrument",
+      "type": "is_a",
+      "description": "AI 生成的模块被定义为个人 AI 代理中的仪器"
+    },
+    {
+      "from": "Shared State Layer",
+      "to": "Architecture Layer",
+      "type": "is_a",
+      "description": "共享状态层被定义为个人 AI 代理架构中的关键层"
+    },
+    {
+      "from": "Shared Context Layer",
+      "to": "PSI Architecture",
+      "type": "part_of",
+      "description": "共享上下文层是 PSI 三层架构的中间层"
+    },
+    {
+      "from": "Module State",
+      "to": "Shared Personal Context Registry",
+      "type": "part_of",
+      "description": "模块状态汇聚于共享个人上下文注册表"
+    },
+    {
+      "from": "GUI Interface",
+      "to": "Chat Agent",
+      "type": "related_to",
+      "description": "双模态交互同步操作同一共享状态"
+    },
+    {
+      "from": "Module",
+      "to": "Provider Contract",
+      "type": "related_to",
+      "description": "模块通过提供者契约实现标准化集成"
+    },
+    {
+      "from": "Hebbian联想情景记忆图",
+      "to": "长期记忆系统",
+      "type": "is_a",
+      "description": "Hebbian联想情景记忆图是面向LLM Agent长期记忆的一种记忆系统实现"
+    },
+    {
+      "from": "用户模型记忆",
+      "to": "语义记忆",
+      "type": "is_a",
+      "description": "用户模型记忆是结构化语义记忆的一种类型"
+    },
+    {
+      "from": "事实记忆",
+      "to": "语义记忆",
+      "type": "is_a",
+      "description": "事实记忆是结构化语义记忆的一种类型"
+    },
+    {
+      "from": "Agent知识记忆",
+      "to": "语义记忆",
+      "type": "is_a",
+      "description": "Agent知识记忆是结构化语义记忆的一种类型"
+    },
+    {
+      "from": "hub节点",
+      "to": "情景记忆图节点",
+      "type": "is_a",
+      "description": "高关联hub节点是情景记忆图中的一类特殊节点"
+    },
+    {
+      "from": "扩散激活路径",
+      "to": "检索路径",
+      "type": "is_a",
+      "description": "扩散激活路径是双路径检索器中的一类检索路径"
+    },
+    {
+      "from": "基础激活路径",
+      "to": "检索路径",
+      "type": "is_a",
+      "description": "基础激活路径是双路径检索器中的一类检索路径"
+    },
+    {
+      "from": "Hebbian情景记忆图",
+      "to": "HeLa-Mem架构",
+      "type": "part_of",
+      "description": "Hebbian情景记忆图是HeLa-Mem三层架构的第一层组成模块"
+    },
+    {
+      "from": "Reflective Agent巩固层",
+      "to": "HeLa-Mem架构",
+      "type": "part_of",
+      "description": "Reflective Agent驱动的语义蒸馏层是HeLa-Mem三层架构的第二层"
+    },
+    {
+      "from": "双路径检索器",
+      "to": "HeLa-Mem架构",
+      "type": "part_of",
+      "description": "双路径检索器是HeLa-Mem三层架构的第三层"
+    },
+    {
+      "from": "对话轮次节点",
+      "to": "Hebbian情景记忆图",
+      "type": "part_of",
+      "description": "每轮对话编码为节点，是情景记忆图的基本组成单位"
+    },
+    {
+      "from": "Hebbian边权",
+      "to": "Hebbian情景记忆图",
+      "type": "part_of",
+      "description": "共激活边权是情景记忆图连接节点的组成元素"
+    },
+    {
+      "from": "自适应遗忘",
+      "to": "Reflective Agent巩固层",
+      "type": "part_of",
+      "description": "删除孤立节点的自适应遗忘机制是巩固层的一部分"
+    },
+    {
+      "from": "Hebbian学习",
+      "to": "联想记忆",
+      "type": "related_to",
+      "description": "Hebbian学习原则是联想记忆自涌现的理论基础（共激活即连接增强）"
+    },
+    {
+      "from": "共激活(Co-activation)",
+      "to": "边权增强(Edge Strengthening)",
+      "type": "related_to",
+      "description": "节点共激活触发对应边的Hebbian权重增强"
+    },
+    {
+      "from": "Reflective Agent",
+      "to": "记忆巩固(Consolidation)",
+      "type": "related_to",
+      "description": "Reflective Agent模拟睡眠巩固过程，将hub蒸馏为语义记忆"
+    },
+    {
+      "from": "扩散激活",
+      "to": "多跳推理",
+      "type": "related_to",
+      "description": "沿Hebbian边传播的扩散激活补足语义检索短板，支持多跳召回"
+    },
+    {
+      "from": "Hebbian机制",
+      "to": "Transformer注意力",
+      "type": "related_to",
+      "description": "两者均涉及共现加权，区别在于Hebbian是持久化关联，注意力是瞬时化加权"
+    },
+    {
+      "from": "自适应遗忘",
+      "to": "图规模控制",
+      "type": "related_to",
+      "description": "自适应遗忘通过删除孤立节点控制图规模的长期可扩展性"
+    },
+    {
+      "from": "Epistemic Working Memory",
+      "to": "Working Memory",
+      "type": "is_a",
+      "description": "认知工作记忆是认知科学工作记忆概念在语言智能体上的映射实例"
+    },
+    {
+      "from": "SLEUTH",
+      "to": "Prompt-Only Protocol",
+      "type": "is_a",
+      "description": "SLEUTH 是一种仅靠提示实现的结构化推理协议"
+    },
+    {
+      "from": "Confirmed Fact",
+      "to": "Memory Element",
+      "type": "is_a",
+      "description": "确认事实是 Epistemic State 的记忆元素之一"
+    },
+    {
+      "from": "Active Hypothesis",
+      "to": "Memory Element",
+      "type": "is_a",
+      "description": "活跃假设是 Epistemic State 的记忆元素之一"
+    },
+    {
+      "from": "Open Question",
+      "to": "Memory Element",
+      "type": "is_a",
+      "description": "开放问题是 Epistemic State 的记忆元素之一"
+    },
+    {
+      "from": "Commitment Nudge",
+      "to": "Stop Decision Mechanism",
+      "type": "is_a",
+      "description": "承诺机制是一种提交/停止决策机制，属最优停止类"
+    },
+    {
+      "from": "Context Dilution",
+      "to": "Failure Mode",
+      "type": "is_a",
+      "description": "上下文稀释是一种多跳推理失败模式"
+    },
+    {
+      "from": "Certainty Trap",
+      "to": "Failure Mode",
+      "type": "is_a",
+      "description": "确定性陷阱（信息瘫痪）是一种多跳推理失败模式"
+    },
+    {
+      "from": "Confirmed Facts",
+      "to": "Epistemic State",
+      "type": "part_of",
+      "description": "确认事实是三元认知状态的第一分量"
+    },
+    {
+      "from": "Active Hypotheses",
+      "to": "Epistemic State",
+      "type": "part_of",
+      "description": "活跃假设是三元认知状态的第二分量"
+    },
+    {
+      "from": "Open Questions",
+      "to": "Epistemic State",
+      "type": "part_of",
+      "description": "开放问题是三元认知状态的第三分量"
+    },
+    {
+      "from": "Commitment Mechanism",
+      "to": "SLEUTH",
+      "type": "part_of",
+      "description": "承诺机制是 SLEUTH 协议的核心组件"
+    },
+    {
+      "from": "Update Protocol",
+      "to": "SLEUTH",
+      "type": "part_of",
+      "description": "更新协议是 SLEUTH 的运行机制"
+    },
+    {
+      "from": "Runtime Enforcement",
+      "to": "SLEUTH",
+      "type": "part_of",
+      "description": "运行时强制执行是 SLEUTH 的协议保障组件"
+    },
+    {
+      "from": "Track",
+      "to": "Update Protocol",
+      "type": "part_of",
+      "description": "追踪操作是更新协议的第一步"
+    },
+    {
+      "from": "Rank",
+      "to": "Update Protocol",
+      "type": "part_of",
+      "description": "排序操作是更新协议的第二步"
+    },
+    {
+      "from": "Context Dilution",
+      "to": "Information Loss",
+      "type": "related_to",
+      "description": "上下文稀释导致信息丢失，主要影响 2–3-hop 任务"
+    },
+    {
+      "from": "Evidence Sufficiency Paralysis",
+      "to": "Certainty Trap",
+      "type": "related_to",
+      "description": "证据充分性瘫痪等价于确定性陷阱，主要影响 4-hop 任务"
+    },
+    {
+      "from": "SLEUTH",
+      "to": "ReAct",
+      "type": "related_to",
+      "description": "SLEUTH 以 ReAct 为基线并在长链任务上超越之"
+    },
+    {
+      "from": "SLEUTH",
+      "to": "Reflexion",
+      "type": "related_to",
+      "description": "SLEUTH 与 Reflexion 类事后反思方法形成对比（后者缺乏回合内状态）"
+    },
+    {
+      "from": "Commitment Mechanism",
+      "to": "Optimal Stopping",
+      "type": "related_to",
+      "description": "承诺机制与最优停止、校准停止等经典决策理论天然衔接"
+    },
+    {
+      "from": "Reasoning Organization",
+      "to": "Model Capability",
+      "type": "related_to",
+      "description": "推理组织与模型能力是可解耦的独立缩放变量"
+    },
+    {
+      "from": "Memory Organization",
+      "to": "Test-Time Compute",
+      "type": "related_to",
+      "description": "认知状态管理与测试时算力、模型规模化互补"
+    },
+    {
+      "from": "Timeout Rate Reduction",
+      "to": "SLEUTH Gain",
+      "type": "related_to",
+      "description": "SLEUTH 收益与超时率下降强相关"
+    },
+    {
+      "from": "CoMem",
+      "to": "无界上下文记忆机制",
+      "type": "is_a",
+      "description": "CoMem 是一种实现有界读的无界上下文记忆方案"
+    },
+    {
+      "from": "深度分工假设",
+      "to": "LLM 层级功能分工理论",
+      "type": "is_a",
+      "description": "深度分工是 LLM 中低层理解、上层查询条件化预测的分工现象"
+    },
+    {
+      "from": "中层残差缓存",
+      "to": "记忆载体形式",
+      "type": "is_a",
+      "description": "中层残差缓存是一种基于残差张量的记忆载体"
+    },
+    {
+      "from": "压缩税",
+      "to": "代价型性能现象",
+      "type": "is_a",
+      "description": "压缩税是因压缩/选择性读入引起的精度下降现象"
+    },
+    {
+      "from": "j",
+      "to": "质量–成本旋钮",
+      "type": "is_a",
+      "description": "j 作为显式质量–成本权衡旋钮，j=0 等价全前向"
+    },
+    {
+      "from": "Write 阶段",
+      "to": "CoMem 架构",
+      "type": "part_of",
+      "description": "Write 是 CoMem 双阶段设计的写入（离线）部分"
+    },
+    {
+      "from": "Read 阶段",
+      "to": "CoMem 架构",
+      "type": "part_of",
+      "description": "Read 是 CoMem 双阶段设计的在线读取部分"
+    },
+    {
+      "from": "512-token 分块",
+      "to": "Write 阶段",
+      "type": "part_of",
+      "description": "分块是 Write 阶段缓存的基本粒度单元"
+    },
+    {
+      "from": "j 深度分割",
+      "to": "读出保真度",
+      "type": "related_to",
+      "description": "j 越深省查询成本但损 frozen readout fidelity（j=6/9/12 LoCoMo 32.78/29.15/24.52）"
+    },
+    {
+      "from": "j 深度分割",
+      "to": "在线读计算与 KV 工作内存",
+      "type": "related_to",
+      "description": "j 调节在线读成本，固定 k/chunk/query 下不随存储长度增长"
+    },
+    {
+      "from": "自蒸馏 LoRA",
+      "to": "LoCoMo 得分",
+      "type": "related_to",
+      "description": "j=12 自蒸馏 LoRA 使 LoCoMo +13.75 点"
+    },
+    {
+      "from": "检索预算",
+      "to": "干扰变量链",
+      "type": "related_to",
+      "description": "更宽检索（Hop-4）不一定更好，16k 后引入干扰"
+    },
+    {
+      "from": "跨块交互",
+      "to": "多事实消歧",
+      "type": "related_to",
+      "description": "跨块因果注意力对多键召回至关重要（96/94→60/32）"
+    },
+    {
+      "from": "语义内容深度 0.45L",
+      "to": "模型规模",
+      "type": "related_to",
+      "description": "语义深度约 0.45L 近尺度不变，零样本可读边界随规模加深"
+    },
+    {
+      "from": "长程瓶颈",
+      "to": "选择机制",
+      "type": "related_to",
+      "description": "长程瓶颈主要是选择而非缓存保真度"
+    },
+    {
+      "from": "实体节点/事件节点/情节节点/事实节点",
+      "to": "记忆单元（memory unit）",
+      "type": "is_a",
+      "description": "四类异质节点均为长期记忆的基本单元类型"
+    },
+    {
+      "from": "逻辑边/因果边/层级边/联想边",
+      "to": "记忆关系（memory relation）",
+      "type": "is_a",
+      "description": "四类异质边构成节点间的语义连接类型"
+    },
+    {
+      "from": "自主组织/自适应检索/记忆再巩固",
+      "to": "记忆生命周期阶段（memory lifecycle stage）",
+      "type": "is_a",
+      "description": "REALM 的三大组件是记忆生命周期的三个连续阶段"
+    },
+    {
+      "from": "检索驱动记忆再巩固",
+      "to": "记忆演化机制（memory evolution mechanism）",
+      "type": "is_a",
+      "description": "再巩固是一种由检索反馈驱动的记忆演化机制"
+    },
+    {
+      "from": "异质认知图",
+      "to": "记忆结构表示（memory structure representation）",
+      "type": "is_a",
+      "description": "异质认知图是本文的记忆结构化表示形式"
+    },
+    {
+      "from": "实体/事件/情节/事实节点",
+      "to": "异质认知图 G=(V,E)",
+      "type": "part_of",
+      "description": "四类节点是异质认知图的顶点组成部分"
+    },
+    {
+      "from": "逻辑/因果/层级/联想边",
+      "to": "异质认知图 G=(V,E)",
+      "type": "part_of",
+      "description": "四类边是异质认知图的连接组成部分"
+    },
+    {
+      "from": "激活子图 G_q",
+      "to": "异质认知图 G_t",
+      "type": "part_of",
+      "description": "激活子图是当前查询从整体记忆中诱导出的局部子图"
+    },
+    {
+      "from": "seeding / expanding / filtering",
+      "to": "自适应检索组件",
+      "type": "part_of",
+      "description": "三个原子动作组成自适应检索流水线"
+    },
+    {
+      "from": "create / strengthen / weaken",
+      "to": "记忆再巩固组件",
+      "type": "part_of",
+      "description": "三种边编辑操作构成再巩固的拓扑更新动作集"
+    },
+    {
+      "from": "自主组织、自适应检索、记忆再巩固",
+      "to": "REALM 框架",
+      "type": "part_of",
+      "description": "三大组件共同构成 REALM 的闭环架构"
+    },
+    {
+      "from": "检索（Retrieve）",
+      "to": "记忆再巩固（Reconsolidate）",
+      "type": "related_to",
+      "description": "检索输出 (G_q, f) 作为再巩固的输入，检索从记忆使用的终点变为记忆进化的信号源"
+    },
+    {
+      "from": "共利用模式（co-utilization pattern）",
+      "to": "记忆拓扑重组",
+      "type": "related_to",
+      "description": "哪些记忆被一起调用影响记忆结构，驱动边权重的增强或减弱"
+    },
+    {
+      "from": "记忆再巩固",
+      "to": "证据利用质量",
+      "type": "related_to",
+      "description": "再巩固主要提升正确回答率（证据利用质量），而非显著扩大证据召回"
+    },
+    {
+      "from": "置信度 c 与学习率 η",
+      "to": "边权有界更新",
+      "type": "related_to",
+      "description": "两者共同约束 create/strengthen/weaken 的更新幅度以防止拓扑震荡"
+    },
+    {
+      "from": "结构化子图与证据聚类",
+      "to": "集体回忆（collective recall）",
+      "type": "related_to",
+      "description": "拓扑重组形成的紧凑证据聚类支持跨记忆单元的联合回忆"
+    },
+    {
+      "from": "异质认知图",
+      "to": "自进化长记忆智能体",
+      "type": "related_to",
+      "description": "图结构为 Agent 长期智能提供可自适应的记忆基础"
+    },
+    {
+      "from": "跨会话长期记忆",
+      "to": "长期记忆",
+      "type": "is_a",
+      "description": "RPMem面向LLM Agent跨会话经验累积，是长期记忆的一种实现形态。"
+    },
+    {
+      "from": "潜在记忆",
+      "to": "参数化记忆",
+      "type": "is_a",
+      "description": "潜在记忆以固定形状向量承载经验，并可解码为LoRA参数，因而属于参数化记忆路径。"
+    },
+    {
+      "from": "循环门控整合",
+      "to": "记忆整合算子",
+      "type": "is_a",
+      "description": "循环门控用于跨会话融合历史记忆与新会话记忆，是一种记忆整合操作。"
+    },
+    {
+      "from": "Fixed FKL",
+      "to": "分布匹配编译目标",
+      "type": "is_a",
+      "description": "Fixed FKL是会话编译阶段的分布匹配目标，而非硬标签监督。"
+    },
+    {
+      "from": "LoRA",
+      "to": "参数高效微调结构",
+      "type": "is_a",
+      "description": "LoRA作为低秩适配参数，被RPMem用作记忆落地到当前backbone的参数载体。"
+    },
+    {
+      "from": "Session Encoder",
+      "to": "RPMem两阶段架构",
+      "type": "part_of",
+      "description": "Session Encoder属于单会话记忆编译阶段，将会话文本编码为latent memory。"
+    },
+    {
+      "from": "Recurrent Gate",
+      "to": "跨会话记忆整合模块",
+      "type": "part_of",
+      "description": "循环门控是跨会话整合模块的核心组件，用于选择性保留和写入记忆。"
+    },
+    {
+      "from": "Model-Specific Decoder",
+      "to": "模型特定解码阶段",
+      "type": "part_of",
+      "description": "Model-Specific Decoder将整合后的latent memory映射为当前backbone的LoRA参数。"
+    },
+    {
+      "from": "Latent Memory",
+      "to": "模型无关记忆资产",
+      "type": "part_of",
+      "description": "Latent Memory与具体backbone解耦，是可在骨干替换后保留和复用的记忆资产。"
+    },
+    {
+      "from": "LoRA参数",
+      "to": "当前Backbone适配参数",
+      "type": "part_of",
+      "description": "LoRA参数由解码器生成并注入冻结backbone，属于当前模型的适配参数部分。"
+    },
+    {
+      "from": "Latent Memory",
+      "to": "LoRA参数",
+      "type": "related_to",
+      "description": "Latent Memory可经模型特定解码器转换为LoRA参数，二者是记忆表征与参数落地之间的关系。"
+    },
+    {
+      "from": "Fixed FKL",
+      "to": "会话编译质量",
+      "type": "related_to",
+      "description": "Fixed FKL分布匹配目标直接影响会话经验编译为latent memory的质量。"
+    },
+    {
+      "from": "循环门控",
+      "to": "记忆容量恒定",
+      "type": "related_to",
+      "description": "循环门控在固定容量内学习保留与更新策略，使记忆体积近恒定。"
+    },
+    {
+      "from": "Backbone迁移",
+      "to": "Model-Specific Decoder切换",
+      "type": "related_to",
+      "description": "骨干替换时保留latent memory、encoder和gate，仅切换新backbone的adapted decoder。"
+    },
+    {
+      "from": "记忆更新",
+      "to": "前向计算",
+      "type": "related_to",
+      "description": "部署阶段所有组件冻结，后续会话仅做一次前向更新，无需重放历史文本。"
+    },
+    {
+      "from": "Consolidation策略",
+      "to": "应用场景泛化",
+      "type": "related_to",
+      "description": "论文指出consolidation策略针对特定场景学习，向记忆需求差异显著场景的泛化仍需研究。"
     }
   ],
   "axioms": [
@@ -22105,6 +26903,831 @@
       "type": "validation",
       "text": "CompassMem framework demonstrates consistency across multiple backbone models",
       "source": "2601.04726"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆库为随机流生态系统，其纯度 Q_t 由污染流入率与流出率共同决定，存在稳态纯度比 Q_ss",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "降低验证器假阴性率 P_FN 是提升记忆纯度的关键路径",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "K-Verification 策略使有效假阴性率满足 P_FN^effective ≈ (P_FN)^K，即使验证器质量一般也能保证 Q_ss → 1",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆单元的可复用性依赖于 precondition 与 goal 的联合匹配，单一 goal 键不足以维持正迁移",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆生存值可分解为效用、自适应衰减与可靠性的乘积：S = Utility × Adaptive Decay × Reliability",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "高风险计划应被动态阈值 T_i = μ_i − σ_i 拦截，以维持生态稳定性",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "在 AndroidWorld 上，DMS 使四款通用 MLLM 平均成功率提升约 18.0%，稳定性 SRR 提升 33.9%",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "移除反馈调节导致成功率下降 26.3%，验证贝叶斯反馈为抑制风险计划的核心",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "移除动态阈值导致成功率下降 29.8%，验证 T_i = μ_i − σ_i 对稳定性至关重要",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "仅使用 goal-based key 时成功率降至 29.7%，低于无记忆基线 41.0%，证实单因子检索引发负迁移",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "移除自调节导致性能下降 27.2%，内存/磁盘占用增加 258%，执行时间增加 18.8%",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "记忆库长期稳定在约 5 MB（峰值 <8 MB），记忆复用率由冷启动约 12% 升至 30%–36%",
+      "source": "2601.22528"
+    },
+    {
+      "type": "validation",
+      "text": "Qwen2.5-VL-72B 成功率从 41.0% 提升至 66.4%（+25.4），验证免训练外挂记忆的有效性",
+      "source": "2601.22528"
+    },
+    {
+      "type": "theoretical",
+      "text": "Context evolution is equivalent to structured decision rule policy search in real-time closed-loop interaction.",
+      "source": "2603.27306"
+    },
+    {
+      "type": "theoretical",
+      "text": "Non-parametric policy improvement can be achieved via natural language rule iteration without weight updates.",
+      "source": "2603.27306"
+    },
+    {
+      "type": "validation",
+      "text": "Teacher-Student separation architecture satisfies real-time latency constraints while enabling deep offline reasoning.",
+      "source": "2603.27306"
+    },
+    {
+      "type": "validation",
+      "text": "In-context updates consistently outperform static prompting baselines in adversarial orbital interception tasks.",
+      "source": "2603.27306"
+    },
+    {
+      "type": "theoretical",
+      "text": "长程成功由搜索效率和终端精度两个互补维度表征",
+      "source": "2603.27490"
+    },
+    {
+      "type": "theoretical",
+      "text": "状态感知的动态策略切换优于单一固定策略",
+      "source": "2603.27490"
+    },
+    {
+      "type": "validation",
+      "text": "AgentSwing 方法在多种基准上优于强静态基线",
+      "source": "2603.27490"
+    },
+    {
+      "type": "validation",
+      "text": "该方法可减少高达 3 倍的交互轮次",
+      "source": "2603.27490"
+    },
+    {
+      "type": "theoretical",
+      "text": "Concept-mediated graphs avoid super-hub degradation inherent in entity-centered designs",
+      "source": "2603.27910"
+    },
+    {
+      "type": "theoretical",
+      "text": "Lightweight graph traversal (weight 0.1) balances structural reasoning and noise better than heavy traversal",
+      "source": "2603.27910"
+    },
+    {
+      "type": "validation",
+      "text": "Structured memory is necessary for complex multi-hop and temporal reasoning tasks",
+      "source": "2603.27910"
+    },
+    {
+      "type": "validation",
+      "text": "Strict budget control (1000 words context) is essential for real-time agent interaction feasibility",
+      "source": "2603.27910"
+    },
+    {
+      "type": "theoretical",
+      "text": "Forgetting operations must preserve task success rate",
+      "source": "2604.00430"
+    },
+    {
+      "type": "theoretical",
+      "text": "Forgetting should be cost-efficient by minimizing API calls",
+      "source": "2604.00430"
+    },
+    {
+      "type": "validation",
+      "text": "Unlearn@1 metric validates cost efficiency in single attempt",
+      "source": "2604.00430"
+    },
+    {
+      "type": "validation",
+      "text": "Cross-scenario generalization validates robustness across domains",
+      "source": "2604.00430"
+    },
+    {
+      "type": "theoretical",
+      "text": "Non-monotonic Scaling Landscape: Larger teams do not necessarily guarantee better long-term performance",
+      "source": "2604.03295"
+    },
+    {
+      "type": "theoretical",
+      "text": "Memory Substitution Axiom: Quality memory design can substitute for team size expansion",
+      "source": "2604.03295"
+    },
+    {
+      "type": "validation",
+      "text": "Small teams with optimized memory outperform large teams in long-horizon tasks",
+      "source": "2604.03295"
+    },
+    {
+      "type": "validation",
+      "text": "Optimized memory topology significantly reduces average token consumption per task",
+      "source": "2604.03295"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆机制的效率提升优于单纯增加模型参数规模",
+      "source": "2604.04503"
+    },
+    {
+      "type": "theoretical",
+      "text": "参数化与非参数化记忆的双向转换支持智能体自主演化",
+      "source": "2604.04503"
+    },
+    {
+      "type": "theoretical",
+      "text": "测试时学习机制可在不中断推理流的情况下更新记忆",
+      "source": "2604.04503"
+    },
+    {
+      "type": "validation",
+      "text": "轻量级模型配合 MIA 架构性能可超越大规模基线模型",
+      "source": "2604.04503"
+    },
+    {
+      "type": "validation",
+      "text": "无监督设置下的自演化机制有效支持开放世界推理",
+      "source": "2604.04503"
+    },
+    {
+      "type": "validation",
+      "text": "强化学习协同训练能显著优化策略协同与记忆检索",
+      "source": "2604.04503"
+    },
+    {
+      "type": "theoretical",
+      "text": "结构化技能表示在经验迁移中的效率优于原始轨迹记忆",
+      "source": "2604.04804"
+    },
+    {
+      "type": "theoretical",
+      "text": "多层级技能设计能适配不同粒度的任务需求并提升泛化性",
+      "source": "2604.04804"
+    },
+    {
+      "type": "validation",
+      "text": "弱模型通过蒸馏强模型技能库可显著扩展能力边界",
+      "source": "2604.04804"
+    },
+    {
+      "type": "validation",
+      "text": "技能库的迭代优化能有效提升技能文档与内容质量",
+      "source": "2604.04804"
+    },
+    {
+      "type": "theoretical",
+      "text": "Event Segmentation Theory operationalized as memory boundary construction mechanism",
+      "source": "2604.06845"
+    },
+    {
+      "type": "theoretical",
+      "text": "Changes in Person, Time, Location, or Topic define an event boundary",
+      "source": "2604.06845"
+    },
+    {
+      "type": "validation",
+      "text": "Boundary guidance yields approximately 20% relative performance improvement",
+      "source": "2604.06845"
+    },
+    {
+      "type": "validation",
+      "text": "Adaptive retrieval reduces QA token cost by 68% compared to baselines",
+      "source": "2604.06845"
+    },
+    {
+      "type": "theoretical",
+      "text": "认知科学双重记忆理论映射至 AI 架构可有效提升专业领域代理能力",
+      "source": "2604.07269"
+    },
+    {
+      "type": "theoretical",
+      "text": "经验驱动的长期学习机制优于仅依赖静态知识获取的传统方式",
+      "source": "2604.07269"
+    },
+    {
+      "type": "validation",
+      "text": "推理与记忆联合优化策略在标准及长程任务中准确率显著优于独立优化基线",
+      "source": "2604.07269"
+    },
+    {
+      "type": "validation",
+      "text": "生成的诊断规则经专家评估具备临床正确性、有用性与信任度",
+      "source": "2604.07269"
+    },
+    {
+      "type": "theoretical",
+      "text": "Agent optimization can be decoupled from parameter updates and achieved via knowledge accumulation.",
+      "source": "2604.07645"
+    },
+    {
+      "type": "theoretical",
+      "text": "Strategy improvement is equivalent to memory quality evolution in a training-free setting.",
+      "source": "2604.07645"
+    },
+    {
+      "type": "validation",
+      "text": "Experience memory is independent of model parameters and supports cross-architecture migration.",
+      "source": "2604.07645"
+    },
+    {
+      "type": "validation",
+      "text": "Memory evolution reduces GPU consumption by 5-6 times compared to RL training while maintaining competitive performance.",
+      "source": "2604.07645"
+    },
+    {
+      "type": "theoretical",
+      "text": "Joint optimization of policy and memory enhances agent generalization capabilities",
+      "source": "2604.07791"
+    },
+    {
+      "type": "theoretical",
+      "text": "Structured memory effectively filters noise in context loading and reduces hallucinations",
+      "source": "2604.07791"
+    },
+    {
+      "type": "validation",
+      "text": "Step-level grouping is crucial for accurate advantage estimation in long-horizon tasks",
+      "source": "2604.07791"
+    },
+    {
+      "type": "validation",
+      "text": "Fine-grained process reward signals are essential for stable training and credit assignment",
+      "source": "2604.07791"
+    },
+    {
+      "type": "theoretical",
+      "text": "Small Language Models are sufficient for memory control tasks without needing Large Language Models",
+      "source": "2604.07798"
+    },
+    {
+      "type": "theoretical",
+      "text": "Online-offline decoupling resolves the latency-quality trade-off in memory systems",
+      "source": "2604.07798"
+    },
+    {
+      "type": "validation",
+      "text": "MTM layer is critical for maintaining situational details as F1 drops significantly without it",
+      "source": "2604.07798"
+    },
+    {
+      "type": "validation",
+      "text": "Semantic filtering significantly reduces noise in retrieval improving overall accuracy",
+      "source": "2604.07798"
+    },
+    {
+      "type": "theoretical",
+      "text": "Relevance in agent history evolves dynamically with task state, rendering static thresholds ineffective.",
+      "source": "2604.07863"
+    },
+    {
+      "type": "theoretical",
+      "text": "Visual memory decays faster than textual memory in web interaction contexts (λ_visual < λ_text).",
+      "source": "2604.07863"
+    },
+    {
+      "type": "validation",
+      "text": "ACGM achieves higher nDCG@10 and Precision@10 compared to GPT-4o and traditional dense retrieval baselines.",
+      "source": "2604.07863"
+    },
+    {
+      "type": "validation",
+      "text": "Sparse connectivity (approx. 3.2 edges/node) maintains O(logT) retrieval complexity without significant performance loss.",
+      "source": "2604.07863"
+    },
+    {
+      "type": "theoretical",
+      "text": "Effective agent memory requires selective extraction based on reasoning rather than just semantic extraction",
+      "source": "2604.07877"
+    },
+    {
+      "type": "theoretical",
+      "text": "Memory writing should be treated as an explicit state maintenance problem",
+      "source": "2604.07877"
+    },
+    {
+      "type": "validation",
+      "text": "Active extraction strategies outperform passive extraction in knowledge update and time reasoning tasks",
+      "source": "2604.07877"
+    },
+    {
+      "type": "validation",
+      "text": "Dual-model architecture balances computational cost and memory accuracy",
+      "source": "2604.07877"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆读写权衡可通过演进与蒸馏的协同优化被打破",
+      "source": "2604.07894"
+    },
+    {
+      "type": "theoretical",
+      "text": "用户经验可在不破坏性删除历史的情况下内部化为模型参数知识",
+      "source": "2604.07894"
+    },
+    {
+      "type": "validation",
+      "text": "TSUBASA 在个性化质量与 Token 效率上实现帕累托改进",
+      "source": "2604.07894"
+    },
+    {
+      "type": "validation",
+      "text": "动态记忆演进在长程任务中优于线性情景记忆",
+      "source": "2604.07894"
+    },
+    {
+      "type": "theoretical",
+      "text": "Proactive agents require coupling memory evolution with demand detection to infer latent needs",
+      "source": "2604.08000"
+    },
+    {
+      "type": "theoretical",
+      "text": "Effective long-term memory must be structured hierarchically to balance short-term context and long-term preferences",
+      "source": "2604.08000"
+    },
+    {
+      "type": "validation",
+      "text": "Intent recognition accuracy under low latency constraints must match leading large models",
+      "source": "2604.08000"
+    },
+    {
+      "type": "validation",
+      "text": "Proactive intervention effectiveness is validated via user help satisfaction and latency compliance",
+      "source": "2604.08000"
+    },
+    {
+      "type": "theoretical",
+      "text": "隐性记忆机制不可简化为显式检索 (Implicit memory cannot be reduced to explicit retrieval)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "theoretical",
+      "text": "当前 LLM 架构缺乏基础隐性记忆机制 (Current LLM architectures lack basic implicit memory mechanisms)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "theoretical",
+      "text": "无意识适应需要架构级创新而非参数增加 (Unconscious adaptation requires architectural innovation, not just parameter scaling)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "validation",
+      "text": "首次尝试准确率 (FTA) 有效测量无意识行为适应 (FTA effectively measures unconscious behavioral adaptation)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "validation",
+      "text": "人类基线在隐性记忆任务上达到 100%，模型天花板为 65.3% (Human baseline achieves 100%, model ceiling is 65.3%)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "validation",
+      "text": "抑制任务表现显著低于偏好任务 (17.6% vs 75.0%) (Inhibition tasks perform significantly worse than preference tasks)",
+      "source": "2604.08064"
+    },
+    {
+      "type": "theoretical",
+      "text": "Global Workspace Theory can be effectively mapped to LLM multi-agent systems",
+      "source": "2604.08206"
+    },
+    {
+      "type": "theoretical",
+      "text": "Intrinsic entropy drives autonomous task initiation and prevents passive response loops",
+      "source": "2604.08206"
+    },
+    {
+      "type": "theoretical",
+      "text": "Dual-layer memory separation is necessary for balancing context limits and continuity",
+      "source": "2604.08206"
+    },
+    {
+      "type": "validation",
+      "text": "Entropy regulation reduces homogenization loops in multi-agent collaboration",
+      "source": "2604.08206"
+    },
+    {
+      "type": "validation",
+      "text": "Core Self injection mitigates semantic drift in long-term interactions",
+      "source": "2604.08206"
+    },
+    {
+      "type": "validation",
+      "text": "Event-driven activation reduces computational waste compared to static polling",
+      "source": "2604.08206"
+    },
+    {
+      "type": "theoretical",
+      "text": "Long-context reasoning can be redefined as an iterative stateful information search process.",
+      "source": "2604.08216"
+    },
+    {
+      "type": "theoretical",
+      "text": "Dynamic test-time memory scaling outperforms static single-step passive retrieval in reducing semantic dilution.",
+      "source": "2604.08216"
+    },
+    {
+      "type": "validation",
+      "text": "MemCoT achieves higher Answer Prediction F1 Score on LoCoMo benchmark compared to RAG baselines.",
+      "source": "2604.08216"
+    },
+    {
+      "type": "validation",
+      "text": "Memory-driven reasoning significantly reduces hallucination and catastrophic forgetting in long-context tasks.",
+      "source": "2604.08216"
+    },
+    {
+      "type": "theoretical",
+      "text": "智能体进化将是模型与外部架构的协同演进，而非单纯的参数规模扩张",
+      "source": "2604.08224"
+    },
+    {
+      "type": "theoretical",
+      "text": "能力外部化（记忆、技能、协议）是提升智能体可靠性的核心逻辑",
+      "source": "2604.08224"
+    },
+    {
+      "type": "validation",
+      "text": "架构可靠性、执行协调性、系统演进能力是验证外部化框架的核心指标",
+      "source": "2604.08224"
+    },
+    {
+      "type": "validation",
+      "text": "外部化架构通过降低模型认知负担提升任务可靠性",
+      "source": "2604.08224"
+    },
+    {
+      "type": "theoretical",
+      "text": "长对话记忆的连贯性依赖于对三个或更多元素间高阶关联的显式建模",
+      "source": "2604.08256"
+    },
+    {
+      "type": "theoretical",
+      "text": "超图结构比传统成对关系图更能有效捕捉分散语义的整体性",
+      "source": "2604.08256"
+    },
+    {
+      "type": "validation",
+      "text": "分层检索策略在保持高准确率的同时显著降低 Token 消耗",
+      "source": "2604.08256"
+    },
+    {
+      "type": "validation",
+      "text": "片段层上下文对时间推理任务的准确性具有关键贡献",
+      "source": "2604.08256"
+    },
+    {
+      "type": "theoretical",
+      "text": "共享状态是个人 AI 代理中实现仪器连贯性的缺失层",
+      "source": "2604.08529"
+    },
+    {
+      "type": "theoretical",
+      "text": "模块间不直接通信，均通过 LLM 中介的共享上下文交互实现解耦集成",
+      "source": "2604.08529"
+    },
+    {
+      "type": "theoretical",
+      "text": "双向信息访问（读取 + 写入）是个人 AI 代理连贯性的必要条件",
+      "source": "2604.08529"
+    },
+    {
+      "type": "validation",
+      "text": "共享上下文跨模块推理满足度达 0.88，显著优于仅搜索 (0.63) 和单模块 (0.27)",
+      "source": "2604.08529"
+    },
+    {
+      "type": "validation",
+      "text": "状态写回成功率达 95%，证明共享层提供可靠的写回路径发现能力",
+      "source": "2604.08529"
+    },
+    {
+      "type": "validation",
+      "text": "共享状态层在保持低延迟 (23s-29s) 的同时显著提升推理与动作执行可靠性",
+      "source": "2604.08529"
+    },
+    {
+      "type": "theoretical",
+      "text": "共激活增强公理：若两节点在时间窗K_t内被共同激活，则其Hebbian边权按 w_ij^(t+1)=(1-λ)w_ij^(t)+η·I(v_i,v_j∈K_t) 增强（neurons that fire together, wire together）",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "不使用衰减公理：非共激活的边权按因子(1-λ)随时间衰减，λ接近1保证长期记忆缓慢消散",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆巩固公理：高关联hub节点及其邻居可被LLM蒸馏为结构化语义记忆（用户模型/事实/Agent知识）",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "语义陷阱",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "自适应遗忘公理：长期孤立、无共激活连边的节点应被删除以约束图规模增长",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "检索互补公理：最终检索结果 = Top-k基础路径 ∪ Top-m翻转路径，联想路径补充语义路径的召回缺口",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "LongMemEval-S上总体ACC 65.40%领先A-MEM(62.60%)与NaiveRAG(61.00%)，Temporal 50.38%/Multi-Session 57.14%/Knowledge-Update 78.21% 三类推理密集任务均第一",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "LoCoMo上平均排名1.25优于MemoryOS(2.25)、A-Mem(3.00)、MemGPT(4.50)",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "Token开销约1010，相比MemGPT的16977降低约94%，验证联想检索的记忆激活稀疏性",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "消融验证：去除Reflective Agent总体ACC 34.74%→29.87%，多跳36.04%→30.17%，表明反思巩固是最关键组件",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "消融验证：去除扩散激活总体ACC 34.74%→32.19%，多跳受损明显，表明联想扩散是补足语义检索短板的核心机制",
+      "source": "2604.16839"
+    },
+    {
+      "type": "validation",
+      "text": "跨backbone验证：GPT-4o-mini/GPT-4o/Qwen2.5-14b/3b上平均排名均约1.25，验证模型无关性；Qwen2.5-3b明显下降，验证对底层LLM能力的依赖",
+      "source": "2604.16839"
+    },
+    {
+      "type": "theoretical",
+      "text": "推理组织方式（how to organize reasoning）是与模型推理能力（how capable the model is）独立的缩放维度",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "结构化外部认知状态可替代隐式上下文记忆，抑制上下文稀释与证据充分性瘫痪",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "何时提交答案",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "如何推理",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "性能增益随推理深度（hop 数）递增，因为瓶颈从推理能力转向推理组织",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "认知状态管理可与模型规模化、测试时算力互补并衔接最优停止理论",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "4-hop 任务上 SLEUTH 相比最佳基线提升 +11.1 EM（37.8 → 48.9），3-hop +4.6，2-hop +5.9",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "HotpotQA +1.0、2WikiMultiHopQA +1.1，简单任务趋于饱和",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "弱模型 GLM-5 + SLEUTH（48.9%）反超更强 Sonnet + ReAct（42.0%）",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "超时率从 2-hop 的 17% / 4-hop 的 35%（无结构）压缩至始终 <12%",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "承诺机制是压制超时率的主要来源；预算 ≥2.5× 推理深度时收益最大",
+      "source": "2607.12267"
+    },
+    {
+      "type": "validation",
+      "text": "token 成本可控：4-hop 为 ReAct 的 1.33×，HotpotQA 为 1.50×，难任务开销反而更小",
+      "source": "2607.12267"
+    },
+    {
+      "type": "theoretical",
+      "text": "深度分工公理：LLM 中低层完成语义理解（语义内容深度约 0.45L，近尺度不变），上层主要做查询条件化预测",
+      "source": "2607.28263"
+    },
+    {
+      "type": "theoretical",
+      "text": "可缓存性公理：由于理解在早期完成，理解状态可缓存为中层残差并在检索后复用，上层可按需重算",
+      "source": "2607.28263"
+    },
+    {
+      "type": "theoretical",
+      "text": "有界读公理：当固定 k/chunk/query 长度时，在线读计算与 KV 工作内存不随存储上下文长度增长",
+      "source": "2607.28263"
+    },
+    {
+      "type": "theoretical",
+      "text": "质量–成本可调公理：Write 停止层号 j 构成显式质量–成本旋钮，j=0 等价全前向，j 越深读越便宜但 query-blind 读出越差",
+      "source": "2607.28263"
+    },
+    {
+      "type": "theoretical",
+      "text": "尺度不变性公理：零样本可读边界随模型规模加深，小模型适应空间更大，32B 附近消失",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "RULER 验证公理：CoMem 在 RULER 达 97.05，单/多针召回经 LoRA 修复后 8k/16k/32k 单针 100/100/100、多键 91/95/92",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "LoCoMo 验证公理：LoCoMo 38.27 优于 KV-Direct 34.59，增益经对话簇 bootstrap 与 DeepSeek-V3 独立审计稳健；j=0 全深度重算达 41.59 证明检索选择有效",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "效率验证公理：128k 显存 18.26GB vs 89.36GB（约 4.9×），prefill 加速 7.83×，缓存 8KB/token（full KV 的 1/18）",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "j 扫描验证公理：LoCoMo j=0/6/9/12 = 41.59/32.78/29.15/24.52，128k Read 从 1.01s 降至 0.72s，印证质量–成本旋钮",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "跨块注意力验证公理：块对角重用下 RULER 多键召回 96/94→60/32，BABILong qa2 36/20→17/13，证明跨块交互对多事实消歧关键",
+      "source": "2607.28263"
+    },
+    {
+      "type": "validation",
+      "text": "完整性验证公理：RULER 完整网格通过八分片完整性检查，无空预测，与磁盘重算分数一致，实验可复现",
+      "source": "2607.28263"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆不是静态存储与固定检索的被动仓库，而是可被检索激活并随使用反馈持续重构的动态生命周期系统。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "theoretical",
+      "text": "检索反馈可以回流并影响记忆拓扑结构：记忆更新不再仅由新输入触发（前向演化），而可由使用模式驱动（使用中演化）。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "theoretical",
+      "text": "共利用假设：被同时调用/共同使用的记忆单元之间的连接应被增强，未被共同使用的连接应被减弱，从而自发形成紧凑证据聚类与结构化子图。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "theoretical",
+      "text": "再巩固的有界性假设：边权更新受学习率 η 与置信度 c 约束并设定上下界，可使记忆拓扑在演化中保持稳定而不发生剧烈震荡。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "theoretical",
+      "text": "证据利用假设：记忆质量的提升主要来源于对已召回证据的组织与利用方式，而非单纯扩大证据召回规模。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "在 LoCoMo 上 REALM 平均分 75.97，优于最强基线 MAGMA 的 68.80（+7.17），验证了使用中演化范式的有效性。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "在 LongMemEval_S 上 REALM 平均分 65.11，优于 Zep 的 63.80（+1.31）。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "消融实验显示记忆再巩固组件分别贡献 2.01 / 2.13 分增益，验证再巩固对整体性能的必要性。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "再巩固使正确回答率提升 +20.83% / +19.23%，而证据发现率仅提升 +3.70% / +5.41%，验证“提升证据利用质量而非扩大召回”的假设。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "LoCoMo 中 84.87%（LongMemEval_S 中 40.52%）的证据可直接从种子节点找到，验证种子检索在证据覆盖中的主导作用。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "validation",
+      "text": "类别级验证：Multi-Hop +4.97、Open-Domain +5.21、Single-session Preference +6.66、Knowledge Update +4.17，表明增益在多种记忆任务类型上具有一致性（但 single-session preference 绝对分仅 36.66，仍为短板）。",
+      "source": "2609.16053"
+    },
+    {
+      "type": "theoretical",
+      "text": "会话经验可以被压缩为固定形状、与模型无关的latent memory，并作为跨会话记忆的中间表征。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "theoretical",
+      "text": "跨会话记忆可通过循环门控在固定容量内实现选择性保留与写入，其形式为h_t=z_t⊙h_{t-1}+(1-z_t)⊙q_t。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "theoretical",
+      "text": "以分布匹配（Fixed FKL）作为会话编译目标，相比硬标签监督更符合完整上下文条件分布的建模需求。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "theoretical",
+      "text": "记忆资产与backbone解耦：latent memory、session encoder和gate可保留，骨干替换时仅需切换model-specific decoder。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "theoretical",
+      "text": "部署阶段冻结全部组件后，新会话只做前向更新即可更新记忆，从而避免历史重放和上下文线性增长。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "validation",
+      "text": "在PERMA上，Fixed FKL编译目标达到85.52%，优于Top-K CE的77.66%和Compiler SFT的61.21%。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "validation",
+      "text": "在整合规则消融中，Learned gate达到85.52%，显著优于factor averaging的54.21%、latent averaging的45.52%和rank concatenation的13.84%。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "validation",
+      "text": "冻结Qwen3-8B encoder后，跨4个backbone、28个backbone-setting组合的平均表现由75.97%提升至89.64%。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "validation",
+      "text": "64个累计会话时记忆更新仅需0.043秒，每用户记忆约36.56 MiB且近恒定，查询前向时间为0.055秒。",
+      "source": "2609.23466"
+    },
+    {
+      "type": "validation",
+      "text": "通用能力退化有限：MMLU为70.13对71.96，GSM8K为73.78对75.21，IFEval为77.89对81.70，且优于Latest Session对照。",
+      "source": "2609.23466"
     }
   ],
   "categories": {

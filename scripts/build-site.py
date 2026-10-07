@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 """
 Build script for GitHub Pages site.
-Reads lexicon.json and paper/ directory, updates site/index.html with:
-- paper path mapping (PAPER_MAP)
-- paper browsing list (PAPER_LIST)
-- ontology body
+Reads lexicon.json / ontology_base.md / timeline.json and paper/ directory,
+and rewrites the embedded `var X = ...;` declarations in site/index.html:
 
-Used by CI/CD (.github/workflows/deploy-pages.yml) and local development.
+- ONTOLOGY_EMBEDDED   whole ontology_base.md as a JS template literal
+- LEXICON_EMBEDDED    lexicon.json
+- TIMELINE_EMBEDDED   timeline.json (curated milestones)
+- PAPER_LIST          papers grouped by year
+- PAPER_MAP           arxiv id -> paper path
+
+Each declaration is replaced in place, so running the script twice is a no-op
+(idempotent). Used by CI/CD (.github/workflows/deploy-pages.yml) and locally.
 """
 
 import json
@@ -31,10 +36,28 @@ def extract_paper_title(md_path):
     return md_path.stem
 
 
+def upsert_js_var(html, name, value_js, multiline):
+    """Idempotently replace the `var NAME = ...;` declaration in `html`.
+
+    ``multiline`` selects the JS template-literal form (``var NAME = `...`;``
+    whose closing ``;`` sits on its own line) versus the single-line JSON
+    object form. Returns ``(html, found)``.
+    """
+    if multiline:
+        pattern = re.compile(r'(?ms)^[ \t]*var ' + re.escape(name) + r" = `[\s\S]*?^`;$")
+        repl = 'var ' + name + ' = `' + value_js + '`;'
+    else:
+        pattern = re.compile(r'(?m)^[ \t]*var ' + re.escape(name) + r' = \{.*\};[ \t]*$')
+        repl = '        var ' + name + ' = ' + value_js + ';'
+    new_html, count = pattern.subn(lambda _m: repl, html, count=1)
+    return new_html, count > 0
+
+
 def main():
     repo_root = Path(__file__).parent.parent
     lexicon_path = repo_root / "ontology" / "lexicon.json"
     ontology_path = repo_root / "ontology" / "ontology_base.md"
+    timeline_path = repo_root / "ontology" / "timeline.json"
     site_path = repo_root / "site" / "index.html"
 
     if not lexicon_path.exists():
@@ -53,6 +76,16 @@ def main():
             ontology_md = f.read()
         print(f"Ontology loaded: {len(ontology_md)} chars")
 
+    # Load curated timeline milestones (optional)
+    timeline_json = None
+    if timeline_path.exists():
+        with open(timeline_path, 'r', encoding='utf-8') as f:
+            timeline = json.load(f)
+        timeline_json = json.dumps(timeline, ensure_ascii=False)
+        print(f"Timeline loaded: {len(timeline.get('years', []))} year nodes")
+    else:
+        print("WARN: ontology/timeline.json not found; TIMELINE_EMBEDDED left as-is.")
+
     if not site_path.exists():
         print("ERROR: site/index.html not found.")
         sys.exit(1)
@@ -60,128 +93,55 @@ def main():
     with open(site_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # ── Build arxiv -> paper path mapping ──
+    # ── Build arxiv -> paper path mapping and per-year paper list ──
     paper_dir = repo_root / "paper"
     paper_files = sorted(paper_dir.rglob("*.md"))
 
     arxiv_to_path = {}
     paper_list = []
     for pf in paper_files:
-        fname = pf.stem
-        arxiv_id = fname.split('_')[0]
+        arxiv_id = pf.stem.split('_')[0]
         rel_path = "paper/" + "/".join(pf.relative_to(paper_dir).parts)
         arxiv_to_path[arxiv_id] = rel_path
-        # Determine year from path
         year = pf.relative_to(paper_dir).parts[0]
-        title = extract_paper_title(pf)
         paper_list.append({
             "arxivId": arxiv_id,
-            "title": title,
+            "title": extract_paper_title(pf),
             "path": rel_path,
             "year": year,
         })
 
     print(f"Found {len(arxiv_to_path)} papers in paper/ directory")
 
-    # ── Build paper list grouped by year ──
     paper_by_year = {}
     for p in paper_list:
         paper_by_year.setdefault(p["year"], []).append(p)
     # Sort years descending
     paper_by_year = dict(sorted(paper_by_year.items(), reverse=True))
 
-    paper_list_json = json.dumps(paper_by_year, ensure_ascii=False)
-
-    # ── Inject into HTML ──
-    mapping_json = json.dumps(arxiv_to_path, ensure_ascii=False)
-
-    # 0. Inject LEXICON_EMBEDDED (lexicon data embedded at build time)
-    lexicon_json = json.dumps(lexicon, ensure_ascii=False)
-    lexicon_marker = "/* LEXICON_EMBEDDED_MARKER */"
-    if lexicon_marker in html:
-        html = html.replace(lexicon_marker, lexicon_json)
-        print("Updated LEXICON_EMBEDDED in site/index.html")
-    else:
-        # Add after GITHUB_PAGES_BASE line
-        inject_lexicon = f"        var LEXICON_EMBEDDED = {lexicon_json};"
-        html = html.replace(
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_lexicon
-        )
-        print("Injected LEXICON_EMBEDDED into site/index.html")
-
-    # 0b. Inject ONTOLOGY_EMBEDDED (ontology markdown embedded at build time)
-    # Escape backticks for JS string
+    # ── Inject into HTML (each declaration replaced in place) ──
     safe_ontology_md = ontology_md.replace('\\', '\\\\').replace('`', '\\`').replace('$', '\\$')
-    onto_marker = "/* ONTOLOGY_EMBEDDED_MARKER */"
-    if onto_marker in html:
-        html = html.replace(onto_marker, safe_ontology_md)
-        print("Updated ONTOLOGY_EMBEDDED in site/index.html")
-    else:
-        inject_ontology = f"        var ONTOLOGY_EMBEDDED = `{safe_ontology_md}`;"
-        html = html.replace(
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_ontology
-        )
-        print("Injected ONTOLOGY_EMBEDDED into site/index.html")
+    # Keep the closing backtick+semicolon on its own line so the declaration
+    # matches the pattern again on the next (idempotent) run.
+    if not safe_ontology_md.endswith('\n'):
+        safe_ontology_md += '\n'
 
-    # 1. Inject or update PAPER_MAP const
-    inject_const = f"        var PAPER_MAP = {mapping_json};"
-    if "var PAPER_MAP = " in html:
-        html = re.sub(
-            r'var PAPER_MAP = \{[^;]+\};',
-            inject_const,
-            html,
-            count=1
-        )
-        print("Updated PAPER_MAP in site/index.html")
-    else:
-        html = html.replace(
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_const
-        )
-        print("Injected PAPER_MAP const into site/index.html")
+    updates = [
+        ("ONTOLOGY_EMBEDDED", safe_ontology_md, True),
+        ("LEXICON_EMBEDDED", json.dumps(lexicon, ensure_ascii=False), False),
+        ("PAPER_LIST", json.dumps(paper_by_year, ensure_ascii=False), False),
+        ("PAPER_MAP", json.dumps(arxiv_to_path, ensure_ascii=False), False),
+    ]
+    if timeline_json is not None:
+        updates.insert(2, ("TIMELINE_EMBEDDED", timeline_json, False))
 
-    # 2. Inject or update PAPER_LIST const
-    inject_papers = f"        var PAPER_LIST = {paper_list_json};"
-    if "var PAPER_LIST = " in html:
-        html = re.sub(
-            r'var PAPER_LIST = \{[^;]+\};',
-            inject_papers,
-            html,
-            count=1
-        )
-        print("Updated PAPER_LIST in site/index.html")
-    else:
-        html = html.replace(
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';",
-            "var GITHUB_PAGES_BASE = 'https://haiyoung.github.io/AgentMemoryAtlas/';\n" + inject_papers
-        )
-        print("Injected PAPER_LIST into site/index.html")
-
-    # 3. Replace search-based fallback with actual mapping lookup
-    old_link = "PAPER_MAP[arxivId] || 'paper/search/'"
-    new_link = "PAPER_MAP[arxivId] || ('paper/search/'"
-
-    # Only replace if old_link exists without being already wrapped
-    if old_link in html:
-        html = html.replace(old_link, new_link)
-        print("Updated paper links to use PAPER_MAP lookup")
-    else:
-        print("Paper links already use PAPER_MAP lookup, skipping")
-
-    # 4. Inject paper browsing section after the ontology-body div, before footer
-    if 'class="papers-section"' not in html:
-        papers_section = '''
-        <section class="papers-section">
-            <h2 class="section-title">
-                <span class="section-icon">&#128218;</span> 论文阅读简报
-            </h2>
-            <div id="paper-list-container"></div>
-        </section>
-'''
-        html = html.replace('</footer>', papers_section + '\n    </footer>')
-        print("Injected paper browsing section into site/index.html")
+    for name, value, multiline in updates:
+        html, found = upsert_js_var(html, name, value, multiline)
+        if found:
+            print(f"Updated {name} in site/index.html")
+        else:
+            print(f"ERROR: `var {name} = ...;` declaration not found in site/index.html")
+            sys.exit(1)
 
     with open(site_path, 'w', encoding='utf-8') as f:
         f.write(html)
