@@ -439,6 +439,15 @@
         .mermaid { text-align: center; margin: 1.5rem 0; }
         .mermaid svg { max-width: 100%; height: auto; }
 
+        .modal-body .mermaid { overflow-x: auto; }
+        .mermaid-error {
+            font-family: monospace;
+            white-space: pre-wrap;
+            text-align: left;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
         @media (max-width: 700px) {
             .timeline-node { flex-basis: 220px; }
         }
@@ -1095,6 +1104,35 @@ Agent Memory 领域正处于从**工程探索**向**系统化学科**演化的�
             }).join('');
         }
 
+        // ── Mermaid: shared helpers (used by ontology body and paper modal) ──
+        function convertMermaidBlocks(container) {
+            if (!container) return;
+            var blocks = container.querySelectorAll('code.language-mermaid');
+            for (var i = 0; i < blocks.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = blocks[i].textContent;
+                blocks[i].parentElement.replaceWith(div);
+            }
+        }
+
+        function renderMermaidIn(container) {
+            if (!container || typeof mermaid === 'undefined') return;
+            var nodes = container.querySelectorAll('.mermaid:not([data-processed])');
+            Array.prototype.forEach.call(nodes, function(node) {
+                mermaid.run({ nodes: [node] }).catch(function(e) {
+                    console.warn('Mermaid render failed:', e);
+                    node.classList.add('mermaid-error');
+                    node.setAttribute('data-processed', 'true');
+                });
+            });
+        }
+
+        function hydrateMermaid(container) {
+            convertMermaidBlocks(container);
+            renderMermaidIn(container);
+        }
+
         function renderOntologyBody() {
             var body = document.getElementById('ontology-body');
             if (!body) return;
@@ -1108,17 +1146,7 @@ Agent Memory 领域正处于从**工程探索**向**系统化学科**演化的�
 
             try {
                 body.innerHTML = marked.parse(cleanMd);
-
-                // Convert mermaid code blocks to divs for mermaid rendering
-                var mermaidBlocks = body.querySelectorAll('code.language-mermaid');
-                for (var i = 0; i < mermaidBlocks.length; i++) {
-                    var code = mermaidBlocks[i];
-                    var pre = code.parentElement;
-                    var div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = code.textContent;
-                    pre.replaceWith(div);
-                }
+                convertMermaidBlocks(body);
             } catch (err) {
                 body.innerHTML = '<p style="color:#ef4444;">正文渲染失败: ' + escapeHtml(err.message) + '</p>';
                 return;
@@ -1134,13 +1162,7 @@ Agent Memory 领域正处于从**工程探索**向**系统化学科**演化的�
             var body = document.getElementById('ontology-body');
             var panel = document.getElementById('panel-ontology');
             if (!body || !panel || panel.hidden) return;
-            var nodes = body.querySelectorAll('.mermaid:not([data-processed])');
-            if (!nodes.length) return;
-            try {
-                mermaid.run({ nodes: nodes });
-            } catch (e) {
-                console.warn('Mermaid render failed:', e);
-            }
+            renderMermaidIn(body);
         }
 
         // ── Paper brief modal ──
@@ -1176,6 +1198,7 @@ Agent Memory 领域正处于从**工程探索**向**系统化学科**演化的�
             fetchPaperMd(path).then(function(text) {
                 if (typeof marked !== 'undefined' && marked.parse) {
                     bodyEl.innerHTML = marked.parse(text);
+                    hydrateMermaid(bodyEl);
                 } else {
                     bodyEl.innerHTML = '';
                     var pre = document.createElement('pre');
